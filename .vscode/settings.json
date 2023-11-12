@@ -15,6 +15,9 @@
     "source.fixAll.eslint": true,
     "source.organizeImports": false
   },
+  "editor.quickSuggestions": {
+    "strings": true
+  },
 
   // Silent the stylistic rules in you IDE, but still auto fix them
   "eslint.rules.customizations": [
