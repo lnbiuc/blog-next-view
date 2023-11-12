@@ -22,7 +22,7 @@ const link = [
 </script>
 
 <template>
-  <div class="m-auto h-[90vh] w-[60%] flex flex-row items-center justify-around">
+  <div class="m-auto h-[86vh] w-[60%] flex flex-row items-center justify-around">
     <div class="flex flex-col items-start justify-start">
       <h1 class="text-left text-6xl font-bold">
         Hi!👋
@@ -50,10 +50,28 @@ const link = [
       <img src="../public/favicon.ico" alt="logo" class="h-[300px] w-[300px] rounded-full">
     </div>
   </div>
+  <div class="h-[100px] w-full flex flex-row justify-center hover:cursor-pointer">
+    <div class="i-carbon-arrow-down icon-down h-[40px] w-[40px]" />
+  </div>
 </template>
 
 <style scoped>
   .open-tab {
     cursor: url(/new-tab.png) 10 10,pointer
   }
+  @keyframes jump {
+    0%, 100% {
+      transform: translateY(-25%);
+      animation-timing-function: cubic-bezier(.8,0,1,1);
+    }
+
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0,0,.2,1);
+    }
+  }
+
+.icon-down {
+    animation: jump 1s ease-in-out infinite;
+}
 </style>
