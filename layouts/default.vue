@@ -1,5 +1,5 @@
 <template>
-  <main class="w-full">
+  <main class="w-full px-4">
     <div class="min-h-[90vh]">
       <slot name="main" />
     </div>

@@ -10,6 +10,14 @@ export default defineNuxtConfig({
     '@vite-pwa/nuxt',
     '@nuxt/ui',
   ],
+  ui: {
+    // @ts-expect-error missing types
+    primary: 'violet',
+    gray: 'cool',
+  },
+  routeRules: {
+    '/api/**': { proxy: { to: 'http://127.0.0.1:6060/api/**' } },
+  },
 
   experimental: {
     // when using generate, payload js assets included in sw precache manifest

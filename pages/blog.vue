@@ -1,34 +1,38 @@
 <script setup lang="ts">
 import { getAllTag } from '~/server/api/tag'
+import { getAllArticle } from '~/server/api/article'
 
-const value: Ref<string> = ref('')
-const tag = [
-  {
-    name: 'JavaScript',
-    index: 1,
-  },
-  {
-    name: 'TypeScript',
-    index: 2,
-  },
-  {
-    name: 'VUE',
-    index: 3,
-  },
-  {
-    name: 'React',
-    index: 4,
-  },
-  {
-    name: 'Java',
-    index: 5,
-  },
-]
+const searchVal: Ref<string> = ref('')
 
-const tags: Ref<string[]> = ref([''])
+const tags: Ref<string[]> = ref([])
 
-const res = await getAllTag()
-tags.value = res.data.value?.data
+const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
+
+const selectVal: Ref<string> = ref(options.value[0])
+
+async function getTags() {
+  getAllTag().then((res) => {
+    tags.value = res.data.value?.data as string[]
+  })
+}
+
+const page = ref<{ pageNumber: number; pageSize: number; total: number; data: [] }>({
+  pageNumber: 1,
+  pageSize: 10,
+  total: 0,
+  data: [],
+})
+
+async function getArticles() {
+  getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
+    page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: [] }
+  })
+}
+
+onMounted(() => {
+  getTags()
+  getArticles()
+})
 </script>
 
 <template>
@@ -41,19 +45,23 @@ tags.value = res.data.value?.data
         <div class="py-4">
           <span>Thoughts, mental models, and tutorials about front-end development.</span>
         </div>
-        <div>
+        <div class="flex flex-row">
           <UInput
-            v-model="value"
-            icon="i-heroicons-magnifying-glass-20-solid" size="xl" placeholder="Search..."
+            v-model="searchVal"
+            class="w-full"
+            :autofocus="true"
+            icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
           />
+          <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
         </div>
         <div class="my-4">
           <span class="mr-2 text-lg">Tags:</span>
-          <UButton v-for="t in tags" :key="t" class="m-1" :tag="t">
+          <UButton v-for="t in tags" :key="t" size="2xs" class="m-1" :tag="t">
             {{ t }}
           </UButton>
         </div>
       </div>
     </div>
+    <BlogCards :articles="page.data" />
   </NuxtLayout>
 </template>

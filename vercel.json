@@ -1,0 +1,11 @@
+{
+  "rewrites": [
+    {
+      "source": "/:path*", "destination": "/index.html"
+    },
+    {
+      "source": "/api/:match*",
+      "destination": "blog-api.lnbiuc.com/api/:match*"
+    }
+  ]
+}
