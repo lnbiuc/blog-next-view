@@ -1,11 +1,12 @@
 {
   "rewrites": [
     {
-      "source": "/:path*", "destination": "/index.html"
+      "source": "/api/:match*",
+      "destination": "https://blog-api.lnbiuc.com/api/:match*"
     },
     {
-      "source": "/api/:match*",
-      "destination": "blog-api.lnbiuc.com/api/:match*"
+      "source": "/:path*",
+      "destination": "/index.html"
     }
   ]
 }
