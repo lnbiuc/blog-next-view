@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getAllTag } from '~/server/api/tag'
 import { getAllArticle, searchArticle } from '~/server/api/article'
+import type { Article } from '~/server/types/article'
 
 const searchVal: Ref<string> = ref('')
 
@@ -16,7 +17,7 @@ async function getTags() {
   })
 }
 
-const page = ref<{ pageNumber: number; pageSize: number; total: number; data: [] }>({
+const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Article[] }>({
   pageNumber: 1,
   pageSize: 20,
   total: 0,
@@ -25,14 +26,20 @@ const page = ref<{ pageNumber: number; pageSize: number; total: number; data: []
 
 async function getArticles() {
   getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: [] }
+    page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+    page.value.data.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
   })
 }
 
 async function search() {
   if (searchVal.value !== '') {
     searchArticle(searchVal.value, page.value.pageNumber, page.value.pageSize).then((res) => {
-      page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: [] }
+      page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+      page.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
     })
   }
   else {
@@ -50,6 +57,24 @@ const debouncedFn = useDebounceFn(() => {
 watch(searchVal, () => {
   debouncedFn()
 })
+
+watch([selectVal, page], () => {
+  if (selectVal.value === options.value[0]) {
+    page.value.data.sort((a, b) => {
+      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    })
+  }
+  else {
+    page.value.data.sort((a, b) => {
+      return b.views - a.views
+    })
+  }
+})
+
+async function tagClick(tag: string) {
+  searchVal.value = tag
+  search()
+}
 </script>
 
 <template>
@@ -74,7 +99,7 @@ watch(searchVal, () => {
         </div>
         <div class="my-4">
           <span class="mr-2 text-lg">Tags:</span>
-          <UButton v-for="t in tags" :key="t" size="2xs" class="m-1" :tag="t">
+          <UButton v-for="t in tags" :key="t" size="2xs" class="m-1" :tag="t" @click="tagClick(t)">
             {{ t }}
           </UButton>
         </div>

@@ -21,7 +21,7 @@ const props = defineProps({
     </div>
 
     <div class="p-4 text-left">
-      <div class="font-bold text-md">
+      <div class="text-md font-bold">
         {{ props.article.title }}
       </div>
       <div class="my-2 flex flex-row items-center">
@@ -31,7 +31,7 @@ const props = defineProps({
         </div>
       </div>
       <div class="mt-1 font-bold">
-        {{ props.article.updatedAt.substring(0, 10) }}
+        {{ props.article.createdAt.substring(0, 10) }}
       </div>
       <div class="mt-2">
         {{ props.article.description }}
