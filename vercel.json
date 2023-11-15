@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:match*",
-      "destination": "https://blog-api.lnbiuc.com/api/:match*"
+      "destination": "https://blog-api.vio.vin/api/:match*"
     },
     {
       "source": "/:path*",
