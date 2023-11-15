@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { getAllTag } from '~/server/api/tag'
-import { getAllArticle } from '~/server/api/article'
+import { getAllArticle, searchArticle } from '~/server/api/article'
 
 const searchVal: Ref<string> = ref('')
 
@@ -18,7 +18,7 @@ async function getTags() {
 
 const page = ref<{ pageNumber: number; pageSize: number; total: number; data: [] }>({
   pageNumber: 1,
-  pageSize: 10,
+  pageSize: 20,
   total: 0,
   data: [],
 })
@@ -29,9 +29,26 @@ async function getArticles() {
   })
 }
 
-onMounted(() => {
-  getTags()
-  getArticles()
+async function search() {
+  if (searchVal.value !== '') {
+    searchArticle(searchVal.value, page.value.pageNumber, page.value.pageSize).then((res) => {
+      page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: [] }
+    })
+  }
+  else {
+    getArticles()
+  }
+}
+
+getTags()
+getArticles()
+
+const debouncedFn = useDebounceFn(() => {
+  search()
+}, 1000, { maxWait: 5000 })
+
+watch(searchVal, () => {
+  debouncedFn()
 })
 </script>
 
@@ -47,6 +64,7 @@ onMounted(() => {
         </div>
         <div class="flex flex-row">
           <UInput
+            id="search"
             v-model="searchVal"
             class="w-full"
             :autofocus="true"

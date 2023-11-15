@@ -33,7 +33,6 @@ function fetch<T>(url: UrlType, option: UseFetchOptions<ResOptions<T>>) {
     // 请求拦截器
     onRequest({ options }) {
       // 在这里判断错误
-      console.error(options)
       return options
     },
     // 响应拦截

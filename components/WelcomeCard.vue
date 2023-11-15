@@ -22,7 +22,7 @@ const link = [
 </script>
 
 <template>
-  <div class="m-auto h-[86vh] w-[60%] flex flex-row items-center justify-around">
+  <div class="m-auto h-[86vh] max-w-[1200px] w-[100%] flex flex-row items-center justify-around">
     <div class="flex flex-col items-start justify-start">
       <h1 class="text-left text-6xl font-bold">
         Hi!👋
