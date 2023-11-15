@@ -11,6 +11,7 @@ const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const selectVal: Ref<string> = ref(options.value[0])
 
+const isLoading: Ref<boolean> = ref(false)
 async function getTags() {
   getAllTag().then((res) => {
     tags.value = res.data.value?.data as string[]
@@ -25,21 +26,25 @@ const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Ar
 })
 
 async function getArticles() {
+  isLoading.value = true
   getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
     page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
     page.value.data.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
+    isLoading.value = false
   })
 }
 
 async function search() {
   if (searchVal.value !== '') {
+    isLoading.value = true
     searchArticle(searchVal.value, page.value.pageNumber, page.value.pageSize).then((res) => {
       page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
       page.value.data.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       })
+      isLoading.value = false
     })
   }
   else {
@@ -91,6 +96,7 @@ async function tagClick(tag: string) {
           <UInput
             id="search"
             v-model="searchVal"
+            :loading="isLoading"
             class="w-full"
             :autofocus="true"
             icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."

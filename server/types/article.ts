@@ -5,7 +5,8 @@ export interface Article {
   shortLink: string
   title: string
   description: string
-  cover: string
+  cover: string[]
+  stack: string[]
   category: string
   tags: string[]
   content: string

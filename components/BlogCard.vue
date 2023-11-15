@@ -12,7 +12,7 @@ const props = defineProps({
 <template>
   <div class="border border-gray-600 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default">
     <div class="relative">
-      <img :src="props.article.cover" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
+      <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">
         <UButton v-for="t in props.article.tags" :key="t" square label="Button" color="gray" size="2xs" class="m-1" :tag="t">
           {{ t }}

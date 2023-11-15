@@ -11,3 +11,7 @@ export async function searchArticle(keyword: string, pageNumber: number, pageSiz
 export async function getArticleByTag(tag: string, pageNumber: number, pageSize: number) {
   return await useHttp.post(`/api/v1/articles/tag/${tag}`, { pageNumber, pageSize })
 }
+
+export async function getArticleByCategory(category: string, pageNumber: number, pageSize: number) {
+  return await useHttp.post(`/api/v1/articles/category/${category}`, { pageNumber, pageSize })
+}

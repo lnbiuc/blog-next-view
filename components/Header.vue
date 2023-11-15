@@ -4,7 +4,7 @@
 
 <template>
   <div class="w-full">
-    <div class="h-[10px] w-full" style="background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #ff00ff);" />
+    <div class="h-[10px] w-full" style="background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff);" />
     <div class="flex flex-row items-center justify-center bg-[#0E1111]">
       <div class="w-[70%] flex justify-center">
         <ul class="flex flex-row py-2">
