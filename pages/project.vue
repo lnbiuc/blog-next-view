@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div>
-        project index
-    </div>
+  <div>
+    project index
+  </div>
 </template>

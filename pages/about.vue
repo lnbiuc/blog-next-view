@@ -3,7 +3,7 @@
 </script>
 
 <template>
-    <div>
-        about index
-    </div>
+  <div>
+    about index
+  </div>
 </template>
