@@ -10,18 +10,18 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="border border-gray-600 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default" @click="$router.push(`/article/${props.article.shortLink}`)">
+  <div class="border border-gray-300 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default dark:border-gray-600" @click="$router.push(`/article/${props.article.shortLink}`)">
     <div class="relative">
       <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">
-        <UButton v-for="t in props.article.tags" :key="t" square label="Button" color="gray" size="2xs" class="m-1" :tag="t">
+        <UButton v-for="t in props.article.tags" :key="t" square label="Button" color="white" size="2xs" class="m-1" :tag="t">
           {{ t }}
         </UButton>
       </div>
     </div>
 
     <div class="p-4 text-left">
-      <div class="text-md font-bold">
+      <div class="text-lg font-bold">
         {{ props.article.title }}
       </div>
       <div class="my-2 flex flex-row items-center">

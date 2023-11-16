@@ -14,6 +14,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@giscus/vue": "^2.3.0",
     "@nuxt/ui": "^2.10.0",
     "md-editor-v3": "^4.8.3"
   },

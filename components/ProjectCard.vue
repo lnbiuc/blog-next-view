@@ -7,25 +7,23 @@ const props = defineProps({
     required: true,
   },
 })
+
+function openNewTab(url: string) {
+  window.open(url, '_blank')
+}
 </script>
 
 <template>
-  <div class="flex flex-col justify-between border border-gray-600 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default">
+  <div class="flex flex-col justify-between border border-gray-300 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default dark:border-gray-600" @click="openNewTab(props.article.content)">
     <div class="p-4 text-left">
-      <div class="text-md font-bold">
-        <ULink
-          :to="props.article.content"
-          active-class="text-primary"
-          inactive-class="text-white hover:text-violet transition-colors duration-150"
-        >
-          {{ props.article.title }}
-        </ULink>
+      <div class="text-lg font-bold">
+        {{ props.article.title }}
       </div>
       <div class="mt-2">
         {{ props.article.description }}
       </div>
       <div>
-        <UBadge v-for="s in article.stack" :key="s" color="gray" variant="solid" class="my-1 mr-2">
+        <UBadge v-for="s in article.stack" :key="s" color="gray" variant="solid" class="my-2 mr-2">
           {{ s }}
         </UBadge>
       </div>

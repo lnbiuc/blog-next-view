@@ -105,7 +105,7 @@ async function tagClick(tag: string) {
         </div>
         <div class="my-4">
           <span class="mr-2 text-lg">Tags:</span>
-          <UButton v-for="t in tags" :key="t" size="2xs" class="m-1" :tag="t" @click="tagClick(t)">
+          <UButton v-for="t in tags" :key="t" color="white" size="2xs" class="m-1" :tag="t" @click="tagClick(t)">
             {{ t }}
           </UButton>
         </div>
