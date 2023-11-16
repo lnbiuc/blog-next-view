@@ -1,8 +1,8 @@
-export type BooleanString = '0' | '1';
+export type BooleanString = '0' | '1'
 
-export type InputPosition = 'top' | 'bottom';
+export type InputPosition = 'top' | 'bottom'
 
-export type Repo = `${string}/${string}`;
+export type Repo = `${string}/${string}`
 
 export type Mapping =
   | 'url'
@@ -10,9 +10,9 @@ export type Mapping =
   | 'og:title'
   | 'specific'
   | 'number'
-  | 'pathname';
+  | 'pathname'
 
-export type GenericString = string & Record<never, never>;
+export type GenericString = string & Record<never, never>
 
 export type Theme =
   | 'light'
@@ -30,7 +30,7 @@ export type Theme =
   | 'noborder_dark'
   | 'cobalt'
   | `https://${string}`
-  | GenericString;
+  | GenericString
 
 export type AvailableLanguage =
   | 'ar'
@@ -56,24 +56,24 @@ export type AvailableLanguage =
   | 'uk'
   | 'zh-CN'
   | 'zh-TW'
-  | GenericString;
+  | GenericString
 
-export type Loading = 'lazy' | 'eager';
+export type Loading = 'lazy' | 'eager'
 
 export interface GiscusProps {
-  id?: string;
-  host?: string;
-  repo: Repo;
-  repoId: string;
-  category?: string;
-  categoryId?: string;
-  mapping: Mapping;
-  term?: string;
-  theme?: Theme;
-  strict?: BooleanString;
-  reactionsEnabled?: BooleanString;
-  emitMetadata?: BooleanString;
-  inputPosition?: InputPosition;
-  lang?: AvailableLanguage;
-  loading?: Loading;
+  id?: string
+  host?: string
+  repo: Repo
+  repoId: string
+  category?: string
+  categoryId?: string
+  mapping: Mapping
+  term?: string
+  theme?: Theme
+  strict?: BooleanString
+  reactionsEnabled?: BooleanString
+  emitMetadata?: BooleanString
+  inputPosition?: InputPosition
+  lang?: AvailableLanguage
+  loading?: Loading
 }

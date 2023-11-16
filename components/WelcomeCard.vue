@@ -54,7 +54,7 @@ const link = [
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center hover:cursor-pointer">
-    <div class="i-carbon-arrow-down icon-down h-[40px] w-[40px]" />
+    <div class="icon-down i-carbon-arrow-down h-[40px] w-[40px]" />
   </div>
 </template>
 
