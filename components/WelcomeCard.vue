@@ -16,7 +16,7 @@ const link = [
     index: 3,
     name: 'Email',
     url: 'mailto:hi@lnbiuc.com',
-    icon: 'i-carbon-email',
+    icon: 'i-heroicons-envelope-solid',
   },
 ]
 </script>
@@ -34,12 +34,15 @@ const link = [
         A Web Developer 🖥. Code for Fun.
       </span>
       <div class="my-3 flex flex-row">
-        <MyButton name="Read the Blog" />
-        <MyButton name="About Me" />
+        <MyButton name="Read the Blog" @click="$router.push('/blog')" />
+        <MyButton name="About Me" @click="$router.push('/about')" />
       </div>
       <div class="flex flex-row">
         <a v-for="l in link" :key="l.index" class="mr-3 flex flex-row items-center justify-center open-tab" :href="l.url" target="_blank">
-          <div :class="l.icon" />
+          <UIcon
+            :name="l.icon"
+            size="lg"
+          />
           <span class="ml-1">
             {{ l.name }}
           </span>

@@ -15,3 +15,7 @@ export async function getArticleByTag(tag: string, pageNumber: number, pageSize:
 export async function getArticleByCategory(category: string, pageNumber: number, pageSize: number) {
   return await useHttp.post(`/api/v1/articles/category/${category}`, { pageNumber, pageSize })
 }
+
+export async function getArticleByShortLink(shortLink: string) {
+  return await useHttp.get(`/api/v1/articles/one/${shortLink}`)
+}

@@ -10,7 +10,7 @@ const props = defineProps({
 </script>
 
 <template>
-  <div class="border border-gray-600 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default">
+  <div class="border border-gray-600 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default" @click="$router.push(`/article/${props.article.shortLink}`)">
     <div class="relative">
       <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">
