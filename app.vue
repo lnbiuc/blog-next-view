@@ -29,7 +29,7 @@ html, body , #__nuxt{
 
 html.dark {
   background: #0E1111;
-  color: white;
+  color: #E6EDF3;
 }
 
 .main-bg {
