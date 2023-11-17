@@ -48,7 +48,7 @@ onMounted(() => {
   <NuxtLayout name="home">
     <div class="flex flex-col text-left">
       <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="max-h-[300px] w-full rounded-md object-cover">
-      <div class="my-3 text-3xl font-bold" @click="theme = theme === 'dark' ? 'light' : 'dark'">
+      <div class="my-3 text-3xl font-bold">
         {{ article?.title }}
       </div>
       <div class="mb-1">
@@ -87,7 +87,7 @@ onMounted(() => {
 </template>
 
 <style>
-.md-editor-dark {
+.md-editor-dark, .md-editor {
   --md-bk-color: transparent !important;
 }
 
