@@ -29,18 +29,16 @@ function getArticle() {
 }
 getArticle()
 
-const scrollElement = ref<HTMLElement>()
-
 const theme = ref<'dark' | 'light'>(color.preference === 'dark' ? 'dark' : 'light')
 
 watch(toRef(color).value, () => {
   theme.value = color.preference === 'dark' ? 'dark' : 'light'
 })
 
+let scrollElement: string | HTMLElement | undefined
+
 onMounted(() => {
-  scrollElement.value = document.documentElement
-  if (color.preference === 'system')
-    theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+  scrollElement = document.documentElement
 })
 </script>
 
@@ -65,7 +63,9 @@ onMounted(() => {
     <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
       <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" />
       <div class="catalog relative">
-        <MdCatalog :editor-id="id" :scroll-element="scrollElement" class="max-h-[100vh]" />
+        <ClientOnly>
+          <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
+        </ClientOnly>
       </div>
     </div>
     <MyGiscus
@@ -101,7 +101,6 @@ onMounted(() => {
 .catalog {
   position: sticky;
     top: 10px;
-    max-height: 100vh;
     overflow: auto;
 }
 </style>
