@@ -33,3 +33,15 @@ export interface ArticleWithContent {
   views: number
   likes: number
 }
+
+export interface ArticlePublishDto {
+  shortLink: string
+  title: string
+  description?: string
+  cover?: string[]
+  stack?: string[]
+  category: string
+  content: string
+  status: string
+  tags?: string[]
+}

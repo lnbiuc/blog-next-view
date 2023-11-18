@@ -14,9 +14,9 @@ const props = defineProps({
     <div class="relative">
       <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">
-        <UButton v-for="t in props.article.tags" :key="t" square label="Button" color="white" size="2xs" class="m-1" :tag="t">
+        <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="m-1 opacity-90" :tag="t">
           {{ t }}
-        </UButton>
+        </UBadge>
       </div>
     </div>
 

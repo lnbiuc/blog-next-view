@@ -18,7 +18,7 @@ async function getTags() {
   })
 }
 
-const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Article[] }>({
+const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
   pageNumber: 1,
   pageSize: 20,
   total: 0,
@@ -28,7 +28,7 @@ const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Ar
 async function getArticles() {
   isLoading.value = true
   getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+    page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
     page.value.data.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
@@ -40,7 +40,7 @@ async function search() {
   if (searchVal.value !== '') {
     isLoading.value = true
     searchArticle(searchVal.value, page.value.pageNumber, page.value.pageSize).then((res) => {
-      page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+      page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       page.value.data.sort((a, b) => {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       })
@@ -83,34 +83,36 @@ async function tagClick(tag: string) {
 </script>
 
 <template>
-  <NuxtLayout name="home">
-    <div class="flex flex-row">
-      <div class="w-full text-left">
-        <h1 class="text-5xl font-bold text-violet">
-          Blog
-        </h1>
-        <div class="py-4">
-          <span>Thoughts, mental models, and tutorials about front-end development.</span>
-        </div>
-        <div class="flex flex-row">
-          <UInput
-            id="search"
-            v-model="searchVal"
-            :loading="isLoading"
-            class="w-full"
-            :autofocus="true"
-            icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
-          />
-          <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
-        </div>
-        <div class="my-4">
-          <span class="mr-2 text-lg">Tags:</span>
-          <UButton v-for="t in tags" :key="t" color="white" size="2xs" class="m-1" :tag="t" @click="tagClick(t)">
-            {{ t }}
-          </UButton>
+  <NuxtLayout name="default">
+    <NuxtLayout name="home">
+      <div class="flex flex-row">
+        <div class="w-full text-left">
+          <h1 class="text-5xl font-bold text-violet">
+            Blog
+          </h1>
+          <div class="py-4">
+            <span>Thoughts, mental models, and tutorials about front-end development.</span>
+          </div>
+          <div class="flex flex-row">
+            <UInput
+              id="search"
+              v-model="searchVal"
+              :loading="isLoading"
+              class="w-full"
+              :autofocus="true"
+              icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
+            />
+            <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
+          </div>
+          <div class="my-4">
+            <span class="mr-2 text-lg">Tags:</span>
+            <UBadge v-for="t in tags" :key="t" size="md" color="gray" variant="solid" class="m-1 cursor-pointer transition-transform duration-150 hover:scale-108" @click="tagClick(t)">
+              {{ t }}
+            </UBadge>
+          </div>
         </div>
       </div>
-    </div>
-    <BlogCards :articles="page.data" />
+      <BlogCards :articles="page.data" />
+    </NuxtLayout>
   </NuxtLayout>
 </template>

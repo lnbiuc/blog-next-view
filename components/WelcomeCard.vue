@@ -22,7 +22,7 @@ const link = [
 </script>
 
 <template>
-  <div class="m-auto h-[86vh] max-w-[1400px] w-[100%] flex flex-row items-center justify-around">
+  <div class="m-auto h-[80vh] max-w-[1400px] w-[100%] flex flex-row items-center justify-around">
     <div class="flex flex-col items-start justify-start">
       <h1 class="text-left text-6xl font-bold">
         Hi!👋
@@ -34,8 +34,12 @@ const link = [
         A Web Developer 🖥. Code for Fun.
       </span>
       <div class="my-3 flex flex-row">
-        <MyButton name="Read the Blog" @click="$router.push('/blog')" />
-        <MyButton name="About Me" @click="$router.push('/about')" />
+        <MyButton @click="$router.push('/blog')">
+          Read the Blog
+        </MyButton>
+        <MyButton @click="$router.push('/about')">
+          About Me
+        </MyButton>
       </div>
       <div class="flex flex-row">
         <a v-for="l in link" :key="l.index" class="mr-3 flex flex-row items-center justify-center open-tab" :href="l.url" target="_blank">

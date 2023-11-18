@@ -17,6 +17,8 @@ export default defineNuxtConfig({
   },
   routeRules: {
     '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
+    // '/api/**': { proxy: { to: 'http://192.168.31.231:6060/api/**' } },
+
   },
 
   experimental: {
