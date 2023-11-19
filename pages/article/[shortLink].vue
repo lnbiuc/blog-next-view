@@ -72,7 +72,7 @@ onMounted(() => {
         </div>
         <MyGiscus
           repo="lnbiuc/blog-next-view"
-          repo-id="R_kgDOKsLYcQ="
+          repo-id="R_kgDOKsLYcQ"
           category="Announcements"
           category-id="DIC_kwDOKsLYcc4CbAW9"
           mapping="pathname"
