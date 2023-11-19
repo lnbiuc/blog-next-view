@@ -4,7 +4,6 @@
   "packageManager": "pnpm@8.9.2",
   "scripts": {
     "build": "nuxi build",
-    "dev:pwa": "VITE_PLUGIN_PWA=true nuxi dev",
     "dev": "nuxi dev",
     "generate": "nuxi generate",
     "postinstall": "nuxi prepare",
@@ -26,7 +25,6 @@
     "@pinia/nuxt": "^0.5.1",
     "@unocss/eslint-config": "^0.56.5",
     "@unocss/nuxt": "^0.56.5",
-    "@vite-pwa/nuxt": "^0.1.1",
     "@vueuse/nuxt": "^10.5.0",
     "consola": "^3.2.3",
     "eslint": "^8.51.0",

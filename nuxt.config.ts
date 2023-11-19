@@ -1,4 +1,3 @@
-import { pwa } from './config/pwa'
 import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({
@@ -7,7 +6,6 @@ export default defineNuxtConfig({
     '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
-    '@vite-pwa/nuxt',
     '@nuxt/ui',
   ],
   ui: {
@@ -15,6 +13,7 @@ export default defineNuxtConfig({
     primary: 'violet',
     gray: 'cool',
   },
+
   routeRules: {
     '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
     // '/api/**': { proxy: { to: 'http://192.168.31.231:6060/api/**' } },
@@ -67,7 +66,6 @@ export default defineNuxtConfig({
     },
   },
 
-  pwa,
 
   devtools: {
     enabled: true,
