@@ -3,8 +3,8 @@
 </script>
 
 <template>
-  <div class="w-full">
-    <div class="h-[10px] w-full" style="background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff);" />
+  <div class="z-50 w-full">
+    <div class="wave-animation h-[10px] w-full" />
     <div class="flex flex-row items-center justify-center">
       <div class="w-[70%] flex justify-center">
         <ul class="flex flex-row py-2">
@@ -28,3 +28,19 @@
     </div>
   </div>
 </template>
+
+<style scoped>
+.wave-animation {
+  background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff);
+  animation: wave 1s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 100% 0;
+  }
+}
+</style>

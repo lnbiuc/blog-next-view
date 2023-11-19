@@ -13,13 +13,15 @@ watch(toRef(color).value, () => {
 </script>
 
 <template>
-  <NuxtLayout name="default">
-    <NuxtLayout name="home">
-      <div class="flex flex-row text-left">
-        <MdPreview editor-id="about-me" :model-value="md" :theme="theme" />
-      </div>
+  <div>
+    <NuxtLayout name="default">
+      <NuxtLayout name="home">
+        <div class="flex flex-row text-left">
+          <MdPreview editor-id="about-me" :model-value="md" :theme="theme" />
+        </div>
+      </NuxtLayout>
     </NuxtLayout>
-  </NuxtLayout>
+  </div>
 </template>
 
 <style scoped>

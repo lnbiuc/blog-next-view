@@ -18,19 +18,21 @@ getArticleByCategory('PROJECT', page.value.pageNumber, page.value.pageSize).then
 </script>
 
 <template>
-  <NuxtLayout name="default">
-    <NuxtLayout name="home">
-      <div class="flex flex-row">
-        <div class="w-full text-left">
-          <h1 class="text-5xl font-bold text-violet">
-            Project
-          </h1>
-          <div class="py-4">
-            <span>Showcase of my works on full-stack development.</span>
+  <div>
+    <NuxtLayout name="default">
+      <NuxtLayout name="home">
+        <div class="flex flex-row">
+          <div class="w-full text-left">
+            <h1 class="text-5xl font-bold text-violet">
+              Project
+            </h1>
+            <div class="py-4">
+              <span>Showcase of my works on full-stack development.</span>
+            </div>
           </div>
         </div>
-      </div>
-      <ProjectCards :articles="page.data" />
+        <ProjectCards :articles="page.data" />
+      </NuxtLayout>
     </NuxtLayout>
-  </NuxtLayout>
+  </div>
 </template>

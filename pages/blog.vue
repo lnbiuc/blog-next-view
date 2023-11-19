@@ -83,36 +83,38 @@ async function tagClick(tag: string) {
 </script>
 
 <template>
-  <NuxtLayout name="default">
-    <NuxtLayout name="home">
-      <div class="flex flex-row">
-        <div class="w-full text-left">
-          <h1 class="text-5xl font-bold text-violet">
-            Blog
-          </h1>
-          <div class="py-4">
-            <span>Thoughts, mental models, and tutorials about front-end development.</span>
-          </div>
-          <div class="flex flex-row">
-            <UInput
-              id="search"
-              v-model="searchVal"
-              :loading="isLoading"
-              class="w-full"
-              :autofocus="true"
-              icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
-            />
-            <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
-          </div>
-          <div class="my-4">
-            <span class="mr-2 text-lg">Tags:</span>
-            <UBadge v-for="t in tags" :key="t" size="md" color="gray" variant="solid" class="m-1 cursor-pointer transition-transform duration-150 hover:scale-108" @click="tagClick(t)">
-              {{ t }}
-            </UBadge>
+  <div>
+    <NuxtLayout name="default">
+      <NuxtLayout name="home">
+        <div class="flex flex-row">
+          <div class="w-full text-left">
+            <h1 class="text-5xl font-bold text-violet">
+              Blog
+            </h1>
+            <div class="py-4">
+              <span>Thoughts, mental models, and tutorials about front-end development.</span>
+            </div>
+            <div class="flex flex-row">
+              <UInput
+                id="search"
+                v-model="searchVal"
+                :loading="isLoading"
+                class="w-full"
+                :autofocus="true"
+                icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
+              />
+              <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
+            </div>
+            <div class="my-4">
+              <span class="mr-2 text-lg">Tags:</span>
+              <UBadge v-for="t in tags" :key="t" size="md" color="gray" variant="solid" class="m-1 cursor-pointer transition-transform duration-150 hover:scale-108" @click="tagClick(t)">
+                {{ t }}
+              </UBadge>
+            </div>
           </div>
         </div>
-      </div>
-      <BlogCards :articles="page.data" />
+        <BlogCards :articles="page.data" />
+      </NuxtLayout>
     </NuxtLayout>
-  </NuxtLayout>
+  </div>
 </template>

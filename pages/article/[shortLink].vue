@@ -43,49 +43,51 @@ onMounted(() => {
 </script>
 
 <template>
-  <NuxtLayout name="default">
-    <NuxtLayout name="home">
-      <div class="flex flex-col text-left">
-        <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="max-h-[300px] w-full rounded-lg object-cover">
-        <div class="my-6 text-4xl font-bold">
-          {{ article?.title }}
+  <div>
+    <NuxtLayout name="default">
+      <NuxtLayout name="home">
+        <div class="flex flex-col text-left">
+          <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="max-h-[300px] w-full rounded-lg object-cover">
+          <div class="my-6 text-4xl font-bold">
+            {{ article?.title }}
+          </div>
+          <div class="mb-1">
+            {{ article?.description }}
+          </div>
+          <div>
+            Last updated: {{ article?.updatedAt }}
+          </div>
+          <div class="mt-4 flex flex-row items-center justify-start text-violet">
+            <span>{{ article?.views }} views</span>
+          </div>
+          <UDivider class="my-6" />
         </div>
-        <div class="mb-1">
-          {{ article?.description }}
+        <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
+          <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" />
+          <div class="catalog relative">
+            <ClientOnly>
+              <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
+            </ClientOnly>
+          </div>
         </div>
-        <div>
-          Last updated: {{ article?.updatedAt }}
-        </div>
-        <div class="mt-4 flex flex-row items-center justify-start text-violet">
-          <span>{{ article?.views }} views</span>
-        </div>
-        <UDivider class="my-6" />
-      </div>
-      <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-        <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" />
-        <div class="catalog relative">
-          <ClientOnly>
-            <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
-          </ClientOnly>
-        </div>
-      </div>
-      <MyGiscus
-        repo="lnbiuc/blog-next-view"
-        repo-id="R_kgDOKsLYcQ="
-        category="Announcements"
-        category-id="DIC_kwDOKsLYcc4CbAW9"
-        mapping="pathname"
-        term="Welcome to @giscus/vue component!"
-        strict="1"
-        reactions-enabled="1"
-        emit-metadata="0"
-        input-position="top"
-        :theme="color.preference"
-        lang="en"
-        crossorigin="anonymous"
-      />
+        <MyGiscus
+          repo="lnbiuc/blog-next-view"
+          repo-id="R_kgDOKsLYcQ="
+          category="Announcements"
+          category-id="DIC_kwDOKsLYcc4CbAW9"
+          mapping="pathname"
+          term="Welcome to @giscus/vue component!"
+          strict="1"
+          reactions-enabled="1"
+          emit-metadata="0"
+          input-position="top"
+          :theme="color.preference"
+          lang="en"
+          crossorigin="anonymous"
+        />
+      </NuxtLayout>
     </NuxtLayout>
-  </NuxtLayout>
+  </div>
 </template>
 
 <style scoped>
@@ -98,13 +100,5 @@ onMounted(() => {
 }
 .md-editor-dark, .md-editor {
   --md-bk-color: transparent !important;
-}
-
-.md-editor-preview-wrapper {
-  padding: 0 !important;
-}
-
-.md-editor-catalog-link span:hover, .md-editor-catalog-active>span {
-  color: #A78BFA !important;
 }
 </style>
