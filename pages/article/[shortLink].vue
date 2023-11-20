@@ -29,16 +29,18 @@ function getArticle() {
 }
 getArticle()
 
-const theme = ref<'dark' | 'light'>(color.preference === 'dark' ? 'dark' : 'light')
-
-watch(toRef(color).value, () => {
-  theme.value = color.preference === 'dark' ? 'dark' : 'light'
-})
+const theme = ref<'light' | 'dark'>()
 
 let scrollElement: string | HTMLElement | undefined
 
+watchEffect(() => {
+  theme.value = color.value === 'light' ? 'light' : 'dark'
+})
+
 onMounted(() => {
   scrollElement = document.documentElement
+  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
+  theme.value = mediaQueryList.matches ? 'dark' : 'light'
 })
 </script>
 
@@ -46,6 +48,7 @@ onMounted(() => {
   <div>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
+        {{ theme }}-{{ color.value }}
         <div class="flex flex-col text-left">
           <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="max-h-[300px] w-full rounded-lg object-cover">
           <div class="my-6 text-4xl font-bold">
@@ -63,7 +66,7 @@ onMounted(() => {
           <UDivider class="my-6" />
         </div>
         <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-          <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" />
+          <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
           <div class="catalog relative">
             <ClientOnly>
               <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
@@ -71,6 +74,7 @@ onMounted(() => {
           </div>
         </div>
         <MyGiscus
+          class="mt-4"
           repo="lnbiuc/blog-next-view"
           repo-id="R_kgDOKsLYcQ"
           category="Announcements"
@@ -100,5 +104,9 @@ onMounted(() => {
 }
 .md-editor-dark, .md-editor {
   --md-bk-color: transparent !important;
+}
+
+.md-editor-catalog-dark {
+  color: #C9D1D9 !important;
 }
 </style>
