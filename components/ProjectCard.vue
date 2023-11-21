@@ -23,7 +23,7 @@ function openNewTab(url: string) {
         {{ props.article.description }}
       </div>
       <div>
-        <UBadge v-for="s in article.stack" :key="s" color="gray" variant="solid" class="my-2 mr-2">
+        <UBadge v-for="s in article.tags" :key="s" color="gray" variant="solid" class="my-2 mr-2">
           {{ s }}
         </UBadge>
       </div>

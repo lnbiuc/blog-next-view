@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Article } from '~/server/types/article'
+import { formatTime } from '~/composables/formatTime'
 
 const props = defineProps({
   article: {
@@ -31,7 +32,7 @@ const props = defineProps({
         </div>
       </div>
       <div class="mt-1 font-bold">
-        {{ props.article.createdAt.substring(0, 10) }}
+        {{ formatTime(props.article.createdAt) }}
       </div>
       <div class="mt-2">
         {{ props.article.description }}

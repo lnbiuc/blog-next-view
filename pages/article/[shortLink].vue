@@ -6,6 +6,7 @@ import { getArticleByShortLink } from '../../server/api/article'
 import type { ArticleWithContent } from '../../server/types/article'
 import 'md-editor-v3/lib/preview.css'
 import MyGiscus from '../../components/Giscus/MyGiscus.vue'
+import { formatTime } from '~/composables/formatTime'
 
 interface RouteParams {
   shortLink: string
@@ -24,6 +25,7 @@ function getArticle() {
   if (!shortLink)
     return
   getArticleByShortLink(shortLink).then((res) => {
+    // @ts-expect-error uncheck
     article.value = res.data.value?.data as ArticleWithContent
   })
 }
@@ -48,9 +50,8 @@ onMounted(() => {
   <div>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
-        {{ theme }}-{{ color.value }}
         <div class="flex flex-col text-left">
-          <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="max-h-[300px] w-full rounded-lg object-cover">
+          <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="aspect-[2.5/1] w-full rounded-lg object-cover">
           <div class="my-6 text-4xl font-bold">
             {{ article?.title }}
           </div>
@@ -58,7 +59,7 @@ onMounted(() => {
             {{ article?.description }}
           </div>
           <div>
-            Last updated: {{ article?.updatedAt }}
+            Last updated: {{ formatTime(article?.updatedAt) }}
           </div>
           <div class="mt-4 flex flex-row items-center justify-start text-violet">
             <span>{{ article?.views }} views</span>
@@ -66,7 +67,7 @@ onMounted(() => {
           <UDivider class="my-6" />
         </div>
         <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-          <MdPreview :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
+          <MdPreview class="preview" :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
           <div class="catalog relative">
             <ClientOnly>
               <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
@@ -74,7 +75,7 @@ onMounted(() => {
           </div>
         </div>
         <MyGiscus
-          class="mt-4"
+          class="mt-4 py-4"
           repo="lnbiuc/blog-next-view"
           repo-id="R_kgDOKsLYcQ"
           category="Announcements"
@@ -106,7 +107,11 @@ onMounted(() => {
   --md-bk-color: transparent !important;
 }
 
-.md-editor-catalog-dark {
-  color: #C9D1D9 !important;
+.preview >>> ul {
+  list-style-type: disc; /* 默认值，圆点 */
+}
+
+.preview >>> ol {
+  list-style-type: decimal; /* 默认值，数字 */
 }
 </style>
