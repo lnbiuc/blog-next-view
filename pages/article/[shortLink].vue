@@ -5,7 +5,7 @@ import { MdCatalog, MdPreview } from 'md-editor-v3'
 import { getArticleByShortLink } from '../../server/api/article'
 import type { ArticleWithContent } from '../../server/types/article'
 import 'md-editor-v3/lib/preview.css'
-import MyGiscus from '../../components/Giscus/MyGiscus.vue'
+import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 
 interface RouteParams {
