@@ -14,6 +14,9 @@
           <li class="px-4 py-2 transition-transform duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/blog')">
             Blog
           </li>
+          <li class="px-4 py-2 transition-transform duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/shorts')">
+            Shorts
+          </li>
           <li class="px-4 py-2 transition-transform duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/project')">
             Project
           </li>

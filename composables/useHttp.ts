@@ -8,7 +8,7 @@ export interface ResOptions<T> {
   timestamp?: number
 }
 
-type UrlType = string | Request | Ref<string | Request> | (() => string | Request)
+type UrlType = string
 
 export type HttpOption<T> = UseFetchOptions<ResOptions<T>>
 

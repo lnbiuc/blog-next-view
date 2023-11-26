@@ -2,7 +2,7 @@
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory } from '~/server/api/article'
 
-const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Article[] }>({
   pageNumber: 1,
   pageSize: 20,
   total: 0,
@@ -10,7 +10,7 @@ const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Ar
 })
 
 getArticleByCategory('PROJECT', page.value.pageNumber, page.value.pageSize).then((res) => {
-  page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+  page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
   page.value.data.sort((a, b) => {
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })

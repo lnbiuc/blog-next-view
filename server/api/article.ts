@@ -19,3 +19,7 @@ export async function getArticleByCategory(category: string, pageNumber: number,
 export async function getArticleByShortLink(shortLink: string) {
   return await useHttp.get(`/api/v1/articles/one/${shortLink}`)
 }
+
+export async function searchShorts(keyword: string, pageNumber: number, pageSize: number) {
+  return await useHttp.post(`/api/v1/articles/search/shorts/${keyword}`, { pageNumber, pageSize })
+}

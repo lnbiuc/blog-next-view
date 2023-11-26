@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Article } from '~/server/types/article'
-import { getAllArticle, searchArticle } from '~/server/api/article'
+import { getArticleByCategory, searchShorts } from '~/server/api/article'
 
 const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Article[] }>({
   pageNumber: 1,
@@ -13,9 +13,8 @@ const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const isLoading = ref<boolean>(false)
 
-async function getArticles() {
-  isLoading.value = true
-  getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
+async function getShorts() {
+  getArticleByCategory('SHORTS', page.value.pageNumber, page.value.pageSize).then((res) => {
     page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
     page.value.data.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
@@ -24,25 +23,22 @@ async function getArticles() {
   })
 }
 
-getArticles()
+getShorts()
 
 async function handleParamsChange(searchVal: string) {
   if (searchVal === 'ALL') {
-    getArticles()
+    getShorts()
     return
   }
   if (searchVal !== '') {
     isLoading.value = true
-    searchArticle(searchVal, page.value.pageNumber, page.value.pageSize).then((res) => {
+    searchShorts(searchVal, page.value.pageNumber, page.value.pageSize).then((res) => {
       page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
-      page.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
       isLoading.value = false
     })
   }
   else {
-    getArticles()
+    getShorts()
   }
 }
 
@@ -67,15 +63,16 @@ async function handleSortByChange(selectVal: string) {
         <div class="flex flex-row">
           <div class="w-full text-left">
             <h1 class="text-5xl font-bold text-violet">
-              Blog
+              Shorts
             </h1>
             <div class="py-4">
-              <span>Thoughts, mental models, and tutorials about front-end development.</span>
+              <span>A collection of short articles and thoughts.
+              </span>
             </div>
-            <Search category="ARTICLE" :is-loading="isLoading" @params-change="handleParamsChange" @sort-by-change="handleSortByChange" />
+            <Search category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange" @sort-by-change="handleSortByChange" />
           </div>
         </div>
-        <BlogCards :articles="page.data" />
+        <ShortCards :articles="page.data" />
       </NuxtLayout>
     </NuxtLayout>
   </div>

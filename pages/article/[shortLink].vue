@@ -25,7 +25,6 @@ function getArticle() {
   if (!shortLink)
     return
   getArticleByShortLink(shortLink).then((res) => {
-    // @ts-expect-error uncheck
     article.value = res.data.value?.data as ArticleWithContent
   })
 }
