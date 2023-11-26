@@ -1,5 +1,7 @@
 # 使用Node.js作为基础镜像
-FROM node:16
+ARG NODE_VERSION=18.14.2
+
+FROM node:${NODE_VERSION}-slim as base
 
 # 设置工作目录
 WORKDIR /app
