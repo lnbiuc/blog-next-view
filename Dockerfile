@@ -10,6 +10,9 @@ WORKDIR /app
 COPY . .
 
 # 安装依赖
+RUN npm install -g npm@10.2.4
+
+# 安装依赖
 RUN npm install
 
 # 构建项目
