@@ -51,4 +51,4 @@ jobs:
             docker pull lnbiuc/blog-next-view:latest
             docker stop blog-next-view
             docker rm blog-next-view
-            docker run -d -p 3000:3000 --name blog-next-view --restart always -m 512m lnbiuc/blog-next-view:latest
+            docker run -d -p 3000:3000 --name blog-next-view --restart always -m 512m --network docker-net lnbiuc/blog-next-view:latest
