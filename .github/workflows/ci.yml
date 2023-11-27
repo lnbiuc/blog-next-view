@@ -52,3 +52,10 @@ jobs:
             docker stop blog-next-view
             docker rm blog-next-view
             docker run -d -p 3000:3000 --name blog-next-view --restart always -m 512m --network docker-net lnbiuc/blog-next-view:latest
+      - name: Tencent CDN
+        uses: keithnull/tencent-cloud-cdn-purge-cache@v1.0
+        env:
+          SECRET_ID: ${{ secrets.SECRET_ID}}
+          SECRET_KEY: ${{ secrets.SECRET_KEY }}
+          PATHS: "https://vio.vin/"
+          FLUSH_TYPE: "flush"
