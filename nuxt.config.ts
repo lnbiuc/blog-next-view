@@ -8,7 +8,23 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/ui',
+    '@nuxtseo/module',
   ],
+
+  site: {
+    url: 'https://vio.vin',
+    name: 'Violet\'s Blog',
+    description: 'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
+    defaultLocale: 'en',
+    identity: {
+      type: 'Person',
+    },
+    twitter: '@ZZSLL_53387',
+    github: 'lnbiuc',
+    email: 'hi@lnbiuc.com',
+    trailingSlash: true,
+  },
+
   ui: {
     // @ts-expect-error missing types
     primary: 'violet',

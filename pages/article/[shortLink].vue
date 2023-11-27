@@ -45,59 +45,6 @@ onMounted(() => {
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
-
-useHead({
-  title: article.value?.title,
-  meta: [
-    {
-      hid: 'description',
-      name: 'description',
-      content: article.value?.description,
-    },
-    {
-      hid: 'keywords',
-      name: 'keywords',
-      content: article.value?.tags.join(','),
-    },
-    // twitter
-    {
-      hid: 'twitter:title',
-      name: 'twitter:title',
-      content: article.value?.title,
-    },
-    {
-      hid: 'twitter:description',
-      name: 'twitter:description',
-      content: article.value?.description,
-    },
-    {
-      hid: 'twitter:image',
-      name: 'twitter:image',
-      content: article.value?.cover[0],
-    },
-    // og
-    {
-      hid: 'og:title',
-      property: 'og:title',
-      content: article.value?.title,
-    },
-    {
-      hid: 'og:description',
-      property: 'og:description',
-      content: article.value?.description,
-    },
-    {
-      hid: 'og:image',
-      property: 'og:image',
-      content: article.value?.cover[0],
-    },
-    {
-      hid: 'og:url',
-      property: 'og:url',
-      content: `https://lnbiuc.com/article/${article.value?.shortLink}`,
-    },
-  ],
-})
 </script>
 
 <template>
