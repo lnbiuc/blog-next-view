@@ -43,6 +43,61 @@ onMounted(() => {
   const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
   theme.value = mediaQueryList.matches ? 'dark' : 'light'
 })
+
+const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
+
+useHead({
+  title: article.value?.title,
+  meta: [
+    {
+      hid: 'description',
+      name: 'description',
+      content: article.value?.description,
+    },
+    {
+      hid: 'keywords',
+      name: 'keywords',
+      content: article.value?.tags.join(','),
+    },
+    // twitter
+    {
+      hid: 'twitter:title',
+      name: 'twitter:title',
+      content: article.value?.title,
+    },
+    {
+      hid: 'twitter:description',
+      name: 'twitter:description',
+      content: article.value?.description,
+    },
+    {
+      hid: 'twitter:image',
+      name: 'twitter:image',
+      content: article.value?.cover[0],
+    },
+    // og
+    {
+      hid: 'og:title',
+      property: 'og:title',
+      content: article.value?.title,
+    },
+    {
+      hid: 'og:description',
+      property: 'og:description',
+      content: article.value?.description,
+    },
+    {
+      hid: 'og:image',
+      property: 'og:image',
+      content: article.value?.cover[0],
+    },
+    {
+      hid: 'og:url',
+      property: 'og:url',
+      content: `https://lnbiuc.com/article/${article.value?.shortLink}`,
+    },
+  ],
+})
 </script>
 
 <template>
@@ -57,16 +112,16 @@ onMounted(() => {
           <div class="mb-1">
             {{ article?.description }}
           </div>
-          <div>
-            Last updated: {{ formatTime(article?.updatedAt) }}
-          </div>
           <div class="mt-4 flex flex-row items-center justify-start text-violet">
-            <span>{{ article?.views }} views</span>
+            <div class="i-carbon-view mr-2" />
+            <div>{{ article?.views }} views</div>
+            <div class="i-carbon-alarm mx-2 scale-110" />
+            <div>{{ formatTime(article?.updatedAt) }}</div>
           </div>
           <UDivider class="my-6" />
         </div>
         <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-          <MdPreview class="preview" :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
+          <MdPreview :md-heading-id="mdHeadingId" class="preview" :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
           <div class="catalog relative">
             <ClientOnly>
               <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
