@@ -1,5 +1,11 @@
 <script setup lang="ts">
 const router = useRouter()
+
+onMounted(() => {
+  setTimeout(() => {
+    router.back()
+  }, 3000)
+})
 </script>
 
 <template>

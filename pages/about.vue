@@ -11,6 +11,10 @@ const theme = ref<'dark' | 'light'>(color.preference === 'dark' ? 'dark' : 'ligh
 watch(toRef(color).value, () => {
   theme.value = color.preference === 'dark' ? 'dark' : 'light'
 })
+
+useHead({
+  title: 'About',
+})
 </script>
 
 <template>
