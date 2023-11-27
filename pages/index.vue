@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const online = useOnline()
+
+useHead({
+  title: 'Home',
+})
 </script>
 
 <template>

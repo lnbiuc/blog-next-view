@@ -1,5 +1,5 @@
 <template>
-  <div text="xs gray4" m-5 p-5 flex="~ gap3" justify-center>
+  <div text="xs gray4" flex="~ gap3" m-5 justify-center p-5 class="opacity-20">
     <!-- <NuxtLink i-carbon-campsite to="/" />
     <a i-carbon-logo-github href="https://github.com/lnbiuc/blog-next-view" target="_blank" /> -->
     <span>Copyright © 2023</span>

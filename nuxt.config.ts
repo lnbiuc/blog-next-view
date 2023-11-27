@@ -13,7 +13,7 @@ export default defineNuxtConfig({
 
   site: {
     url: 'https://vio.vin',
-    name: 'Violet\'s Blog',
+    name: '薇尔薇',
     description: 'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
     defaultLocale: 'en',
     identity: {

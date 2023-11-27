@@ -58,6 +58,10 @@ async function handleSortByChange(selectVal: string) {
     })
   }
 }
+
+useHead({
+  title: 'Blogs',
+})
 </script>
 
 <template>

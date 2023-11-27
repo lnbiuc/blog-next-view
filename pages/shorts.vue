@@ -54,6 +54,10 @@ async function handleSortByChange(selectVal: string) {
     })
   }
 }
+
+useHead({
+  title: 'Shorts',
+})
 </script>
 
 <template>

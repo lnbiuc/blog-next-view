@@ -26,6 +26,66 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
+    useHead({
+      title: article.value?.title,
+      meta: [
+        {
+          hid: 'description',
+          name: 'description',
+          content: article.value?.description,
+        },
+        {
+          hid: 'keywords',
+          name: 'keywords',
+          content: article.value?.tags?.join(',') ?? '',
+        },
+        {
+          hid: 'og:title',
+          property: 'og:title',
+          content: article.value?.title,
+        },
+        {
+          hid: 'og:description',
+          property: 'og:description',
+          content: article.value?.description,
+        },
+        {
+          hid: 'og:image',
+          property: 'og:image',
+          content: article.value?.cover[0],
+        },
+        {
+          hid: 'og:url',
+          property: 'og:url',
+          content: `https://vio.vin/article/${article.value?.shortLink}`,
+        },
+        {
+          hid: 'og:site_name',
+          property: 'og:site_name',
+          content: 'Violet',
+        },
+        {
+          hid: 'og:type',
+          property: 'og:type',
+          content: 'article',
+        },
+        {
+          hid: 'twitter:card',
+          name: 'twitter:card',
+          content: 'summary',
+        },
+        {
+          hid: 'twitter:title',
+          name: 'twitter:title',
+          content: article.value?.title,
+        },
+        {
+          hid: 'twitter:description',
+          name: 'twitter:description',
+          content: article.value?.description,
+        },
+      ],
+    })
   })
 }
 getArticle()
@@ -68,10 +128,10 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
           <UDivider class="my-6" />
         </div>
         <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-          <MdPreview :md-heading-id="mdHeadingId" class="preview" :editor-id="id" :model-value="article?.content" :theme="theme" :show-code-row-number="true" preview-theme="github" />
+          <MdPreview :theme="theme" :md-heading-id="mdHeadingId" class="preview" :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
           <div class="catalog relative">
             <ClientOnly>
-              <MdCatalog :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
+              <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
             </ClientOnly>
           </div>
         </div>

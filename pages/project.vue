@@ -15,6 +15,10 @@ getArticleByCategory('PROJECT', page.value.pageNumber, page.value.pageSize).then
     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
   })
 })
+
+useHead({
+  title: 'Project',
+})
 </script>
 
 <template>
