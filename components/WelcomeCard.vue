@@ -60,7 +60,7 @@ const link = [
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center hover:cursor-pointer">
-    <div class="icon-down i-carbon-arrow-down h-[40px] w-[40px]" />
+    <div class="icon-down i-carbon-arrow-down fade-in h-[40px] w-[40px]" />
   </div>
 </template>
 
@@ -100,5 +100,15 @@ const link = [
   .hidden {
     display: none;
   }
+}
+
+.fade-in {
+  box-shadow:
+  2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+  6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+  12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+  22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+  41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+  100px 100px 80px rgba(0, 0, 0, 0.07);
 }
 </style>

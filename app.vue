@@ -52,4 +52,15 @@ html.dark {
   opacity: 0;
   filter: blur(1rem);
 }
+
+.header-transition-enter-active,
+.header-transition-leave-active {
+  transition: all 1000ms;
+}
+
+.header-transition-enter,
+.header-transition-leave-to {
+  opacity: 0;
+  transform: translateY(-100%);
+}
 </style>
