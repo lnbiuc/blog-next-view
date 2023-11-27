@@ -1,9 +1,20 @@
 <script setup lang="ts">
-
+const props = defineProps({
+  fixed: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  up: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
 </script>
 
 <template>
-  <div class="z-50 w-full">
+  <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="my-head z-50 w-full" :class="{ 'animate-enter-up': props.up, 'animate-enter-down': !props.up }">
     <div class="wave-animation h-[10px] w-full" />
     <div class="flex flex-row items-center justify-center">
       <div class="w-[70%] flex justify-center">
@@ -30,6 +41,7 @@
       </div>
     </div>
   </div>
+  <div v-if="props.fixed" class="h-[60px]" />
 </template>
 
 <style scoped>
@@ -45,5 +57,26 @@
   100% {
     background-position: 100% 0;
   }
+}
+
+.my-head {
+  border-bottom: 1px solid hsla(0,0%,73%,.2);
+  backdrop-filter: saturate(180%) blur(20px);
+  /* 初始状态 */
+  transform: translateY(-100%);
+  transition: all 1s ease-in-out;
+  opacity: 0;
+}
+
+.animate-enter-up {
+  /* 从上方往下划出的出现动画 */
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.animate-enter-down {
+  /* 从下方向上划出的消失动画 */
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
