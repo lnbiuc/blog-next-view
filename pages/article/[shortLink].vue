@@ -26,7 +26,7 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-    useSeoMeta({
+    useHead({
       title: article.value?.title || 'Violet\'s Blog',
       description: article.value?.description || 'A blog for sharing knowledge',
       ogTitle: article.value?.title || 'Violet\'s Blog',

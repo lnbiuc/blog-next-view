@@ -23,6 +23,10 @@ export default defineNuxtConfig({
     github: 'lnbiuc',
     email: 'hi@lnbiuc.com',
     trailingSlash: true,
+    twitterCard: 'summary_large_image',
+    twitterSite: '@ZZSLL_53387',
+    twitterCreator: '@ZZSLL_53387',
+    twitterImage: 'https://vio.vin/favicon.ico',
   },
 
   ui: {
