@@ -3,7 +3,7 @@
   "workbench.colorTheme": "Darcula",
   "workbench.editor.tabCloseButton": "right",
   "workbench.fontAliasing": "antialiased",
-  "workbench.iconTheme": "file-icons",
+  "workbench.iconTheme": "material-icon-theme",
   "workbench.list.smoothScrolling": true,
   "workbench.preferredDarkColorTheme": "Vitesse Dark",
   "workbench.preferredLightColorTheme": "Vitesse Light",
@@ -12,7 +12,7 @@
   "workbench.startupEditor": "newUntitledFile",
   "workbench.tree.expandMode": "singleClick",
   "workbench.tree.indent": 10,
-  "editor.fontFamily": "Hack Nerd Font Mono, monospace",
+  "editor.fontFamily": "Input mono, monospace",
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss06', 'zero'",
 
   // Editor

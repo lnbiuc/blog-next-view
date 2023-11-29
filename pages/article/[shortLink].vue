@@ -26,17 +26,6 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-    useSeoMeta({
-      title: article.value?.title || 'Violet\'s Blog',
-      description: article.value?.description || 'A blog for sharing knowledge',
-      ogTitle: article.value?.title || 'Violet\'s Blog',
-      ogDescription: article.value?.description || 'A blog for sharing knowledge',
-      ogImage: article.value?.cover[0] || 'https://vio.vin/favicon.ico',
-      twitterCard: 'summary_large_image',
-      twitterTitle: article.value?.title || 'Violet\'s Blog',
-      twitterDescription: article.value?.description || 'A blog for sharing knowledge',
-      twitterImage: article.value?.cover[0] || 'https://vio.vin/favicon.ico',
-    })
   })
 }
 getArticle()
@@ -60,6 +49,16 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
 
 <template>
   <div>
+    <Head>
+      <Meta name="keywords" :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'" />
+      <Meta name="og.title" :content="article?.title || 'Violet\'s Blog'" />
+      <Meta name="og.description" :content="article?.description || 'A blog for sharing knowledge test'" />
+      <Meta name="og.image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
+      <Meta name="twitter.card" content="summary_large_image" />
+      <Meta name="twitter.title" :content="article?.title || 'Violet\'s Blog'" />
+      <Meta name="twitter.description" :content="article?.description || 'A blog for sharing knowledge test'" />
+      <Meta name="twitter.image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
+    </Head>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
         <div class="flex flex-col text-left">
