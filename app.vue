@@ -27,7 +27,7 @@ useHead({
     {
       hid: 'og:image',
       property: 'og:image',
-      content: '/favicon.ico',
+      content: 'https://vio.vin/favicon.ico',
     },
     {
       hid: 'og:url',
@@ -62,7 +62,7 @@ useHead({
     {
       hid: 'twitter:image',
       name: 'twitter:image',
-      content: '/favicon.ico',
+      content: 'https://vio.vin/favicon.ico',
     },
     {
       hid: 'twitter:url',

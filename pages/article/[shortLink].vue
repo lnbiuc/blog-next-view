@@ -26,65 +26,16 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-    useHead({
-      title: article.value?.title,
-      meta: [
-        {
-          hid: 'description',
-          name: 'description',
-          content: article.value?.description,
-        },
-        {
-          hid: 'keywords',
-          name: 'keywords',
-          content: article.value?.tags?.join(',') ?? '',
-        },
-        {
-          hid: 'og:title',
-          property: 'og:title',
-          content: article.value?.title,
-        },
-        {
-          hid: 'og:description',
-          property: 'og:description',
-          content: article.value?.description,
-        },
-        {
-          hid: 'og:image',
-          property: 'og:image',
-          content: article.value?.cover[0],
-        },
-        {
-          hid: 'og:url',
-          property: 'og:url',
-          content: `https://vio.vin/article/${article.value?.shortLink}`,
-        },
-        {
-          hid: 'og:site_name',
-          property: 'og:site_name',
-          content: 'Violet',
-        },
-        {
-          hid: 'og:type',
-          property: 'og:type',
-          content: 'article',
-        },
-        {
-          hid: 'twitter:card',
-          name: 'twitter:card',
-          content: 'summary',
-        },
-        {
-          hid: 'twitter:title',
-          name: 'twitter:title',
-          content: article.value?.title,
-        },
-        {
-          hid: 'twitter:description',
-          name: 'twitter:description',
-          content: article.value?.description,
-        },
-      ],
+    useSeoMeta({
+      title: article.value?.title || 'Violet\'s Blog',
+      description: article.value?.description || 'A blog for sharing knowledge',
+      ogTitle: article.value?.title || 'Violet\'s Blog',
+      ogDescription: article.value?.description || 'A blog for sharing knowledge',
+      ogImage: article.value?.cover[0] || 'https://vio.vin/favicon.ico',
+      twitterCard: 'summary_large_image',
+      twitterTitle: article.value?.title || 'Violet\'s Blog',
+      twitterDescription: article.value?.description || 'A blog for sharing knowledge',
+      twitterImage: article.value?.cover[0] || 'https://vio.vin/favicon.ico',
     })
   })
 }

@@ -32,8 +32,8 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // '/api/**': { proxy: { to: process.server ? 'http://blog-next-api:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
-    '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
+    '/api/**': { proxy: { to: process.server ? 'http://blog-next-api:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
+    // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
   },
 
   experimental: {
