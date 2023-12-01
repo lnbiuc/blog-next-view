@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     identity: {
       type: 'Person',
     },
-    twitter: '@ZZSLL_53387',
     github: 'lnbiuc',
     email: 'hi@lnbiuc.com',
     trailingSlash: true,
