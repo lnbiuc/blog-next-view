@@ -26,7 +26,6 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-  })
 }
 getArticle()
 
