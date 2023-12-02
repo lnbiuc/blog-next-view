@@ -2,11 +2,13 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { MdCatalog, MdPreview } from 'md-editor-v3'
-import { getArticleByShortLink } from '../../server/api/article'
-import type { ArticleWithContent } from '../../server/types/article'
+import type { HeadList } from 'md-editor-v3/lib/types'
+import { getArticleByShortLink } from '~/server/api/article'
+import type { ArticleWithContent } from '~/server/types/article'
 import 'md-editor-v3/lib/preview.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
+import 'animate.css'
 
 interface RouteParams {
   shortLink: string
@@ -26,6 +28,8 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
+  }
+  )
 }
 getArticle()
 
@@ -44,12 +48,24 @@ onMounted(() => {
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
+
+const hasCatalog = ref(false)
+
+function handleOnGetCatalog(catalog: HeadList[]) {
+  console.log(catalog)
+  if (catalog && catalog.length > 0)
+    hasCatalog.value = true
+}
+
+const isLoadFinish = ref(false)
 </script>
 
 <template>
   <div>
+
     <Head>
-      <Meta name="keywords" :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'" />
+      <Meta name="keywords"
+        :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'" />
       <Meta property="og:title" :content="article?.title || 'Violet\'s Blog'" />
       <Meta property="og:description" :content="article?.description || 'A blog for sharing knowledge test'" />
       <Meta property="og:image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
@@ -62,8 +78,12 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
     <NuxtLayout name="default">
       <NuxtLayout name="home">
         <div class="flex flex-col text-left">
-          <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover" class="aspect-[2.5/1] w-full rounded-lg object-cover">
-          <div class="my-6 text-4xl font-bold">
+          <Transition name="fade">
+            <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
+              class="aspect-[2.5/1] w-full rounded-lg object-cover">
+          </Transition>
+
+          <div class="my-6 text-4xl font-bold" @click="isLoadFinish = !isLoadFinish">
             {{ article?.title }}
           </div>
           <div class="mb-1">
@@ -77,30 +97,20 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
           </div>
           <UDivider class="my-6" />
         </div>
-        <div class="text-left lg:grid lg:grid-cols-[auto,250px] lg:gap-8">
-          <MdPreview :theme="theme" :md-heading-id="mdHeadingId" class="preview" :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
-          <div class="catalog relative">
+        <div class="text-left lg:grid lg:gap-8"
+          :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }">
+          <MdPreview :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
+            :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
+          <div class="catalog relative" v-if="hasCatalog">
             <ClientOnly>
-              <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20" :scroll-element="scrollElement" class="max-h-[100vh]" />
+              <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20"
+                :scroll-element="scrollElement" class="max-h-[100vh]" />
             </ClientOnly>
           </div>
         </div>
-        <MyGiscus
-          class="mt-4 py-4"
-          repo="lnbiuc/blog-next-view"
-          repo-id="R_kgDOKsLYcQ"
-          category="Announcements"
-          category-id="DIC_kwDOKsLYcc4CbAW9"
-          mapping="pathname"
-          term="Welcome to @giscus/vue component!"
-          strict="1"
-          reactions-enabled="1"
-          emit-metadata="0"
-          input-position="top"
-          :theme="color.preference"
-          lang="en"
-          crossorigin="anonymous"
-        />
+        <MyGiscus class="mt-4 py-4" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" category="Announcements"
+          category-id="DIC_kwDOKsLYcc4CbAW9" mapping="pathname" term="Welcome to @giscus/vue component!" strict="1"
+          reactions-enabled="1" emit-metadata="0" input-position="top" :theme="theme" lang="en" crossorigin="anonymous" />
       </NuxtLayout>
     </NuxtLayout>
   </div>
@@ -114,15 +124,57 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
   height: auto;
   max-height: calc(100vh - 50px);
 }
-.md-editor-dark, .md-editor {
+
+.md-editor-dark,
+.md-editor {
   --md-bk-color: transparent !important;
 }
 
-.preview >>> ul {
-  list-style-type: disc; /* 默认值，圆点 */
+.preview>>>ul {
+  list-style-type: disc;
+  /* 默认值，圆点 */
 }
 
-.preview >>> ol {
-  list-style-type: decimal; /* 默认值，数字 */
+.preview>>>ol {
+  list-style-type: decimal;
+  /* 默认值，数字 */
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+.fade-enter-to,
+.fade-leave-from {
+  opacity: 1;
+}
+
+/* 以下部分在上面动画基础上添加缩放动画效果 */
+.fade-enter-active {
+  animation: bounce 1s ease;
+}
+
+.fade-leave-active {
+  animation: bounce 1s ease reverse;
+}
+
+@keyframes bounce {
+  0% {
+    transform: scale(0);
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }
 </style>

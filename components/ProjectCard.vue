@@ -14,7 +14,9 @@ function openNewTab(url: string) {
 </script>
 
 <template>
-  <div class="flex flex-col justify-between border border-gray-300 rounded-md transition-transform duration-150 hover:scale-102 hover:cursor-default dark:border-gray-600" @click="openNewTab(props.article.content)">
+  <div
+    class="flex flex-col justify-between border border-gray-300 rounded-md transition-transform duration-150 hover:scale-102 active:scale-98 hover:cursor-default dark:border-gray-600"
+    @click="openNewTab(props.article.content)">
     <div class="p-4 text-left">
       <div class="text-lg font-bold">
         {{ props.article.title }}

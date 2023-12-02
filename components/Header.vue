@@ -23,19 +23,24 @@ import 'animate.css'
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/')">
+            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+              @click="$router.push('/')">
               Home
             </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/blog')">
+            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+              @click="$router.push('/blog')">
               Blog
             </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/shorts')">
+            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+              @click="$router.push('/shorts')">
               Shorts
             </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/project')">
+            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+              @click="$router.push('/project')">
               Project
             </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" @click="$router.push('/about')">
+            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+              @click="$router.push('/about')">
               About
             </li>
           </ul>
@@ -45,7 +50,6 @@ import 'animate.css'
         </div>
       </div>
     </div>
-    <!-- <div class="h-[60px]" /> -->
   </div>
 </template>
 
@@ -59,13 +63,14 @@ import 'animate.css'
   0% {
     background-position: 0 0;
   }
+
   100% {
     background-position: 100% 0;
   }
 }
 
 .my-head {
-  border-bottom: 1px solid hsla(0,0%,73%,.2);
+  border-bottom: 1px solid hsla(0, 0%, 73%, .2);
   backdrop-filter: saturate(180%) blur(20px);
 }
 </style>
