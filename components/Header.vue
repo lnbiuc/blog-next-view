@@ -18,12 +18,22 @@ import 'animate.css'
 <template>
   <div>
     <!-- <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="my-head z-50 w-full"> -->
-    <div class="my-head z-50 w-full transition-all">
+    <div class="my-head z-150 w-full transition-all">
       <div class="wave-animation h-[10px] w-full" />
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
+            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/">Home
+            </NuxtLink>
+            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/blog">Blog
+            </NuxtLink>
+            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/shorts">
+              Shorts</NuxtLink>
+            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/project">
+              Project</NuxtLink>
+            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/about">
+              About</NuxtLink>
+            <!-- <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
               @click="$router.push('/')">
               Home
             </li>
@@ -42,7 +52,7 @@ import 'animate.css'
             <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
               @click="$router.push('/about')">
               About
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="w-[30%] flex justify-start">

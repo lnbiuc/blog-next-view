@@ -80,7 +80,7 @@ const isLoadFinish = ref(false)
         <div class="flex flex-col text-left">
           <Transition name="fade">
             <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-              class="aspect-[2.5/1] w-full rounded-lg object-cover">
+              class="aspect-[2.5/1] w-full rounded-lg object-cover z-10">
           </Transition>
 
           <div class="my-6 text-4xl font-bold" @click="isLoadFinish = !isLoadFinish">
@@ -101,12 +101,14 @@ const isLoadFinish = ref(false)
           :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }">
           <MdPreview :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
             :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
-          <div class="catalog relative" v-if="hasCatalog">
-            <ClientOnly>
-              <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20"
-                :scroll-element="scrollElement" class="max-h-[100vh]" />
-            </ClientOnly>
-          </div>
+          <Transition name="right">
+            <div class="catalog relative" v-if="hasCatalog">
+              <ClientOnly>
+                <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20"
+                  :scroll-element="scrollElement" class="max-h-[100vh]" />
+              </ClientOnly>
+            </div>
+          </Transition>
         </div>
         <MyGiscus class="mt-4 py-4" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" category="Announcements"
           category-id="DIC_kwDOKsLYcc4CbAW9" mapping="pathname" term="Welcome to @giscus/vue component!" strict="1"
@@ -138,43 +140,5 @@ const isLoadFinish = ref(false)
 .preview>>>ol {
   list-style-type: decimal;
   /* 默认值，数字 */
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 1s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
-}
-
-/* 以下部分在上面动画基础上添加缩放动画效果 */
-.fade-enter-active {
-  animation: bounce 1s ease;
-}
-
-.fade-leave-active {
-  animation: bounce 1s ease reverse;
-}
-
-@keyframes bounce {
-  0% {
-    transform: scale(0);
-  }
-
-  50% {
-    transform: scale(1.2);
-  }
-
-  100% {
-    transform: scale(1);
-  }
 }
 </style>

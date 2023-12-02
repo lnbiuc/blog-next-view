@@ -36,13 +36,11 @@ onMounted(() => {
 
 <template>
   <div>
-    <Header :fixed="fixed" class="animate__fadeInDown" />
     <main class="w-full px-4">
       <slot />
       <!-- <div class="mx-auto mt-5 text-center text-sm opacity-25">
         [Default Layout]
       </div> -->
     </main>
-    <Footer />
   </div>
 </template>
