@@ -136,4 +136,26 @@ html.dark {
     transform: translateY(0%);
   }
 }
+
+@keyframes multi-step-spin {
+  0% {
+    transform: rotate(0turn);
+  }
+
+  25% {
+    transform: rotate(0.25turn);
+  }
+
+  50% {
+    transform: rotate(0.5turn);
+  }
+
+  75% {
+    transform: rotate(0.75turn);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
 </style>
