@@ -1,6 +1,23 @@
+<script setup lang="ts">
+function handleToTop() {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
+
+const isScroll = ref(false)
+
+onMounted(() => {
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > window.innerHeight / 2) {
+      isScroll.value = true
+    } else {
+      isScroll.value = false
+    }
+  })
+})
+</script>
+
 <template>
   <div>
-    <VitePwaManifest />
     <div class="main-bg z-0 h-full w-full opacity-20" />
     <Header class="animate__fadeInDown" />
     <div class="relative z-10">
@@ -8,6 +25,15 @@
     </div>
     <Footer />
     <UNotifications class="w-[300px]" />
+    <Transition name="fade">
+      <div class="flex flex-row justify-end z-1000 fixed right-4 bottom-4" v-if="isScroll">
+        <div
+          class="w-50px h-50px bg-violet flex transition-all duration-150 flex-row justify-center items-center rounded-full hover:bg-violet-500 hover:scale-110 active:scale-90"
+          @click="handleToTop">
+          <div class="i-carbon-chevron-up scale-150"></div>
+        </div>
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -18,6 +44,7 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
+  scroll-behavior: smooth;
 }
 
 html.dark {
@@ -69,7 +96,7 @@ html.dark {
 /* up to down */
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s ease;
+  transition: opacity .5s ease;
 }
 
 .fade-enter-from,
@@ -92,7 +119,7 @@ html.dark {
 
 @keyframes up-to-down {
   from {
-    transform: translateY(-50%);
+    transform: translateY(50%);
   }
 
   to {

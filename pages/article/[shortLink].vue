@@ -102,10 +102,10 @@ function handleOnGetCatalog(catalog: HeadList[]) {
             <MdPreview :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
               :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
             <Transition name="right">
-              <div class="catalog relative" v-if="hasCatalog">
+              <div class="catalog relative mt-[60px]" v-if="hasCatalog">
                 <ClientOnly>
-                  <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :scroll-element-offset-top="20"
-                    :scroll-element="scrollElement" class="max-h-[100vh]" />
+                  <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :offset-top="90" :scroll-element-offset-top="80"
+                    :scroll-element="scrollElement" />
                 </ClientOnly>
               </div>
             </Transition>
@@ -135,10 +135,10 @@ function handleOnGetCatalog(catalog: HeadList[]) {
 <style scoped>
 .catalog {
   position: sticky;
-  top: 10px;
+  top: 80px;
   overflow: auto;
   height: auto;
-  max-height: calc(100vh - 50px);
+  max-height: calc(100vh - 95px);
 }
 
 .md-editor-dark,

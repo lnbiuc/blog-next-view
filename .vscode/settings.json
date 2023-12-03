@@ -14,7 +14,6 @@
   "workbench.tree.indent": 10,
   "editor.fontFamily": "Input mono, monospace",
   "editor.fontLigatures": "'ss01', 'ss02', 'ss03', 'ss06', 'zero'",
-
   // Editor
   "editor.accessibilitySupport": "off",
   "editor.cursorSmoothCaretAnimation": "on",
@@ -81,7 +80,6 @@
     "**/tmp": true,
     "**/yarn.lock": true
   },
-
   // Extension configs
   "emmet.showSuggestionsAsSnippets": true,
   "emmet.triggerExpansionOnTab": false,
@@ -94,7 +92,6 @@
     "Grammarly",
     "eslint"
   ],
-
   // ESLint config: https://github.com/antfu/eslint-config
   "eslint.codeAction.showDocumentation": {
     "enable": true
@@ -118,7 +115,6 @@
     "jsonc",
     "json5"
   ],
-
   "github.copilot.enable": {
     "*": true,
     "markdown": true,
@@ -182,13 +178,11 @@
   "iconify.annotations": true,
   "iconify.inplace": true,
   "svg.preview.mode": "svg",
-
   // I only use Prettier for manually formatting
   "prettier.enable": false,
   "prettier.printWidth": 200,
   "prettier.semi": false,
   "prettier.singleQuote": true,
-
   // File Nesting
   // this might not be up to date with the repo, please check yourself
   // https://github.com/antfu/vscode-file-nesting-config

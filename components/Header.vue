@@ -1,24 +1,23 @@
 <script setup lang="ts">
 import 'animate.css'
 
-// const props = defineProps({
-//   fixed: {
-//     type: Boolean,
-//     required: false,
-//     default: false,
-//   },
-//   up: {
-//     type: Boolean,
-//     required: false,
-//     default: false,
-//   },
-// })
+const props = defineProps({
+  fixed: {
+    type: Boolean,
+    required: false,
+    default: true,
+  },
+  up: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+})
 </script>
 
 <template>
-  <div>
-    <!-- <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="my-head z-50 w-full"> -->
-    <div class="my-head z-150 w-full transition-all">
+  <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="w-full z-1000">
+    <div class="my-head">
       <div class="wave-animation h-[10px] w-full" />
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
@@ -33,26 +32,6 @@ import 'animate.css'
               Project</NuxtLink>
             <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/about">
               About</NuxtLink>
-            <!-- <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
-              @click="$router.push('/')">
-              Home
-            </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
-              @click="$router.push('/blog')">
-              Blog
-            </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
-              @click="$router.push('/shorts')">
-              Shorts
-            </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
-              @click="$router.push('/project')">
-              Project
-            </li>
-            <li class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet"
-              @click="$router.push('/about')">
-              About
-            </li> -->
           </ul>
         </div>
         <div class="w-[30%] flex justify-start">
@@ -61,6 +40,7 @@ import 'animate.css'
       </div>
     </div>
   </div>
+  <div class="h-60px w-full" v-if="props.fixed" />
 </template>
 
 <style scoped>
