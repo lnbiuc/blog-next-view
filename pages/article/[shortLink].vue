@@ -115,17 +115,9 @@ function handleOnGetCatalog(catalog: HeadList[]) {
             reactions-enabled="1" emit-metadata="0" input-position="top" :theme="theme" lang="en"
             crossorigin="anonymous" />
         </div>
-        <div v-else class="center">
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
-          <div class="wave"></div>
+        <div v-else class="w-full h-[80vh] flex flex-row justify-center items-center">
+          <div class="loader w-full scale-150 text-violet">
+          </div>
         </div>
       </NuxtLayout>
     </NuxtLayout>
@@ -156,80 +148,29 @@ function handleOnGetCatalog(catalog: HeadList[]) {
   /* 默认值，数字 */
 }
 
-.spinner {
-  animation: spin 2000ms;
-  animation-iteration-count: infinite;
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: pre;
+  font-size: 30px;
+  line-height: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
 }
 
-bodY {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+.loader:before {
+  content: "Loading...\AgodnLai...\Aoiaglni...\ALiongad...\Agindola...\Analoidg...";
+  white-space: pre;
+  display: inline-block;
+  animation: l38 1s infinite steps(6);
 }
 
-.center {
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.wave {
-  width: 5px;
-  height: 100px;
-  background: linear-gradient(45deg, rgb(106, 103, 206), #8a2be2);
-  margin: 10px;
-  animation: wave 1s linear infinite;
-  border-radius: 20px;
-}
-
-.wave:nth-child(2) {
-  animation-delay: 0.1s;
-}
-
-.wave:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.wave:nth-child(4) {
-  animation-delay: 0.3s;
-}
-
-.wave:nth-child(5) {
-  animation-delay: 0.4s;
-}
-
-.wave:nth-child(6) {
-  animation-delay: 0.5s;
-}
-
-.wave:nth-child(7) {
-  animation-delay: 0.6s;
-}
-
-.wave:nth-child(8) {
-  animation-delay: 0.7s;
-}
-
-.wave:nth-child(9) {
-  animation-delay: 0.8s;
-}
-
-.wave:nth-child(10) {
-  animation-delay: 0.9s;
-}
-
-@keyframes wave {
-  0% {
-    transform: scale(0);
-  }
-
-  50% {
-    transform: scale(1);
-  }
-
+@keyframes l38 {
   100% {
-    transform: scale(0);
+    transform: translateY(-100%)
   }
 }
 </style>
