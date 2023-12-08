@@ -73,7 +73,8 @@ useHead({
               <span>A collection of short articles and thoughts.
               </span>
             </div>
-            <Search category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange" @sort-by-change="handleSortByChange" />
+            <Search category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange" />
           </div>
         </div>
         <ShortCards :articles="page.data" />

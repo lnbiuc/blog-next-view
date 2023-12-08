@@ -76,7 +76,8 @@ useHead({
             <div class="py-4">
               <span>Thoughts, mental models, and tutorials about front-end development.</span>
             </div>
-            <Search category="ARTICLE" :is-loading="isLoading" @params-change="handleParamsChange" @sort-by-change="handleSortByChange" />
+            <Search category="ARTICLE" :is-loading="isLoading" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange" />
           </div>
         </div>
         <BlogCards :articles="page.data" />

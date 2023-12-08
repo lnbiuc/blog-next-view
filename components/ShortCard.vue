@@ -28,4 +28,5 @@ const props = defineProps({
         {{ formatTime(props.article.createdAt) }}
       </div>
     </div>
-  </div></template>
+  </div>
+</template>
