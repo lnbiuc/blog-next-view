@@ -5,7 +5,7 @@ export async function getAllArticle(pageNumber: number, pageSize: number) {
 }
 
 export async function searchArticle(keyword: string, pageNumber: number, pageSize: number) {
-  return await useHttp.post(`/api/v1/articles/search/${keyword}`, { pageNumber, pageSize })
+  return await useHttp.post(`/api/v1/articles/search/article/${keyword}`, { pageNumber, pageSize })
 }
 
 export async function getArticleByTag(tag: string, pageNumber: number, pageSize: number) {

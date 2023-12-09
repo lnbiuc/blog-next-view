@@ -93,28 +93,25 @@ html.dark {
   transform: translateY(-100%);
 }
 
-/* up to down */
+/* 1. declare transition */
+.fade-move,
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity .5s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-
-.fade-enter-to,
-.fade-leave-from {
-  opacity: 1;
-}
-
-.fade-enter-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   animation: up-to-down .5s ease;
 }
 
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(1) translate(50px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
 .fade-leave-active {
-  animation: up-to-down .5s ease reverse;
+  position: absolute;
 }
 
 @keyframes up-to-down {
