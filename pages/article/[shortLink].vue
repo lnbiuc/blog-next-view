@@ -52,7 +52,6 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
 const hasCatalog = ref(false)
 
 function handleOnGetCatalog(catalog: HeadList[]) {
-  console.log(catalog)
   if (catalog && catalog.length > 0)
     hasCatalog.value = true
 }

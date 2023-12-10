@@ -22,15 +22,15 @@ const props = defineProps({
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/">Home
+            <NuxtLink class="header-link" to="/">Home
             </NuxtLink>
-            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/blog">Blog
+            <NuxtLink class="header-link" to="/blog">Blog
             </NuxtLink>
-            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/shorts">
+            <NuxtLink class="header-link" to="/shorts">
               Shorts</NuxtLink>
-            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/project">
+            <NuxtLink class="header-link" to="/project">
               Project</NuxtLink>
-            <NuxtLink class="px-4 py-2 transition-all duration-150 hover:cursor-default hover:text-violet" to="/about">
+            <NuxtLink class="header-link" to="/about">
               About</NuxtLink>
           </ul>
         </div>
@@ -44,9 +44,22 @@ const props = defineProps({
 </template>
 
 <style scoped>
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .wave-animation {
-  background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff);
-  animation: wave 1s linear infinite;
+  background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff, #7a2df3, #2be22b);
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
 }
 
 @keyframes wave {

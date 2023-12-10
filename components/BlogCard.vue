@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="border border-gray-300 rounded-md transition-transform duration-150 hover:scale-102 active:scale-98 hover:cursor-default dark:border-gray-600"
+    class="card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)">
     <div class="relative">
       <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
@@ -24,7 +24,7 @@ const props = defineProps({
     </div>
 
     <div class="p-4 text-left">
-      <div class="text-lg font-bold">
+      <div class="text-xl font-bold">
         {{ props.article.title }}
       </div>
       <div class="my-2 flex flex-row items-center">

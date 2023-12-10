@@ -23,3 +23,7 @@ export async function getArticleByShortLink(shortLink: string) {
 export async function searchShorts(keyword: string, pageNumber: number, pageSize: number) {
   return await useHttp.post(`/api/v1/articles/search/shorts/${keyword}`, { pageNumber, pageSize })
 }
+
+export async function getHomeArticle() {
+  return await useHttp.get(`/api/v1/articles/home`)
+}

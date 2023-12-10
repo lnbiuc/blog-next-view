@@ -7,13 +7,11 @@ const isScroll = ref(false)
 
 onMounted(() => {
   window.addEventListener('scroll', () => {
-    if (window.scrollY > window.innerHeight / 2) {
-      isScroll.value = true
-    } else {
-      isScroll.value = false
-    }
+    isScroll.value = window.scrollY > window.innerHeight / 2;
   })
 })
+
+useColorMode().value = 'dark'
 </script>
 
 <template>
@@ -68,35 +66,9 @@ html.dark {
   color: #A78BFA !important;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.2s;
-}
-
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-  /* transform: rotate3d(1, 1, 1, 180deg); */
-  transform: scaleX(1.01) scaleY(1.01) scaleZ(1.5) rotateX(0deg) rotateY(0deg) rotateZ(0deg) translateX(0px) translateY(0px) translateZ(-40px) skewX(0deg) skewY(0deg);
-
-}
-
-.header-transition-enter-active,
-.header-transition-leave-active {
-  transition: all 1000ms;
-}
-
-.header-transition-enter,
-.header-transition-leave-to {
-  opacity: 0;
-  transform: translateY(-100%);
-}
-
 /* 1. declare transition */
 .fade-move,
-.fade-enter-active,
-.fade-leave-active {
+.fade-enter-active {
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   animation: up-to-down .5s ease;
 }
@@ -111,7 +83,8 @@ html.dark {
 /* 3. ensure leaving items are taken out of layout flow so that moving
       animations can be calculated correctly. */
 .fade-leave-active {
-  position: absolute;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease reverse;
 }
 
 @keyframes up-to-down {
@@ -124,13 +97,8 @@ html.dark {
   }
 }
 
-/* right to left */
 .right-enter-active {
   animation: right-to-left .5s ease;
-}
-
-.fade-leave-active {
-  animation: right-to-left .5s ease reverse;
 }
 
 @keyframes right-to-left {
@@ -181,5 +149,15 @@ html.dark {
   100% {
     transform: rotate(1turn);
   }
+}
+
+.common-shadow {
+  box-shadow:
+    2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+    22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    100px 100px 80px rgba(0, 0, 0, 0.07);
 }
 </style>

@@ -1,9 +1,23 @@
 <script setup lang="ts">
+import { getHomeArticle } from '~/server/api/article';
+import type { Article } from '~/server/types/article';
+
 const online = useOnline()
 
-useHead({
-  title: 'Home',
+const data = ref({
+  featuredArticles: [] as Article[],
+  featuredShort: [] as Article[],
+  featuredProject: [] as Article[],
 })
+
+function getHomeData() {
+  getHomeArticle().then((res) => {
+    data.value = res.data.value?.data as typeof data.value
+  })
+}
+
+getHomeData()
+
 </script>
 
 <template>
@@ -22,10 +36,32 @@ useHead({
             </div>
           </template>
         </Suspense>
-        <!-- <div class="min-h-[1000px] w-full">
-      <h1>index</h1>
-    </div> -->
         <WelcomeCard />
+        <NuxtLayout name="home">
+          <div id="featured">
+            <div class="title-font">
+              Featured Article
+            </div>
+            <BlogCards :articles="data.featuredArticles" />
+            <div class="title-btn">
+              <MyButton @click="$router.push('/blog')">See More</MyButton>
+            </div>
+            <div class="title-font">
+              Featured Short
+            </div>
+            <ShortCards :articles="data.featuredShort" />
+            <div class="title-btn">
+              <MyButton @click="$router.push('/shorts')">See More</MyButton>
+            </div>
+            <div class="title-font">
+              Featured Project
+            </div>
+            <ProjectCards :articles="data.featuredProject" />
+            <div class="title-btn">
+              <MyButton @click="$router.push('/project')">See More</MyButton>
+            </div>
+          </div>
+        </NuxtLayout>
       </div>
     </NuxtLayout>
   </div>
