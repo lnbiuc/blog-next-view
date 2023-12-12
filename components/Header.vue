@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import 'animate.css'
-
 const props = defineProps({
   fixed: {
     type: Boolean,
