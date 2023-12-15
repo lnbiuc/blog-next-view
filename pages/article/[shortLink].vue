@@ -28,7 +28,7 @@ function getArticle() {
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-  }
+  },
   )
 }
 getArticle()
@@ -55,15 +55,15 @@ function handleOnGetCatalog(catalog: HeadList[]) {
   if (catalog && catalog.length > 0)
     hasCatalog.value = true
 }
-
 </script>
 
 <template>
   <div>
-
     <Head>
-      <Meta name="keywords"
-        :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'" />
+      <Meta
+        name="keywords"
+        :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
+      />
       <Meta property="og:title" :content="article?.title || 'Violet\'s Blog'" />
       <Meta property="og:description" :content="article?.description || 'A blog for sharing knowledge test'" />
       <Meta property="og:image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
@@ -78,8 +78,10 @@ function handleOnGetCatalog(catalog: HeadList[]) {
         <div v-if="article">
           <div class="flex flex-col text-left">
             <Transition name="fade">
-              <img v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-                class="aspect-[2.5/1] w-full rounded-lg object-cover z-10">
+              <img
+                v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
+                class="z-10 aspect-[2.5/1] w-full rounded-lg object-cover"
+              >
             </Transition>
 
             <div class="my-6 text-4xl font-bold">
@@ -96,27 +98,34 @@ function handleOnGetCatalog(catalog: HeadList[]) {
             </div>
             <UDivider class="my-6" />
           </div>
-          <div class="text-left lg:grid lg:gap-8"
-            :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }">
-            <MdPreview :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
-              :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github" />
+          <div
+            class="text-left lg:grid lg:gap-8"
+            :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }"
+          >
+            <MdPreview
+              :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
+              :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github"
+            />
             <Transition name="right">
-              <div class="catalog relative mt-[60px]" v-if="hasCatalog">
+              <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
-                  <MdCatalog :md-heading-id="mdHeadingId" :editor-id="id" :offset-top="90" :scroll-element-offset-top="80"
-                    :scroll-element="scrollElement" />
+                  <MdCatalog
+                    :md-heading-id="mdHeadingId" :editor-id="id" :offset-top="90" :scroll-element-offset-top="80"
+                    :scroll-element="scrollElement"
+                  />
                 </ClientOnly>
               </div>
             </Transition>
           </div>
-          <MyGiscus class="mt-4 py-4" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" category="Announcements"
+          <MyGiscus
+            class="mt-4 py-4" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" category="Announcements"
             category-id="DIC_kwDOKsLYcc4CbAW9" mapping="pathname" term="Welcome to @giscus/vue component!" strict="1"
             reactions-enabled="1" emit-metadata="0" input-position="top" :theme="theme" lang="en"
-            crossorigin="anonymous" />
+            crossorigin="anonymous"
+          />
         </div>
-        <div v-else class="w-full h-[80vh] flex flex-row justify-center items-center">
-          <div class="loader w-full scale-150 text-violet">
-          </div>
+        <div v-else class="h-[80vh] w-full flex flex-row items-center justify-center">
+          <div class="loader w-full scale-150 text-violet" />
         </div>
       </NuxtLayout>
     </NuxtLayout>

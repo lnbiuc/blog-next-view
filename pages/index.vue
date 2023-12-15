@@ -10,9 +10,12 @@ const data = ref({
   featuredProject: [] as Article[],
 })
 
+const loadingFinish = ref(false)
+
 function getHomeData() {
   getHomeArticle().then((res) => {
     data.value = res.data.value?.data as typeof data.value
+    loadingFinish.value = true
   })
 }
 
@@ -38,7 +41,7 @@ getHomeData()
         </Suspense>
         <WelcomeCard />
         <NuxtLayout name="home">
-          <div id="featured">
+          <div id="featured" v-if="loadingFinish">
             <div class="title-font">
               Featured Article
             </div>
