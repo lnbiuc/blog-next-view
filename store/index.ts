@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import type { Article } from '~/server/types/article'
+import { getHomeArticle } from '~/server/api/article'
 
 export const useArticleApiStore = defineStore('articleApi', () => {
   const indexDataRef = ref({
@@ -20,7 +21,19 @@ export const useArticleApiStore = defineStore('articleApi', () => {
     indexDataRef.value = data
   }
 
-  return { indexData, hasIndexData, setIndexData }
+  function getIndexData() {
+    if (hasIndexData.value) {
+      return indexData.value
+    }
+    else {
+      getHomeArticle().then((res) => {
+        indexDataRef.value = res.data.value?.data as typeof indexDataRef.value
+        setIndexData(indexDataRef.value)
+      })
+    }
+  }
+
+  return { indexData, hasIndexData, getIndexData }
 })
 
 export const useIndexArticleApiStore = defineStore('indexArticleApi', {
