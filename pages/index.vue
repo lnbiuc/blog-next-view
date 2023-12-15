@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { getHomeArticle } from '~/server/api/article'
 import type { Article } from '~/server/types/article'
+import { useIndexArticleApiStore } from '~/store'
 
 const online = useOnline()
 
@@ -12,11 +13,20 @@ const data = ref({
 
 const loadingFinish = ref(false)
 
+const store = useIndexArticleApiStore()
+
 function getHomeData() {
-  getHomeArticle().then((res) => {
-    data.value = res.data.value?.data as typeof data.value
+  if (store.hasIndexData) {
+    data.value = store.indexData
     loadingFinish.value = true
-  })
+  }
+  else {
+    getHomeArticle().then((res) => {
+      data.value = res.data.value?.data as typeof data.value
+      loadingFinish.value = true
+      store.setIndexData(data.value)
+    })
+  }
 }
 
 getHomeData()
