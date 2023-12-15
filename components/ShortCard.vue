@@ -12,7 +12,7 @@ const props = defineProps({
 
 <template>
   <div
-    class="card-border"
+    class="card-bg-filter card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)"
   >
     <div class="p-4 text-left">

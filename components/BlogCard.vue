@@ -12,11 +12,11 @@ const props = defineProps({
 
 <template>
   <div
-    class="card-border"
+    class="card-bg-filter overflow-hidden card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)"
   >
     <div class="relative">
-      <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
+      <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full transform rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">
         <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="m-1 opacity-90" :tag="t">
           {{ t }}
@@ -43,3 +43,13 @@ const props = defineProps({
     </div>
   </div>
 </template>
+
+<style scoped>
+.card-bg-filter img {
+  transition: transform 500ms;
+}
+
+.card-bg-filter:hover img {
+  transform: scale(1.1);
+}
+</style>

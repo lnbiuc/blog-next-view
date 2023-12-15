@@ -56,7 +56,7 @@ function handleScroll() {
       </div>
       <div class="flex flex-row">
         <a
-          v-for="l in link" :key="l.index" class="mr-3 flex flex-row items-center justify-center open-tab" :href="l.url"
+          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row items-center justify-center" :href="l.url"
           target="_blank"
         >
           <UIcon :name="l.icon" size="lg" />
@@ -67,7 +67,7 @@ function handleScroll() {
       </div>
     </div>
     <div class="hidden transition-transform duration-150 md:block hover:scale-105">
-      <img src="../public/favicon.ico" alt="logo" class="favicon-shadown animate__bounceIn h-[300px] w-[300px] rounded-full">
+      <img src="/favicon.ico" alt="logo" class="favicon-shadown animate__bounceIn h-[300px] w-[300px] rounded-full">
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center">
@@ -78,7 +78,7 @@ function handleScroll() {
 <style scoped>
 @font-face {
   font-family: 'MyFont';
-  src: url('../public/Spacewar.ttf') format('truetype');
+  src: url('/Spacewar.ttf') format('truetype');
 }
 
 .favicon-shadown {
@@ -87,10 +87,6 @@ function handleScroll() {
 
 .dark .favicon-shadown {
   box-shadow: 0 0 150px 50px #335062;
-}
-
-.open-tab {
-  cursor: url(/new-tab.png) 10 10, pointer
 }
 
 @keyframes jump {

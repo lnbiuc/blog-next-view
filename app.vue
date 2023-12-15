@@ -161,4 +161,22 @@ html.dark {
     41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
     100px 100px 80px rgba(0, 0, 0, 0.07);
 }
+
+.card-bg-filter {
+  backdrop-filter: saturate(180%) blur(20px);
+}
+
+.my-open-tab {
+  cursor: url(/new-tab.png) 10 10, pointer
+}
+
+@font-face {
+  font-family: 'CodeFont';
+  src: url('/MonaspaceArgon-Regular.woff') format('truetype');
+}
+
+.github-theme pre, .github-theme code {
+  font-family: 'CodeFont', source-code-pro,Menlo,Monaco,Consolas,Courier New,monospace !important;
+  font-size: 14px !important;
+}
 </style>

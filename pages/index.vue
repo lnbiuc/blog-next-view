@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { Article } from '~/server/types/article'
-import { useArticleApiStore } from '~/store'
+
+// import { useArticleApiStore } from '~/store'
+import { getHomeArticle } from '~/server/api/article'
 
 const online = useOnline()
 
@@ -12,16 +14,13 @@ const data = ref({
 
 const loadingFinish = ref(false)
 
-const { indexData, hasIndexData, getIndexData } = useArticleApiStore()
+// const { indexData, hasIndexData, getIndexData } = useArticleApiStore()
 
 function getHomeData() {
-  if (hasIndexData)
+  getHomeArticle().then((res) => {
+    data.value = res.data.value?.data as typeof data.value
     loadingFinish.value = true
-
-  else
-    getIndexData()
-
-  data.value = indexData
+  })
 }
 
 getHomeData()
@@ -53,6 +52,7 @@ getHomeData()
             <div class="title-btn">
               <MyButton @click="$router.push('/blog')">
                 See More
+                <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
             <div class="title-font">
@@ -62,6 +62,7 @@ getHomeData()
             <div class="title-btn">
               <MyButton @click="$router.push('/shorts')">
                 See More
+                <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
             <div class="title-font">
@@ -71,6 +72,7 @@ getHomeData()
             <div class="title-btn">
               <MyButton @click="$router.push('/project')">
                 See More
+                <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
           </div>

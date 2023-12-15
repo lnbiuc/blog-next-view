@@ -15,7 +15,7 @@ function openNewTab(url: string) {
 
 <template>
   <div
-    class="card-border"
+    class="card-bg-filter my-open-tab flex flex-col justify-between overflow-hidden card-border"
     @click="openNewTab(props.article.content)"
   >
     <div class="p-4 text-left">
@@ -36,3 +36,17 @@ function openNewTab(url: string) {
     </div>
   </div>
 </template>
+
+<style scoped>
+.card-bg-filter img {
+  transition: transform 500ms;
+}
+
+.card-bg-filter:hover img {
+  transform: scale(1.05);
+}
+
+.my-open-tab {
+  cursor: url(/new-tab.png) 10 10, pointer
+}
+</style>
