@@ -15,7 +15,7 @@ const props = defineProps({
 
 <template>
   <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="z-1000 w-full">
-    <div class="my-head">
+    <div class="my-head overflow-hidden">
       <div class="wave-animation h-[10px] w-full" />
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
@@ -63,6 +63,7 @@ const props = defineProps({
   background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff, #7a2df3, #2be22b);
   background-size: 200% 200%;
   animation: gradientAnimation 10s ease infinite;
+  box-shadow: 0 0 150px 2px rgb(106, 103, 206);
 }
 
 @keyframes wave {
@@ -76,7 +77,6 @@ const props = defineProps({
 }
 
 .my-head {
-  border-bottom: 1px solid hsla(0, 0%, 73%, .2);
   backdrop-filter: saturate(180%) blur(20px);
 }
 </style>

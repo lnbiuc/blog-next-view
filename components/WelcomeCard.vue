@@ -6,19 +6,19 @@ const link = [
     index: 0,
     name: 'Github',
     url: 'https://github.com/lnbiuc',
-    icon: 'i-carbon-logo-github',
+    icon: 'i-ri:github-line',
   },
   {
     index: 1,
     name: 'Twitter',
     url: 'https://twitter.com/ZZSLL_53387',
-    icon: 'i-carbon-logo-twitter',
+    icon: 'i-ri:twitter-x-fill',
   },
   {
     index: 3,
     name: 'Email',
     url: 'mailto:hi@lnbiuc.com',
-    icon: 'i-heroicons-envelope-solid',
+    icon: 'i-ri:mail-add-line',
   },
 ]
 
@@ -67,7 +67,7 @@ function handleScroll() {
       </div>
     </div>
     <div class="hidden transition-transform duration-150 md:block hover:scale-105">
-      <img src="../public/favicon.ico" alt="logo" class="common-shadow animate__bounceIn h-[300px] w-[300px] rounded-full">
+      <img src="../public/favicon.ico" alt="logo" class="favicon-shadown animate__bounceIn h-[300px] w-[300px] rounded-full">
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center">
@@ -79,6 +79,14 @@ function handleScroll() {
 @font-face {
   font-family: 'MyFont';
   src: url('../public/Spacewar.ttf') format('truetype');
+}
+
+.favicon-shadown {
+  box-shadow: 0 0 150px 50px #8990b5;
+}
+
+.dark .favicon-shadown {
+  box-shadow: 0 0 150px 50px #335062;
 }
 
 .open-tab {
