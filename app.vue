@@ -7,7 +7,7 @@ const isScroll = ref(false)
 
 onMounted(() => {
   window.addEventListener('scroll', () => {
-    isScroll.value = window.scrollY > window.innerHeight / 2;
+    isScroll.value = window.scrollY > window.innerHeight / 2
   })
 })
 
@@ -24,11 +24,12 @@ useColorMode().value = 'dark'
     <Footer />
     <UNotifications class="w-[300px]" />
     <Transition name="fade">
-      <div class="flex flex-row justify-end z-1000 fixed right-4 bottom-4" v-if="isScroll">
+      <div v-if="isScroll" class="fixed bottom-4 right-4 z-1000 flex flex-row justify-end">
         <div
-          class="w-50px h-50px bg-violet flex transition-all duration-150 flex-row justify-center items-center rounded-full hover:bg-violet-500 hover:scale-110 active:scale-90"
-          @click="handleToTop">
-          <div class="i-carbon-chevron-up scale-150"></div>
+          class="h-50px w-50px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
+          @click="handleToTop"
+        >
+          <div class="i-carbon-chevron-up scale-150" />
         </div>
       </div>
     </Transition>

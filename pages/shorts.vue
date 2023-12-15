@@ -2,7 +2,7 @@
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory, searchShorts } from '~/server/api/article'
 
-const page = ref<{ pageNumber: number; pageSize: number; total: number; data: Article[] }>({
+const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
   pageNumber: 1,
   pageSize: 20,
   total: 0,
@@ -15,7 +15,7 @@ const isLoading = ref<boolean>(false)
 
 async function getShorts() {
   getArticleByCategory('SHORTS', page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+    page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
     page.value.data.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
@@ -33,7 +33,7 @@ async function handleParamsChange(searchVal: string) {
   if (searchVal !== '') {
     isLoading.value = true
     searchShorts(searchVal, page.value.pageNumber, page.value.pageSize).then((res) => {
-      page.value = res.data.value?.data as { pageNumber: number; pageSize: number; total: number; data: Article[] }
+      page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       isLoading.value = false
     })
   }
@@ -73,8 +73,10 @@ useHead({
               <span>A collection of short articles and thoughts.
               </span>
             </div>
-            <Search category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange"
-              @sort-by-change="handleSortByChange" />
+            <Search
+              category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange"
+            />
           </div>
         </div>
         <ShortCards :articles="page.data" />

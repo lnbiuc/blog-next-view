@@ -53,15 +53,19 @@ async function tagClick(tag: string) {
 
 <template>
   <div class="flex flex-row">
-    <UInput id="search" v-model="searchVal" :loading="isLoading" class="w-full"
-      icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..." />
+    <UInput
+      id="search" v-model="searchVal" :loading="isLoading" class="w-full"
+      icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
+    />
     <USelectMenu v-model="selectVal" class="ml-2" size="lg" :options="options" />
   </div>
   <Transition name="fade">
-    <div class="mt-2" v-if="tags.length > 1">
+    <div v-if="tags.length > 1" class="mt-2">
       <span class="mr-2 text-lg">Tags:</span>
-      <UBadge v-for="t in tags" :key="t" size="md" color="gray" variant="solid"
-        class="m-1 cursor-pointer transition-transform duration-150 active:scale-[0.97] animate-shadow" @click="tagClick(t)">
+      <UBadge
+        v-for="t in tags" :key="t" size="md" color="gray" variant="solid"
+        class="animate-shadow m-1 cursor-pointer transition-transform duration-150 active:scale-[0.97]" @click="tagClick(t)"
+      >
         {{ t }}
       </UBadge>
     </div>

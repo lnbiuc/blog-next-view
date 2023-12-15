@@ -1,5 +1,4 @@
 import type { FetchResponse } from 'ofetch'
-import type { Ref } from 'vue'
 import type { UseFetchOptions } from '#app'
 
 export interface ResOptions<T> {

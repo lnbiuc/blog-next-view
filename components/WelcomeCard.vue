@@ -23,19 +23,19 @@ const link = [
 ]
 
 function handleScroll() {
-  const el = document.getElementById("featured");
-  const yOffset = -80;
+  const el = document.getElementById('featured')
+  const yOffset = -80
   if (el) {
-    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset;
-    const offsetPosition = elementPosition + yOffset;
+    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset
+    const offsetPosition = elementPosition + yOffset
 
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+    window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
   }
 }
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)"  class="m-auto max-w-[1400px] w-[100%] flex flex-col items-center justify-around md:flex-row">
+  <div style="height: calc(100vh - 160px)" class="m-auto max-w-[1400px] w-[100%] flex flex-col items-center justify-around md:flex-row">
     <div class="flex flex-col items-start justify-start md:items-start md:justify-start">
       <h1 class="text-left text-6xl font-bold">
         Hi!👋
@@ -55,8 +55,10 @@ function handleScroll() {
         </MyButton>
       </div>
       <div class="flex flex-row">
-        <a v-for="l in link" :key="l.index" class="mr-3 flex flex-row items-center justify-center open-tab" :href="l.url"
-          target="_blank">
+        <a
+          v-for="l in link" :key="l.index" class="mr-3 flex flex-row items-center justify-center open-tab" :href="l.url"
+          target="_blank"
+        >
           <UIcon :name="l.icon" size="lg" />
           <span class="ml-1">
             {{ l.name }}
@@ -69,7 +71,7 @@ function handleScroll() {
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center">
-    <div class="icon-down i-carbon-arrow-down common-shadow h-[40px] w-[40px] hover:cursor-pointer" @click="handleScroll"/>
+    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer" @click="handleScroll" />
   </div>
 </template>
 

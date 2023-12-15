@@ -13,7 +13,8 @@ const props = defineProps({
 <template>
   <div
     class="card-border"
-    @click="$router.push(`/article/${props.article.shortLink}`)">
+    @click="$router.push(`/article/${props.article.shortLink}`)"
+  >
     <div class="relative">
       <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-tl-md rounded-tr-md object-cover">
       <div class="absolute bottom-0 right-0 p-1 text-right">

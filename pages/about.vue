@@ -3,30 +3,30 @@ import 'md-editor-v3/lib/preview.css'
 import { MdPreview } from 'md-editor-v3'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 
-const md = '# Violet\n' +
-    '\n' +
-    '## whoami\n' +
-    '\n' +
-    'Hello! I\'m Violet. I\'m a recent graduate in computer science. A Java programmer based in Xi\'an. I have a passion for exploring everything interesting, ranging from peculiar gadgets like charger,NAS and routers. Additionally, I find great joy in delving into the world of frontend development. Currently residing and working in Xi\'an, I document my professional and learning journey through work and study notes, which you can find on this website. Feel free to reach out and connect!\n' +
-    '\n' +
-    '## What can I do\n' +
-    '\n' +
-    'As you can see, I am a programmer, I developing interesting things.\n' +
-    '\n' +
-    '## Tech Stack\n' +
-    '\n' +
-    '- Language: Java、JavaScript、TypeScript\n' +
-    '- Framework: Spring & SpringCloud、Vue、Nuxt\n' +
-    '- Databases: MySQL、PostgreSQL、MongoDB\n' +
-    '- Middleware: Redis、Elasticsearch、Zookeeper、Kafka、RabbitMQ、Nginx\n' +
-    '- Ops: Docker、Centos、Ubuntu\n' +
-    '\n' +
-    '## Contact\n' +
-    '\n' +
-    '- [Mail](mailto:hi@lnbiuc.com)\n' +
-    '- [Github](https://github.com/lnbiuc)\n' +
-    '- [Twitter](https://twitter.com/ZZSLL_53387)\n' +
-    '- [Bilibili](https://space.bilibili.com/1258497845)'
+const md = '# Violet\n'
+  + '\n'
+  + '## whoami\n'
+  + '\n'
+  + 'Hello! I\'m Violet. I\'m a recent graduate in computer science. A Java programmer based in Xi\'an. I have a passion for exploring everything interesting, ranging from peculiar gadgets like charger,NAS and routers. Additionally, I find great joy in delving into the world of frontend development. Currently residing and working in Xi\'an, I document my professional and learning journey through work and study notes, which you can find on this website. Feel free to reach out and connect!\n'
+  + '\n'
+  + '## What can I do\n'
+  + '\n'
+  + 'As you can see, I am a programmer, I developing interesting things.\n'
+  + '\n'
+  + '## Tech Stack\n'
+  + '\n'
+  + '- Language: Java、JavaScript、TypeScript\n'
+  + '- Framework: Spring & SpringCloud、Vue、Nuxt\n'
+  + '- Databases: MySQL、PostgreSQL、MongoDB\n'
+  + '- Middleware: Redis、Elasticsearch、Zookeeper、Kafka、RabbitMQ、Nginx\n'
+  + '- Ops: Docker、Centos、Ubuntu\n'
+  + '\n'
+  + '## Contact\n'
+  + '\n'
+  + '- [Mail](mailto:hi@lnbiuc.com)\n'
+  + '- [Github](https://github.com/lnbiuc)\n'
+  + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
+  + '- [Bilibili](https://space.bilibili.com/1258497845)'
 const color = useColorMode()
 
 const theme = ref<'dark' | 'light'>(color.preference === 'dark' ? 'dark' : 'light')

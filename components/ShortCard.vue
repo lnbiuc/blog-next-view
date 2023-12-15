@@ -13,14 +13,17 @@ const props = defineProps({
 <template>
   <div
     class="card-border"
-    @click="$router.push(`/article/${props.article.shortLink}`)">
+    @click="$router.push(`/article/${props.article.shortLink}`)"
+  >
     <div class="p-4 text-left">
       <div class="text-lg font-bold">
         {{ props.article.title }}
       </div>
       <div class="mt-2">
-        <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="my-1 mr-1 opacity-90"
-          :tag="t">
+        <UBadge
+          v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="my-1 mr-1 opacity-90"
+          :tag="t"
+        >
           {{ t }}
         </UBadge>
       </div>

@@ -3,7 +3,8 @@
 
 <template>
   <div
-    class="common-border">
+    class="common-border"
+  >
     <slot />
   </div>
 </template>

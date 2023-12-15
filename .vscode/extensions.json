@@ -11,7 +11,6 @@
     "lokalise.i18n-ally",
     // themes & icons
     "antfu.icons-carbon",
-    "antfu.theme-vitesse",
     "file-icons.file-icons",
     "sainnhe.gruvbox-material",
     // life savers!
@@ -28,7 +27,6 @@
     "johnsoncodehk.vscode-tsconfig-helper",
     "mpontus.tab-cycle",
     "naumovs.color-highlight",
-    "WakaTime.vscode-wakatime",
     "znck.grammarly"
   ]
 }

@@ -14,22 +14,27 @@ const props = defineProps({
 </script>
 
 <template>
-  <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="w-full z-1000">
+  <div :style="{ position: props.fixed ? 'fixed' : 'relative' }" class="z-1000 w-full">
     <div class="my-head">
       <div class="wave-animation h-[10px] w-full" />
       <div class="flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <NuxtLink class="header-link" to="/">Home
+            <NuxtLink class="header-link" to="/">
+              Home
             </NuxtLink>
-            <NuxtLink class="header-link" to="/blog">Blog
+            <NuxtLink class="header-link" to="/blog">
+              Blog
             </NuxtLink>
             <NuxtLink class="header-link" to="/shorts">
-              Shorts</NuxtLink>
+              Shorts
+            </NuxtLink>
             <NuxtLink class="header-link" to="/project">
-              Project</NuxtLink>
+              Project
+            </NuxtLink>
             <NuxtLink class="header-link" to="/about">
-              About</NuxtLink>
+              About
+            </NuxtLink>
           </ul>
         </div>
         <div class="w-[30%] flex justify-start">
@@ -38,7 +43,7 @@ const props = defineProps({
       </div>
     </div>
   </div>
-  <div class="h-60px w-full" v-if="props.fixed" />
+  <div v-if="props.fixed" class="h-60px w-full" />
 </template>
 
 <style scoped>

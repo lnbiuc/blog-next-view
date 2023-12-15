@@ -16,7 +16,8 @@ function openNewTab(url: string) {
 <template>
   <div
     class="card-border"
-    @click="openNewTab(props.article.content)">
+    @click="openNewTab(props.article.content)"
+  >
     <div class="p-4 text-left">
       <div class="text-lg font-bold">
         {{ props.article.title }}

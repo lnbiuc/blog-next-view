@@ -36,7 +36,7 @@ jobs:
       - name: ssh pipelines
         uses: cross-the-world/ssh-pipeline@master
         env:
-          WELCOME: "ssh pipeline"
+          WELCOME: ssh pipeline
         with:
           host: ${{ secrets.SERVER_IP }}
           port: ${{ secrets.SERVER_PORT }}
@@ -53,5 +53,5 @@ jobs:
         env:
           SECRET_ID: ${{ secrets.SECRET_ID}}
           SECRET_KEY: ${{ secrets.SECRET_KEY }}
-          PATHS: "https://vio.vin/"
-          FLUSH_TYPE: "flush"
+          PATHS: https://vio.vin/
+          FLUSH_TYPE: flush
