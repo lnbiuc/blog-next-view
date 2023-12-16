@@ -10,8 +10,8 @@ const link = [
   },
   {
     index: 1,
-    name: 'Twitter',
-    url: 'https://twitter.com/ZZSLL_53387',
+    name: 'X',
+    url: 'https://x.com/ZZSLL_53387',
     icon: 'i-ri:twitter-x-fill',
   },
   {
