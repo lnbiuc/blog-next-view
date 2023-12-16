@@ -4,21 +4,27 @@ import 'animate.css'
 const link = [
   {
     index: 0,
-    name: 'Github',
+    name: '',
     url: 'https://github.com/lnbiuc',
     icon: 'i-ri:github-line',
   },
   {
     index: 1,
-    name: 'X',
+    name: '',
     url: 'https://x.com/ZZSLL_53387',
-    icon: 'i-ri:twitter-x-fill',
+    icon: 'i-ri:twitter-x-line',
+  },
+  {
+    index: 2,
+    name: '',
+    url: 'https://space.bilibili.com/1258497845',
+    icon: 'i-ri:bilibili-line',
   },
   {
     index: 3,
-    name: 'Email',
+    name: '',
     url: 'mailto:hi@lnbiuc.com',
-    icon: 'i-ri:mail-add-line',
+    icon: 'i-ri:mail-line',
   },
 ]
 
