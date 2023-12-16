@@ -14,6 +14,7 @@ const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 const isLoading = ref<boolean>(false)
 
 async function getShorts() {
+  isLoading.value = true
   getArticleByCategory('SHORTS', page.value.pageNumber, page.value.pageSize).then((res) => {
     page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
     page.value.data.sort((a, b) => {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { Article } from '~/server/types/article'
-import { getAllArticle, searchArticle } from '~/server/api/article'
+import { getArticleByCategory, searchArticle } from '~/server/api/article'
 
 const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
   pageNumber: 1,
@@ -15,7 +15,7 @@ const isLoading = ref<boolean>(false)
 
 async function getArticles() {
   isLoading.value = true
-  getAllArticle(page.value.pageNumber, page.value.pageSize).then((res) => {
+  getArticleByCategory('ARTICLE', page.value.pageNumber, page.value.pageSize).then((res) => {
     page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
     page.value.data.sort((a, b) => {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
