@@ -33,7 +33,7 @@ function getArticle() {
 }
 getArticle()
 
-const theme = ref<'light' | 'dark'>()
+const theme = ref<'light' | 'dark'>(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
 
 let scrollElement: string | HTMLElement | undefined
 
@@ -43,8 +43,6 @@ watchEffect(() => {
 
 onMounted(() => {
   scrollElement = document.documentElement
-  const mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)')
-  theme.value = mediaQueryList.matches ? 'dark' : 'light'
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
