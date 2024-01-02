@@ -33,7 +33,10 @@ function getArticle() {
 }
 getArticle()
 
-const theme = ref<'light' | 'dark'>(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+const theme = ref<'light' | 'dark'>(color.value === 'dark' ? 'dark' : 'light')
+
+// if (window)
+// theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
 let scrollElement: string | HTMLElement | undefined
 
@@ -43,6 +46,7 @@ watchEffect(() => {
 
 onMounted(() => {
   scrollElement = document.documentElement
+  theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
