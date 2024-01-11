@@ -17,36 +17,65 @@ interface RouteParams {
 const route = useRoute()
 const { shortLink }: RouteParams = route.params as RouteParams
 
-const article = ref<ArticleWithContent>()
-
+const article = ref<ArticleWithContent>({
+  id: 1728778987570724864,
+  shortLink: 'mysql-common',
+  title: 'MySQL',
+  description: 'MySQL数据库基础、MySQL架构、存储引擎、事务、锁、索引、日志等',
+  content: '',
+  cover: [
+    'https://r2-img.lnbiuc.com/blog/2023/11/1536b7ff27547e77f30bbb9a1c75ed3b.jpg',
+  ],
+  category: 'ARTICLE',
+  stack: [],
+  tags: [
+    'mysql',
+  ],
+  author: {
+    id: 1730607699895787520,
+    email: 'hi@******.com',
+    nickname: 'lnbiuc',
+    avatar: 'https://avatar.example.com/john.png',
+    bio: 'This is john\'s bio info',
+    status: 'active',
+  },
+  createdAt: '2023-11-26 22:13:24',
+  updatedAt: '2023-11-26 22:16:33',
+  views: 748,
+  likes: 0,
+})
+let md = 'Violet'
 const id = 'preview-only'
-
-const color = useColorMode()
 
 function getArticle() {
   if (!shortLink)
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
+    md = article.value?.content || ''
   },
   )
 }
+
 getArticle()
+
+const color = useColorMode()
 
 const theme = ref<'light' | 'dark'>(color.value === 'dark' ? 'dark' : 'light')
 
-// if (window)
-// theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+if (window)
+  theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+
+watch(() => color.value, () => {
+  theme.value = color.value === 'light' ? 'light' : 'dark'
+}, {
+  immediate: true,
+})
 
 let scrollElement: string | HTMLElement | undefined
 
-watchEffect(() => {
-  theme.value = color.value === 'light' ? 'light' : 'dark'
-})
-
 onMounted(() => {
   scrollElement = document.documentElement
-  theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
@@ -106,7 +135,7 @@ function handleOnGetCatalog(catalog: HeadList[]) {
           >
             <MdPreview
               :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
-              :editor-id="id" :model-value="article?.content" :show-code-row-number="true" preview-theme="github"
+              :editor-id="id" :model-value="md" :show-code-row-number="true" preview-theme="github"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">

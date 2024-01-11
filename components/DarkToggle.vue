@@ -12,6 +12,8 @@ useHead({
 function toggleDark() {
   color.preference = color.value === 'dark' ? 'light' : 'dark'
 }
+
+color.value = 'dark'
 </script>
 
 <template>
