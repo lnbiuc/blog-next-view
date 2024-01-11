@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 const props = defineProps({
   fixed: {
     type: Boolean,
@@ -11,6 +11,27 @@ const props = defineProps({
     default: false,
   },
 })
+
+const { width, height } = useWindowSize()
+
+const isOpen = ref(false)
+
+const links = [{
+  label: 'Home',
+  to: '/'
+}, {
+  label: 'Blog',
+  to: '/blog'
+}, {
+  label: 'Shorts',
+  to: '/shorts'
+}, {
+  label: 'Project',
+  to: '/project'
+},{
+  label: 'About',
+  to: '/about'
+}]
 </script>
 
 <template>
@@ -37,7 +58,7 @@ const props = defineProps({
             </NuxtLink>
           </ul>
         </div>
-        <div class="w-[30%] flex justify-start">
+        <div v-if="width > 767" class="w-[30%] flex justify-start">
           <DarkToggle />
         </div>
       </div>
@@ -60,9 +81,8 @@ const props = defineProps({
 }
 
 .wave-animation {
-  background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff, #7a2df3, #2be22b);
+  background: linear-gradient(to right, #8a2be2, rgb(106, 103, 206), #aa00ff, #7a2df3);
   background-size: 200% 200%;
-  animation: gradientAnimation 10s ease infinite;
   box-shadow: 0 0 150px 2px rgb(106, 103, 206);
 }
 
@@ -72,7 +92,7 @@ const props = defineProps({
   }
 
   100% {
-    background-position: 100% 0;
+    background-position: 200% 0;
   }
 }
 

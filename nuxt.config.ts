@@ -8,7 +8,10 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/ui',
-    '@nuxtseo/module',
+    '@nuxtjs/seo',
+    'nuxt-simple-robots',
+    '@nuxtjs/sitemap',
+    'nuxt-og-image'
   ],
 
   site: {

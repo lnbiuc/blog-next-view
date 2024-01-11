@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import 'md-editor-v3/lib/preview.css'
 import { MdPreview } from 'md-editor-v3'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
@@ -43,8 +43,25 @@ watch(() => color.value, () => {
   immediate: true,
 })
 
+useSeoMeta({
+  ogImage: '/ogabout.png',
+  twitterTitle: '薇尔薇｜About',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/ogabout.png',
+  twitterCard: 'summary_large_image'
+})
+
 useHead({
-  title: 'About',
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
 })
 </script>
 
@@ -59,23 +76,23 @@ useHead({
           <div class="py-4">
             <span>Introduction and Contact Information: Feel free to leave messages here to get in touch with me.</span>
           </div>
-          <MdPreview editor-id="about-me" class="preview" :model-value="md" :theme="theme" />
+          <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" />
         </div>
         <MyGiscus
-          class="mt-4 py-4"
-          repo="lnbiuc/blog-next-view"
-          repo-id="R_kgDOKsLYcQ"
+          :theme="color.preference"
           category="Announcements"
           category-id="DIC_kwDOKsLYcc4CbAW9"
-          mapping="pathname"
-          term="Welcome to @giscus/vue component!"
-          strict="1"
-          reactions-enabled="1"
+          class="mt-4 py-4"
+          crossorigin="anonymous"
           emit-metadata="0"
           input-position="top"
-          :theme="color.preference"
           lang="en"
-          crossorigin="anonymous"
+          mapping="pathname"
+          reactions-enabled="1"
+          repo="lnbiuc/blog-next-view"
+          repo-id="R_kgDOKsLYcQ"
+          strict="1"
+          term="Welcome to @giscus/vue component!"
         />
       </NuxtLayout>
     </NuxtLayout>

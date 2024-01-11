@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { Article } from '~/server/types/article'
 
 // import { useArticleApiStore } from '~/store'
@@ -24,11 +24,33 @@ function getHomeData() {
 }
 
 getHomeData()
+
+useSeoMeta({
+  ogImage: '/og.png',
+  twitterTitle: '薇尔薇',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/og.png',
+  twitterCard: 'summary_large_image'
+})
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
+})
 </script>
 
 <template>
   <div>
     <NuxtLayout name="default">
+      <IndexIGImage/>
       <div>
         <Suspense>
           <ClientOnly>

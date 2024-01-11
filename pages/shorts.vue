@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory, searchShorts } from '~/server/api/article'
 
@@ -56,8 +56,25 @@ async function handleSortByChange(selectVal: string) {
   }
 }
 
+useSeoMeta({
+  ogImage: '/ogshort.png',
+  twitterTitle: '薇尔薇｜Shorts',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/ogshort.png',
+  twitterCard: 'summary_large_image'
+})
+
 useHead({
-  title: 'Shorts',
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
 })
 </script>
 
@@ -75,7 +92,7 @@ useHead({
               </span>
             </div>
             <Search
-              category="SHORTS" :is-loading="isLoading" @params-change="handleParamsChange"
+              :is-loading="isLoading" category="SHORTS" @params-change="handleParamsChange"
               @sort-by-change="handleSortByChange"
             />
           </div>

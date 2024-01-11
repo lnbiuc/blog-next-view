@@ -9,11 +9,15 @@ useHead({
   }],
 })
 
+color.preference = 'dark'
+
 function toggleDark() {
   color.preference = color.value === 'dark' ? 'light' : 'dark'
 }
 
-color.value = 'dark'
+onMounted(() => {
+  color.preference = 'dark'
+})
 </script>
 
 <template>
