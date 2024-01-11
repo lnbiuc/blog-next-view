@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { MdCatalog, MdPreview } from 'md-editor-v3'
@@ -17,42 +17,17 @@ interface RouteParams {
 const route = useRoute()
 const { shortLink }: RouteParams = route.params as RouteParams
 
-const article = ref<ArticleWithContent>({
-  id: 1728778987570724864,
-  shortLink: 'mysql-common',
-  title: 'MySQL',
-  description: 'MySQL数据库基础、MySQL架构、存储引擎、事务、锁、索引、日志等',
-  content: '',
-  cover: [
-    'https://r2-img.lnbiuc.com/blog/2023/11/1536b7ff27547e77f30bbb9a1c75ed3b.jpg',
-  ],
-  category: 'ARTICLE',
-  stack: [],
-  tags: [
-    'mysql',
-  ],
-  author: {
-    id: 1730607699895787520,
-    email: 'hi@******.com',
-    nickname: 'lnbiuc',
-    avatar: 'https://avatar.example.com/john.png',
-    bio: 'This is john\'s bio info',
-    status: 'active',
-  },
-  createdAt: '2023-11-26 22:13:24',
-  updatedAt: '2023-11-26 22:16:33',
-  views: 748,
-  likes: 0,
-})
-let md = 'Violet'
+const article = ref<ArticleWithContent>()
 const id = 'preview-only'
 
+const isLoading = ref(true)
+const afterFetchData = ref(false)
 function getArticle() {
   if (!shortLink)
     return
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
-    md = article.value?.content || ''
+    afterFetchData.value = true
   },
   )
 }
@@ -63,8 +38,8 @@ const color = useColorMode()
 
 const theme = ref<'light' | 'dark'>(color.value === 'dark' ? 'dark' : 'light')
 
-if (window)
-  theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+// if (window)
+//   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
 watch(() => color.value, () => {
   theme.value = color.value === 'light' ? 'light' : 'dark'
@@ -74,39 +49,67 @@ watch(() => color.value, () => {
 
 let scrollElement: string | HTMLElement | undefined
 
+
 onMounted(() => {
   scrollElement = document.documentElement
+  // color.preference = theme.value
 })
+
+// nextTick(() => {
+//   nextTick(() => {
+//     theme.value = color.value === 'light' ? 'light' : 'dark'
+//   })
+// })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
 
 const hasCatalog = ref(false)
 
 function handleOnGetCatalog(catalog: HeadList[]) {
-  if (catalog && catalog.length > 0)
+  if (catalog && catalog.length > 0) {
     hasCatalog.value = true
+  }
+  isLoading.value = false
 }
+
+useHead({
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
+})
 </script>
 
 <template>
   <div>
     <Head>
       <Meta
-        name="keywords"
         :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
+        name="keywords"
       />
-      <Meta property="og:title" :content="article?.title || 'Violet\'s Blog'" />
-      <Meta property="og:description" :content="article?.description || 'A blog for sharing knowledge test'" />
-      <Meta property="og:image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
-      <Meta name="twitter:card" content="summary_large_image" />
-      <Meta name="twitter:creator" content="@lnbiuc" />
-      <Meta name="twitter:title" :content="article?.title || 'Violet\'s Blog'" />
-      <Meta name="twitter:description" :content="article?.description || 'A blog for sharing knowledge test'" />
-      <Meta name="twitter:image" :content="article?.cover[0] || 'https://vio.vin/favicon.ico'" />
+      <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
+      <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
+      <Meta :content="article?.cover[0] || 'https://r2-img.lnbiuc.com/blog/2023/12/a0c3209cc9c8515b9466d29db77c8904.jpeg'" property="og:image" />
+      <Meta content="summary_large_image" name="twitter:card" />
+      <Meta content="@lnbiuc" name="twitter:creator" />
+      <Meta :content="article?.title || 'Violet\'s Blog'" name="twitter:title" />
+      <Meta :content="article?.description || 'A blog for sharing knowledge.'" name="twitter:description" />
+      <Meta :content="article?.cover[0] || 'https://r2-img.lnbiuc.com/blog/2023/12/a0c3209cc9c8515b9466d29db77c8904.jpeg'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
-        <div v-if="article">
+        <div v-if="isLoading" class="absolute z-40 top-[6px] left-0 dark:bg-black bg-light-200">
+          <div class="relative  w-[100vw] h-[100vh] flex flex-row items-center justify-center">
+            <div class="loader w-full scale-150 text-violet" />
+          </div>
+        </div>
+        <div v-if="afterFetchData">
           <div class="flex flex-col text-left">
             <Transition name="fade">
               <img
@@ -130,33 +133,30 @@ function handleOnGetCatalog(catalog: HeadList[]) {
             <UDivider class="my-6" />
           </div>
           <div
-            class="text-left lg:grid lg:gap-8"
             :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }"
+            class="text-left lg:grid lg:gap-8"
           >
             <MdPreview
-              :on-get-catalog="handleOnGetCatalog" :theme="theme" :md-heading-id="mdHeadingId" class="preview"
-              :editor-id="id" :model-value="md" :show-code-row-number="true" preview-theme="github"
+              :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
+              :show-code-row-number="true" :theme="theme" class="preview" preview-theme="github"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
                   <MdCatalog
-                    :md-heading-id="mdHeadingId" :editor-id="id" :offset-top="90" :scroll-element-offset-top="80"
-                    :scroll-element="scrollElement"
+                    :editor-id="id" :md-heading-id="mdHeadingId" :offset-top="90" :scroll-element="scrollElement"
+                    :scroll-element-offset-top="80"
                   />
                 </ClientOnly>
               </div>
             </Transition>
           </div>
           <MyGiscus
-            class="mt-4 py-4" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" category="Announcements"
-            category-id="DIC_kwDOKsLYcc4CbAW9" mapping="pathname" term="Welcome to @giscus/vue component!" strict="1"
-            reactions-enabled="1" emit-metadata="0" input-position="top" :theme="theme" lang="en"
-            crossorigin="anonymous"
+            :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="mt-4 py-4"
+            crossorigin="anonymous" emit-metadata="0" input-position="top" lang="en"
+            mapping="pathname" reactions-enabled="1" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" strict="1"
+            term="Welcome to @giscus/vue component!"
           />
-        </div>
-        <div v-else class="h-[80vh] w-full flex flex-row items-center justify-center">
-          <div class="loader w-full scale-150 text-violet" />
         </div>
       </NuxtLayout>
     </NuxtLayout>

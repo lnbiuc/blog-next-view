@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory } from '~/server/api/article'
 
@@ -16,8 +16,25 @@ getArticleByCategory('PROJECT', page.value.pageNumber, page.value.pageSize).then
   })
 })
 
+useSeoMeta({
+  ogImage: '/ogproject.png',
+  twitterTitle: '薇尔薇｜Project',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/ogproject.png',
+  twitterCard: 'summary_large_image'
+})
+
 useHead({
-  title: 'Project',
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
 })
 </script>
 

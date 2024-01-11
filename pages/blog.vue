@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory, searchArticle } from '~/server/api/article'
 
@@ -59,8 +59,25 @@ async function handleSortByChange(selectVal: string) {
   }
 }
 
+useSeoMeta({
+  ogImage: '/ogblog.png',
+  twitterTitle: '薇尔薇｜Blog',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/ogblog.png',
+  twitterCard: 'summary_large_image'
+})
+
 useHead({
-  title: 'Blogs',
+  htmlAttrs: {
+    lang: 'en'
+  },
+  link: [
+    {
+      rel: 'icon',
+      type: 'image/png',
+      href: '/favicon.png'
+    }
+  ]
 })
 </script>
 
@@ -77,7 +94,7 @@ useHead({
               <span>Thoughts, mental models, and tutorials about front-end development.</span>
             </div>
             <Search
-              category="ARTICLE" :is-loading="isLoading" @params-change="handleParamsChange"
+              :is-loading="isLoading" category="ARTICLE" @params-change="handleParamsChange"
               @sort-by-change="handleSortByChange"
             />
           </div>
