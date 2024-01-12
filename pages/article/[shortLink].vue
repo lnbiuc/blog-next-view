@@ -49,7 +49,6 @@ watch(() => color.value, () => {
 
 let scrollElement: string | HTMLElement | undefined
 
-
 onMounted(() => {
   scrollElement = document.documentElement
   // color.preference = theme.value
@@ -66,23 +65,23 @@ const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index
 const hasCatalog = ref(false)
 
 function handleOnGetCatalog(catalog: HeadList[]) {
-  if (catalog && catalog.length > 0) {
+  if (catalog && catalog.length > 0)
     hasCatalog.value = true
-  }
+
   isLoading.value = false
 }
 
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: 'en',
   },
   link: [
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
+      href: '/favicon.png',
+    },
+  ],
 })
 </script>
 
@@ -95,17 +94,17 @@ useHead({
       />
       <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
-      <Meta :content="article?.cover[0] || 'https://r2-img.lnbiuc.com/blog/2023/12/a0c3209cc9c8515b9466d29db77c8904.jpeg'" property="og:image" />
+      <Meta :content="article?.cover[0] || '/og.png'" property="og:image" />
       <Meta content="summary_large_image" name="twitter:card" />
       <Meta content="@lnbiuc" name="twitter:creator" />
       <Meta :content="article?.title || 'Violet\'s Blog'" name="twitter:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" name="twitter:description" />
-      <Meta :content="article?.cover[0] || 'https://r2-img.lnbiuc.com/blog/2023/12/a0c3209cc9c8515b9466d29db77c8904.jpeg'" name="twitter:image" />
+      <Meta :content="article?.cover[0] || '/og.png'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
-        <div v-if="isLoading" class="absolute z-40 top-[6px] left-0 dark:bg-black bg-light-200">
-          <div class="relative  w-[100vw] h-[100vh] flex flex-row items-center justify-center">
+        <div v-if="isLoading" class="absolute left-0 top-[6px] z-40 bg-light-200 dark:bg-black">
+          <div class="relative h-[100vh] w-[100vw] flex flex-row items-center justify-center">
             <div class="loader w-full scale-150 text-violet" />
           </div>
         </div>
