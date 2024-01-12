@@ -26,10 +26,10 @@ useColorMode().value = 'dark'
     <Transition name="fade">
       <div v-if="isScroll" class="fixed bottom-4 right-4 z-1000 flex flex-row justify-end">
         <div
-          class="h-30px w-30px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
+          class="h-50px w-50px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
           @click="handleToTop"
         >
-          <div class="i-carbon-chevron-up scale-100" />
+          <div class="i-carbon-chevron-up scale-150" />
         </div>
       </div>
     </Transition>
