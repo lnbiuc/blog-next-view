@@ -3,7 +3,7 @@
 
 <template>
   <div
-    class="flex flex-row cursor-pointer items-center justify-between common-border"
+    class="card flex flex-row cursor-pointer items-center justify-between common-border"
   >
     <slot />
   </div>

@@ -39,9 +39,13 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/api/**': { proxy: { to: process.server ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
-    // '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
+    // '/api/**': { proxy: { to: process.server ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
+    '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
     // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
+  },
+
+  devProxy: {
+    '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
   },
 
   experimental: {
