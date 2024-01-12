@@ -104,13 +104,12 @@ useHead({
   color: #A78BFA !important;
 }
 
-.preview>>>ul {
-  list-style-type: disc;
-  /* 默认值，圆点 */
+/* 使用 :deep() 替换 >>> */
+:deep(.preview) ul {
+  list-style-type: disc; /* 默认值，圆点 */
 }
 
-.preview>>>ol {
-  list-style-type: decimal;
-  /* 默认值，数字 */
+:deep(.preview) ol {
+  list-style-type: decimal; /* 默认值，数字 */
 }
 </style>

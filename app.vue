@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script lang="ts" setup>
 function handleToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
@@ -26,10 +26,10 @@ useColorMode().value = 'dark'
     <Transition name="fade">
       <div v-if="isScroll" class="fixed bottom-4 right-4 z-1000 flex flex-row justify-end">
         <div
-          class="h-50px w-50px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
+          class="h-35px w-35px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
           @click="handleToTop"
         >
-          <div class="i-carbon-chevron-up scale-150" />
+          <div class="i-carbon-chevron-up" />
         </div>
       </div>
     </Transition>

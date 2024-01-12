@@ -3,6 +3,7 @@ import type { Article } from '~/server/types/article'
 
 // import { useArticleApiStore } from '~/store'
 import { getHomeArticle } from '~/server/api/article'
+import process from 'node:process'
 
 const online = useOnline()
 

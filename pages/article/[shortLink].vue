@@ -15,17 +15,22 @@ interface RouteParams {
 }
 
 const route = useRoute()
-const { shortLink }: RouteParams = route.params as RouteParams
-
+const params = route.params
 const article = ref<ArticleWithContent>()
 const id = 'preview-only'
 
 const isLoading = ref(true)
 const afterFetchData = ref(false)
+
+function processShortLink(shortLink: string | string[]): string {
+  if (Array.isArray(shortLink)) {
+    return ''; // 如果是数组，返回空字符串
+  } else {
+    return shortLink; // 否则返回shortLink本身
+  }
+}
 function getArticle() {
-  if (!shortLink)
-    return
-  getArticleByShortLink(shortLink).then((res) => {
+  getArticleByShortLink(processShortLink(params?.shortLink)).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
   },
@@ -175,15 +180,13 @@ useHead({
 .md-editor {
   --md-bk-color: transparent !important;
 }
-
-.preview>>>ul {
-  list-style-type: disc;
-  /* 默认值，圆点 */
+/* 使用 :deep() 替换 >>> */
+:deep(.preview) ul {
+  list-style-type: disc; /* 默认值，圆点 */
 }
 
-.preview>>>ol {
-  list-style-type: decimal;
-  /* 默认值，数字 */
+:deep(.preview) ol {
+  list-style-type: decimal; /* 默认值，数字 */
 }
 
 /* HTML: <div class="loader"></div> */
