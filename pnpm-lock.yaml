@@ -20,6 +20,9 @@ dependencies:
   md-editor-v3:
     specifier: ^4.10.0
     version: 4.10.0(@codemirror/state@6.4.0)(@codemirror/view@6.23.0)(@lezer/common@1.2.0)(vue@3.4.3)
+  vue-use-fixed-header:
+    specifier: ^2.0.1
+    version: 2.0.1
 
 devDependencies:
   '@antfu/eslint-config':
@@ -10467,6 +10470,10 @@ packages:
       '@vue/language-core': 1.8.27(typescript@5.3.3)
       semver: 7.5.4
       typescript: 5.3.3
+
+  /vue-use-fixed-header@2.0.1:
+    resolution: {integrity: sha512-mVn4i84ofefBa0RadrcQyDBgLuFfmSBjJPi8vylcINoQ5a+/sUzncnHa+syHdtIvXf1dFXfBR92CR1V2isZmCw==}
+    dev: false
 
   /vue@3.4.3(typescript@5.3.3):
     resolution: {integrity: sha512-GjN+culMAGv/mUbkIv8zMKItno8npcj5gWlXkSxf1SPTQf8eJ4A+YfHIvQFyL1IfuJcMl3soA7SmN1fRxbf/wA==}
