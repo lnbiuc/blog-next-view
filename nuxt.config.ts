@@ -44,9 +44,9 @@ export default defineNuxtConfig({
     // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
   },
 
-  devProxy: {
-    '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
-  },
+  // devProxy: {
+  //   '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
+  // },
 
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
