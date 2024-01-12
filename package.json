@@ -24,7 +24,7 @@
     "@iconify-json/carbon": "^1.1.27",
     "@iconify-json/twemoji": "^1.1.15",
     "@nuxtjs/color-mode": "^3.3.2",
-    "@nuxtjs/seo": "2.0.0-rc.4",
+    "@nuxtseo/module": "2.0.0-beta.45",
     "@pinia/nuxt": "^0.5.1",
     "@unocss/eslint-config": "^0.56.5",
     "@unocss/nuxt": "^0.56.5",
