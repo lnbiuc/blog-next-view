@@ -45,8 +45,4 @@ function openNewTab(url: string) {
 .card-bg-filter:hover img {
   transform: scale(1.05);
 }
-
-.my-open-tab {
-  cursor: url(/new-tab.png) 10 10, pointer
-}
 </style>

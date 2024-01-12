@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
-    'nuxt-og-image'
+    'nuxt-og-image',
   ],
 
   site: {
