@@ -12,6 +12,7 @@ export default defineNuxtConfig({
     'nuxt-simple-robots',
     '@nuxtjs/sitemap',
     'nuxt-og-image',
+    '@nuxtjs/mdc',
   ],
 
   site: {

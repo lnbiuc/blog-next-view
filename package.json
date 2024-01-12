@@ -17,13 +17,15 @@
     "@nuxt/ui": "^2.12.0",
     "animate.css": "^4.1.1",
     "date-fns": "^2.30.0",
-    "md-editor-v3": "^4.10.0"
+    "md-editor-v3": "^4.10.0",
+    "vue-use-fixed-header": "^2.0.1"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^1.2.1",
     "@iconify-json/carbon": "^1.1.27",
     "@iconify-json/twemoji": "^1.1.15",
     "@nuxtjs/color-mode": "^3.3.2",
+    "@nuxtjs/mdc": "^0.3.0",
     "@nuxtjs/seo": "2.0.0-rc.4",
     "@pinia/nuxt": "^0.5.1",
     "@unocss/eslint-config": "^0.56.5",
