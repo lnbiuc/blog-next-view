@@ -10,10 +10,6 @@ import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import 'animate.css'
 
-interface RouteParams {
-  shortLink: string
-}
-
 const route = useRoute()
 const params = route.params
 const article = ref<ArticleWithContent>()
@@ -23,11 +19,11 @@ const isLoading = ref(true)
 const afterFetchData = ref(false)
 
 function processShortLink(shortLink: string | string[]): string {
-  if (Array.isArray(shortLink)) {
-    return ''; // 如果是数组，返回空字符串
-  } else {
-    return shortLink; // 否则返回shortLink本身
-  }
+  if (Array.isArray(shortLink))
+    return '' // 如果是数组，返回空字符串
+
+  else
+    return shortLink // 否则返回shortLink本身
 }
 function getArticle() {
   getArticleByShortLink(processShortLink(params?.shortLink)).then((res) => {
