@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import type { Article } from '~/server/types/article'
 import { getArticleByCategory, searchArticle } from '~/server/api/article'
+import { usePreloadCacheStore } from '~/store'
 
 const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
   pageNumber: 1,
-  pageSize: 20,
+  pageSize: 50,
   total: 0,
   data: [],
 })
@@ -12,6 +13,19 @@ const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Ar
 const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const isLoading = ref<boolean>(false)
+
+const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
+
+function loadArticles() {
+  const res: { pageNumber: number, pageSize: number, total: number, data: Article[] } | undefined = getCategoryArticleCache('ARTICLE')
+  if (res) {
+    page.value = res
+    return
+  }
+  getArticles()
+}
+
+loadArticles()
 
 async function getArticles() {
   isLoading.value = true
@@ -21,10 +35,9 @@ async function getArticles() {
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
     isLoading.value = false
+    cacheCategoryArticle('ARTICLE', page.value)
   })
 }
-
-getArticles()
 
 async function handleParamsChange(searchVal: string) {
   if (searchVal === 'ALL') {
@@ -64,20 +77,20 @@ useSeoMeta({
   twitterTitle: '薇尔薇｜Blog',
   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
   twitterImage: '/ogblog.png',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
 })
 
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: 'en',
   },
   link: [
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
+      href: '/favicon.png',
+    },
+  ],
 })
 </script>
 

@@ -5,6 +5,7 @@ import { MdCatalog, MdPreview } from 'md-editor-v3'
 import type { HeadList } from 'md-editor-v3/lib/types'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
+
 import 'md-editor-v3/lib/preview.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
@@ -114,7 +115,7 @@ useHead({
             <Transition name="fade">
               <img
                 v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-                class="z-10 aspect-[2.5/1] w-full rounded-lg object-cover"
+                class="z-10 aspect-[16/9] w-full rounded-lg object-cover"
               >
             </Transition>
 
@@ -138,7 +139,7 @@ useHead({
           >
             <MdPreview
               :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
-              :show-code-row-number="true" :theme="theme" class="preview" preview-theme="github"
+              :show-code-row-number="true" :theme="theme" class="preview chinese" preview-theme="github"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">

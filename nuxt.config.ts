@@ -31,6 +31,9 @@ export default defineNuxtConfig({
     // @ts-expect-error missing types
     primary: 'violet',
     gray: 'cool',
+    icons: {
+      dynamic: true,
+    },
   },
 
   routeRules: {
@@ -58,6 +61,8 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: '',
+    preference: 'dark',
+    fallback: 'dark',
   },
 
   nitro: {

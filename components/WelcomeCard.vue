@@ -65,7 +65,7 @@ function handleScroll() {
           v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row items-center justify-center" :href="l.url"
           target="_blank"
         >
-          <UIcon :name="l.icon" size="lg" />
+          <UIcon :name="l.icon" class="text-xl" />
           <span class="ml-1">
             {{ l.name }}
           </span>

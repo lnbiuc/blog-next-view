@@ -5,6 +5,12 @@ const { width } = useWindowSize()
 
 const headerRef = ref(null)
 const { styles } = useFixedHeader(headerRef)
+
+const route = useRoute()
+
+function isExactRoute(currRoute: string) {
+  return currRoute === route.path
+}
 </script>
 
 <template>
@@ -14,21 +20,21 @@ const { styles } = useFixedHeader(headerRef)
       <div class="w-full flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <span class="header-link" @click="$router.push('/')">
+            <NuxtLink to="/" class="header-link" :class="{ 'text-violet': isExactRoute('/') }">
               Home
-            </span>
-            <span class="header-link" @click="$router.push('/blog')">
+            </NuxtLink>
+            <NuxtLink to="/blog" class="header-link" :class="{ 'text-violet': isExactRoute('/blog') }">
               Blog
-            </span>
-            <span class="header-link" @click="$router.push('/shorts')">
+            </NuxtLink>
+            <NuxtLink to="/shorts" class="header-link" :class="{ 'text-violet': isExactRoute('/shorts') }">
               Shorts
-            </span>
-            <span class="header-link" @click="$router.push('/project')">
+            </NuxtLink>
+            <NuxtLink to="/project" class="header-link" :class="{ 'text-violet': isExactRoute('/project') }">
               Project
-            </span>
-            <span class="header-link" @click="$router.push('/about')">
+            </NuxtLink>
+            <NuxtLink to="/about" class="header-link" :class="{ 'text-violet': isExactRoute('/about') }">
               About
-            </span>
+            </NuxtLink>
           </ul>
         </div>
         <div v-if="width > 767" class="w-[30%] flex justify-center">

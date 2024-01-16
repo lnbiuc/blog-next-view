@@ -1,29 +1,9 @@
 <script lang="ts" setup>
 import type { Article } from '~/server/types/article'
-
-// import { useArticleApiStore } from '~/store'
-import { getHomeArticle } from '~/server/api/article'
+import { usePreloadCacheStore } from '~/store'
+import { getArticleByCategory } from '~/server/api/article'
 
 const online = useOnline()
-
-const data = ref({
-  featuredArticles: [] as Article[],
-  featuredShort: [] as Article[],
-  featuredProject: [] as Article[],
-})
-
-const loadingFinish = ref(false)
-
-// const { indexData, hasIndexData, getIndexData } = useArticleApiStore()
-
-function getHomeData() {
-  getHomeArticle().then((res) => {
-    data.value = res.data.value?.data as typeof data.value
-    loadingFinish.value = true
-  })
-}
-
-getHomeData()
 
 useSeoMeta({
   ogImage: '/og.png',
@@ -45,6 +25,74 @@ useHead({
     },
   ],
 })
+
+const articlePage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+const shortsPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
+
+function preloadArticles() {
+  if (!getCategoryArticleCache('ARTICLE')) {
+    getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
+      articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      articlePage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('ARTICLE', articlePage.value)
+    })
+  }
+  else {
+    articlePage.value = getCategoryArticleCache('ARTICLE') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+  }
+
+  if (!getCategoryArticleCache('SHORTS')) {
+    getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
+      shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      shortsPage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('SHORTS', shortsPage.value)
+      provide('shortsPage', shortsPage)
+    })
+  }
+  else {
+    shortsPage.value = getCategoryArticleCache('SHORTS') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+  }
+
+  if (!getCategoryArticleCache('PROJECT')) {
+    getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
+      projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      projectPage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('PROJECT', projectPage.value)
+      provide('projectPage', projectPage)
+    })
+  }
+  else {
+    projectPage.value = getCategoryArticleCache('PROJECT') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+  }
+}
+
+preloadArticles()
 </script>
 
 <template>
@@ -66,31 +114,35 @@ useHead({
         </Suspense>
         <WelcomeCard />
         <NuxtLayout name="home">
-          <div v-if="loadingFinish" id="featured">
+          <div v-if="articlePage.data.length > 3" id="featured">
             <div class="title-font">
               Featured Article
             </div>
-            <BlogCards :articles="data.featuredArticles" />
+            <BlogCards :articles="articlePage.data.slice(0, 6)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/blog')">
                 See More
                 <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
+          </div>
+          <div v-if="shortsPage.data.length > 3">
             <div class="title-font">
               Featured Short
             </div>
-            <ShortCards :articles="data.featuredShort" />
+            <ShortCards :articles="shortsPage.data.slice(0, 6)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/shorts')">
                 See More
                 <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
+          </div>
+          <div v-if="projectPage.data.length > 1">
             <div class="title-font">
               Featured Project
             </div>
-            <ProjectCards :articles="data.featuredProject" />
+            <ProjectCards :articles="projectPage.data.slice(0, 3)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/project')">
                 See More
