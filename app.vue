@@ -1,9 +1,99 @@
 <script lang="ts" setup>
+import type { Article } from '~/server/types/article'
+import { getTagByCategory } from '~/server/api/tag'
+import { usePreloadCacheStore } from '~/store'
+import { getArticleByCategory } from '~/server/api/article'
+
 function handleToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
 const isScroll = ref(false)
+
+const articleTags: Ref<string[]> = ref(['ALL'])
+const shortTags: Ref<string[]> = ref(['ALL'])
+
+const { cacheTags, getTagsCache, cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
+
+async function preloadArticleTags() {
+  getTagByCategory('ARTICLE').then((res) => {
+    const resTag = res.data.value?.data as string[]
+    // push res to tags
+    resTag.forEach(e => articleTags.value.push(e))
+    if (!getTagsCache('ARTICLE'))
+      cacheTags('ARTICLE', articleTags.value)
+  })
+}
+
+function preloadShortTags() {
+  getTagByCategory('SHORTS').then((res) => {
+    const resTag = res.data.value?.data as string[]
+    // push res to tags
+    resTag.forEach(e => shortTags.value.push(e))
+    if (!getTagsCache('SHORTS'))
+      cacheTags('SHORTS', shortTags.value)
+  })
+}
+
+const articlePage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+const shortsPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
+  pageNumber: 1,
+  pageSize: 50,
+  total: 0,
+  data: [],
+})
+
+function preloadArticles() {
+  if (!getCategoryArticleCache('ARTICLE')) {
+    getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
+      articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      articlePage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('ARTICLE', articlePage.value)
+      provide('articlePage', articlePage)
+    })
+  }
+
+  if (!getCategoryArticleCache('SHORTS')) {
+    getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
+      shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      shortsPage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('SHORTS', shortsPage.value)
+      provide('shortsPage', shortsPage)
+    })
+  }
+
+  if (!getCategoryArticleCache('PROJECT')) {
+    getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
+      projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
+      projectPage.value.data.sort((a, b) => {
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+      })
+      cacheCategoryArticle('PROJECT', projectPage.value)
+      provide('projectPage', projectPage)
+    })
+  }
+}
+
+preloadArticleTags()
+preloadShortTags()
+preloadArticles()
 
 onMounted(() => {
   window.addEventListener('scroll', () => {
@@ -43,7 +133,6 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
-  scroll-behavior: smooth;
 }
 
 html.dark {
@@ -193,5 +282,15 @@ html.dark {
 
 .github-theme h4 {
   font-size: 1.25rem;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
 }
 </style>

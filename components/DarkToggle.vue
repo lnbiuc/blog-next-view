@@ -16,7 +16,7 @@ function toggleDark() {
 }
 
 onMounted(() => {
-  color.preference = 'dark'
+//   color.preference = 'dark'
 })
 </script>
 

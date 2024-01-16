@@ -58,7 +58,7 @@ const preloadArticle = useThrottleFn(() => {
       <div class="mt-1 font-bold">
         {{ formatTime(props.article.createdAt) }}
       </div>
-      <div class="mt-2">
+      <div class="mt-2 text-sm">
         {{ props.article.description }}
       </div>
     </div>

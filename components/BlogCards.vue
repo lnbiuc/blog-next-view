@@ -21,9 +21,9 @@ onMounted(() => {
 
 <template>
   <div class="my-card grid grid-cols-1 mt-2 w-full gap-4 lg:grid-cols-3 md:grid-cols-3 sm:grid-cols-2 xl:grid-cols-3">
-    <TransitionGroup name="fade">
-      <BlogCard v-for="article in props.articles" :key="article.id" :article="article" class="card" />
-    </TransitionGroup>
+    <!-- <TransitionGroup name="fade"> -->
+    <BlogCard v-for="article in props.articles" :key="article.id" :article="article" class="card" />
+    <!-- </TransitionGroup> -->
   </div>
 </template>
 
@@ -50,7 +50,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.15), transparent 40vmin);
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.15), transparent 20vmin);
   background-attachment: fixed;
   opacity: var(--active, 0);
   transition: opacity 0.2s;
@@ -63,7 +63,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), rgb(167, 139, 250, 1), transparent 40vmin),
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), rgb(167, 139, 250, 1), transparent 20vmin),
     transparent;
   background-attachment: fixed;
   pointer-events: none;
