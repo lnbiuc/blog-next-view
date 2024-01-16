@@ -50,7 +50,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.15), transparent 20vmin);
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), hsl(0 0% 100% / 0.15), transparent 15vmin);
   background-attachment: fixed;
   opacity: var(--active, 0);
   transition: opacity 0.2s;
@@ -63,7 +63,7 @@ onMounted(() => {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), rgb(167, 139, 250, 1), transparent 20vmin),
+    radial-gradient(circle at calc(var(--x) * 1px) calc(var(--y) * 1px), rgb(167, 139, 250, 1), transparent 15vmin),
     transparent;
   background-attachment: fixed;
   pointer-events: none;
