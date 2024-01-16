@@ -1,4 +1,3 @@
-import process from 'node:process'
 import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({
@@ -36,8 +35,8 @@ export default defineNuxtConfig({
 
   routeRules: {
     // '/api/**': { proxy: { to: process ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
-    '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
-    // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
+    // '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
+    '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
   },
 
   devProxy: {
@@ -69,7 +68,7 @@ export default defineNuxtConfig({
     },
     prerender: {
       crawlLinks: false,
-      routes: ['/'],
+      routes: ['/', '/blog', '/shorts', '/project', '/about'],
       ignore: ['/hi'],
     },
   },

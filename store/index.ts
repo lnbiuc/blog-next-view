@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
-import type { Article } from '~/server/types/article'
-import { getHomeArticle } from '~/server/api/article'
+import type { Article, ArticleWithContent } from '~/server/types/article'
+import { getArticleByShortLink, getHomeArticle } from '~/server/api/article'
 
 export const useArticleApiStore = defineStore('articleApi', () => {
   const indexDataRef = ref({
@@ -54,4 +54,28 @@ export const useIndexArticleApiStore = defineStore('indexArticleApi', {
       this.indexData = data
     },
   },
+})
+
+export const usePreloadCacheStore = defineStore('preloadCache', () => {
+  const articleCache: Ref<Record<string, ArticleWithContent>> = ref({})
+  // const tagCache: Ref<Record<string>, string[]> = ref({})
+
+  function cacheArticle(data: ArticleWithContent): void {
+    articleCache.value[data.shortLink] = data
+  }
+
+  function getArticleCache(shortLink: string): ArticleWithContent | undefined {
+    if (articleCache.value[shortLink])
+      return articleCache.value[shortLink]
+  }
+
+  // function cacheTags(category: string, tags: string[]) {
+  //   tagCache.value[category] = tags
+  // }
+
+  // function getTagsCache(category: string) {
+
+  // }
+
+  return { cacheArticle, getArticleCache }
 })

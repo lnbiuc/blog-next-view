@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { Article } from '~/server/types/article'
+import { ref } from 'vue'
+import { useThrottleFn } from '@vueuse/core'
+import type { Article, ArticleWithContent } from '~/server/types/article'
 import { formatTime } from '~/composables/formatTime'
+import { usePreloadCacheStore } from '~/store'
+import { getArticleByShortLink } from '~/server/api/article'
 
 const props = defineProps({
   article: {
@@ -8,12 +12,29 @@ const props = defineProps({
     required: true,
   },
 })
+
+const article = ref<ArticleWithContent>()
+
+const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+
+const preloadArticle = useThrottleFn(() => {
+  const res: ArticleWithContent | undefined = getArticleCache(props.article.shortLink)
+  if (res)
+    return
+
+  getArticleByShortLink(props.article.shortLink).then((res) => {
+    article.value = res.data.value?.data as ArticleWithContent
+    cacheArticle(article.value)
+  },
+  )
+}, 1000)
 </script>
 
 <template>
   <div
     class="card-bg-filter overflow-hidden card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)"
+    @mouseover="preloadArticle()"
   >
     <div class="relative overflow-hidden p-[3px]">
       <img :src="props.article.cover[0]" alt="cover" class="z-0 h-48 w-full transform rounded-tl-sm rounded-tr-sm object-cover">

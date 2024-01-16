@@ -3,7 +3,6 @@ import type { Article } from '~/server/types/article'
 
 // import { useArticleApiStore } from '~/store'
 import { getHomeArticle } from '~/server/api/article'
-import process from 'node:process'
 
 const online = useOnline()
 
@@ -31,27 +30,27 @@ useSeoMeta({
   twitterTitle: '薇尔薇',
   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
   twitterImage: '/og.png',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
 })
 
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: 'en',
   },
   link: [
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
+      href: '/favicon.png',
+    },
+  ],
 })
 </script>
 
 <template>
   <div>
     <NuxtLayout name="default">
-      <IndexIGImage/>
+      <IndexIGImage />
       <div>
         <Suspense>
           <ClientOnly>

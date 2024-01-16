@@ -9,30 +9,32 @@ import 'md-editor-v3/lib/preview.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import 'animate.css'
-
-interface RouteParams {
-  shortLink: string
-}
+import { usePreloadCacheStore } from '~/store'
 
 const route = useRoute()
-const params = route.params
 const article = ref<ArticleWithContent>()
 const id = 'preview-only'
 
 const isLoading = ref(true)
-const afterFetchData = ref(false)
+const afterFetchData = ref(true)
 
-function processShortLink(shortLink: string | string[]): string {
-  if (Array.isArray(shortLink)) {
-    return ''; // 如果是数组，返回空字符串
-  } else {
-    return shortLink; // 否则返回shortLink本身
-  }
-}
+// @ts-expect-error fkts
+const shortLink = route.params.shortLink
+
+const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+
 function getArticle() {
-  getArticleByShortLink(processShortLink(params?.shortLink)).then((res) => {
+  const res: ArticleWithContent | undefined = getArticleCache(shortLink)
+  if (res) {
+    article.value = res
+    afterFetchData.value = true
+    return
+  }
+
+  getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
+    cacheArticle(article.value)
   },
   )
 }
