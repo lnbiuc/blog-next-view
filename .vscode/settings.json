@@ -14,7 +14,7 @@
   "editor.fontFamily": "Monaspace Argon, Input Mono, Fire Code",
 
   // theme
-  "workbench.colorTheme": "GitHub Dark Colorblind (Beta)",
+  "workbench.colorTheme": "Darcula",
 
   // Auto fix
   "editor.codeActionsOnSave": {
