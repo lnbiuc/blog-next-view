@@ -9,7 +9,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtseo/module',
     '@formkit/auto-animate/nuxt',
-    '@nuxtjs/google-fonts',
   ],
 
   site: {
