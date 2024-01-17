@@ -8,6 +8,8 @@ export default defineNuxtConfig({
     '@nuxtjs/color-mode',
     '@nuxt/ui',
     '@nuxtseo/module',
+    '@formkit/auto-animate/nuxt',
+    '@nuxtjs/google-fonts',
   ],
 
   site: {
@@ -28,10 +30,10 @@ export default defineNuxtConfig({
   },
 
   ui: {
-    // @ts-expect-error missing types
     primary: 'violet',
     gray: 'cool',
     icons: {
+    // @ts-expect-error missing types
       dynamic: true,
     },
   },
