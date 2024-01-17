@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import 'animate.css'
-
 const link = [
   {
     index: 0,
@@ -73,7 +71,7 @@ function handleScroll() {
       </div>
     </div>
     <div class="hidden transition-transform duration-150 md:block hover:scale-105">
-      <img src="/favicon.ico" alt="logo" class="favicon-shadown animate__bounceIn h-[300px] w-[300px] rounded-full">
+      <img v-auto-animate src="/favicon.ico" alt="logo" class="favicon-shadown h-[300px] w-[300px] rounded-full">
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center">

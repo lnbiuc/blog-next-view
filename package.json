@@ -13,6 +13,7 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
+    "@formkit/auto-animate": "^0.8.1",
     "@giscus/vue": "^2.4.0",
     "@nuxt/ui": "^2.12.0",
     "animate.css": "^4.1.1",
