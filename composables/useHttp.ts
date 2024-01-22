@@ -31,7 +31,6 @@ function fetch<T>(url: UrlType, option: UseFetchOptions<ResOptions<T>>) {
   return useFetch<ResOptions<T>>(url, {
     // 请求拦截器
     onRequest({ options }) {
-      options.headers = { referer: 'localhost' }
       // 在这里判断错误
       return options
     },

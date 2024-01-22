@@ -107,7 +107,7 @@ useColorMode().value = 'dark'
 <template>
   <div>
     <div class="main-bg z-0 h-full w-full opacity-20" />
-    <Header class="animate__fadeInDown" />
+    <Header />
     <div class="relative z-10">
       <NuxtPage />
     </div>
