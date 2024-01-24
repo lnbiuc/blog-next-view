@@ -62,7 +62,7 @@ onMounted(() => {
   // }
   const card: HTMLElement | null = document.querySelector('.favicon-shadown')
   const motionMatchMedia = window.matchMedia('(prefers-reduced-motion)')
-  const THRESHOLD = 20
+  const THRESHOLD = 10
   /*
  * Read the blog post here:
  * https://letsbuildui.dev/articles/a-3d-hover-effect-using-css-transforms
@@ -103,7 +103,7 @@ onMounted(() => {
         Hi!👋
       </h1>
       <h1 class="mt-5 text-6xl font-bold">
-        I'm <span class="text-violet" style="font-family: 'MyFont', sans-serif;">Violet</span>
+        I'm <span class="text-violet text-shadow-md" style="font-family: 'MyFont', sans-serif;">violet</span>
       </h1>
       <span class="mb-2 mt-5 text-2xl">
         A Web Developer 🖥. Code for Fun.
@@ -129,7 +129,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="hidden transition-all md:block">
-      <img v-auto-animate src="/favicon.ico" alt="logo" class="favicon-shadown h-[300px] w-[300px] rounded-full transition-all">
+      <img v-auto-animate src="/favicon.ico" alt="logo" class="favicon-shadown h-[300px] w-[300px] rounded-full shadow-md transition-all hover:shadow-xl">
     </div>
   </div>
   <div class="h-[100px] w-full flex flex-row justify-center">
@@ -144,26 +144,22 @@ onMounted(() => {
 }
 
 .favicon-shadown:hover {
-  box-shadow: 0 0 150px 60px #8990b5;
   transform: translateZ(12px);
   transition: all 0.1s ease;
 }
 
 .dark .favicon-shadown:hover {
-  box-shadow: 0 0 150px 60px #335062;
   transform: translateZ(12px);
   transition: all 0.1s ease;
 }
 
 .favicon-shadown {
-  box-shadow: 0 0 150px 30px #8990b5;
   transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
   transition: all 0.1s ease;
   transform-style: preserve-3d;
 }
 
 .dark .favicon-shadown {
-  box-shadow: 0 0 150px 30px #335062;
   transition: all 0.1s ease;
   transform-style: preserve-3d;
 }

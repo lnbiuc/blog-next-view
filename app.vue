@@ -3,6 +3,7 @@ import type { Article } from '~/server/types/article'
 import { getTagByCategory } from '~/server/api/tag'
 import { usePreloadCacheStore } from '~/store'
 import { getArticleByCategory } from '~/server/api/article'
+import '~/styles/main.css'
 
 function handleToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
@@ -106,7 +107,7 @@ useColorMode().value = 'dark'
 
 <template>
   <div>
-    <div class="main-bg z-0 h-full w-full opacity-20" />
+    <div class="z-0 h-full w-full opacity-20" />
     <Header />
     <div class="relative z-10">
       <NuxtPage />
@@ -133,11 +134,6 @@ body,
   height: 100vh;
   margin: 0;
   padding: 0;
-}
-
-html.dark {
-  background: #0E1111;
-  color: #C9D1D9;
 }
 
 .md-editor-dark {
@@ -255,10 +251,6 @@ html.dark {
     100px 100px 80px rgba(0, 0, 0, 0.07);
 }
 
-.card-bg-filter {
-  backdrop-filter: saturate(180%) blur(20px);
-}
-
 .my-open-tab {
   cursor: url(/new-tab.png) 10 10, pointer
 }
@@ -292,5 +284,17 @@ html.dark {
 .page-leave-to {
   opacity: 0;
   filter: blur(1rem);
+}
+
+.link-active {
+  transition: all 0.2s;
+  border-radius:  0.5rem;
+  background-color: #a78bfa2c;
+}
+
+.link-hover:hover {
+    transition: all 0.2s;
+    border-radius:  0.5rem;
+    background-color: #a78bfa2c;
 }
 </style>

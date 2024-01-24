@@ -42,7 +42,7 @@ const preloadArticle = useThrottleFn(() => {
       </div>
       <div class="mt-2">
         <UBadge
-          v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="my-1 mr-1 opacity-90"
+          v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="my-1 mr-2 opacity-90"
           :tag="t"
         >
           {{ t }}
