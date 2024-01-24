@@ -20,25 +20,29 @@ function isExactRoute(currRoute: string) {
       <div class="w-full flex flex-row items-center justify-center">
         <div class="w-[70%] flex justify-center">
           <ul class="flex flex-row py-2">
-            <NuxtLink to="/" class="header-link" :class="{ 'text-violet': isExactRoute('/') }">
+            <NuxtLink to="/" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/') }">
               Home
             </NuxtLink>
-            <NuxtLink to="/blog" class="header-link" :class="{ 'text-violet': isExactRoute('/blog') }">
+            <NuxtLink to="/blog" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/blog') }">
               Blog
             </NuxtLink>
-            <NuxtLink to="/shorts" class="header-link" :class="{ 'text-violet': isExactRoute('/shorts') }">
+            <NuxtLink to="/shorts" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/shorts') }">
               Shorts
             </NuxtLink>
-            <NuxtLink to="/project" class="header-link" :class="{ 'text-violet': isExactRoute('/project') }">
+            <NuxtLink to="/project" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/project') }">
               Project
             </NuxtLink>
-            <NuxtLink to="/about" class="header-link" :class="{ 'text-violet': isExactRoute('/about') }">
+            <NuxtLink to="/about" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/about') }">
               About
             </NuxtLink>
           </ul>
         </div>
-        <div v-if="width > 767" class="w-[30%] flex justify-center">
+        <div
+          v-if="width > 767"
+          class="w-[30%] flex justify-center"
+        >
           <DarkToggle />
+          <!-- <UColorModeButton /> -->
         </div>
       </div>
     </header>

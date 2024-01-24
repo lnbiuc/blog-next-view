@@ -19,19 +19,19 @@ const id = 'preview-only'
 const isLoading = ref(true)
 const afterFetchData = ref(false)
 
-// @ts-expect-error fkts
 const shortLink = route.params.shortLink
 
 const { cacheArticle, getArticleCache } = usePreloadCacheStore()
 
 function getArticle() {
+  // @ts-expect-error fkts
   const res: ArticleWithContent | undefined = getArticleCache(shortLink)
   if (res) {
     article.value = res
     afterFetchData.value = true
     return
   }
-
+  // @ts-expect-error fkts
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
@@ -42,15 +42,14 @@ function getArticle() {
 
 getArticle()
 
-const color = useColorMode()
+const isDark = useDark()
 
-const theme = ref<'light' | 'dark'>(color.value === 'dark' ? 'dark' : 'light')
-
+const theme = ref<'light' | 'dark'>('dark')
 // if (window)
 //   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
-watch(() => color.value, () => {
-  theme.value = color.value === 'light' ? 'light' : 'dark'
+watch(() => isDark.value, () => {
+  theme.value = isDark.value ? 'dark' : 'light'
 }, {
   immediate: true,
 })
@@ -60,6 +59,11 @@ let scrollElement: string | HTMLElement | undefined
 onMounted(() => {
   scrollElement = document.documentElement
   // color.preference = theme.value
+  theme.value = computed(() => {
+    if (!isDark.value)
+      return 'light'
+    return 'dark'
+  }).value
 })
 
 // nextTick(() => {
@@ -145,7 +149,7 @@ useHead({
           >
             <MdPreview
               :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
-              :show-code-row-number="true" :theme="theme" class="preview chinese" preview-theme="github"
+              :show-code-row-number="false" :theme="theme" class="preview" preview-theme="github"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
