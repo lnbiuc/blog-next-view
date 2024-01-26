@@ -27,12 +27,15 @@ const md = '# Violet\n'
   + '- [Github](https://github.com/lnbiuc)\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
-const color = useColorMode()
 
-const theme = ref<'dark' | 'light'>(color.preference === 'dark' ? 'dark' : 'light')
+const isDark = useDark()
 
-watch(toRef(color).value, () => {
-  theme.value = color.preference === 'dark' ? 'dark' : 'light'
+const theme = ref<'light' | 'dark'>('dark')
+// if (window)
+//   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+
+watchEffect(() => {
+  theme.value = isDark.value ? 'dark' : 'light'
 })
 
 useSeoMeta({
@@ -40,20 +43,20 @@ useSeoMeta({
   twitterTitle: '薇尔薇｜About',
   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
   twitterImage: '/ogabout.png',
-  twitterCard: 'summary_large_image'
+  twitterCard: 'summary_large_image',
 })
 
 useHead({
   htmlAttrs: {
-    lang: 'en'
+    lang: 'en',
   },
   link: [
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png'
-    }
-  ]
+      href: '/favicon.png',
+    },
+  ],
 })
 </script>
 
@@ -62,7 +65,7 @@ useHead({
     <NuxtLayout name="default">
       <NuxtLayout name="home">
         <div class="flex flex-col text-left">
-          <h1 class="text-5xl font-bold text-violet">
+          <h1 class="text-5xl text-violet font-bold">
             About
           </h1>
           <div class="py-4">
@@ -71,7 +74,7 @@ useHead({
           <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" />
         </div>
         <MyGiscus
-          :theme="color.preference"
+          :theme="theme"
           category="Announcements"
           category-id="DIC_kwDOKsLYcc4CbAW9"
           class="mt-4 py-4"
