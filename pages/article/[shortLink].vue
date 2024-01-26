@@ -1,17 +1,19 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { MdCatalog, MdPreview } from 'md-editor-v3'
+import { MdCatalog, MdPreview, config } from 'md-editor-v3'
 import type { HeadList } from 'md-editor-v3/lib/types'
+
+// @ts-expect-error no error
+import ancher from 'markdown-it-anchor'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 
-import 'md-editor-v3/lib/preview.css'
+// import 'md-editor-v3/lib/preview.css'
 
 // import '~/styles/markdown.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
-import 'animate.css'
 import { usePreloadCacheStore } from '~/store'
 
 const route = useRoute()
@@ -21,6 +23,7 @@ const id = 'preview-only'
 const isLoading = ref(true)
 const afterFetchData = ref(false)
 
+// @ts-expect-error fkts
 const shortLink = route.params.shortLink
 
 const { cacheArticle, getArticleCache } = usePreloadCacheStore()
@@ -42,28 +45,26 @@ function getArticle() {
 
 getArticle()
 
-const isDark = useDark()
+definePageMeta({
+  colorMode: 'dark',
+})
+
+const colorMode = useDark()
 
 const theme = ref<'light' | 'dark'>('dark')
 // if (window)
 //   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
-watch(() => isDark.value, () => {
-  theme.value = isDark.value ? 'dark' : 'light'
-}, {
-  immediate: true,
+watchEffect(() => {
+  theme.value = colorMode.value ? 'dark' : 'light'
 })
 
 let scrollElement: string | HTMLElement | undefined
 
 onMounted(() => {
   scrollElement = document.documentElement
-  // color.preference = theme.value
-  theme.value = computed(() => {
-    if (!isDark.value)
-      return 'light'
-    return 'dark'
-  }).value
+  if (colorMode.value)
+    colorMode.value = !colorMode.value
 })
 
 // nextTick(() => {
@@ -71,6 +72,14 @@ onMounted(() => {
 //     theme.value = color.value === 'light' ? 'light' : 'dark'
 //   })
 // })
+
+config({
+  markdownItConfig(mdit) {
+    mdit.use(ancher, {
+
+    })
+  },
+})
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
 
@@ -125,7 +134,7 @@ useHead({
             <Transition name="fade">
               <img
                 v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-                class="z-10 aspect-[16/9] w-full rounded-lg object-cover"
+                class="z-10 aspect-[16/9] w-full rounded-lg object-cover shadow-md"
               >
             </Transition>
 
@@ -149,13 +158,14 @@ useHead({
           >
             <MdPreview
               :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
-              :show-code-row-number="false" :theme="theme" class="preview" preview-theme="github"
+              :show-code-row-number="false" class="preview" preview-theme="github" :theme="theme"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
                   <MdCatalog
                     :editor-id="id" :md-heading-id="mdHeadingId" :offset-top="90" :scroll-element="scrollElement"
+                    class="toc"
                     :scroll-element-offset-top="80"
                   />
                 </ClientOnly>

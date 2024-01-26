@@ -102,7 +102,7 @@ onMounted(() => {
   })
 })
 
-useColorMode().value = 'dark'
+// useColorMode().value = 'dark'
 </script>
 
 <template>
@@ -154,6 +154,10 @@ body,
 .md-editor-catalog-link span:hover,
 .md-editor-catalog-active>span {
   color: #A78BFA !important;
+}
+
+.dark .md-editor-catalog-link {
+    color: #c9d1d9 !important;
 }
 
 /* 1. declare transition */

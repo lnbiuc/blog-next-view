@@ -2,6 +2,7 @@
   --c-bg: #fff;
   --c-scrollbar: #eee;
   --c-scrollbar-hover: #bbb;
+  --md-color: #050505 !important;
 }
 
 html {
@@ -11,9 +12,18 @@ html {
 }
 
 html.dark {
-  --c-bg: #121213;
+  --c-bg: #050505;
   --c-scrollbar: #111;
   --c-scrollbar-hover: #222;
+  --md-color: #c9d1d9  !important;
+}
+
+.md-editor {
+    --md-color: #050505  !important;
+}
+
+.dark .md-editor {
+    --md-color: #c9d1d9  !important;
 }
 
 ::selection {

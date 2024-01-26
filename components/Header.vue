@@ -26,7 +26,7 @@ watchEffect(() => {
 
 <template>
   <div id="header" class="flex flex-col items-center justify-center px-5">
-    <header ref="headerRef" class="Header w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1100px] xl:w-[80%] xl:rounded-md" :style="styles">
+    <header ref="headerRef" class="Header w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] xl:rounded-md" :style="styles">
       <div class="wave-animation h-[10px] w-full" />
       <div class="h-[50px] w-full flex flex-row items-center justify-center">
         <div class="w-[70%] flex" :class="{ 'justify-center': hidden, 'justify-start': !hidden }">
