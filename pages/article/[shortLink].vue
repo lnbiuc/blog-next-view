@@ -7,6 +7,8 @@ import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 
 import 'md-editor-v3/lib/preview.css'
+
+// import '~/styles/markdown.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import 'animate.css'
@@ -24,14 +26,12 @@ const shortLink = route.params.shortLink
 const { cacheArticle, getArticleCache } = usePreloadCacheStore()
 
 function getArticle() {
-  // @ts-expect-error fkts
   const res: ArticleWithContent | undefined = getArticleCache(shortLink)
   if (res) {
     article.value = res
     afterFetchData.value = true
     return
   }
-  // @ts-expect-error fkts
   getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
