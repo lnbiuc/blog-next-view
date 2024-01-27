@@ -28,15 +28,8 @@ const md = '# Violet\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
 
-const isDark = useDark()
 
 const theme = ref<'light' | 'dark'>('dark')
-// if (window)
-//   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-
-watchEffect(() => {
-  theme.value = isDark.value ? 'dark' : 'light'
-})
 
 useSeoMeta({
   ogImage: '/ogabout.png',
