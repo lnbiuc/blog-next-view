@@ -1,15 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { MdCatalog, MdPreview, config } from 'md-editor-v3'
+import { MdCatalog, MdPreview } from 'md-editor-v3'
 import type { HeadList } from 'md-editor-v3/lib/types'
-
-// @ts-expect-error no error
-import ancher from 'markdown-it-anchor'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 
-// import 'md-editor-v3/lib/preview.css'
+import 'md-editor-v3/lib/preview.css'
 
 // import '~/styles/markdown.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
@@ -45,17 +42,11 @@ function getArticle() {
 
 getArticle()
 
-definePageMeta({
-  colorMode: 'dark',
-})
-
 const colorMode = useDark()
 
 const theme = ref<'light' | 'dark'>('dark')
-// if (window)
-//   theme.value = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 
-watchEffect(() => {
+watch(colorMode, () => {
   theme.value = colorMode.value ? 'dark' : 'light'
 })
 
@@ -63,22 +54,7 @@ let scrollElement: string | HTMLElement | undefined
 
 onMounted(() => {
   scrollElement = document.documentElement
-  if (colorMode.value)
-    colorMode.value = !colorMode.value
-})
-
-// nextTick(() => {
-//   nextTick(() => {
-//     theme.value = color.value === 'light' ? 'light' : 'dark'
-//   })
-// })
-
-config({
-  markdownItConfig(mdit) {
-    mdit.use(ancher, {
-
-    })
-  },
+  colorMode.value = theme.value === 'dark'
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
