@@ -1,27 +1,31 @@
 <script setup lang="ts">
-const color = useColorMode()
+const colorMode = useColorMode()
 
 useHead({
   meta: [{
     id: 'theme-color',
     name: 'theme-color',
-    content: () => color.value === 'dark' ? '#222222' : '#E6EDF3',
+    content: () => colorMode.preference === 'dark' ? '#222222' : '#E6EDF3',
   }],
 })
 
-const isDark = useDark()
+function toggleDark() {
+  colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+}
+
+const isDark = computed(() => colorMode.preference === 'dark')
 
 /**
  * Credit to [@hooray](https://github.com/hooray)
  * @see https://github.com/vuejs/vitepress/pull/2347
  */
-function toggleDark(event: MouseEvent) {
+function useToggleDark(event: MouseEvent) {
   // @ts-expect-error experimental API
   const isAppearanceTransition = document.startViewTransition
     && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
   if (!isAppearanceTransition) {
-    isDark.value = !isDark.value
+    toggleDark()
     return
   }
 
@@ -33,7 +37,7 @@ function toggleDark(event: MouseEvent) {
   )
   // @ts-expect-error: Transition API
   const transition = document.startViewTransition(async () => {
-    isDark.value = !isDark.value
+    toggleDark()
     await nextTick()
   })
   transition.ready
@@ -58,14 +62,10 @@ function toggleDark(event: MouseEvent) {
       )
     })
 }
-
-onMounted(() => {
-//   color.preference = 'dark'
-})
 </script>
 
 <template>
-  <button class="!outline-none" @click="toggleDark">
+  <button class="!outline-none" @click="useToggleDark">
     <div class="i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill" />
   </button>
 </template>
