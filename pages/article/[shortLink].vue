@@ -13,26 +13,34 @@ import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import { usePreloadCacheStore } from '~/store'
 
-const route = useRoute()
+const route = useRoute('article-shortLink')
 const article = ref<ArticleWithContent>()
 const id = 'preview-only'
 
 const isLoading = ref(true)
 const afterFetchData = ref(false)
 
-// @ts-expect-error fkts
 const shortLink = route.params.shortLink
+
+function getFirstLink(shortLink: string | string[]): string {
+  if (Array.isArray(shortLink) && shortLink.length > 0)
+    return shortLink[0]
+  else if (typeof shortLink === 'string')
+    return shortLink
+  else
+    throw new Error('Invalid input')
+}
 
 const { cacheArticle, getArticleCache } = usePreloadCacheStore()
 
 function getArticle() {
-  const res: ArticleWithContent | undefined = getArticleCache(shortLink)
+  const res: ArticleWithContent | undefined = getArticleCache(getFirstLink(shortLink))
   if (res) {
     article.value = res
     afterFetchData.value = true
     return
   }
-  getArticleByShortLink(shortLink).then((res) => {
+  getArticleByShortLink(getFirstLink(shortLink)).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
     cacheArticle(article.value)
@@ -41,20 +49,14 @@ function getArticle() {
 }
 
 getArticle()
+const colorMode = useColorMode()
 
-const colorMode = useDark()
-
-const theme = ref<'light' | 'dark'>('dark')
-
-watch(colorMode, () => {
-  theme.value = colorMode.value ? 'dark' : 'light'
-})
+const theme = ref<'light' | 'dark'>(colorMode.value === 'system' ? 'light' : colorMode.value === 'dark' ? 'dark' : 'light')
 
 let scrollElement: string | HTMLElement | undefined
 
 onMounted(() => {
   scrollElement = document.documentElement
-  colorMode.value = theme.value === 'dark'
 })
 
 const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
@@ -100,11 +102,13 @@ useHead({
     </Head>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
-        <div v-if="isLoading" class="absolute left-0 top-0 z-40 bg-light-200 dark:bg-black">
+        <!-- <div v-if="isLoading" class="absolute left-0 top-0 z-40 bg-light-200 dark:bg-black">
           <div class="relative h-[100vh] w-[100vw] flex flex-row items-center justify-center">
             <div class="loader w-full scale-150 text-violet" />
           </div>
-        </div>
+        </div> -->
+        <h1>{{ colorMode }}</h1>
+        <h1>{{ theme }}</h1>
         <div v-if="afterFetchData">
           <div class="flex flex-col text-left">
             <Transition name="fade">
