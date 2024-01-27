@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import 'md-editor-v3/lib/preview.css'
-import { MdPreview } from 'md-editor-v3'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
+import '~/styles/markdown.css'
+import '~/styles/prose.css'
 
 const md = '# Violet\n'
   + '\n'
@@ -27,7 +27,6 @@ const md = '# Violet\n'
   + '- [Github](https://github.com/lnbiuc)\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
-
 
 const theme = ref<'light' | 'dark'>('dark')
 
@@ -64,7 +63,8 @@ useHead({
           <div class="py-4">
             <span>Introduction and Contact Information: Feel free to leave messages here to get in touch with me.</span>
           </div>
-          <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" />
+          <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
+          <NuxtMarkdown class="violet-prose" :source="md" />
         </div>
         <MyGiscus
           :theme="theme"
@@ -86,26 +86,3 @@ useHead({
     </NuxtLayout>
   </div>
 </template>
-
-<style scoped>
-.md-editor-dark, .md-editor {
-  --md-bk-color: transparent !important;
-}
-
-.md-editor-preview-wrapper {
-  padding: 0 !important;
-}
-
-.md-editor-catalog-link span:hover, .md-editor-catalog-active>span {
-  color: #A78BFA !important;
-}
-
-/* 使用 :deep() 替换 >>> */
-:deep(.preview) ul {
-  list-style-type: disc; /* 默认值，圆点 */
-}
-
-:deep(.preview) ol {
-  list-style-type: decimal; /* 默认值，数字 */
-}
-</style>

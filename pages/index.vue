@@ -70,7 +70,6 @@ function preloadArticles() {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       })
       cacheCategoryArticle('SHORTS', shortsPage.value)
-      provide('shortsPage', shortsPage)
     })
   }
   else {
@@ -84,7 +83,6 @@ function preloadArticles() {
         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
       })
       cacheCategoryArticle('PROJECT', projectPage.value)
-      provide('projectPage', projectPage)
     })
   }
   else {

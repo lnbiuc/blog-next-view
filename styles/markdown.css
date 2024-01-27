@@ -32,32 +32,32 @@ html:not(.dark) .shiki span {
   transform: translate(0, 1.6em);
 }
 
-/* Prose */
-.prose pre:not(.shiki) {
+/* violet-prose */
+.violet-prose pre:not(.shiki) {
   padding: 0;
-  margin: 0;
+  margin: 10px 0;
   background: transparent;
 }
 
-.prose .shiki {
+.violet-prose .shiki {
   font-family: 'DM Mono', 'Input Mono', 'Fira Code', monospace;
   font-size: 0.92em;
   line-height: 1.4;
   margin: 0.5em 0;
 }
 
-.prose img {
+.violet-prose img {
   width: 100%;
 }
 
-.prose p > img {
+.violet-prose p > img {
   width: 100%;
   --uno: shadow rounded-lg;
   transform: scale(1.05);
   margin: 2.6em 0;
 }
 
-.prose {
+.violet-prose {
   --fg: #555;
   --fg-deep: #222;
   --fg-deeper: #000;
@@ -65,27 +65,27 @@ html:not(.dark) .shiki span {
   color: var(--fg);
 }
 
-.prose a {
+.violet-prose a {
   font-weight: inherit;
   text-decoration: none;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
   transition: border 0.3s ease-in-out;
 }
 
-.prose a:hover {
+.violet-prose a:hover {
   border-bottom: 1px solid var(--fg);
 }
 
-.prose a code {
+.violet-prose a code {
   color: inherit;
 }
 
-.prose hr {
+.violet-prose hr {
   width: 50px;
   margin: 2em auto;
 }
 
-html.dark .prose {
+html.dark .violet-prose {
   --fg: #bbb;
   --fg-deep: #ddd;
   --fg-deeper: #fff;
@@ -133,7 +133,7 @@ h6:focus .header-anchor {
   opacity: 0.5;
 }
 
-.prose blockquote {
+.violet-prose blockquote {
   font-weight: normal;
   font-style: normal;
   line-height: 1.6em;
@@ -141,23 +141,23 @@ h6:focus .header-anchor {
   margin-left: -1.1em;
 }
 
-.prose blockquote > * {
+.violet-prose blockquote > * {
   opacity: 0.7;
 }
 
-.prose blockquote > :first-child {
+.violet-prose blockquote > :first-child {
   margin-top: 0;
 }
 
-.prose blockquote > :last-child {
+.violet-prose blockquote > :last-child {
   margin-bottom: 0;
 }
 
-.prose blockquote p:first-of-type::before {
+.violet-prose blockquote p:first-of-type::before {
   content: none;
 }
 
-.prose blockquote p:first-of-type::after {
+.violet-prose blockquote p:first-of-type::after {
   content: none;
 }
 

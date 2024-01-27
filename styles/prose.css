@@ -146,7 +146,7 @@
   color: #111827;
 }
 .violet-prose pre {
-  color: #e5e7eb;
+  /* color: #e5e7eb; */
   overflow-x: auto;
   font-size: 0.875em;
   line-height: 1.7142857;

@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import 'animate.css'
-
 const fixed = ref<boolean>(false)
 
 const up = ref<boolean>(false)

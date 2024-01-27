@@ -1,6 +1,8 @@
+import Shikiji from 'markdown-it-shikiji'
 import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({
+// @ts-expect-error dasdd
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
@@ -9,6 +11,7 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtseo/module',
     '@formkit/auto-animate/nuxt',
+    'nuxt-markdown-render',
   ],
 
   site: {

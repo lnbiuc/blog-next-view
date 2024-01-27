@@ -1,23 +1,18 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { MdCatalog, MdPreview } from 'md-editor-v3'
-import type { HeadList } from 'md-editor-v3/lib/types'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 
-import 'md-editor-v3/lib/preview.css'
-
 // import '~/styles/markdown.css'
+import '~/styles/prose.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import { usePreloadCacheStore } from '~/store'
 
 const route = useRoute('article-shortLink')
 const article = ref<ArticleWithContent>()
-const id = 'preview-only'
 
-const isLoading = ref(true)
 const afterFetchData = ref(false)
 
 const shortLink = route.params.shortLink
@@ -51,24 +46,11 @@ function getArticle() {
 getArticle()
 const colorMode = useColorMode()
 
-const theme = ref<'light' | 'dark'>(colorMode.value === 'system' ? 'light' : colorMode.value === 'dark' ? 'dark' : 'light')
-
-let scrollElement: string | HTMLElement | undefined
-
-onMounted(() => {
-  scrollElement = document.documentElement
+const theme = computed(() => {
+  return colorMode.value === 'dark' ? 'dark' : 'light'
 })
 
-const mdHeadingId = (_text: any, _level: any, index: number) => `heading-${index}`
-
 const hasCatalog = ref(false)
-
-function handleOnGetCatalog(catalog: HeadList[]) {
-  if (catalog && catalog.length > 0)
-    hasCatalog.value = true
-
-  isLoading.value = false
-}
 
 useHead({
   htmlAttrs: {
@@ -107,8 +89,6 @@ useHead({
             <div class="loader w-full scale-150 text-violet" />
           </div>
         </div> -->
-        <h1>{{ colorMode }}</h1>
-        <h1>{{ theme }}</h1>
         <div v-if="afterFetchData">
           <div class="flex flex-col text-left">
             <Transition name="fade">
@@ -136,18 +116,15 @@ useHead({
             :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }"
             class="text-left lg:grid lg:gap-8"
           >
-            <MdPreview
-              :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
-              :show-code-row-number="false" class="preview" preview-theme="github" :theme="theme"
-            />
+            <NuxtMarkdown class="violet-prose" :source="article!.content" />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
-                  <MdCatalog
+                  <!-- <MdCatalog
                     :editor-id="id" :md-heading-id="mdHeadingId" :offset-top="90" :scroll-element="scrollElement"
                     class="toc"
                     :scroll-element-offset-top="80"
-                  />
+                  /> -->
                 </ClientOnly>
               </div>
             </Transition>
@@ -171,19 +148,6 @@ useHead({
   overflow: auto;
   height: auto;
   max-height: calc(100vh - 95px);
-}
-
-.md-editor-dark,
-.md-editor {
-  --md-bk-color: transparent !important;
-}
-/* 使用 :deep() 替换 >>> */
-:deep(.preview) ul {
-  list-style-type: disc; /* 默认值，圆点 */
-}
-
-:deep(.preview) ol {
-  list-style-type: decimal; /* 默认值，数字 */
 }
 
 /* HTML: <div class="loader"></div> */

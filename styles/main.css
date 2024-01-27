@@ -18,14 +18,6 @@ html.dark {
   --md-color: #c9d1d9  !important;
 }
 
-.md-editor {
-    --md-color: #050505  !important;
-}
-
-.dark .md-editor {
-    --md-color: #c9d1d9  !important;
-}
-
 ::selection {
   background: #a78bfa55;
 }
