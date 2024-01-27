@@ -6,10 +6,12 @@ import type { HeadList } from 'md-editor-v3/lib/types'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 
-import 'md-editor-v3/lib/preview.css'
+// import 'md-editor-v3/lib/preview.css'
+
+// import '~/styles/markdown.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
-import 'animate.css'
+import { usePreloadCacheStore } from '~/store'
 
 const route = useRoute()
 const params = route.params
@@ -23,13 +25,19 @@ function processShortLink(shortLink: string | string[]): string {
   if (Array.isArray(shortLink))
     return '' // 如果是数组，返回空字符串
 
-  else
-    return shortLink // 否则返回shortLink本身
-}
+const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+
 function getArticle() {
-  getArticleByShortLink(processShortLink(params?.shortLink)).then((res) => {
+  const res: ArticleWithContent | undefined = getArticleCache(shortLink)
+  if (res) {
+    article.value = res
+    afterFetchData.value = true
+    return
+  }
+  getArticleByShortLink(shortLink).then((res) => {
     article.value = res.data.value?.data as ArticleWithContent
     afterFetchData.value = true
+    cacheArticle(article.value)
   },
   )
 }
@@ -115,7 +123,7 @@ useHead({
             <Transition name="fade">
               <img
                 v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-                class="z-10 aspect-[16/9] w-full rounded-lg object-cover"
+                class="z-10 aspect-[16/9] w-full rounded-lg object-cover shadow-md"
               >
             </Transition>
 
@@ -139,13 +147,14 @@ useHead({
           >
             <MdPreview
               :editor-id="id" :md-heading-id="mdHeadingId" :model-value="article?.content" :on-get-catalog="handleOnGetCatalog"
-              :show-code-row-number="true" :theme="theme" class="preview chinese" preview-theme="github"
+              :show-code-row-number="false" class="preview" preview-theme="github" :theme="theme"
             />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
                   <MdCatalog
                     :editor-id="id" :md-heading-id="mdHeadingId" :offset-top="90" :scroll-element="scrollElement"
+                    class="toc"
                     :scroll-element-offset-top="80"
                   />
                 </ClientOnly>
