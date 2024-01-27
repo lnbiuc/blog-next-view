@@ -26,7 +26,6 @@
     "GitHub.vscode-pull-request-github",
     "johnsoncodehk.vscode-tsconfig-helper",
     "mpontus.tab-cycle",
-    "naumovs.color-highlight",
-    "znck.grammarly"
+    "naumovs.color-highlight"
   ]
 }
