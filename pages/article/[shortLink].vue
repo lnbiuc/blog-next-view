@@ -7,7 +7,7 @@ import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import { usePreloadCacheStore } from '~/store'
 
-const route = useRoute('article-shortLink')
+const route = useRoute()
 const article = ref<ArticleWithContent>()
 
 const afterFetchData = ref(false)
