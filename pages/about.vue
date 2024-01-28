@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
-import '~/styles/markdown.css'
-import '~/styles/prose.css'
+
+// import '~/styles/markdown.css'
+// import '~/styles/prose.css'
 
 const md = '# Violet\n'
   + '\n'
@@ -64,7 +65,7 @@ useHead({
             <span>Introduction and Contact Information: Feel free to leave messages here to get in touch with me.</span>
           </div>
           <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
-          <NuxtMarkdown class="violet-prose" :source="md" />
+          <MDRender class="violet-prose" :source="md" />
         </div>
         <MyGiscus
           :theme="theme"
@@ -73,7 +74,7 @@ useHead({
           class="mt-4 py-4"
           crossorigin="anonymous"
           emit-metadata="0"
-          input-position="top"
+          input-position="bottom"
           lang="en"
           mapping="pathname"
           reactions-enabled="1"

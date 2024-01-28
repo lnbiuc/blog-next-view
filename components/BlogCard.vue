@@ -50,7 +50,7 @@ const preloadArticle = useThrottleFn(() => {
         {{ props.article.title }}
       </div>
       <div class="my-2 flex flex-row items-center">
-        <div class="i-carbon-view text-violet" />
+        <div class="i-carbon-view" />
         <div class="ml-2 text-violet">
           {{ props.article.views }} views
         </div>

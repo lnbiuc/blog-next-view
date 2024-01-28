@@ -26,9 +26,9 @@ watchEffect(() => {
 
 <template>
   <div id="header" class="flex flex-col items-center justify-center px-5">
-    <header ref="headerRef" class="Header w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] xl:rounded-md" :style="styles">
-      <div class="wave-animation h-[10px] w-full" />
-      <div class="h-[50px] w-full flex flex-row items-center justify-center">
+    <header ref="headerRef" class="Header w-full overflow-hidden lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] xl:rounded-md xl:pt-2" :style="styles">
+      <div class="wave-animation h-[10px] w-full rounded-lt rounded-rt" />
+      <div class="h-[50px] w-full flex flex-row items-center justify-center" style="backdrop-filter: saturate(180%) blur(20px);">
         <div class="w-[70%] flex" :class="{ 'justify-center': hidden, 'justify-start': !hidden }">
           <ul v-if="hidden" class="flex flex-row py-2">
             <li>
@@ -138,6 +138,5 @@ watchEffect(() => {
   width: 100%;
   z-index: 1000;
   align-items: center;
-  backdrop-filter: saturate(180%) blur(20px);
 }
 </style>

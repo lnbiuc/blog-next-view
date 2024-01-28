@@ -1,4 +1,3 @@
-import Shikiji from 'markdown-it-shikiji'
 import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({

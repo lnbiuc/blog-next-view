@@ -3,9 +3,6 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
-
-// import '~/styles/markdown.css'
-import '~/styles/prose.css'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import { usePreloadCacheStore } from '~/store'
@@ -104,11 +101,15 @@ useHead({
             <div class="mb-1">
               {{ article?.description }}
             </div>
-            <div class="mt-4 flex flex-row items-center justify-start text-violet">
+            <div class="mt-4 flex flex-row items-center justify-start">
               <div class="i-carbon-view mr-2" />
-              <div>{{ article?.views }} views</div>
+              <div class="text-violet">
+                {{ article?.views }} views
+              </div>
               <div class="i-carbon-alarm mx-2 scale-110" />
-              <div>{{ formatTime(article?.updatedAt) }}</div>
+              <div class="text-violet">
+                {{ formatTime(article?.updatedAt) }}
+              </div>
             </div>
             <UDivider class="my-6" />
           </div>
@@ -116,7 +117,7 @@ useHead({
             :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }"
             class="text-left lg:grid lg:gap-8"
           >
-            <NuxtMarkdown class="violet-prose" :source="article!.content" />
+            <MDRender :source="article!.content" />
             <Transition name="right">
               <div v-if="hasCatalog" class="catalog relative mt-[60px]">
                 <ClientOnly>
@@ -131,7 +132,7 @@ useHead({
           </div>
           <MyGiscus
             :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="mt-4 py-4"
-            crossorigin="anonymous" emit-metadata="0" input-position="top" lang="en"
+            crossorigin="anonymous" emit-metadata="0" input-position="bottom" lang="en"
             mapping="pathname" reactions-enabled="1" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" strict="1"
             term="Welcome to @giscus/vue component!"
           />
