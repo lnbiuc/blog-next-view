@@ -29,7 +29,11 @@ const md = '# Violet\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
 
-const theme = ref<'light' | 'dark'>('dark')
+const colorMode = useColorMode()
+
+const theme = computed(() => {
+  return colorMode.value === 'dark' ? 'dark' : 'light'
+})
 
 useSeoMeta({
   ogImage: '/ogabout.png',
