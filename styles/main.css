@@ -3,7 +3,12 @@
   --c-scrollbar: #eee;
   --c-scrollbar-hover: #bbb;
   --md-color: #050505 !important;
+  --toc-height: calc(100vh - 100px)
 }
+
+/* * {
+    border: 1px solid red;
+} */
 
 html {
   background-color: var(--c-bg);
@@ -212,3 +217,38 @@ html:not(.dark) [img-dark] {
 .fade-leave-to {
   opacity: 0;
 }
+
+.is-active-li {
+    color: #a78bfa;
+}
+
+.toc-list-item {
+    @apply m-2 transition-all
+}
+
+/* .toc-list-item ol {
+    display: none;
+} */
+
+.node-name--H1 {
+    @apply text-sm;
+}
+
+.node-name--H2 {
+    @apply text-sm pl-4;
+}
+
+.is-collapsed {
+    display: none;
+}
+
+.toc-link {
+  white-space: nowrap;      /* 禁止换行 */
+  overflow: hidden;         /* 隐藏超出部分 */
+  text-overflow: ellipsis;  /* 显示省略号 */
+}
+
+
+/* .is-active-li ol {
+    display: flex;
+} */

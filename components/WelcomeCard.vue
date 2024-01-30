@@ -97,7 +97,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)" class="m-auto max-w-[1400px] w-[100%] flex flex-col items-center justify-around md:flex-row">
+  <div style="height: calc(100vh - 160px)" class="m-auto max-w-[1000px] w-[100%] flex flex-col items-center justify-between md:flex-row">
     <div class="flex flex-col items-start justify-start md:items-start md:justify-start">
       <h1 class="text-left text-6xl font-bold">
         Hi!👋

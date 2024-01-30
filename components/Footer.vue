@@ -29,7 +29,7 @@ const link = [
 
 <template>
   <div class="mt-20 w-full flex flex-col items-center justify-center">
-    <div text="xs gray4" class="h-[100px] w-full flex flex-row items-start justify-around overflow-hidden border-t border-t-gray-300 p-5 xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1100px] xl:w-[80%] dark:border-t-gray-700">
+    <div text="xs gray4" class="h-[100px] w-full flex flex-row items-start justify-between overflow-hidden border-t border-t-gray-300 p-5 xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] dark:border-t-gray-700">
       <div>
         <span>Copyright © 2023</span>
         <NuxtLink to="/about" class="mx-4">

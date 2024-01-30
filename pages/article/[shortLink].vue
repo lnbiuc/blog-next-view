@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import * as tocbot from 'tocbot'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 import MyGiscus from '~/components/Giscus/MyGiscus.vue'
@@ -12,6 +13,7 @@ const article = ref<ArticleWithContent>()
 
 const afterFetchData = ref(false)
 
+// @ts-expect-error no error
 const shortLink = route.params.shortLink
 
 function getFirstLink(shortLink: string | string[]): string {
@@ -61,6 +63,43 @@ useHead({
     },
   ],
 })
+
+function initTOC() {
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '#violetToc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '#violetMD',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2',
+    // For headings inside relative or absolute positioned containers within content.
+    // hasInnerContainers: true,
+    scrollSmoothOffset: -80,
+    headingsOffset: 80,
+  })
+}
+
+onMounted(() => {
+  nextTick(() => {
+    initTOC()
+  })
+})
+
+onBeforeUnmount(() => {
+  tocbot.destroy()
+})
+
+const { width } = useWindowSize()
+
+watchEffect(() => {
+  if (width.value < 1200) { hasCatalog.value = false }
+  else {
+    nextTick(() => {
+      initTOC()
+    })
+    hasCatalog.value = true
+  }
+})
 </script>
 
 <template>
@@ -80,13 +119,8 @@ useHead({
       <Meta :content="article?.cover[0] || '/og.png'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
-      <NuxtLayout name="article">
-        <!-- <div v-if="isLoading" class="absolute left-0 top-0 z-40 bg-light-200 dark:bg-black">
-          <div class="relative h-[100vh] w-[100vw] flex flex-row items-center justify-center">
-            <div class="loader w-full scale-150 text-violet" />
-          </div>
-        </div> -->
-        <div v-if="afterFetchData">
+      <div v-if="afterFetchData">
+        <NuxtLayout name="home">
           <div class="flex flex-col text-left">
             <Transition name="fade">
               <img
@@ -113,22 +147,15 @@ useHead({
             </div>
             <UDivider class="my-6" />
           </div>
-          <div
-            :style="hasCatalog ? { gridTemplateColumns: 'auto 250px' } : { gridAutoColumns: 'auto' }"
-            class="text-left lg:grid lg:gap-8"
-          >
-            <MDRender :source="article!.content" />
-            <Transition name="right">
-              <div v-if="hasCatalog" class="catalog relative mt-[60px]">
-                <ClientOnly>
-                  <!-- <MdCatalog
-                    :editor-id="id" :md-heading-id="mdHeadingId" :offset-top="90" :scroll-element="scrollElement"
-                    class="toc"
-                    :scroll-element-offset-top="80"
-                  /> -->
-                </ClientOnly>
+          <div class="flex flex-row justify-between pb-20 pt-10">
+            <div class="max-w-760px w-full">
+              <div
+                class="text-left"
+              >
+                <MDRender :source="article!.content" />
               </div>
-            </Transition>
+            </div>
+            <div v-if="hasCatalog" id="violetToc" class="catalog w-full flex flex-row justify-start p-2 pl-6 text-left text-[#555] dark:text-[#bbb]" />
           </div>
           <MyGiscus
             :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="mt-4 py-4"
@@ -136,8 +163,8 @@ useHead({
             mapping="pathname" reactions-enabled="1" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" strict="1"
             term="Welcome to @giscus/vue component!"
           />
-        </div>
-      </NuxtLayout>
+        </NuxtLayout>
+      </div>
     </NuxtLayout>
   </div>
 </template>
@@ -148,7 +175,8 @@ useHead({
   top: 80px;
   overflow: auto;
   height: auto;
-  max-height: calc(100vh - 95px);
+  max-height: var(--toc-height);
+  max-width: calc(1000px - 760px);
 }
 
 /* HTML: <div class="loader"></div> */

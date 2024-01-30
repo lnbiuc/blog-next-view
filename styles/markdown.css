@@ -58,8 +58,8 @@ html:not(.dark) .shiki span {
 }
 
 .violet-prose {
-  --fg: #555;
-  --fg-deep: #222;
+  --fg: #222;
+  --fg-deep: #111;
   --fg-deeper: #000;
 
   color: var(--fg);
@@ -86,8 +86,8 @@ html:not(.dark) .shiki span {
 }
 
 html.dark .violet-prose {
-  --fg: #bbb;
-  --fg-deep: #ddd;
+  --fg: #ddd;
+  --fg-deep: #eee;
   --fg-deeper: #fff;
 }
 

@@ -30,6 +30,15 @@ export default defineNuxtConfig({
     twitterImage: 'https://vio.vin/favicon.ico',
   },
 
+  nuxtMarkdownRender: {
+    options: {
+      html: true,
+      linkify: true,
+      xhtmlOut: true,
+    },
+    vueRuntimeCompiler: true, // enable this if a plugin needs to render vue components
+  },
+
   ui: {
     primary: 'violet',
     gray: 'cool',
@@ -83,6 +92,8 @@ export default defineNuxtConfig({
       link: [
         { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
         { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+        // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+        // { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css' },
       ],
       meta: [
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -93,6 +104,8 @@ export default defineNuxtConfig({
       script: [
         // <script async src="https://analytics.eu.umami.is/script.js" data-website-id="afdca035-1988-40f8-89a0-e9ed73267348"></script>
         { 'async': true, 'src': 'https://analytics.eu.umami.is/script.js', 'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348' },
+        // <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+        // { src: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js' },
       ],
     },
   },
