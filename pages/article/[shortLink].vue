@@ -80,7 +80,7 @@ useHead({
       <Meta :content="article?.cover[0] || '/og.png'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
-      <NuxtLayout name="home">
+      <NuxtLayout name="article">
         <!-- <div v-if="isLoading" class="absolute left-0 top-0 z-40 bg-light-200 dark:bg-black">
           <div class="relative h-[100vh] w-[100vw] flex flex-row items-center justify-center">
             <div class="loader w-full scale-150 text-violet" />
