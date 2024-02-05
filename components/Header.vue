@@ -1,9 +1,10 @@
 <script lang="ts" setup>
 // import { useFixedHeader } from 'vue-use-fixed-header'
-import { useWindowScroll, useWindowSize } from '@vueuse/core'
+import { useWindowScroll } from '@vueuse/core'
 
 const { y } = useWindowScroll()
-const { width } = useWindowSize()
+
+const width = ref(1200)
 
 const isOpen = ref(true)
 const route = useRoute()
@@ -23,13 +24,24 @@ function enableScroll() {
   window.onscroll = function () { }
 }
 
+function handleResize() {
+  width.value = window.innerWidth
+}
+
 onMounted(() => {
+  handleResize()
   watchEffect(() => {
     if (!isOpen.value)
       disableScroll()
     else
       enableScroll()
+
+    window.addEventListener('resize', handleResize)
   })
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('resize', handleResize)
 })
 </script>
 
@@ -44,6 +56,7 @@ onMounted(() => {
     class="fixed z-1000 h-60px w-full flex flex-row border-b border-transparent bg-white bg-opacity-50 transition-all dark:bg-dark dark:bg-opacity-0"
   >
     <div class="h-60px flex flex-row items-center">
+      <!-- {{ width }} -->
       <img src="/favicon.ico" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" @click="$router.push('/')">
     </div>
     <div
