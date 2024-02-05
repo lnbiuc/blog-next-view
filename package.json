@@ -32,6 +32,7 @@
     "@types/markdown-it-container": "^2.0.9",
     "@unocss/eslint-config": "^0.56.5",
     "@unocss/nuxt": "^0.56.5",
+    "@unocss/postcss": "^0.58.5",
     "@unocss/transformer-directives": "^0.58.5",
     "@vrcd-community/markdown-it-video": "^1.1.1",
     "@vueuse/nuxt": "^10.7.2",

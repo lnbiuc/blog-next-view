@@ -1,122 +1,102 @@
 <script lang="ts" setup>
-import { useFixedHeader } from 'vue-use-fixed-header'
+// import { useFixedHeader } from 'vue-use-fixed-header'
+import { useWindowScroll, useWindowSize } from '@vueuse/core'
 
+const { y } = useWindowScroll()
 const { width } = useWindowSize()
 
-const headerRef = ref(null)
-const { styles } = useFixedHeader(headerRef)
-
+const isOpen = ref(true)
 const route = useRoute()
-
-function isExactRoute(currRoute: string) {
-  return currRoute === route.path
+function currRouter(path: string): boolean {
+  return route.path === path
 }
 
-const isOpen = ref(false)
+function disableScroll() {
+  const x = window.scrollX
+  const y = window.scrollY
+  window.onscroll = function () {
+    window.scrollTo(x, y)
+  }
+}
 
-const hidden = ref(false)
+function enableScroll() {
+  window.onscroll = function () { }
+}
 
 watchEffect(() => {
-  if (width.value < 767)
-    hidden.value = false
+  if (!isOpen.value)
+    disableScroll()
   else
-    hidden.value = true
+    enableScroll()
 })
 </script>
 
 <template>
-  <div id="header" class="flex flex-col items-center justify-center px-5">
-    <header ref="headerRef" class="Header w-full overflow-hidden lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] xl:rounded-md xl:pt-2" :style="styles">
-      <div class="wave-animation h-[10px] w-full rounded-lt rounded-rt" />
-      <div class="h-[50px] w-full flex flex-row items-center justify-center" style="backdrop-filter: saturate(180%) blur(20px);">
-        <div class="w-[70%] flex" :class="{ 'justify-center': hidden, 'justify-start': !hidden }">
-          <ul v-if="hidden" class="flex flex-row py-2">
-            <li>
-              <NuxtLink to="/" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/') }">
-                Home
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/blog" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/blog') }">
-                Blog
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/shorts" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/shorts') }">
-                Shorts
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/project" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/project') }">
-                Project
-              </NuxtLink>
-            </li>
-            <li>
-              <NuxtLink to="/about" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/about') }">
-                About
-              </NuxtLink>
-            </li>
-          </ul>
-          <div v-else class="text-2xl text-violet font-700 text-shadow-md" style="font-family: 'MyFont', sans-serif;" @click="$router.push('/')">
-            violet
-          </div>
-        </div>
-        <div
-          v-if="hidden"
-          class="w-[30%] flex justify-center"
-        >
-          <DarkToggle />
-        </div>
-        <div v-else>
-          <div class="i-ri:menu-line" @click="isOpen = !isOpen" />
-        </div>
-      </div>
-    </header>
-  </div>
-  <USlideover
-    v-model="isOpen" class="z-1000 transition-all" side="right" :ui="{
-      width: 'w-150px max-w-[150px]',
+  <div
+    :class="{ 'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50': y > 60,
+              'justify-between items-start h-60px': width < 767,
+              'justify-around items-center h-60px': width > 767,
+              'h-full': !isOpen,
     }"
+    style="backdrop-filter: saturate(180%) blur(20px)"
+    class="fixed z-1000 h-60px w-full flex flex-row border-b border-transparent bg-white bg-opacity-50 transition-all dark:bg-dark dark:bg-opacity-0"
   >
-    <UCard class="flex flex-col">
-      <template #header>
-        <Placeholder class="h-10" />
-      </template>
-      <div class="">
-        <ul>
-          <li class="my-4">
-            <NuxtLink to="/" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/') }" @click="isOpen = !isOpen">
-              Home
-            </NuxtLink>
-          </li>
-          <li class="my-4">
-            <NuxtLink to="/blog" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/blog') }" @click="isOpen = !isOpen">
-              Blog
-            </NuxtLink>
-          </li>
-          <li class="my-4">
-            <NuxtLink to="/shorts" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/shorts') }" @click="isOpen = !isOpen">
-              Shorts
-            </NuxtLink>
-          </li>
-          <li class="my-4">
-            <NuxtLink to="/project" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/project') }" @click="isOpen = !isOpen">
-              Project
-            </NuxtLink>
-          </li>
-          <li class="my-4">
-            <NuxtLink to="/about" class="link-hover header-link" :class="{ 'text-violet link-active': isExactRoute('/about') }" @click="isOpen = !isOpen">
-              About
-            </NuxtLink>
-          </li>
-          <li class="my-4 ml-6 scale-120">
-            <DarkToggle />
-          </li>
-        </ul>
-      </div>
-    </UCard>
-  </USlideover>
-  <div class="h-60px w-full" />
+    <div class="h-60px flex flex-row items-center">
+      <img src="/favicon.ico" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" @click="$router.push('/')">
+    </div>
+    <div
+      :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
+      class="hidden"
+    >
+      <ul
+        class="flex flex-row"
+        :class="{ 'flex-col w-full': width < 767,
+                  'flex-row': width > 767,
+                  'items-start mt-60px mr-4': !isOpen,
+        }"
+      >
+        <li :class="{ 'h-50px text-2xl': !isOpen }">
+          <router-link to="/" class="header-link" :class="{ 'text-violet': currRouter('/') }" @click="isOpen = !isOpen">
+            Home
+          </router-link>
+        </li>
+        <li :class="{ 'h-50px text-2xl': !isOpen }">
+          <router-link to="/blog" class="header-link" :class="{ 'text-violet': currRouter('/blog') }" @click="isOpen = !isOpen">
+            Blog
+          </router-link>
+        </li>
+        <li :class="{ 'h-50px text-2xl': !isOpen }">
+          <router-link to="/shorts" class="header-link" :class="{ 'text-violet': currRouter('/shorts') }" @click="isOpen = !isOpen">
+            Short
+          </router-link>
+        </li>
+        <li :class="{ 'h-50px text-2xl': !isOpen }">
+          <router-link to="/project" class="header-link" :class="{ 'text-violet': currRouter('/project') }" @click="isOpen = !isOpen">
+            Project
+          </router-link>
+        </li>
+        <li :class="{ 'h-50px text-2xl': !isOpen }">
+          <router-link to="/about" class="header-link" :class="{ 'text-violet': currRouter('/about') }" @click="isOpen = !isOpen">
+            About
+          </router-link>
+        </li>
+        <li :class="{ 'h-50px text-2xl flex w-full flex-row items-center justify-center': !isOpen }" class="hidden">
+          <DarkToggle @click="isOpen = !isOpen" />
+        </li>
+      </ul>
+    </div>
+    <div>
+      <DarkToggle :class="{ 'flex ': width > 767 }" class="hidden" />
+      <div
+        :class="{ 'flex': width < 767,
+                  'i-ri:menu-fill scale-150': isOpen,
+                  'i-ri:close-fill scale-180': !isOpen }"
+        class="mr-4 hidden h-60px flex-row items-center"
+        @click="isOpen = !isOpen"
+      />
+    </div>
+  </div>
+  <div class="h-60px" />
 </template>
 
 <style scoped>

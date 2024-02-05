@@ -58,6 +58,9 @@ devDependencies:
   '@unocss/nuxt':
     specifier: ^0.56.5
     version: 0.56.5(postcss@8.4.33)(vite@4.5.2)(webpack@5.90.1)
+  '@unocss/postcss':
+    specifier: ^0.58.5
+    version: 0.58.5(postcss@8.4.33)
   '@unocss/transformer-directives':
     specifier: ^0.58.5
     version: 0.58.5
