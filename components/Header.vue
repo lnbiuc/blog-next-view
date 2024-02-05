@@ -23,11 +23,13 @@ function enableScroll() {
   window.onscroll = function () { }
 }
 
-watchEffect(() => {
-  if (!isOpen.value)
-    disableScroll()
-  else
-    enableScroll()
+onMounted(() => {
+  watchEffect(() => {
+    if (!isOpen.value)
+      disableScroll()
+    else
+      enableScroll()
+  })
 })
 </script>
 
@@ -56,32 +58,32 @@ watchEffect(() => {
         }"
       >
         <li :class="{ 'h-50px text-2xl': !isOpen }">
-          <router-link to="/" class="header-link" :class="{ 'text-violet': currRouter('/') }" @click="isOpen = !isOpen">
+          <router-link to="/" class="header-link" :class="{ 'text-violet': currRouter('/') }" @click="isOpen = true">
             Home
           </router-link>
         </li>
         <li :class="{ 'h-50px text-2xl': !isOpen }">
-          <router-link to="/blog" class="header-link" :class="{ 'text-violet': currRouter('/blog') }" @click="isOpen = !isOpen">
+          <router-link to="/blog" class="header-link" :class="{ 'text-violet': currRouter('/blog') }" @click="isOpen = true">
             Blog
           </router-link>
         </li>
         <li :class="{ 'h-50px text-2xl': !isOpen }">
-          <router-link to="/shorts" class="header-link" :class="{ 'text-violet': currRouter('/shorts') }" @click="isOpen = !isOpen">
+          <router-link to="/shorts" class="header-link" :class="{ 'text-violet': currRouter('/shorts') }" @click="isOpen = true">
             Short
           </router-link>
         </li>
         <li :class="{ 'h-50px text-2xl': !isOpen }">
-          <router-link to="/project" class="header-link" :class="{ 'text-violet': currRouter('/project') }" @click="isOpen = !isOpen">
+          <router-link to="/project" class="header-link" :class="{ 'text-violet': currRouter('/project') }" @click="isOpen = true">
             Project
           </router-link>
         </li>
         <li :class="{ 'h-50px text-2xl': !isOpen }">
-          <router-link to="/about" class="header-link" :class="{ 'text-violet': currRouter('/about') }" @click="isOpen = !isOpen">
+          <router-link to="/about" class="header-link" :class="{ 'text-violet': currRouter('/about') }" @click="isOpen = true">
             About
           </router-link>
         </li>
         <li :class="{ 'h-50px text-2xl flex w-full flex-row items-center justify-center': !isOpen }" class="hidden">
-          <DarkToggle @click="isOpen = !isOpen" />
+          <DarkToggle @click="isOpen = true" />
         </li>
       </ul>
     </div>

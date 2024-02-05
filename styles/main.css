@@ -4,7 +4,6 @@
   --c-scrollbar-hover: #bbb;
   --md-color: #050505 !important;
   --toc-height: calc(100vh - 100px);
-  --border: #eee;
 }
 
 /* * {
@@ -22,7 +21,6 @@ html.dark {
   --c-scrollbar: #111;
   --c-scrollbar-hover: #222;
   --md-color: #c9d1d9  !important;
-  --border: #333;
 }
 
 ::selection {
