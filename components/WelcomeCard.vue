@@ -103,7 +103,7 @@ onMounted(() => {
         Hi!👋
       </h1>
       <h1 class="mt-5 text-6xl font-bold">
-        I'm <span class="text-violet text-shadow-md" style="font-family: 'MyFont', sans-serif;">violet</span>
+        I'm <span class="text-violet text-shadow-sm" style="font-family: 'MyFont', sans-serif;">violet</span>
       </h1>
       <span class="mb-2 mt-5 text-2xl">
         A Web Developer 🖥. Code for Fun.
