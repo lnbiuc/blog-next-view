@@ -26,7 +26,7 @@ async function preloadArticleTags() {
   })
 }
 
-function preloadShortTags() {
+async function preloadShortTags() {
   getTagByCategory('SHORTS').then((res) => {
     const resTag = res.data.value?.data as string[]
     // push res to tags
@@ -57,7 +57,7 @@ const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, d
   data: [],
 })
 
-function preloadArticles() {
+async function preloadArticles() {
   if (!getCategoryArticleCache('ARTICLE')) {
     getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
       articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
@@ -89,11 +89,10 @@ function preloadArticles() {
   }
 }
 
-preloadArticleTags()
-preloadShortTags()
-preloadArticles()
-
 onMounted(() => {
+  preloadArticleTags()
+  preloadShortTags()
+  preloadArticles()
   window.addEventListener('scroll', () => {
     isScroll.value = window.scrollY > window.innerHeight / 2
   })
