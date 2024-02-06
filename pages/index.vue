@@ -50,7 +50,7 @@ const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, d
 const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
 
 function preloadArticles() {
-  if (!getCategoryArticleCache('ARTICLE')) {
+  if (!getCategoryArticleCache('ARTICLE') || getCategoryArticleCache('ARTICLE')?.total === 0) {
     getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
       articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       articlePage.value.data.sort((a, b) => {
@@ -63,7 +63,7 @@ function preloadArticles() {
     articlePage.value = getCategoryArticleCache('ARTICLE') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
   }
 
-  if (!getCategoryArticleCache('SHORTS')) {
+  if (!getCategoryArticleCache('SHORTS') || getCategoryArticleCache('SHORTS')?.total === 0) {
     getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
       shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       shortsPage.value.data.sort((a, b) => {
@@ -76,7 +76,7 @@ function preloadArticles() {
     shortsPage.value = getCategoryArticleCache('SHORTS') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
   }
 
-  if (!getCategoryArticleCache('PROJECT')) {
+  if (!getCategoryArticleCache('PROJECT') || getCategoryArticleCache('PROJECT')?.total === 0) {
     getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
       projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       projectPage.value.data.sort((a, b) => {

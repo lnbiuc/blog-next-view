@@ -16,7 +16,7 @@ const shortTags: Ref<string[]> = ref(['ALL'])
 
 const { cacheTags, getTagsCache, cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
 
-async function preloadArticleTags() {
+function preloadArticleTags() {
   getTagByCategory('ARTICLE').then((res) => {
     const resTag = res.data.value?.data as string[]
     // push res to tags
@@ -26,7 +26,7 @@ async function preloadArticleTags() {
   })
 }
 
-async function preloadShortTags() {
+function preloadShortTags() {
   getTagByCategory('SHORTS').then((res) => {
     const resTag = res.data.value?.data as string[]
     // push res to tags
@@ -57,8 +57,8 @@ const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, d
   data: [],
 })
 
-async function preloadArticles() {
-  if (!getCategoryArticleCache('ARTICLE')) {
+function preloadArticles() {
+  if (getCategoryArticleCache('ARTICLE')?.total === 0) {
     getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
       articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       articlePage.value.data.sort((a, b) => {
@@ -68,7 +68,7 @@ async function preloadArticles() {
     })
   }
 
-  if (!getCategoryArticleCache('SHORTS')) {
+  if (getCategoryArticleCache('SHORTS')?.total === 0) {
     getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
       shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       shortsPage.value.data.sort((a, b) => {
@@ -78,7 +78,7 @@ async function preloadArticles() {
     })
   }
 
-  if (!getCategoryArticleCache('PROJECT')) {
+  if (getCategoryArticleCache('PROJECT')?.total === 0) {
     getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
       projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
       projectPage.value.data.sort((a, b) => {
@@ -89,10 +89,11 @@ async function preloadArticles() {
   }
 }
 
+preloadArticleTags()
+preloadShortTags()
+preloadArticles()
+
 onMounted(() => {
-  preloadArticleTags()
-  preloadShortTags()
-  preloadArticles()
   window.addEventListener('scroll', () => {
     isScroll.value = window.scrollY > window.innerHeight / 2
   })

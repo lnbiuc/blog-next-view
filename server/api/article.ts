@@ -27,3 +27,7 @@ export async function searchShorts(keyword: string, pageNumber: number, pageSize
 export async function getHomeArticle() {
   return await useHttp.get(`/api/v1/articles/home`)
 }
+
+export async function getArticleViews() {
+  return await useHttp.get(`/api/v1/articles/views`)
+}

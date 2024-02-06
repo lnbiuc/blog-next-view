@@ -45,3 +45,8 @@ export interface ArticlePublishDto {
   status: string
   tags?: string[]
 }
+
+export interface ArticleViews {
+  shortLink: string
+  views: number
+}
