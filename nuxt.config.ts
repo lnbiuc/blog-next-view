@@ -1,7 +1,6 @@
 import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({
-// @ts-expect-error dasdd
   modules: [
     '@vueuse/nuxt',
     '@unocss/nuxt',
@@ -10,7 +9,6 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtseo/module',
     '@formkit/auto-animate/nuxt',
-    'nuxt-markdown-render',
   ],
 
   site: {
@@ -30,24 +28,6 @@ export default defineNuxtConfig({
     twitterImage: 'https://vio.vin/favicon.ico',
   },
 
-  nuxtMarkdownRender: {
-    options: {
-      html: true,
-      linkify: true,
-      xhtmlOut: true,
-    },
-    vueRuntimeCompiler: true, // enable this if a plugin needs to render vue components
-  },
-
-  ui: {
-    primary: 'violet',
-    gray: 'cool',
-    icons: {
-    // @ts-expect-error missing types
-      dynamic: true,
-    },
-  },
-
   routeRules: {
     // '/api/**': { proxy: { to: process ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
     '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
@@ -65,7 +45,7 @@ export default defineNuxtConfig({
   },
 
   css: [
-    '@unocss/reset/tailwind.css',
+    // '@unocss/reset/tailwind.css',
   ],
 
   colorMode: {

@@ -110,7 +110,7 @@ onBeforeUnmount(() => {
               'flex-col w-full': width < 767,
               'flex-row': width > 767,
               'items-start mt-60px mr-4': !isOpen,
-              'ring-[#ccc] dark:ring-[#333] shadow nav-shadow ': y < 80 && width > 767,
+              'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
             }"
           >
             <li :class="{ 'leading-10 text-2xl': !isOpen }">

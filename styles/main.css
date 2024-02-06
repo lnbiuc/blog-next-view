@@ -18,7 +18,8 @@ html {
 }
 
 html.dark {
-  --c-bg: #050505;
+  /* --c-bg: #050505; */
+  --c-bg: rgb(24 24 27);
   --c-scrollbar: #111;
   --c-scrollbar-hover: #222;
   --md-color: #c9d1d9  !important;

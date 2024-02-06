@@ -100,11 +100,13 @@ useHead({
       <NuxtLayout name="home">
         <div class="flex flex-row">
           <div class="w-full text-left">
-            <h1 class="text-5xl font-bold text-violet">
+            <h1 class="text-5xl text-violet font-bold">
               Blog
             </h1>
             <div class="py-4">
-              <span>Thoughts, mental models, and tutorials about front-end development.</span>
+              <span>
+                A collection of my thoughts and experiences.
+              </span>
             </div>
             <Search
               :is-loading="isLoading" category="ARTICLE" @params-change="handleParamsChange"

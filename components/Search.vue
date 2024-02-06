@@ -68,10 +68,10 @@ async function tagClick(tag: string) {
 <template>
   <div class="flex flex-row">
     <UInput
-      id="search" v-model="searchVal" :loading="isLoading" class="w-full"
+      id="search" v-model="searchVal" :loading="isLoading" class="w-full" color="gray"
       icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
     />
-    <USelectMenu v-model="selectVal" class="z-1000 ml-2" size="lg" :options="options" />
+    <USelectMenu v-model="selectVal" class="z-1000 ml-2" size="lg" :options="options" color="gray" />
   </div>
   <Transition name="fade">
     <div v-if="tags.length > 1" class="mt-2">

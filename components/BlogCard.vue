@@ -37,7 +37,7 @@ const preloadArticle = useThrottleFn(() => {
     @mouseover="preloadArticle()"
   >
     <div class="relative overflow-hidden">
-      <img :src="props.article.cover[0]" alt="cover" class="z-0 h-48 w-full transform rounded-tl-md rounded-tr-md object-cover">
+      <img :src="props.article.cover[0]" alt="cover" class="z-0 h-48 w-full transform rounded-tl-md rounded-tr-md object-cover shadow">
       <div class="absolute bottom-0 right-0 p-1 text-right">
         <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90" :tag="t">
           {{ t }}
@@ -67,7 +67,10 @@ const preloadArticle = useThrottleFn(() => {
 
 <style scoped>
 .card-bg-filter img {
-  transition: transform 500ms;
-  padding: 1px;
+  transition: transform 100ms;
+}
+
+.card-bg-filter:hover img {
+  transform: scale(0.988);
 }
 </style>

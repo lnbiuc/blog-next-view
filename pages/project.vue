@@ -61,11 +61,13 @@ useHead({
       <NuxtLayout name="home">
         <div class="flex flex-row">
           <div class="w-full text-left">
-            <h1 class="text-5xl font-bold text-violet">
+            <h1 class="text-5xl text-violet font-bold">
               Project
             </h1>
             <div class="py-4">
-              <span>Showcase of my works on full-stack development.</span>
+              <span>
+                My projects and interesting projects that I deploy
+              </span>
             </div>
           </div>
         </div>

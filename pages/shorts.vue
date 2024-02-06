@@ -97,11 +97,11 @@ useHead({
       <NuxtLayout name="home">
         <div class="flex flex-row">
           <div class="w-full text-left">
-            <h1 class="text-5xl font-bold text-violet">
+            <h1 class="text-5xl text-violet font-bold">
               Shorts
             </h1>
             <div class="py-4">
-              <span>A collection of short articles and thoughts.
+              <span>Short articles, usually some notes and code snippets.
               </span>
             </div>
             <Search

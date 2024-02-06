@@ -66,7 +66,7 @@ useHead({
             About
           </h1>
           <div class="py-4">
-            <span>Introduction and Contact Information: Feel free to leave messages here to get in touch with me.</span>
+            <span>About me and this site, you can find the contact information here.</span>
           </div>
           <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
           <MDRender class="violet-prose" :source="md" />
