@@ -237,7 +237,15 @@ html:not(.dark) [img-dark] {
 }
 
 .node-name--H2 {
-    @apply text-sm pl-4;
+    @apply text-sm pl-2;
+}
+
+.node-name--H3 {
+  @apply text-sm pl-4;
+}
+
+.node-name--H4 {
+  @apply text-xs pl-6;
 }
 
 .is-collapsed {

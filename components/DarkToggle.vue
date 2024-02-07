@@ -9,8 +9,10 @@ useHead({
   }],
 })
 
+const themes = ['light', 'dark', 'system']
+
 function toggleDark() {
-  colorMode.preference = colorMode.preference === 'dark' ? 'light' : 'dark'
+  colorMode.preference = themes[(themes.indexOf(colorMode.preference) + 1) % themes.length]
 }
 
 const isDark = computed(() => colorMode.preference === 'dark')
@@ -66,6 +68,6 @@ function useToggleDark(event: MouseEvent) {
 
 <template>
   <button class="!outline-none" @click="useToggleDark">
-    <div class="i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill" />
+    <div :class="{ 'i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill': colorMode.preference !== 'system', 'i-ri:contrast-line': colorMode.preference === 'system' }" />
   </button>
 </template>

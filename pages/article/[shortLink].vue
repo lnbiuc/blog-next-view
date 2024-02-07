@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+
+// @ts-expect-error no error
 import * as tocbot from 'tocbot'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
@@ -71,7 +73,7 @@ function initTOC() {
     // Where to grab the headings to build the table of contents.
     contentSelector: '#violetMD',
     // Which headings to grab inside of the contentSelector element.
-    headingSelector: 'h1, h2',
+    headingSelector: 'h1, h2, h3',
     // For headings inside relative or absolute positioned containers within content.
     // hasInnerContainers: true,
     scrollSmoothOffset: -80,
@@ -121,11 +123,11 @@ watchEffect(() => {
     <NuxtLayout name="default">
       <div v-if="afterFetchData">
         <NuxtLayout name="home">
-          <div class="flex flex-col text-left">
+          <div class="text-left flex flex-col">
             <Transition name="fade">
               <img
                 v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
-                class="z-10 aspect-[16/9] w-full rounded-lg object-cover shadow-md"
+                class="object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
               >
             </Transition>
 
@@ -135,7 +137,7 @@ watchEffect(() => {
             <div class="mb-1">
               {{ article?.description }}
             </div>
-            <div class="mt-4 flex flex-row items-center justify-start">
+            <div class="mt-4 flex flex-row justify-start items-center">
               <div class="i-carbon-view mr-2" />
               <div class="text-violet">
                 {{ article?.views }} views
@@ -147,7 +149,7 @@ watchEffect(() => {
             </div>
             <UDivider class="my-6" />
           </div>
-          <div class="flex flex-row justify-between pb-20 pt-10">
+          <div class="pb-20 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div
                 class="text-left"
@@ -155,10 +157,10 @@ watchEffect(() => {
                 <MDRender :source="article!.content" />
               </div>
             </div>
-            <div v-if="hasCatalog" id="violetToc" class="catalog w-full flex flex-row justify-start p-2 pl-6 text-left text-[#555] dark:text-[#bbb]" />
+            <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
           </div>
           <MyGiscus
-            :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="mt-4 py-4"
+            :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="py-4 mt-4"
             crossorigin="anonymous" emit-metadata="0" input-position="bottom" lang="en"
             mapping="pathname" reactions-enabled="1" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" strict="1"
             term="Welcome to @giscus/vue component!"
