@@ -97,9 +97,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)" class="m-auto max-w-[1000px] w-[100%] flex flex-col items-center justify-center md:flex-row md:justify-between">
-    <div class="flex flex-col items-start justify-start md:items-start md:justify-start">
-      <h1 class="text-left text-6xl font-bold">
+  <div style="height: calc(100vh - 160px)" class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
+    <div class="flex flex-col justify-start items-start md:justify-start md:items-start">
+      <h1 class="text-6xl font-bold text-left">
         Hi!👋
       </h1>
       <h1 class="mt-5 text-6xl font-bold">
@@ -118,7 +118,7 @@ onMounted(() => {
       </div>
       <div class="flex flex-row">
         <a
-          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row items-center justify-center" :href="l.url"
+          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center" :href="l.url"
           target="_blank"
         >
           <UIcon :name="l.icon" class="text-xl" />
@@ -129,10 +129,10 @@ onMounted(() => {
       </div>
     </div>
     <div class="hidden transition-all md:block">
-      <img v-auto-animate src="/favicon.ico" alt="logo" class="favicon-shadown h-[300px] w-[300px] rounded-full shadow-md transition-all hover:shadow-xl">
+      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo" class="favicon-shadown rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
     </div>
   </div>
-  <div class="h-[100px] w-full flex flex-row justify-center">
+  <div class="flex flex-row h-[100px] w-full justify-center">
     <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer" @click="handleScroll" />
   </div>
 </template>

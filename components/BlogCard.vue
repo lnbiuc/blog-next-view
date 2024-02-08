@@ -37,8 +37,8 @@ const preloadArticle = useThrottleFn(() => {
     @mouseover="preloadArticle()"
   >
     <div class="relative overflow-hidden">
-      <img :src="props.article.cover[0]" alt="cover" class="z-0 h-48 w-full transform rounded-tl-md rounded-tr-md object-cover shadow">
-      <div class="absolute bottom-0 right-0 p-1 text-right">
+      <img :src="`${props.article.cover[0]}/thumbnail`" alt="cover" class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
+      <div class="p-1 text-right absolute bottom-0 right-0">
         <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90" :tag="t">
           {{ t }}
         </UBadge>

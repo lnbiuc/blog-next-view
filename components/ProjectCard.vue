@@ -15,7 +15,7 @@ function openNewTab(url: string) {
 
 <template>
   <div
-    class="card-bg-filter my-open-tab flex flex-col justify-between overflow-hidden card-border"
+    class="card-bg-filter my-open-tab flex flex-col overflow-hidden justify-between card-border"
     @click="openNewTab(props.article.content)"
   >
     <div class="p-4 text-left">
@@ -31,8 +31,8 @@ function openNewTab(url: string) {
         </UBadge>
       </div>
     </div>
-    <div class="relative px-4 pb-4">
-      <img :src="props.article.cover[0]" alt="cover" class="h-48 w-full rounded-md object-cover">
+    <div class="px-4 pb-4 relative">
+      <img :src="`${props.article.cover[0]}/comporess1600x900`" alt="cover" class="object-cover rounded-md h-48 w-full">
     </div>
   </div>
 </template>

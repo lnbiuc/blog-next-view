@@ -84,18 +84,18 @@ onBeforeUnmount(() => {
               'justify-center items-center h-60px': width > 767,
               'h-full': !isOpen,
     }"
-    class="fixed z-999 h-60px w-full flex flex-row border-b border-transparent bg-white bg-opacity-50 backdrop-blur-md transition-all dark:bg-dark dark:bg-opacity-0"
+    class="backdrop-blur-md bg-white bg-opacity-50 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
   >
-    <div class="max-w-1600px flex flex-row items-center" :class="{ 'justify-between w-full': width < 767, 'justify-center w-80%': width > 767 }">
-      <div class="h-60px w-100px flex flex-row items-center">
-        <img src="/favicon.ico" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" @click="$router.push('/')">
+    <div class="flex flex-row max-w-1600px items-center" :class="{ 'justify-between w-full': width < 767, 'justify-center w-80%': width > 767 }">
+      <div class="flex flex-row h-60px w-100px items-center">
+        <img src="https://static.vio.vin/favicon.png/thumbnail" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" @click="$router.push('/')">
       </div>
       <Transition name="slide">
-        <div v-if="y > showTitleY && isArticlePage && width > 767" class="max-w-1000px w-full flex flex-col items-start justify-start overflow-hidden text-ellipsis">
-          <p class="overflow-hidden text-ellipsis text-xl font-semibold">
+        <div v-if="y > showTitleY && isArticlePage && width > 767" class="text-ellipsis flex flex-col max-w-1000px w-full overflow-hidden justify-start items-start">
+          <p class="text-xl font-semibold text-ellipsis overflow-hidden">
             {{ article?.title }}
           </p>
-          <p class="overflow-hidden text-ellipsis text-xs text-gray-500">
+          <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">
             {{ article?.category.toLowerCase() }} / {{ article?.shortLink }}
           </p>
         </div>
@@ -105,7 +105,7 @@ onBeforeUnmount(() => {
           class="hidden max-w-1000px w-full"
         >
           <ul
-            class="h-0px flex flex-row items-center rounded-full ring-1 ring-transparent ring-inset transition-all"
+            class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-center transition-all ring-1"
             :class="{
               'flex-col w-full': width < 767,
               'flex-row': width > 767,
@@ -148,14 +148,14 @@ onBeforeUnmount(() => {
         class="w-100px"
         :class="{ 'flex justify-end': width < 767 }"
       >
-        <DarkToggle :class="{ 'flex ': width > 767 }" class="relative z-1100 hidden" />
+        <DarkToggle :class="{ 'flex ': width > 767 }" class="hidden relative z-1100" />
         <div
           :class="{
             'flex': width < 767,
             'i-ri:menu-fill scale-150': isOpen,
             'i-ri:close-fill scale-180': !isOpen,
           }"
-          class="mr-4 hidden h-60px flex-row items-center"
+          class="mr-4 hidden flex-row h-60px items-center"
           @click="isOpen = !isOpen"
         />
       </div>
@@ -170,10 +170,10 @@ onBeforeUnmount(() => {
     >
       <!-- Your content -->
       <div
-        class="top-90px z-2000 m-auto h-75px max-w-1000px flex items-end justify-center text-center"
+        class="m-auto text-center flex h-75px max-w-1000px justify-center items-end top-90px z-2000"
       >
         <ul
-          class="h-35px flex flex-row items-center rounded rounded-full shadow ring-1 ring-[#ccc] ring-transparent ring-inset backdrop-blur-md transition-all dark:ring-[#333]"
+          class="backdrop-blur-md rounded rounded-full shadow ring-[#ccc] ring-transparent ring-inset flex flex-row h-35px items-center transition-all ring-1 dark:ring-[#333]"
           :class="{
             'flex-col w-full': width < 767,
             'flex-row': width > 767,

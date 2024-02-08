@@ -2,7 +2,6 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-// @ts-expect-error no error
 import * as tocbot from 'tocbot'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
@@ -126,7 +125,7 @@ watchEffect(() => {
           <div class="text-left flex flex-col">
             <Transition name="fade">
               <img
-                v-if="article?.cover[0]" :src="article?.cover[0]" alt="cover"
+                v-if="article?.cover[0]" :src="`${article?.cover[0]}/comporess1600x900`" alt="cover"
                 class="object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
               >
             </Transition>
