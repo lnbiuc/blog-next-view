@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import markdownit from 'markdown-it'
 import shikiji from 'markdown-it-shikiji'
-import { transformerNotationDiff } from 'shikiji-transformers'
+import { transformerMetaHighlight, transformerNotationDiff, transformerNotationFocus, transformerNotationHighlight, transformerNotationWordHighlight } from 'shikiji-transformers'
 import anchor from 'markdown-it-anchor'
 
 // @ts-expect-error miss type
 import video from '@vrcd-community/markdown-it-video'
-
-// @ts-expect-error miss type
 import container from 'markdown-it-container'
 
 // @ts-expect-error miss type
@@ -40,6 +38,10 @@ md.use(await shikiji({
   },
   transformers: [
     transformerNotationDiff(),
+    transformerNotationHighlight(),
+    transformerNotationWordHighlight(),
+    transformerNotationFocus(),
+    transformerMetaHighlight(),
   ],
 }))
 
