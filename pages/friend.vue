@@ -60,6 +60,7 @@ const md = '你可以通过在下方评论来申请友链，只需满足以下�
   + '  - 描述: A Web <Developer />. Code for Fun.' + '\n'
   + '  - 头像: https://vio.vin/favicon.ico' + '\n'
   + '  - 链接: https://vio.vin' + '\n'
+  + '  - 邮箱: hi@lnbiuc.com' + '\n'
   + '\n'
 </script>
 

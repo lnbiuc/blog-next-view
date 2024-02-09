@@ -30,7 +30,7 @@ function openLink() {
           {{ props.friend.title }}
         </div>
         <div class="text-sm text-gray-600 text-left dark:text-gray-400">
-          {{ props.friend.bio }} views
+          {{ props.friend.bio }}
         </div>
       </div>
     </div>
