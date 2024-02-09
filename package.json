@@ -18,11 +18,11 @@
     "@nuxt/ui": "^2.13.0",
     "date-fns": "^2.30.0",
     "tocbot": "^4.25.0",
-    "vue-use-fixed-header": "^2.0.2"
+    "vue-use-fixed-header": "^2.0.3"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^1.2.1",
-    "@iconify-json/carbon": "^1.1.28",
+    "@iconify-json/carbon": "^1.1.29",
     "@iconify-json/twemoji": "^1.1.15",
     "@nuxtjs/color-mode": "^3.3.2",
     "@nuxtseo/module": "2.0.0-beta.45",
