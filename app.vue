@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { getFriendsList } from './server/api/friend'
+import type { Friend } from '~/server/types/friend'
 import type { Article } from '~/server/types/article'
 import { getTagByCategory } from '~/server/api/tag'
 import { usePreloadCacheStore } from '~/store'
@@ -57,6 +59,8 @@ const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, d
   data: [],
 })
 
+const friends = ref<Friend[]>()
+
 function preloadArticles() {
   if (getCategoryArticleCache('ARTICLE')?.total === 0) {
     getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
@@ -89,6 +93,21 @@ function preloadArticles() {
   }
 }
 
+const { cacheFriend, getFriendCache } = usePreloadCacheStore()
+function preloadFriends() {
+  if (getFriendCache().length > 0) {
+    friends.value = getFriendCache()
+  }
+  else {
+    getFriendsList().then((res) => {
+      friends.value = res.data.value?.data as Friend[]
+      cacheFriend(friends.value)
+    })
+  }
+}
+
+preloadFriends()
+
 preloadArticleTags()
 preloadShortTags()
 preloadArticles()
@@ -104,7 +123,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <div class="z-0 h-full w-full opacity-20" />
+    <div class="opacity-20 h-full w-full z-0" />
     <Header />
     <div class="relative z-10">
       <NuxtPage />
@@ -112,9 +131,9 @@ onMounted(() => {
     <Footer />
     <UNotifications class="w-[300px]" />
     <Transition name="fade">
-      <div v-if="isScroll" class="fixed bottom-4 right-4 z-1000 flex flex-row justify-end">
+      <div v-if="isScroll" class="flex flex-row fixed justify-end bottom-4 right-4 z-1000">
         <div
-          class="h-35px w-35px flex flex-row items-center justify-center rounded-full bg-violet transition-all duration-150 active:scale-90 hover:scale-110 hover:bg-violet-500"
+          class="bg-violet rounded-full flex flex-row h-35px w-35px justify-center items-center transition-all duration-150 hover:bg-violet-500 active:scale-90 hover:scale-110"
           @click="handleToTop"
         >
           <div class="i-carbon-chevron-up" />

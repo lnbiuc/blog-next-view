@@ -134,6 +134,11 @@ onBeforeUnmount(() => {
               </router-link>
             </li>
             <li :class="{ 'leading-10 text-2xl': !isOpen }">
+              <router-link to="/friend" class="header-link" @click="isOpen = true">
+                Friend
+              </router-link>
+            </li>
+            <li :class="{ 'leading-10 text-2xl': !isOpen }">
               <router-link to="/about" class="header-link" @click="isOpen = true">
                 About
               </router-link>
@@ -198,6 +203,11 @@ onBeforeUnmount(() => {
           <li :class="{ 'h-50px text-2xl': !isOpen }">
             <router-link to="/project" class="header-link" @click="isOpen = true">
               Project
+            </router-link>
+          </li>
+          <li :class="{ 'h-50px text-2xl': !isOpen }">
+            <router-link to="/friend" class="header-link" @click="isOpen = true">
+              Friend
             </router-link>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">

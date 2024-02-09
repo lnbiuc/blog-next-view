@@ -29,12 +29,6 @@ const md = '# Violet\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
 
-const colorMode = useColorMode()
-
-const theme = computed(() => {
-  return colorMode.value === 'dark' ? 'dark' : 'light'
-})
-
 useSeoMeta({
   ogImage: '/ogabout.png',
   twitterTitle: '薇尔薇｜About',
@@ -61,7 +55,7 @@ useHead({
   <div>
     <NuxtLayout name="default">
       <NuxtLayout name="home">
-        <div class="flex flex-col text-left">
+        <div class="text-left flex flex-col">
           <h1 class="text-5xl text-violet font-bold">
             About
           </h1>
@@ -71,22 +65,7 @@ useHead({
           <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
           <MDRender class="violet-prose" :source="md" />
         </div>
-        <MyGiscus
-          :theme="theme"
-          category="Announcements"
-          category-id="DIC_kwDOKsLYcc4CbAW9"
-          class="mt-4 py-4"
-          crossorigin="anonymous"
-          emit-metadata="0"
-          input-position="bottom"
-          lang="en"
-          mapping="pathname"
-          reactions-enabled="1"
-          repo="lnbiuc/blog-next-view"
-          repo-id="R_kgDOKsLYcQ"
-          strict="1"
-          term="Welcome to @giscus/vue component!"
-        />
+        <Comment />
       </NuxtLayout>
     </NuxtLayout>
   </div>

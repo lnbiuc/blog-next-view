@@ -5,7 +5,6 @@ import { useRoute } from 'vue-router'
 import * as tocbot from 'tocbot'
 import { getArticleByShortLink } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
-import MyGiscus from '~/components/Giscus/MyGiscus.vue'
 import { formatTime } from '~/composables/formatTime'
 import { usePreloadCacheStore } from '~/store'
 
@@ -44,11 +43,6 @@ function getArticle() {
 }
 
 getArticle()
-const colorMode = useColorMode()
-
-const theme = computed(() => {
-  return colorMode.value === 'dark' ? 'dark' : 'light'
-})
 
 const hasCatalog = ref(false)
 
@@ -158,12 +152,7 @@ watchEffect(() => {
             </div>
             <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
           </div>
-          <MyGiscus
-            :theme="theme" category="Announcements" category-id="DIC_kwDOKsLYcc4CbAW9" class="py-4 mt-4"
-            crossorigin="anonymous" emit-metadata="0" input-position="bottom" lang="en"
-            mapping="pathname" reactions-enabled="1" repo="lnbiuc/blog-next-view" repo-id="R_kgDOKsLYcQ" strict="1"
-            term="Welcome to @giscus/vue component!"
-          />
+          <Comment />
         </NuxtLayout>
       </div>
     </NuxtLayout>
