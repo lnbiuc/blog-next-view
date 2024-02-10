@@ -79,6 +79,7 @@ onBeforeUnmount(() => {
 
 <template>
   <div
+    id="header"
     :class="{ 'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50': y > 60,
               'justify-between items-start h-60px': width < 767,
               'justify-center items-center h-60px': width > 767,

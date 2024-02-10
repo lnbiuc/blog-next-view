@@ -28,8 +28,8 @@ const link = [
 </script>
 
 <template>
-  <div class="mt-20 w-full flex flex-col items-center justify-center">
-    <div text="xs gray4" class="h-[100px] w-full flex flex-row items-start justify-between overflow-hidden border-t border-t-gray-300 p-5 xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] dark:border-t-gray-700">
+  <div id="footer" class="mt-20 flex flex-col w-full justify-center items-center">
+    <div text="xs gray4" class="p-5 border-t border-t-gray-300 flex flex-row h-[100px] w-full overflow-hidden justify-between items-start xl:m-2 dark:border-t-gray-700 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
       <div>
         <span>Copyright © 2023</span>
         <NuxtLink to="/about" class="mx-4">
@@ -39,7 +39,7 @@ const link = [
       </div>
       <div class="flex flex-row">
         <a
-          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row items-center justify-center" :href="l.url"
+          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center" :href="l.url"
           target="_blank"
         >
           <UIcon :name="l.icon" class="text-xl" />
