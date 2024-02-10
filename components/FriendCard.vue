@@ -23,7 +23,7 @@ function openLink() {
     </div>
     <div class="m-2 flex flex-row">
       <div class="max-w-150px items-start">
-        <img :src="props.friend.avatar" alt="avatar" class="object-cover rounded h-15 w-full z-0 transform">
+        <img :src="props.friend.avatar" alt="avatar" class="object-cover rounded h-15 w-15 z-0 transform">
       </div>
       <div class="ml-2 flex flex-col justify-center">
         <div class="text-xl font-bold text-left">
