@@ -106,12 +106,12 @@ watchEffect(() => {
       />
       <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
-      <Meta :content="article?.cover[0] || '/og.png'" property="og:image" />
+      <Meta :content="article?.ogImage || '/og.png'" property="og:image" />
       <Meta content="summary_large_image" name="twitter:card" />
       <Meta content="@lnbiuc" name="twitter:creator" />
       <Meta :content="article?.title || 'Violet\'s Blog'" name="twitter:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" name="twitter:description" />
-      <Meta :content="article?.cover[0] || '/og.png'" name="twitter:image" />
+      <Meta :content="article?.ogImage || '/og.png'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
       <div v-if="afterFetchData">

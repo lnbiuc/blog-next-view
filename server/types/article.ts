@@ -32,6 +32,7 @@ export interface ArticleWithContent {
   updatedAt: string
   views: number
   likes: number
+  ogImage: string
 }
 
 export interface ArticlePublishDto {
