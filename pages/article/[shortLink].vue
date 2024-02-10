@@ -142,7 +142,7 @@ watchEffect(() => {
             </div>
             <UDivider class="my-6" />
           </div>
-          <div class="pb-20 pt-10 flex flex-row justify-between">
+          <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div
                 class="text-left"
@@ -151,6 +151,9 @@ watchEffect(() => {
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+          </div>
+          <div class="violet-prose mb-10 text-left cursor-pointer">
+            <a class="text-xl" @click="$router.back">cd ..</a>
           </div>
           <Comment />
         </NuxtLayout>
