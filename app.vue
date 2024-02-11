@@ -19,7 +19,7 @@ const shortTags: Ref<string[]> = ref(['ALL'])
 const { cacheTags, getTagsCache, cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
 
 function preloadArticleTags() {
-  useFetch('http://blog-next-api.zeabur.internal/api/tags/all').then((res) => {
+  useFetch('http://blog-next-api.zeabur.internal/api/v1/tags/all').then((res) => {
     console.warn('-------debug-------')
     console.warn(res)
     console.warn('-------debug-------')
