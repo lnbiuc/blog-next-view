@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import * as tocbot from 'tocbot'
+import { useTimeoutFn } from '@vueuse/core'
 import { getArticleByShortLink, increaseView } from '~/server/api/article'
 import type { ArticleWithContent } from '~/server/types/article'
 import { formatTime } from '~/composables/formatTime'
@@ -74,14 +75,20 @@ function initTOC() {
   })
 }
 
+const { start, stop } = useTimeoutFn(() => {
+  increaseView(shortLink)
+}, 30000)
+
 onMounted(() => {
   nextTick(() => {
     initTOC()
   })
 
-  setTimeout(() => {
-    increaseView(shortLink)
-  }, 15000)
+  start()
+})
+
+onBeforeRouteLeave(() => {
+  stop()
 })
 
 onBeforeUnmount(() => {
