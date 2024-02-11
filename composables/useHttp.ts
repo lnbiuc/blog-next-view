@@ -35,13 +35,6 @@ function fetch<T>(url: UrlType, option: UseFetchOptions<ResOptions<T>>) {
       console.warn('-----------before request-------------')
       console.warn(url)
       console.warn(option.body)
-
-      useFetch('http://blog-next-api.zeabur.internal/api/v1/tags/all').then((res) => {
-        console.warn('-------debug-------')
-        console.warn(res)
-        console.warn('-------debug-------')
-      })
-
       return options
     },
     // 响应拦截
