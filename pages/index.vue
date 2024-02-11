@@ -105,7 +105,7 @@ preloadArticles()
             </div>
           </ClientOnly>
           <template #fallback>
-            <div italic op50>
+            <div op50 italic>
               <span animate-pulse>Loading...</span>
             </div>
           </template>

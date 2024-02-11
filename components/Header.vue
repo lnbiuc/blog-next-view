@@ -85,7 +85,7 @@ onBeforeUnmount(() => {
               'justify-center items-center h-60px': width > 767,
               'h-full': !isOpen,
     }"
-    class="backdrop-blur-md bg-white bg-opacity-50 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
+    class="backdrop-blur-md bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
   >
     <div class="flex flex-row max-w-1600px items-center" :class="{ 'justify-between w-full': width < 767, 'justify-center w-80%': width > 767 }">
       <div class="flex flex-row h-60px w-100px items-center">
