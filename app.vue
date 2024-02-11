@@ -19,6 +19,12 @@ const shortTags: Ref<string[]> = ref(['ALL'])
 const { cacheTags, getTagsCache, cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
 
 function preloadArticleTags() {
+  useFetch('http://blog-next-api.zeabur.internal/api/tags/all').then((res) => {
+    console.warn('-------debug-------')
+    console.warn(res)
+    console.warn('-------debug-------')
+  })
+
   getTagByCategory('ARTICLE').then((res) => {
     const resTag = res.data.value?.data as string[]
     // push res to tags
@@ -119,12 +125,6 @@ onMounted(() => {
 })
 
 // useColorMode().value = 'dark'
-
-useFetch('http://blog-next-api.zeabur.internal/api/tags/all').then((res) => {
-  console.warn('-------debug-------')
-  console.warn(res)
-  console.warn('-------debug-------')
-})
 </script>
 
 <template>
