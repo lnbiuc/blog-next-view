@@ -41,6 +41,10 @@ function fetch<T>(url: UrlType, option: UseFetchOptions<ResOptions<T>>) {
       // 在这里判断错误
       if (response._data.code !== 200) {
         handleError<T>(response)
+        console.error('--------response error-----------')
+        console.error(url)
+        console.error(response.body)
+        console.error(response.status)
         return Promise.reject(response._data)
       }
       // 成功返回
