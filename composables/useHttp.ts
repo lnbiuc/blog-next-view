@@ -32,19 +32,23 @@ function fetch<T>(url: UrlType, option: UseFetchOptions<ResOptions<T>>) {
     // 请求拦截器
     onRequest({ options }) {
       // 在这里判断错误
+      console.warn('-----------before request-------------')
+      console.warn(url)
+      console.warn(option.body)
       return options
     },
     // 响应拦截
     onResponse({ response }) {
+      console.warn('-----------get response-------------')
+      console.warn(url)
+      console.warn(response.body)
+      console.warn(response.status)
+      console.warn(response.type)
       if (response.headers.get('content-disposition') && response.status === 200)
         return response
       // 在这里判断错误
       if (response._data.code !== 200) {
         handleError<T>(response)
-        console.error('--------response error-----------')
-        console.error(url)
-        console.error(response.body)
-        console.error(response.status)
         return Promise.reject(response._data)
       }
       // 成功返回

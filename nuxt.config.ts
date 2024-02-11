@@ -33,10 +33,10 @@ export default defineNuxtConfig({
     // '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
     // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
     // '/api/**': { proxy: { to: 'http://blog-next-api:6060/api/**' } },
-    '/api/**': { proxy: { to: 'https://violet-blog-api.zeabur.app/api/**' } },
-    // '/api/**': { proxy: { to: 'http://blog-next-api.zeabur.internal/api/**' } },
+    // '/api/**': { proxy: { to: 'https://violet-blog-api.zeabur.app/api/**' } },
+    '/api/**': { proxy: { to: 'http://blog-next-api.zeabur.internal/api/**' } },
   },
-
+  debug: true,
   experimental: {
     // when using generate, payload js assets included in sw precache manifest
     // but missing on offline, disabling extraction it until fixed
@@ -60,6 +60,7 @@ export default defineNuxtConfig({
         target: 'esnext',
       },
     },
+    logLevel: 1,
     prerender: {
       crawlLinks: false,
       //   routes: ['/', '/blog', '/shorts', '/project', '/about'],
