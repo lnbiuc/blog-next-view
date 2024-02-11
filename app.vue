@@ -119,6 +119,12 @@ onMounted(() => {
 })
 
 // useColorMode().value = 'dark'
+
+useFetch('http://blog-next-api.zeabur.internal/api/tags/all').then((res) => {
+  console.warn('-------debug-------')
+  console.warn(res)
+  console.warn('-------debug-------')
+})
 </script>
 
 <template>
