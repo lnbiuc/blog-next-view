@@ -68,6 +68,6 @@ function useToggleDark(event: MouseEvent) {
 
 <template>
   <button class="!outline-none" @click="useToggleDark">
-    <div :class="{ 'i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill': colorMode.preference !== 'system', 'i-ri:contrast-line': colorMode.preference === 'system' }" />
+    <div class="scale-120" :class="{ 'i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill': colorMode.preference !== 'system', 'i-ri:contrast-line': colorMode.preference === 'system' }" />
   </button>
 </template>
