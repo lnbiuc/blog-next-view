@@ -31,3 +31,7 @@ export async function getHomeArticle() {
 export async function getArticleViews() {
   return await useHttp.get(`/api/v1/articles/views`)
 }
+
+export async function increaseView(shortLink: string) {
+  return await useHttp.get(`/api/v1/articles/increase_view?shortLink=${shortLink}`)
+}
