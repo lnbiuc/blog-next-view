@@ -77,7 +77,7 @@ function initTOC() {
 
 const { start, stop } = useTimeoutFn(() => {
   increaseView(shortLink)
-}, 30000)
+}, 10000)
 
 onMounted(() => {
   nextTick(() => {
