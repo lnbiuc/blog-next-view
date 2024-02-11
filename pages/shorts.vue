@@ -85,7 +85,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.png',
+      href: '/favicon.ico',
     },
   ],
 })
@@ -96,7 +96,7 @@ useHead({
     <NuxtLayout name="default">
       <NuxtLayout name="home">
         <div class="flex flex-row">
-          <div class="w-full text-left">
+          <div class="text-left w-full">
             <h1 class="text-5xl text-violet font-bold">
               Shorts
             </h1>
