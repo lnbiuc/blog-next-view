@@ -1,32 +1,24 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
-import type { Article, ArticleWithContent } from '~/server/types/article'
-import { formatTime } from '~/composables/formatTime'
-import { usePreloadCacheStore } from '~/store'
-import { getArticleByShortLink } from '~/server/api/article'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
 const props = defineProps({
   article: {
-    type: Object as PropType<Article>,
+    type: Object as PropType<IArticle>,
     required: true,
   },
 })
 
-const article = ref<ArticleWithContent>()
+const article = ref<IArticle>()
 
-const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+const { one } = useArticleStore()
 
 const preloadArticle = useThrottleFn(() => {
-  const res: ArticleWithContent | undefined = getArticleCache(props.article.shortLink)
-  if (res)
-    return
-
-  getArticleByShortLink(props.article.shortLink).then((res) => {
-    article.value = res.data.value?.data as ArticleWithContent
-    cacheArticle(article.value)
-  },
-  )
+  one(props.article.shortLink).then((data) => {
+    article.value = data
+  })
 }, 1000)
 </script>
 
@@ -49,7 +41,7 @@ const preloadArticle = useThrottleFn(() => {
         </UBadge>
       </div>
       <div class="mt-3 text-sm">
-        {{ formatTime(props.article.createdAt) }}
+        {{ props.article.createdAt }}
       </div>
     </div>
   </div>

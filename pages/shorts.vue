@@ -1,69 +1,65 @@
 <script lang="ts" setup>
-import type { Article } from '~/server/types/article'
-import { getArticleByCategory, searchShorts } from '~/server/api/article'
-import { usePreloadCacheStore } from '~/store'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
-const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
+const shorts: Ref<IArticle[]> = ref([])
 
 const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const isLoading = ref<boolean>(false)
 
-const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
+const { category } = useArticleStore()
 
-function loadShorts() {
-  const res: { pageNumber: number, pageSize: number, total: number, data: Article[] } | undefined = getCategoryArticleCache('SHORTS')
-  if (res) {
-    page.value = res
-    return
-  }
-  getShorts()
-}
-
-loadShorts()
-
-async function getShorts() {
-  isLoading.value = true
-  getArticleByCategory('SHORTS', page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-    page.value.data.sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+async function getArticles() {
+  category('short').then((data) => {
+    data.forEach((short) => {
+      shorts.value.push(short)
     })
-    isLoading.value = false
-    cacheCategoryArticle('SHORTS', page.value)
   })
 }
 
+getArticles()
+
 async function handleParamsChange(searchVal: string) {
   if (searchVal === 'ALL') {
-    getShorts()
+    getArticles()
     return
   }
   if (searchVal !== '') {
     isLoading.value = true
-    searchShorts(searchVal, page.value.pageNumber, page.value.pageSize).then((res) => {
-      page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      isLoading.value = false
+    const { data } = await useFetch<IArticle[]>('/api/search', {
+      method: 'POST',
+      body: {
+        category: 'article',
+        keyword: searchVal,
+      },
     })
+
+    shorts.value = []
+
+    if (data.value) {
+      data.value.forEach((article) => {
+        shorts.value.push(article)
+      })
+    }
+
+    isLoading.value = false
   }
   else {
-    getShorts()
+    getArticles()
   }
 }
 
 async function handleSortByChange(selectVal: string) {
   if (selectVal === options.value[0]) {
-    page.value.data.sort((a, b) => {
+    shorts.value.sort((a, b) => {
+      // @ts-expect-error no error
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
   }
   else {
-    page.value.data.sort((a, b) => {
+    shorts.value.sort((a, b) => {
+      // @ts-expect-error no error
       return b.views - a.views
     })
   }
@@ -105,12 +101,12 @@ useHead({
               </span>
             </div>
             <Search
-              :is-loading="isLoading" category="SHORTS" @params-change="handleParamsChange"
+              :is-loading="isLoading" category="short" @params-change="handleParamsChange"
               @sort-by-change="handleSortByChange"
             />
           </div>
         </div>
-        <ShortCards :articles="page.data" />
+        <ShortCards :articles="shorts" />
       </NuxtLayout>
     </NuxtLayout>
   </div>

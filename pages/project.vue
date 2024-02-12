@@ -1,37 +1,16 @@
 <script lang="ts" setup>
-import type { Article } from '~/server/types/article'
-import { getArticleByCategory } from '~/server/api/article'
-import { usePreloadCacheStore } from '~/store'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
-const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
+const projects: Ref<IArticle[]> = ref([])
 
-const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
+const { category } = useArticleStore()
 
-function loadProjects() {
-  const res: { pageNumber: number, pageSize: number, total: number, data: Article[] } | undefined = getCategoryArticleCache('PROJECT')
-  if (res) {
-    page.value = res
-    return
-  }
-  getProjects()
-}
-
-loadProjects()
-
-function getProjects() {
-  getArticleByCategory('PROJECT', page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-    page.value.data.sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-    })
-    cacheCategoryArticle('PROJECT', page.value)
+category('project').then((data) => {
+  data.forEach((project) => {
+    projects.value.push(project)
   })
-}
+})
 
 useSeoMeta({
   ogImage: '/ogproject.png',
@@ -71,7 +50,7 @@ useHead({
             </div>
           </div>
         </div>
-        <ProjectCards :articles="page.data" />
+        <ProjectCards :articles="projects" />
       </NuxtLayout>
     </NuxtLayout>
   </div>

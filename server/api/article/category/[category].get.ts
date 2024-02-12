@@ -1,11 +1,11 @@
 import { ArticleSchema } from '~/server/models/article.schema'
 
 export default defineEventHandler(async (event) => {
+  console.warn(`request: ${event.path}`)
   try {
-    const shortLink = event.context.params?.shortLink
     const category = event.context.params?.category
-    console.warn(`shortLink:${shortLink}, category:${category}`)
-    return await ArticleSchema.findOne({ shortLink, category })
+    console.warn(`category:${category}`)
+    return await ArticleSchema.find({ category }, { })
   }
   catch (error) {
     return error

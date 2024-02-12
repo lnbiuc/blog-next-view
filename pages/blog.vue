@@ -1,43 +1,24 @@
 <script lang="ts" setup>
-import type { Article } from '~/server/types/article'
-import { getArticleByCategory, searchArticle } from '~/server/api/article'
-import { usePreloadCacheStore } from '~/store'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
-const page = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
+const articles: Ref<IArticle[]> = ref([])
 
 const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const isLoading = ref<boolean>(false)
 
-const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
-
-function loadArticles() {
-  const res: { pageNumber: number, pageSize: number, total: number, data: Article[] } | undefined = getCategoryArticleCache('ARTICLE')
-  if (res) {
-    page.value = res
-    return
-  }
-  getArticles()
-}
-
-loadArticles()
+const { category } = useArticleStore()
 
 async function getArticles() {
-  isLoading.value = true
-  getArticleByCategory('ARTICLE', page.value.pageNumber, page.value.pageSize).then((res) => {
-    page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-    page.value.data.sort((a, b) => {
-      return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+  category('article').then((data) => {
+    data.forEach((article) => {
+      articles.value.push(article)
     })
-    isLoading.value = false
-    cacheCategoryArticle('ARTICLE', page.value)
   })
 }
+
+getArticles()
 
 async function handleParamsChange(searchVal: string) {
   if (searchVal === 'ALL') {
@@ -46,13 +27,23 @@ async function handleParamsChange(searchVal: string) {
   }
   if (searchVal !== '') {
     isLoading.value = true
-    searchArticle(searchVal, page.value.pageNumber, page.value.pageSize).then((res) => {
-      page.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      page.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      isLoading.value = false
+    const { data } = await useFetch<IArticle[]>('/api/search', {
+      method: 'POST',
+      body: {
+        category: 'article',
+        keyword: searchVal,
+      },
     })
+
+    articles.value = []
+
+    if (data.value) {
+      data.value.forEach((article) => {
+        articles.value.push(article)
+      })
+    }
+
+    isLoading.value = false
   }
   else {
     getArticles()
@@ -61,12 +52,14 @@ async function handleParamsChange(searchVal: string) {
 
 async function handleSortByChange(selectVal: string) {
   if (selectVal === options.value[0]) {
-    page.value.data.sort((a, b) => {
+    articles.value.sort((a, b) => {
+      // @ts-expect-error no error
       return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     })
   }
   else {
-    page.value.data.sort((a, b) => {
+    articles.value.sort((a, b) => {
+      // @ts-expect-error no error
       return b.views - a.views
     })
   }
@@ -109,12 +102,12 @@ useHead({
               </span>
             </div>
             <Search
-              :is-loading="isLoading" category="ARTICLE" @params-change="handleParamsChange"
+              :is-loading="isLoading" category="article" @params-change="handleParamsChange"
               @sort-by-change="handleSortByChange"
             />
           </div>
         </div>
-        <BlogCards :articles="page.data" />
+        <BlogCards :articles="articles" />
       </NuxtLayout>
     </NuxtLayout>
   </div>

@@ -1,14 +1,16 @@
 <script setup lang="ts">
-import type { Article } from '~/server/types/article'
+import type { IArticle } from '~/server/types'
 
 const props = defineProps({
   article: {
-    type: Object as PropType<Article>,
+    type: Object as PropType<IArticle>,
     required: true,
   },
 })
 
-function openNewTab(url: string) {
+function openNewTab(url: string | undefined) {
+  if (!url)
+    return
   window.open(url, '_blank')
 }
 </script>
@@ -16,7 +18,7 @@ function openNewTab(url: string) {
 <template>
   <div
     class="card-bg-filter my-open-tab flex flex-col overflow-hidden justify-between card-border"
-    @click="openNewTab(props.article.content)"
+    @click="openNewTab(props.article.link)"
   >
     <div class="p-4 text-left">
       <div class="text-lg font-bold">
@@ -32,7 +34,7 @@ function openNewTab(url: string) {
       </div>
     </div>
     <div class="px-4 pb-4 relative">
-      <img :src="`${props.article.cover[0]}/comporess1600x900`" alt="cover" class="object-cover rounded-md h-48 w-full">
+      <img :src="`${props.article.cover}/comporess1600x900`" alt="cover" class="object-cover rounded-md h-48 w-full">
     </div>
   </div>
 </template>

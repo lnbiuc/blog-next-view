@@ -2,12 +2,12 @@ export interface IUser {
   _id: string
   nickname: string
   password: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface IArticle {
-  _id: string
+  _id?: string
   shortLink: string
   title: string
   description?: string
@@ -21,8 +21,8 @@ export interface IArticle {
   likes?: number
   ogImage?: string
   link?: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }
 
 export interface IFriend {
@@ -34,6 +34,6 @@ export interface IFriend {
   email?: string
   screenShot?: string
   status?: string
-  createdAt: Date
-  updatedAt: Date
+  createdAt?: Date
+  updatedAt?: Date
 }

@@ -1,10 +1,4 @@
 <script lang="ts" setup>
-import { getFriendsList } from './server/api/friend'
-import type { Friend } from '~/server/types/friend'
-import type { Article } from '~/server/types/article'
-import { getTagByCategory } from '~/server/api/tag'
-import { usePreloadCacheStore } from '~/store'
-import { getArticleByCategory } from '~/server/api/article'
 import '~/styles/main.css'
 
 function handleToTop() {
@@ -12,105 +6,6 @@ function handleToTop() {
 }
 
 const isScroll = ref(false)
-
-const articleTags: Ref<string[]> = ref(['ALL'])
-const shortTags: Ref<string[]> = ref(['ALL'])
-
-const { cacheTags, getTagsCache, cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
-
-function preloadArticleTags() {
-  getTagByCategory('ARTICLE').then((res) => {
-    const resTag = res.data.value?.data as string[]
-    // push res to tags
-    resTag.forEach(e => articleTags.value.push(e))
-    if (!getTagsCache('ARTICLE'))
-      cacheTags('ARTICLE', articleTags.value)
-  })
-}
-
-function preloadShortTags() {
-  getTagByCategory('SHORTS').then((res) => {
-    const resTag = res.data.value?.data as string[]
-    // push res to tags
-    resTag.forEach(e => shortTags.value.push(e))
-    if (!getTagsCache('SHORTS'))
-      cacheTags('SHORTS', shortTags.value)
-  })
-}
-
-const articlePage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
-
-const shortsPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
-
-const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
-
-const friends = ref<Friend[]>()
-
-function preloadArticles() {
-  if (getCategoryArticleCache('ARTICLE')?.total === 0) {
-    getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
-      articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      articlePage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('ARTICLE', articlePage.value)
-    })
-  }
-
-  if (getCategoryArticleCache('SHORTS')?.total === 0) {
-    getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
-      shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      shortsPage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('SHORTS', shortsPage.value)
-    })
-  }
-
-  if (getCategoryArticleCache('PROJECT')?.total === 0) {
-    getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
-      projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      projectPage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('PROJECT', projectPage.value)
-    })
-  }
-}
-
-const { cacheFriend, getFriendCache } = usePreloadCacheStore()
-function preloadFriends() {
-  if (getFriendCache().length > 0) {
-    friends.value = getFriendCache()
-  }
-  else {
-    getFriendsList().then((res) => {
-      friends.value = res.data.value?.data as Friend[]
-      cacheFriend(friends.value)
-    })
-  }
-}
-
-// preloadFriends()
-
-// preloadArticleTags()
-// preloadShortTags()
-// preloadArticles()
 
 onMounted(() => {
   window.addEventListener('scroll', () => {
