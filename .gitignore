@@ -5,3 +5,4 @@ dist
 .nuxt
 .idea/
 .DS_Store
+.env.local

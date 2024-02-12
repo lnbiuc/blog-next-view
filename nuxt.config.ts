@@ -10,7 +10,13 @@ export default defineNuxtConfig({
     '@nuxt/ui',
     '@nuxtseo/module',
     '@formkit/auto-animate/nuxt',
+    'nuxt-mongoose',
   ],
+
+  mongoose: {
+    uri: 'process.env.MONGODB_URI',
+    devtools: true,
+  },
 
   site: {
     url: 'https://vio.vin',
