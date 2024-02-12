@@ -14,7 +14,7 @@ export default defineNuxtConfig({
   ],
 
   mongoose: {
-    uri: 'process.env.MONGODB_URI',
+    uri: process.env.MONGODB_URI,
     devtools: true,
   },
 
@@ -42,7 +42,7 @@ export default defineNuxtConfig({
     // '/api/**': { proxy: { to: 'http://blog-next-api:6060/api/**' } },
     // '/api/**': { proxy: { to: 'https://violet-blog-api.zeabur.app/api/**' } },
     //   '/api/**': { proxy: { to: `http://${}/api/**` } },
-    '/api/**': { proxy: { to: process.env.PROXY_ADDR } },
+    // '/api/**': { proxy: { to: process.env.PROXY_ADDR } },
   },
 
   experimental: {

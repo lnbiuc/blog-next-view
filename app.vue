@@ -106,11 +106,11 @@ function preloadFriends() {
   }
 }
 
-preloadFriends()
+// preloadFriends()
 
-preloadArticleTags()
-preloadShortTags()
-preloadArticles()
+// preloadArticleTags()
+// preloadShortTags()
+// preloadArticles()
 
 onMounted(() => {
   window.addEventListener('scroll', () => {

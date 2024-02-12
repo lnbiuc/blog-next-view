@@ -1413,7 +1413,7 @@ packages:
     resolution: {integrity: sha512-Ghv2MgWbJcUM9G5Dy3oQP0cJkUwEgaiuQxEF61FXJdn0a69Q4StZEP/hLF0MWPM9m6EvAwI7orxkJHM7MrmtVg==}
     hasBin: true
     dependencies:
-      '@nuxt/kit': 3.9.0
+      '@nuxt/kit': 3.10.1
       ci-info: 4.0.0
       consola: 3.2.3
       create-require: 1.1.1
