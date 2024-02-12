@@ -4,46 +4,23 @@ import { useRoute } from 'vue-router'
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
-import { getArticleByShortLink, increaseView } from '~/server/api/article'
-import type { ArticleWithContent } from '~/server/types/article'
-import { formatTime } from '~/composables/formatTime'
-import { usePreloadCacheStore } from '~/store'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
 const route = useRoute()
-const article = ref<ArticleWithContent>()
+const article = ref<IArticle>()
 
 const afterFetchData = ref(false)
 
 // @ts-expect-error no error
 const shortLink = route.params.shortLink
 
-function getFirstLink(shortLink: string | string[]): string {
-  if (Array.isArray(shortLink) && shortLink.length > 0)
-    return shortLink[0]
-  else if (typeof shortLink === 'string')
-    return shortLink
-  else
-    throw new Error('Invalid input')
-}
+const { one } = useArticleStore()
 
-const { cacheArticle, getArticleCache } = usePreloadCacheStore()
-
-function getArticle() {
-  const res: ArticleWithContent | undefined = getArticleCache(getFirstLink(shortLink))
-  if (res) {
-    article.value = res
-    afterFetchData.value = true
-    return
-  }
-  getArticleByShortLink(getFirstLink(shortLink)).then((res) => {
-    article.value = res.data.value?.data as ArticleWithContent
-    afterFetchData.value = true
-    cacheArticle(article.value)
-  },
-  )
-}
-
-getArticle()
+one(shortLink).then((data) => {
+  article.value = data
+  afterFetchData.value = true
+})
 
 const hasCatalog = ref(false)
 
@@ -76,7 +53,7 @@ function initTOC() {
 }
 
 const { start, stop } = useTimeoutFn(() => {
-  increaseView(shortLink)
+//   increaseView(shortLink)
 }, 10000)
 
 onMounted(() => {
@@ -130,7 +107,7 @@ watchEffect(() => {
           <div class="text-left flex flex-col">
             <Transition name="fade">
               <img
-                v-if="article?.cover[0]" :src="`${article?.cover[0]}/comporess1600x900`" alt="cover"
+                v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
                 class="object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
               >
             </Transition>
@@ -148,7 +125,7 @@ watchEffect(() => {
               </div>
               <div class="i-carbon-alarm mx-2 scale-110" />
               <div class="text-violet">
-                {{ formatTime(article?.updatedAt) }}
+                {{ article?.updatedAt }}
               </div>
             </div>
             <UDivider class="my-6" />
@@ -158,7 +135,7 @@ watchEffect(() => {
               <div
                 class="text-left"
               >
-                <MDRender :source="article!.content" />
+                <MDRender :source="article?.content ? article?.content : ''" />
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />

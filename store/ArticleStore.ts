@@ -24,7 +24,10 @@ export const useArticleStore = defineStore('articleStore', () => {
     if (articles.value.length === 0)
       await getAll()
 
-    return articles.value.filter(article => article.category === category)
+    return articles.value.filter(article => article.category === category).sort((a, b) => {
+      // @ts-expect-error no error
+      return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()
+    })
   }
 
   async function one(shortLink: string): Promise<IArticle> {

@@ -2,8 +2,10 @@
 // import { useFixedHeader } from 'vue-use-fixed-header'
 import { useWindowScroll } from '@vueuse/core'
 import { useFixedHeader } from 'vue-use-fixed-header'
-import type { ArticleWithContent } from '~/server/types/article'
 import { usePreloadCacheStore } from '~/store'
+
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
 const headerRef = ref(null)
 
@@ -20,18 +22,21 @@ const isArticlePage = ref(false)
 
 const shortLink = ref('')
 
-const article = ref<ArticleWithContent>()
-
-const store = usePreloadCacheStore()
+const article = ref<IArticle>()
 
 const showTitleY = ref(60)
+
+const { one } = useArticleStore()
+
 watchEffect(() => {
   if (route.path.includes('/article/')) {
     isArticlePage.value = true
     const params = route.params as { shortLink: string }
     shortLink.value = params.shortLink
-    article.value = store.getArticleCache(shortLink.value)
-    if (article.value && article.value.cover.length > 0) {
+    one(shortLink.value).then((data) => {
+      article.value = data
+    })
+    if (article.value && article.value.cover) {
       if (width.value < 767)
         showTitleY.value = 350
 
@@ -97,7 +102,7 @@ onBeforeUnmount(() => {
             {{ article?.title }}
           </p>
           <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">
-            {{ article?.category.toLowerCase() }} / {{ article?.shortLink }}
+            {{ article?.category }} / {{ article?.shortLink }}
           </p>
         </div>
         <div
