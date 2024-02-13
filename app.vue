@@ -12,8 +12,6 @@ onMounted(() => {
     isScroll.value = window.scrollY > window.innerHeight / 2
   })
 })
-
-// useColorMode().value = 'dark'
 </script>
 
 <template>

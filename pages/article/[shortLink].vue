@@ -7,6 +7,7 @@ import { useTimeoutFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
+import { addHoverEffect } from '~/composables/hoverEffect'
 
 const route = useRoute()
 const article = ref<IArticle>()
@@ -65,6 +66,7 @@ onMounted(() => {
   })
 
   start()
+  addHoverEffect('.cover-image', 5)
 })
 
 onBeforeRouteLeave(() => {
@@ -111,7 +113,7 @@ watchEffect(() => {
             <Transition name="fade">
               <img
                 v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
+                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
               >
             </Transition>
 

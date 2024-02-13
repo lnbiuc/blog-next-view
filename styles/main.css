@@ -489,3 +489,25 @@ html:not(.dark) [img-dark] {
   transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
   animation: up-to-down .5s ease reverse;
 }
+
+
+.favicon-shadow:hover {
+  transform: translateZ(12px);
+  transition: all 0.1s ease;
+}
+
+.dark .favicon-shadow:hover {
+  transform: translateZ(12px);
+  transition: all 0.1s ease;
+}
+
+.favicon-shadow {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: all 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+.dark .favicon-shadow {
+  transition: all 0.1s ease;
+  transform-style: preserve-3d;
+}
