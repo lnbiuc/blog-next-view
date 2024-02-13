@@ -12,8 +12,7 @@ const article = ref<IArticle>()
 
 const afterFetchData = ref(false)
 
-// @ts-expect-error no error
-const shortLink = route.params.shortLink
+const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 

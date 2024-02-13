@@ -1,39 +1,23 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { getArticleByShortLink } from '~/server/api/article'
-import type { ArticleWithContent } from '~/server/types/article'
-
-import { formatTime } from '~/composables/formatTime'
-import { usePreloadCacheStore } from '~/store'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
 definePageMeta({
   layout: 'empty',
 })
 
 const route = useRoute()
-const article = ref<ArticleWithContent>()
+const article = ref<IArticle>()
 
-// @ts-expect-error ???
-const shortLink = route.params.shortLink
+const shortLink = route.params.shortLink as string
 
-const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+const { one } = useArticleStore()
 
-function getArticle() {
-  const res: ArticleWithContent | undefined = getArticleCache(shortLink)
-  if (res) {
-    article.value = res
-    return
-  }
-
-  getArticleByShortLink(shortLink).then((res) => {
-    article.value = res.data.value?.data as ArticleWithContent
-    cacheArticle(article.value)
-  },
-  )
-}
-
-getArticle()
+one(shortLink).then((data) => {
+  article.value = data
+})
 
 onMounted(() => {
   // hidden header
@@ -64,7 +48,7 @@ onMounted(() => {
         </div>
         <div class="i-carbon-alarm mx-2 scale-110" />
         <div class="text-shadow">
-          Posted in {{ formatTime(article?.updatedAt) }}
+          Posted in {{ article?.updatedAt }}
         </div>
       </div>
     </div>
