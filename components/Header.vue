@@ -2,7 +2,6 @@
 // import { useFixedHeader } from 'vue-use-fixed-header'
 import { useWindowScroll } from '@vueuse/core'
 import { useFixedHeader } from 'vue-use-fixed-header'
-import { usePreloadCacheStore } from '~/store'
 
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'

@@ -7,6 +7,7 @@ export const useArticleStore = defineStore('articleStore', () => {
   const article: Record<string, IArticle> = reactive({})
   async function getAll() {
     const { data } = await useFetch<IArticle[]>('/api/article')
+    articles.value = []
     if (data.value) {
       data.value.forEach((article) => {
         articles.value.push(article)

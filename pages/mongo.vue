@@ -1,22 +1,15 @@
 <script setup lang="ts">
-import type { IArticle } from '~/server/types'
+import type { IFriend } from '~/server/types'
 
 const res = ref('')
 
-const article: Ref<IArticle> = ref({
-  shortLink: 'sample-short-link',
-  title: 'Sample Title',
-  description: 'Sample Description',
-  cover: 'sample-cover-url',
-  category: 'sample-category',
-  tags: ['tag1', 'tag2'],
-  content: 'Sample content',
-  authorId: 'sample-author-id',
-  status: 'sample-status',
-  views: 0,
-  likes: 0,
-  ogImage: 'sample-og-image-url',
-  link: 'sample-link',
+const friend = ref<IFriend>({
+  title: 'test',
+  bio: 'test',
+  avatar: 'test',
+  url: 'test',
+  screenShot: 'test',
+  status: 'ACTIVE',
 })
 
 async function handleClick() {
@@ -37,7 +30,12 @@ async function handleClick() {
   //     body: article,
   //   })
 
-  const { data } = useFetch('/api/article/category/article')
+  //   const { data } = useFetch('/api/article/category/article')
+  //   console.warn(data)
+  const { data } = useFetch('/api/friend/create', {
+    method: 'POST',
+    body: friend.value,
+  })
   console.warn(data)
 }
 </script>

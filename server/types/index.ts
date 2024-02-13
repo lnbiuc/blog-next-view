@@ -26,7 +26,7 @@ export interface IArticle {
 }
 
 export interface IFriend {
-  _id: string
+  _id?: string
   title: string
   bio: string
   avatar: string

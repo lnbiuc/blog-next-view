@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Friend } from '~/server/types/friend'
+import type { IFriend } from '~/server/types'
 
 const props = defineProps({
   friend: {
-    type: Object as PropType<Friend>,
+    type: Object as PropType<IFriend>,
     required: true,
   },
 })
