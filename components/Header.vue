@@ -151,7 +151,7 @@ const { hasAuth } = useUserStore()
                 About
               </router-link>
             </li>
-            <li v-if="hasAuth" :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li v-if="hasAuth()" :class="{ 'leading-10 text-2xl': !isOpen }">
               <router-link to="/violet" class="header-link" @click="isOpen = true">
                 Admin
               </router-link>
@@ -228,7 +228,7 @@ const { hasAuth } = useUserStore()
               About
             </router-link>
           </li>
-          <li v-if="hasAuth" :class="{ 'h-50px text-2xl': !isOpen }">
+          <li v-if="hasAuth()" :class="{ 'h-50px text-2xl': !isOpen }">
             <router-link to="/violet" class="header-link" @click="isOpen = true">
               Admin
             </router-link>
