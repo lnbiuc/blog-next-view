@@ -5,6 +5,7 @@ import { useFixedHeader } from 'vue-use-fixed-header'
 
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
+import { useUserStore } from '~/store/UserStore'
 
 const headerRef = ref(null)
 
@@ -79,6 +80,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
 })
+
+const { hasAuth } = useUserStore()
 </script>
 
 <template>
@@ -146,6 +149,11 @@ onBeforeUnmount(() => {
             <li :class="{ 'leading-10 text-2xl': !isOpen }">
               <router-link to="/about" class="header-link" @click="isOpen = true">
                 About
+              </router-link>
+            </li>
+            <li v-if="hasAuth" :class="{ 'leading-10 text-2xl': !isOpen }">
+              <router-link to="/violet" class="header-link" @click="isOpen = true">
+                Admin
               </router-link>
             </li>
             <li :class="{ 'leading-10 text-2xl flex w-full flex-row items-center justify-center': !isOpen }" class="hidden">
@@ -218,6 +226,11 @@ onBeforeUnmount(() => {
           <li :class="{ 'h-50px text-2xl': !isOpen }">
             <router-link to="/about" class="header-link" @click="isOpen = true">
               About
+            </router-link>
+          </li>
+          <li v-if="hasAuth" :class="{ 'h-50px text-2xl': !isOpen }">
+            <router-link to="/violet" class="header-link" @click="isOpen = true">
+              Admin
             </router-link>
           </li>
         </ul>

@@ -55,7 +55,7 @@ getAll().then(() => {
 <template>
   <div>
     <NuxtLayout name="default">
-      <IndexIGImage />
+      <!-- <IndexIGImage /> -->
       <div>
         <Suspense>
           <ClientOnly>
