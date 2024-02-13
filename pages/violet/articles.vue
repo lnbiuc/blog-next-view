@@ -70,8 +70,12 @@ function calcStatusColor(status: string) {
   }
 }
 
-function handleEdit() {
+const router = useRouter()
 
+function handleEdit() {
+  if (selected.value.length === 0)
+    return
+  router.push(`/violet/edit/${selected.value[0].shortLink}`)
 }
 </script>
 
