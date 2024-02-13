@@ -16,6 +16,9 @@ export default defineNuxtConfig({
   mongoose: {
     uri: process.env.MONGODB_URI,
     devtools: true,
+    options: {
+      dbName: 'blog',
+    },
   },
 
   site: {
