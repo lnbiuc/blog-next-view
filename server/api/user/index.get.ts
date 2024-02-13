@@ -1,9 +1,14 @@
 import { UserSchema } from '~/server/models/user.schema'
 
 export default defineEventHandler(async (event) => {
-  console.warn(`request: ${event.path}`)
+  console.warn(`start request: ${event.path}`)
+  const startTime = Date.now()
   try {
-    return await UserSchema.find({})
+    const res = await UserSchema.find({})
+    const endTime = Date.now()
+    const elapsedTime = endTime - startTime
+    console.warn(`request: ${event.path} takes ${elapsedTime} ms`)
+    return res
   }
   catch (error) {
     return error

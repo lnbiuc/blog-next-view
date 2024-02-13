@@ -1,7 +1,8 @@
 import { ArticleSchema } from '~/server/models/article.schema'
 
 export default defineEventHandler(async (event) => {
-  console.warn(`request: ${event.path}`)
+  console.warn(`start request: ${event.path}`)
+  const startTime = Date.now()
   try {
     const body = await readBody(event)
 
@@ -21,7 +22,9 @@ export default defineEventHandler(async (event) => {
 
       // 执行查询
       const result = await ArticleSchema.find(query)
-
+      const endTime = Date.now()
+      const elapsedTime = endTime - startTime
+      console.warn(`request: ${event.path} takes ${elapsedTime} ms`)
       return result
     }
     else {
