@@ -17,7 +17,7 @@ export default defineNuxtConfig({
     uri: process.env.MONGODB_URI,
     devtools: true,
     options: {
-      dbName: 'blog',
+      dbName: 'blog_v2',
     },
   },
 
