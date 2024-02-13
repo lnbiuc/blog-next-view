@@ -62,7 +62,12 @@ md.use(codeCopy, {
   iconClass: 'i-carbon:copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all',
   iconStyle: 'font-size: 1.5em;width: 20px;height: 20px;background- image: url(\'your-svg-icon.svg\');background-size: cover;display: inline-block;',
 })
-const result = md.render(props.source.replace(/\\n/g, '\n'))
+
+const result = ref<string>('')
+
+watchEffect(() => {
+  result.value = md.render(props.source.replace(/\\n/g, '\n'))
+})
 
 const openPop = ref<boolean>(false)
 

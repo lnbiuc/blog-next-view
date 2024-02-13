@@ -51,27 +51,29 @@ onMounted(() => {
 </script>
 
 <template>
-  <NuxtLayout name="empty">
-    <div class="m-auto flex flex-row min-h-60vh w-300px justify-center items-center">
-      <UForm :state="form" class="space-y-4" @submit="onSubmit">
-        <UFormGroup label="Nickname" name="nickname">
-          <UInput v-model="form.nickname" />
-          <div v-if="errorFields?.nickname?.length" text-red>
-            {{ errorFields.nickname[0].message }}
-          </div>
-        </UFormGroup>
+  <div>
+    <NuxtLayout name="empty">
+      <div class="m-auto flex flex-row min-h-60vh w-300px justify-center items-center">
+        <UForm :state="form" class="space-y-4" @submit="onSubmit">
+          <UFormGroup label="Nickname" name="nickname">
+            <UInput v-model="form.nickname" />
+            <div v-if="errorFields?.nickname?.length" text-red>
+              {{ errorFields.nickname[0].message }}
+            </div>
+          </UFormGroup>
 
-        <UFormGroup label="Password" name="password">
-          <UInput v-model="form.password" type="password" />
-          <div v-if="errorFields?.password?.length" text-red>
-            {{ errorFields.password[0].message }}
-          </div>
-        </UFormGroup>
+          <UFormGroup label="Password" name="password">
+            <UInput v-model="form.password" type="password" />
+            <div v-if="errorFields?.password?.length" text-red>
+              {{ errorFields.password[0].message }}
+            </div>
+          </UFormGroup>
 
-        <UButton type="submit" :disabled="!pass">
-          Submit
-        </UButton>
-      </UForm>
-    </div>
-  </NuxtLayout>
+          <UButton type="submit" :disabled="!pass">
+            Submit
+          </UButton>
+        </UForm>
+      </div>
+    </NuxtLayout>
+  </div>
 </template>
