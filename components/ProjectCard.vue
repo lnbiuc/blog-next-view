@@ -17,7 +17,7 @@ function openNewTab(url: string | undefined) {
 
 <template>
   <div
-    class="card-bg-filter my-open-tab flex flex-col overflow-hidden justify-between card-border"
+    class="card-bg-filter backdrop-blur-sm my-open-tab flex flex-col overflow-hidden justify-between card-border"
     @click="openNewTab(props.article.link)"
   >
     <div class="p-4 text-left">

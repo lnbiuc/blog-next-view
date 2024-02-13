@@ -8,15 +8,19 @@ import { useArticleStore } from '~/store/ArticleStore'
 import { useUserStore } from '~/store/UserStore'
 
 const headerRef = ref(null)
-
-const { styles } = useFixedHeader(headerRef)
-
+const route = useRoute()
+const showTitleY = ref(60)
 const { y } = useWindowScroll()
+
+const isPricingPage = computed(() => (!route.path.includes('/article')) || y.value < showTitleY.value)
+
+const { styles } = useFixedHeader(headerRef, {
+  watch: isPricingPage, // Will perform a check everytime the value changes
+})
 
 const width = ref(1200)
 
 const isOpen = ref(true)
-const route = useRoute()
 
 const isArticlePage = ref(false)
 
@@ -24,9 +28,16 @@ const shortLink = ref('')
 
 const article = ref<IArticle>()
 
-const showTitleY = ref(60)
-
 const { one } = useArticleStore()
+
+const computedStyle = ref()
+
+watchEffect(() => {
+  if (isArticlePage.value)
+    computedStyle.value = styles
+  else
+    computedStyle.value = {}
+})
 
 watchEffect(() => {
   if (route.path.includes('/article/')) {
@@ -87,33 +98,41 @@ const { hasAuth } = useUserStore()
 <template>
   <div
     id="header"
-    :class="{ 'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50': y > 60,
+    :class="{ 'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md': y > 60,
               'justify-between items-start h-60px': width < 767,
               'justify-center items-center h-60px': width > 767,
-              'h-full': !isOpen,
+              'h-full backdrop-blur-md': !isOpen,
     }"
-    class="backdrop-blur-md bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
+    class="bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
   >
-    <div class="flex flex-row max-w-1600px items-center" :class="{ 'justify-between w-full': width < 767, 'justify-center w-80%': width > 767 }">
+    <div
+      class="flex flex-row max-w-1600px items-center"
+      :class="{ 'justify-between w-full': width < 767,
+                'justify-center w-80%': width > 767,
+                'justify-between w-80': width > 767 && y > 60,
+      }"
+    >
       <div class="flex flex-row h-60px w-100px items-center">
         <img src="https://static.vio.vin/favicon.png/thumbnail" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" @click="$router.push('/')">
       </div>
-      <Transition name="slide">
-        <div v-if="y > showTitleY && isArticlePage && width > 767" class="text-ellipsis flex flex-col max-w-1000px w-full overflow-hidden justify-start items-start">
-          <p class="text-xl font-semibold text-ellipsis overflow-hidden">
-            {{ article?.title }}
-          </p>
-          <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">
-            {{ article?.category }} / {{ article?.shortLink }}
-          </p>
-        </div>
+      <div class="violet-cus flex flex-col w-full">
+        <Transition name="slide">
+          <div v-if="y > showTitleY && isArticlePage && width > 767" class="text-ellipsis flex flex-col max-w-1000px w-full overflow-hidden justify-start items-start">
+            <p class="text-xl font-semibold text-ellipsis overflow-hidden">
+              {{ article?.title }}
+            </p>
+            <p class="text-xs text-gray-500 text-ellipsis overflow-hidden">
+              {{ article?.category }} / {{ article?.shortLink }}
+            </p>
+          </div>
+        </Transition>
         <div
-          v-else
+          v-if="!isOpen"
           :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
           class="hidden max-w-1000px w-full"
         >
           <ul
-            class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-center transition-all ring-1"
+            class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-end transition-all ring-1"
             :class="{
               'flex-col w-full': width < 767,
               'flex-row': width > 767,
@@ -121,47 +140,48 @@ const { hasAuth } = useUserStore()
               'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
             }"
           >
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/" class="header-link" @click="isOpen = true">
                 Home
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/blog" class="header-link" @click="isOpen = true">
                 Blog
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/shorts" class="header-link" @click="isOpen = true">
                 Short
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/project" class="header-link" @click="isOpen = true">
                 Project
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/friend" class="header-link" @click="isOpen = true">
                 Friend
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/about" class="header-link" @click="isOpen = true">
                 About
               </router-link>
             </li>
-            <li v-if="hasAuth()" :class="{ 'leading-10 text-2xl': !isOpen }">
+            <li v-if="hasAuth()" :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/violet" class="header-link" @click="isOpen = true">
                 Admin
               </router-link>
             </li>
-            <li :class="{ 'leading-10 text-2xl flex w-full flex-row items-center justify-center': !isOpen }" class="hidden">
+            <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }" class="hidden">
               <DarkToggle @click="isOpen = true" />
             </li>
           </ul>
         </div>
-      </Transition>
+      </div>
+
       <div
         class="w-100px"
         :class="{ 'flex justify-end': width < 767 }"
@@ -179,23 +199,32 @@ const { hasAuth } = useUserStore()
       </div>
     </div>
   </div>
+
   <div class="flex flex-row justify-center">
     <header
-      v-if="y > showTitleY && isArticlePage && width > 767"
+      v-if="width > 767"
       ref="headerRef"
-      class="Header"
-      :style="styles"
+      class="Header flex flex-row justify-center"
+      :style="{
+        ...styles,
+        position: isPricingPage ? 'relative' : 'fixed',
+      }"
     >
       <!-- Your content -->
       <div
-        class="m-auto text-center flex h-75px max-w-1000px justify-center items-end top-90px z-2000"
+        class="m-auto text-center flex max-w-1000px justify-center z-2000 transition-all"
+        :class="{ 'items-end h-75px': isArticlePage && y > showTitleY,
+                  'items-center h-60px': !isArticlePage || (isArticlePage && y < showTitleY),
+                  'fixed top-0': isPricingPage,
+        }"
       >
         <ul
-          class="backdrop-blur-md rounded rounded-full shadow ring-[#ccc] ring-transparent ring-inset flex flex-row h-35px items-center transition-all ring-1 dark:ring-[#333]"
+          class="rounded rounded-full ring-inset flex flex-row h-35px items-center transition-all"
           :class="{
             'flex-col w-full': width < 767,
             'flex-row': width > 767,
             'items-start mt-60px mr-4': !isOpen,
+            'ring-[#ccc] ring-1 dark:ring-[#333] backdrop-blur-md': y < 60 || (isArticlePage && y > showTitleY),
           }"
         >
           <li :class="{ 'h-50px text-2xl': !isOpen }">

@@ -25,7 +25,7 @@ const preloadArticle = useThrottleFn(() => {
 
 <template>
   <div
-    class="card-bg-filter overflow-hidden card-border"
+    class="card-bg-filter backdrop-blur-sm overflow-hidden card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)"
     @mouseover="preloadArticle()"
   >
