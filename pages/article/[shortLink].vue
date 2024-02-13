@@ -6,12 +6,14 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
+import { formatTime } from '~/composables/formatTime'
 
 const route = useRoute()
 const article = ref<IArticle>()
 
 const afterFetchData = ref(false)
 
+// @ts-expect-error no error
 const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
@@ -51,8 +53,10 @@ function initTOC() {
   })
 }
 
-const { start, stop } = useTimeoutFn(() => {
-//   increaseView(shortLink)
+const { start, stop } = useTimeoutFn(async () => {
+  useFetch<string>(`/api/article/views/${article.value?._id}`, {
+    method: 'PUT',
+  })
 }, 10000)
 
 onMounted(() => {
@@ -124,7 +128,7 @@ watchEffect(() => {
               </div>
               <div class="i-carbon-alarm mx-2 scale-110" />
               <div class="text-violet">
-                {{ article?.updatedAt }}
+                {{ formatTime(article?.updatedAt) }}
               </div>
             </div>
             <UDivider class="my-6" />

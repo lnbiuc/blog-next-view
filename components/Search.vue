@@ -21,17 +21,13 @@ const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const selectVal: Ref<string> = ref(options.value[0])
 
-function loadTags() {
-  tagCategory(props.category).then((data) => {
-    if (data) {
-      data.forEach((tag) => {
-        tags.value.push(tag)
-      })
-    }
-  })
-}
-
-loadTags()
+tagCategory(props.category).then((data) => {
+  if (data) {
+    data.forEach((tag) => {
+      tags.value.push(tag)
+    })
+  }
+})
 
 const debouncedFn = useDebounceFn(() => {
   if (!tags.value.includes(searchVal.value))

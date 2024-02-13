@@ -29,23 +29,25 @@ const articles: Ref<IArticle[]> = ref([])
 const shorts: Ref<IArticle[]> = ref([])
 const projects: Ref<IArticle[]> = ref([])
 
-const { category } = useArticleStore()
+const { getAll, category } = useArticleStore()
 
-category('article').then((data) => {
-  data.forEach((article) => {
-    articles.value.push(article)
+getAll().then(() => {
+  category('article').then((data) => {
+    data.forEach((article) => {
+      articles.value.push(article)
+    })
   })
-})
 
-category('short').then((data) => {
-  data.forEach((short) => {
-    shorts.value.push(short)
+  category('short').then((data) => {
+    data.forEach((short) => {
+      shorts.value.push(short)
+    })
   })
-})
 
-category('project').then((data) => {
-  data.forEach((project) => {
-    projects.value.push(project)
+  category('project').then((data) => {
+    data.forEach((project) => {
+      projects.value.push(project)
+    })
   })
 })
 </script>

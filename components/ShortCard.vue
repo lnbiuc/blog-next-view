@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
+import { formatTime } from '~/composables/formatTime'
 
 const props = defineProps({
   article: {
@@ -41,7 +42,7 @@ const preloadArticle = useThrottleFn(() => {
         </UBadge>
       </div>
       <div class="mt-3 text-sm">
-        {{ props.article.createdAt }}
+        {{ formatTime(props.article.createdAt) }}
       </div>
     </div>
   </div>

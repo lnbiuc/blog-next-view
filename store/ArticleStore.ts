@@ -37,5 +37,5 @@ export const useArticleStore = defineStore('articleStore', () => {
 
     return article[shortLink]
   }
-  return { category, one }
+  return { category, one, getAll }
 })
