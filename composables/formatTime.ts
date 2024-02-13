@@ -1,5 +1,4 @@
 import { format } from 'date-fns'
-import { zhCN } from 'date-fns/locale'
 
 export function formatTime(data: string | undefined | null | Date) {
   if (data)
@@ -10,7 +9,7 @@ export function formatTime(data: string | undefined | null | Date) {
 
 export function formatZHTime(data: string | undefined | null | Date) {
   if (data)
-    return format(new Date(data), 'yyyy年MM月dd日', { locale: zhCN })
+    return format(new Date(data), 'yyyy年MM月dd日')
   else
     return ''
 }
