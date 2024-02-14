@@ -1,13 +1,6 @@
-import crypto from 'node:crypto'
-import type Buffer from 'node:buffer'
+import process from 'node:process'
+import COS from 'cos-nodejs-sdk-v5'
 
-export async function getFileHash(file: Buffer): Promise<string> {
-  if (!crypto)
-    throw new Error('Web Crypto API is not supported in this browser.')
+export function upload(filePath: string) {
 
-  const hashBuffer = await crypto.subtle.digest('SHA-256', await file)
-  const hashArray = Array.from(new Uint8Array(hashBuffer))
-  const hashHex = hashArray.map(byte => byte.toString(16).padStart(2, '0')).join('')
-
-  return hashHex
 }

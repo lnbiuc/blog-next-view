@@ -120,7 +120,7 @@ async function handleUpload() {
 
   toast.add({ title: `start upload ${fileCover.value.name}` })
   const formData = new FormData()
-  formData.append('file', fileCover.value, fileCover.value.name)
+  formData.append('file', fileCover.value)
   const { data, status } = await useFetch('/api/upload', {
     method: 'POST',
     body: formData,
