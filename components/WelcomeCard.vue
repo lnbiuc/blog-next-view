@@ -67,7 +67,7 @@ onMounted(() => {
       <div class="flex flex-row">
         <a
           v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center" :href="l.url"
-          target="_blank"
+          target="_blank" aria-label="icon"
         >
           <UIcon :name="l.icon" class="text-xl" />
           <span class="ml-1">
