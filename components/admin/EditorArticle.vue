@@ -31,27 +31,10 @@ const article = ref<IArticle>({
 })
 
 if (props.shortLink) {
-  const { data } = useFetch<IArticle>(`/api/article/${props.shortLink}`)
-
-  if (data.value) {
-    article.value._id = data.value?._id
-    article.value.shortLink = data.value!.shortLink
-    article.value.title = data.value!.title
-    article.value.description = data.value!.description
-    article.value.cover = data.value!.cover
-    article.value.category = data.value!.category
-    article.value.tags = data.value!.tags
-    article.value.content = data.value!.content
-    article.value.content = article.value.content!.replace(/\\n/g, '\n')
-    article.value.authorId = data.value!.authorId
-    article.value.status = data.value!.status
-    article.value.views = data.value!.views
-    article.value.likes = data.value!.likes
-    article.value.ogImage = data.value!.ogImage
-    article.value.link = data.value!.link
-    article.value.createdAt = data.value!.createdAt
-    article.value.updatedAt = data.value!.updatedAt
-  }
+  const { data } = await useFetch(`/api/article/${props.shortLink}`)
+  article.value = data.value as IArticle
+  if (article.value.content)
+    article.value.content = article.value.content.replace(/\\n/g, '\n')
 }
 
 const rules = {
@@ -121,10 +104,10 @@ const publishSetting = ref(false)
     </NuxtLayout>
     <div class="p-6 flex flex-row min-h-60vh w-full">
       <div class="p-2 w-1/2">
-        <UTextarea v-model="article.content" type="textarea" autoresize />
+        <UTextarea v-model="article.content" textarea-class="md-textarea" type="textarea" autoresize />
       </div>
       <div class="p-2 w-1/2">
-        <MDRender :source="article.content ? article.content : ''" />
+        <MDRender id="md-result" :source="article.content ? article.content : ''" />
       </div>
     </div>
     <NuxtLayout name="home">

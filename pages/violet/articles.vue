@@ -2,7 +2,14 @@
 import type { IArticle } from '~/server/types'
 import { formatZHTime } from '~/composables/formatTime'
 
-const { data, pending } = useFetch<IArticle[]>('/api/article')
+const nuxtApp = useNuxtApp()
+
+const { data, pending } = useFetch<IArticle[]>('/api/article', {
+  method: 'GET',
+  getCachedData(key) {
+    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
+  },
+})
 
 const columns = [
   { key: '_id', label: 'ID' },
@@ -82,15 +89,14 @@ function handleEdit() {
 <template>
   <div>
     <NuxtLayout name="admin">
-      <UAccordion :items="metaData" class="mt-2" />
       <div class="my-1 flex flex-row">
-        <UButton class="mr-2" @click="handleEdit">
+        <UButton icon="i-ri:edit-fill" class="mr-2" color="blue" @click="handleEdit">
           Edit
         </UButton>
-        <UButton class="mr-2">
+        <UButton icon="i-ri:delete-bin-5-fill" class="mr-2" color="red">
           Delete
         </UButton>
-        <UButton class="mr-2">
+        <UButton icon="i-ri:device-recover-fill" class="mr-2" color="green">
           Recover
         </UButton>
         <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="mr-2" />
@@ -99,7 +105,7 @@ function handleEdit() {
 
       <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns" @select="select">
         <template #shortLink-data="{ row }">
-          <ULink target="_blank" :to="`https://vio.vin/article/${row.shortLink}`" class="text-violet-400 transition-all hover:text-violet-600">
+          <ULink target="_blank" :to="`/article/${row.shortLink}`" class="text-violet-400 transition-all hover:text-violet-600">
             {{ row.shortLink }}
           </ULink>
         </template>
@@ -111,6 +117,7 @@ function handleEdit() {
           <UPopover mode="hover">
             <UAvatar
               v-if="row.cover"
+              img-class="object-cover"
               :src="`${row.cover}/thumbnail`"
               alt="Avatar"
             />
@@ -158,6 +165,7 @@ function handleEdit() {
           {{ formatZHTime(row.updatedAt) }}
         </template>
       </UTable>
+      <UAccordion :items="metaData" class="mt-2" />
     </NuxtLayout>
   </div>
 </template>

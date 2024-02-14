@@ -24,5 +24,10 @@ export const useUserStore = defineStore('userStore', () => {
     return currUser.value._id !== '' && currUser.value.nickname !== ''
   }
 
-  return { getUser, hasAuth }
+  function logout() {
+    currUser.value._id = ''
+    currUser.value.nickname = ''
+  }
+
+  return { getUser, hasAuth, logout }
 })
