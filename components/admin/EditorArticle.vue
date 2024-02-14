@@ -139,8 +139,11 @@ async function handleUpload() {
   }
 }
 
+const fileInput = ref()
+
 function handleClean() {
   fileCover.value = null
+  fileInput.value = null
   article.value.cover = ''
 }
 </script>
@@ -204,7 +207,7 @@ function handleClean() {
           </div>
           <UFormGroup label="Upload Cover" name="file">
             <div class="flex flex-row">
-              <UInput type="file" @change="onChangeFile" />
+              <UInput v-model="fileInput" type="file" @change="onChangeFile" />
               <UButton class="ml-2" @click="handleUpload">
                 upload
               </UButton>

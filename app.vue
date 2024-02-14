@@ -22,7 +22,7 @@ onMounted(() => {
       <NuxtPage />
     </div>
     <Footer />
-    <UNotifications class="b-0 w-[300px] z-2000" />
+    <UNotifications class="b-0 w-[300px] z-4000" />
     <Transition name="fade">
       <div v-if="isScroll" class="flex flex-row fixed justify-end bottom-4 right-4 z-1000">
         <div
