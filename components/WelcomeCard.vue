@@ -45,7 +45,8 @@ onMounted(() => {
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)" class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
+  <div style="height: calc(100vh - 160px)"
+    class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
     <div class="flex flex-col justify-start items-start md:justify-start md:items-start">
       <h1 class="text-6xl font-bold text-left">
         Hi!👋
@@ -54,7 +55,8 @@ onMounted(() => {
         I'm <span class="text-violet" style="font-family: 'MyFont', sans-serif;">violet</span>
       </h1>
       <span class="mb-2 mt-5 text-2xl">
-        A Web {{ '<Developer />' }}. {{ 'Code_' }} for Fun.
+        A Web {{ `
+        < Developer /> ` }}. {{ 'Code_' }} for Fun.
       </span>
       <div class="my-3 flex flex-row">
         <MyButton @click="$router.push('/blog')">
@@ -65,10 +67,8 @@ onMounted(() => {
         </MyButton>
       </div>
       <div class="flex flex-row">
-        <a
-          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center" :href="l.url"
-          target="_blank" aria-label="icon"
-        >
+        <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
+          :href="l.url" target="_blank" aria-label="icon">
           <UIcon :name="l.icon" class="text-xl" />
           <span class="ml-1">
             {{ l.name }}
@@ -77,11 +77,13 @@ onMounted(() => {
       </div>
     </div>
     <div class="hidden transition-all md:block">
-      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo" class="favicon-shadow rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
+      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo"
+        class="favicon-shadow rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
     </div>
   </div>
   <div class="flex flex-row h-[100px] w-full justify-center">
-    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer" @click="handleScroll" />
+    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer"
+      @click="handleScroll" />
   </div>
 </template>
 
