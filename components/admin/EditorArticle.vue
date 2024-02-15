@@ -14,7 +14,7 @@ const props = defineProps({
 const toast = useToast()
 
 const article = ref<IArticle>({
-  _id: '',
+  _id: undefined,
   shortLink: '',
   title: '',
   description: '',
@@ -65,10 +65,6 @@ const rules = {
     type: 'string',
     required: true,
   },
-  content: {
-    type: 'string',
-    required: true,
-  },
   authorId: {
     type: 'string',
     required: true,
@@ -81,10 +77,6 @@ const rules = {
 
 // @ts-expect-error no error
 const { pass, errorFields } = useAsyncValidator(article, rules)
-
-function handleSubmit() {
-
-}
 
 const metaData = [{
   label: 'meta data',
@@ -100,6 +92,8 @@ const fileCover = ref<File | null>(null)
 const tags = ref<string[]>([])
 
 watchEffect(async () => {
+
+  tags.value = []
   if (!article.value.category)
     return
   const { data } = await useFetch(`/api/tag/${article.value.category}`)
@@ -146,18 +140,47 @@ function handleClean() {
   fileInput.value = null
   article.value.cover = ''
 }
+
+async function handlePublish() {
+  if (!article.value._id || article.value._id === '') {
+    const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
+      method: 'POST',
+      body: article.value
+    })
+    if (status.value === 'success') {
+      if (data.value) {
+        publishSetting.value = false
+        toast.add({ title: `publish ${data.value.title} success, article id ${data.value._id}` })
+      }
+    }
+
+    if (status.value === 'error') {
+      toast.add({ title: `publish failed, ${error.value}` })
+    }
+  }
+
+  if (article.value._id && article.value._id !== '') {
+    const { data, status, error } = await useFetch<IArticle>('/api/article/update', {
+      method: 'PUT',
+      body: article.value
+    })
+    if (status.value === 'success') {
+      if (data.value) {
+        publishSetting.value = false
+        toast.add({ title: `update ${data.value.title} success, article id ${data.value._id}` })
+      }
+    }
+
+    if (status.value === 'error') {
+      toast.add({ title: `update failed, ${error.value}` })
+    }
+  }
+}
 </script>
 
 <template>
   <div>
     <NuxtLayout name="home">
-      <UAccordion :items="metaData" class="text-left">
-        <template #item>
-          <div>
-            {{ article }}
-          </div>
-        </template>
-      </UAccordion>
       <div class="mt-4 flex flex-row items-center">
         <UButton class="mr-2" @click="publishSetting = true">
           Publish Settings
@@ -177,7 +200,7 @@ function handleClean() {
     </div>
     <UModal v-model="publishSetting" class="z-2000">
       <div class="p-4">
-        <UForm :state="article" class="space-y-4" @submit="handleSubmit">
+        <UForm :state="article" class="space-y-4">
           <UFormGroup label="ShortLink" name="shortLink">
             <UInput v-model="article.shortLink" />
             <div v-if="errorFields?.shortLink?.length" class="text-xs text-red">
@@ -240,11 +263,26 @@ function handleClean() {
               {{ errorFields.authorId[0].message }}
             </div>
           </UFormGroup>
-          <UButton type="submit" :disabled="!pass">
+          <UFormGroup label="Link" name="link">
+            <UInput v-model="article.link" placeholder="project require link" />
+            <div v-if="errorFields?.link?.length" class="text-xs text-red">
+              {{ errorFields.link[0].message }}
+            </div>
+          </UFormGroup>
+          <UButton type="submit" :disabled="!pass" @click="handlePublish">
             Publish
           </UButton>
         </UForm>
       </div>
     </UModal>
+    <NuxtLayout name="home">
+      <UAccordion :items="metaData" class="text-left">
+        <template #item>
+          <div>
+            {{ article }}
+          </div>
+        </template>
+      </UAccordion>
+    </NuxtLayout>
   </div>
 </template>

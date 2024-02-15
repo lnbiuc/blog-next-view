@@ -2,13 +2,8 @@
 import type { IArticle } from '~/server/types'
 import { formatZHTime } from '~/composables/formatTime'
 
-const nuxtApp = useNuxtApp()
-
-const { data, pending } = useFetch<IArticle[]>('/api/article', {
+const { data, pending } = useFetch<IArticle[]>('/api/article/all', {
   method: 'GET',
-  getCachedData(key) {
-    return nuxtApp.payload.data[key] || nuxtApp.static.data[key]
-  },
 })
 
 const columns = [
@@ -93,19 +88,21 @@ function handleEdit() {
         <UButton icon="i-ri:edit-fill" class="mr-2" color="blue" @click="handleEdit">
           Edit
         </UButton>
-        <UButton icon="i-ri:delete-bin-5-fill" class="mr-2" color="red">
+        <!-- <UButton icon="i-ri:delete-bin-5-fill" class="mr-2" color="red">
           Delete
         </UButton>
         <UButton icon="i-ri:device-recover-fill" class="mr-2" color="green">
           Recover
-        </UButton>
+        </UButton> -->
         <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="mr-2" />
-        <UInput v-model="q" placeholder="Filter data..." />
+        <UInput v-model="q" placeholder="Search data..." />
       </div>
 
-      <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns" @select="select">
+      <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
+        @select="select">
         <template #shortLink-data="{ row }">
-          <ULink target="_blank" :to="`/article/${row.shortLink}`" class="text-violet-400 transition-all hover:text-violet-600">
+          <ULink target="_blank" :to="`/article/${row.shortLink}`"
+            class="text-violet-400 transition-all hover:text-violet-600">
             {{ row.shortLink }}
           </ULink>
         </template>
@@ -115,12 +112,7 @@ function handleEdit() {
 
         <template #cover-data="{ row }">
           <UPopover mode="hover">
-            <UAvatar
-              v-if="row.cover"
-              img-class="object-cover"
-              :src="`${row.cover}/thumbnail`"
-              alt="Avatar"
-            />
+            <UAvatar v-if="row.cover" img-class="object-cover" :src="`${row.cover}/thumbnail`" alt="Avatar" />
             <div v-else>
               null
             </div>
@@ -142,11 +134,7 @@ function handleEdit() {
 
         <template #ogImage-data="{ row }">
           <UPopover mode="hover">
-            <UAvatar
-              v-if="row.ogImage"
-              :src="`${row.ogImage}/thumbnail`"
-              alt="Avatar"
-            />
+            <UAvatar v-if="row.ogImage" :src="`${row.ogImage}/thumbnail`" alt="Avatar" />
             <div v-else>
               null
             </div>
