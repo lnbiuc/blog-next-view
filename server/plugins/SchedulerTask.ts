@@ -20,6 +20,12 @@ function startScheduler() {
 			console.warn('cool beans! I run once a second! 😀');
 			updateArticleObImageTask();
 		})
-		.dailyAt(1, 0);
+		.dailyAt(1, 3);
+
+	scheduler
+		.run(() => {
+			console.warn('cool beans! I run once a second! 😀');
+		})
+		.everyMinutes(1);
 	// create as many tasks as you want here
 }

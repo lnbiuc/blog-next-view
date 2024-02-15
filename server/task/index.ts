@@ -111,7 +111,8 @@ export async function updateArticleObImageTask() {
 			article.ogImage = previewUrl as string;
 			const res = await ArticleSchema.findByIdAndUpdate(
 				article._id, // 指定要更新的文章的 _id
-				{ ogImage: article.ogImage } // 只包含要更新的字段
+				{ ogImage: article.ogImage }, // 只包含要更新的字段
+				{ new: false }
 			);
 			console.log('res:', res);
 
