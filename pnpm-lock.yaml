@@ -130,6 +130,9 @@ devDependencies:
   nuxt-mongoose:
     specifier: ^1.0.5
     version: 1.0.5(@nuxt/devtools@1.0.8)(@vue/compiler-core@3.4.19)(async-validator@4.2.5)(axios@1.6.7)(nuxt@3.10.2)(postcss@8.4.35)(vite@5.1.1)(vue@3.4.19)(webpack@5.90.1)
+  nuxt-scheduler:
+    specifier: ^0.1.9
+    version: 0.1.9
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(typescript@5.3.3)(vue@3.4.19)
@@ -7235,6 +7238,13 @@ packages:
     resolution: {integrity: sha512-mNcltoe1R8o7STTegSOHdnJNN7s5EUvhoS7ShnTHDyOSd+8H+UdWODq6qSv67PjC8Zc5JRT8+oLAMCr0SIXw7g==}
     engines: {node: ^16 || ^18 || >= 20}
 
+  /node-cron@3.0.3:
+    resolution: {integrity: sha512-dOal67//nohNgYWb+nWmg5dkFdIwDm8EpeGYMekPMrngV3637lqnX0lbUcCtgibHTz6SEz7DAIjKvKDFYCnO1A==}
+    engines: {node: '>=6.0.0'}
+    dependencies:
+      uuid: 8.3.2
+    dev: true
+
   /node-fetch-native@1.6.2:
     resolution: {integrity: sha512-69mtXOFZ6hSkYiXAVB5SqaRvrbITC/NPyqv7yuu/qw0nmgPyYbIMYYNIDhNtwPrzk0ptrimrLz/hhjvm4w5Z+w==}
 
@@ -7593,6 +7603,17 @@ packages:
       - vite
       - vue
       - webpack
+    dev: true
+
+  /nuxt-scheduler@0.1.9:
+    resolution: {integrity: sha512-2WOEBhhVCpDvt0SpxZGMGhtsMVT6PLRI0yRgVFvWLw6mu6NqAPfof6HW9kP7ENOEJ2p5DXIk6CajVBl6LN0Htg==}
+    dependencies:
+      '@nuxt/kit': 3.10.2
+      defu: 6.1.4
+      node-cron: 3.0.3
+    transitivePeerDependencies:
+      - rollup
+      - supports-color
     dev: true
 
   /nuxt-schema-org@3.3.4(@nuxt/devtools@1.0.8)(@unhead/shared@1.8.10)(@vue/compiler-core@3.4.19)(async-validator@4.2.5)(axios@1.6.7)(nuxt@3.10.2)(postcss@8.4.35)(unhead@1.8.10)(vite@5.1.1)(vue@3.4.19)(webpack@5.90.1):
@@ -10260,6 +10281,11 @@ packages:
   /uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
     deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    hasBin: true
+    dev: true
+
+  /uuid@8.3.2:
+    resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
     hasBin: true
     dev: true
 

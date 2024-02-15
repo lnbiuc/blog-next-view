@@ -96,28 +96,26 @@ const { hasAuth } = useUserStore()
 </script>
 
 <template>
-  <div
-    id="header"
-    :class="{ 'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md': y > 60,
-              'justify-between items-start h-60px': width < 767,
-              'justify-center items-center h-60px': width > 767,
-              'h-full backdrop-blur-md': !isOpen,
-    }"
-    class="bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0"
-  >
-    <div
-      class="flex flex-row max-w-1600px items-center"
-      :class="{ 'justify-between w-full': width < 767,
-                'justify-center w-80%': width > 767,
-                'justify-between w-80': width > 767 && y > 60,
-      }"
-    >
+  <div id="header" :class="{
+    'dark:border-b-[#333] border-b-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md': y > 60,
+    'justify-between items-start h-60px': width < 767,
+    'justify-center items-center h-60px': width > 767,
+    'h-full backdrop-blur-md': !isOpen,
+  }"
+    class="bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0 header-hidden-sign">
+    <div class="flex flex-row max-w-1600px items-center" :class="{
+      'justify-between w-full': width < 767,
+      'justify-center w-80%': width > 767,
+      'justify-between w-80': width > 767 && y > 60,
+    }">
       <div class="flex flex-row h-60px w-100px items-center">
-        <img src="https://static.vio.vin/favicon.png/thumbnail" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" alt="logo" @click="$router.push('/')">
+        <img src="https://static.vio.vin/favicon.png/thumbnail"
+          class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" alt="logo" @click="$router.push('/')">
       </div>
       <div class="violet-cus flex flex-col w-full">
         <Transition name="slide">
-          <div v-if="y > showTitleY && isArticlePage && width > 767" class="text-ellipsis flex flex-col max-w-1000px w-full overflow-hidden justify-start items-start">
+          <div v-if="y > showTitleY && isArticlePage && width > 767"
+            class="text-ellipsis flex flex-col max-w-1000px w-full overflow-hidden justify-start items-start">
             <p class="text-xl font-semibold text-ellipsis overflow-hidden">
               {{ article?.title }}
             </p>
@@ -126,20 +124,14 @@ const { hasAuth } = useUserStore()
             </p>
           </div>
         </Transition>
-        <div
-          v-if="!isOpen"
-          :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
-          class="hidden max-w-1000px w-full"
-        >
-          <ul
-            class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-end transition-all ring-1"
-            :class="{
-              'flex-col w-full': width < 767,
-              'flex-row': width > 767,
-              'items-start mt-60px mr-4': !isOpen,
-              'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
-            }"
-          >
+        <div v-if="!isOpen" :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
+          class="hidden max-w-1000px w-full">
+          <ul class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-end transition-all ring-1" :class="{
+            'flex-col w-full': width < 767,
+            'flex-row': width > 767,
+            'items-start mt-60px mr-4': !isOpen,
+            'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
+          }">
             <li :class="{ 'leading-12 text-2xl': !isOpen }">
               <router-link to="/" class="header-link" @click="isOpen = true">
                 Home
@@ -175,58 +167,42 @@ const { hasAuth } = useUserStore()
                 Admin
               </router-link>
             </li>
-            <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }" class="hidden">
+            <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }"
+              class="hidden">
               <DarkToggle @click="isOpen = true" />
             </li>
           </ul>
         </div>
       </div>
 
-      <div
-        class="w-100px"
-        :class="{ 'flex justify-end': width < 767 }"
-      >
+      <div class="w-100px" :class="{ 'flex justify-end': width < 767 }">
         <DarkToggle :class="{ 'flex ': width > 767 }" class="hidden relative z-1100" />
-        <div
-          :class="{
-            'flex': width < 767,
-            'i-ri:menu-fill scale-150': isOpen,
-            'i-ri:close-fill scale-180': !isOpen,
-          }"
-          class="mr-4 hidden flex-row h-60px items-center"
-          @click="isOpen = !isOpen"
-        />
+        <div :class="{
+          'flex': width < 767,
+          'i-ri:menu-fill scale-150': isOpen,
+          'i-ri:close-fill scale-180': !isOpen,
+        }" class="mr-4 hidden flex-row h-60px items-center" @click="isOpen = !isOpen" />
       </div>
     </div>
   </div>
 
-  <div class="flex flex-row justify-center">
-    <header
-      v-if="width > 767"
-      ref="headerRef"
-      class="Header flex flex-row justify-center"
-      :style="{
-        ...styles,
-        position: isPricingPage ? 'relative' : 'fixed',
-      }"
-    >
+  <div class="flex flex-row justify-center header-hidden-sign">
+    <header v-if="width > 767" ref="headerRef" class="Header flex flex-row justify-center" :style="{
+      ...styles,
+      position: isPricingPage ? 'relative' : 'fixed',
+    }">
       <!-- Your content -->
-      <div
-        class="m-auto text-center flex max-w-1000px justify-center z-2000 transition-all"
-        :class="{ 'items-end h-75px': isArticlePage && y > showTitleY,
-                  'items-center h-60px': !isArticlePage || (isArticlePage && y < showTitleY),
-                  'fixed top-0': isPricingPage,
-        }"
-      >
-        <ul
-          class="rounded rounded-full ring-inset flex flex-row h-35px items-center transition-all"
-          :class="{
-            'flex-col w-full': width < 767,
-            'flex-row': width > 767,
-            'items-start mt-60px mr-4': !isOpen,
-            'ring-[#ccc] ring-1 dark:ring-[#333] backdrop-blur-md': y < 60 || (isArticlePage && y > showTitleY),
-          }"
-        >
+      <div class="m-auto text-center flex max-w-1000px justify-center z-2000 transition-all" :class="{
+        'items-end h-75px': isArticlePage && y > showTitleY,
+        'items-center h-60px': !isArticlePage || (isArticlePage && y < showTitleY),
+        'fixed top-0': isPricingPage,
+      }">
+        <ul class="rounded rounded-full ring-inset flex flex-row h-35px items-center transition-all" :class="{
+          'flex-col w-full': width < 767,
+          'flex-row': width > 767,
+          'items-start mt-60px mr-4': !isOpen,
+          'ring-[#ccc] ring-1 dark:ring-[#333] backdrop-blur-md': y < 60 || (isArticlePage && y > showTitleY),
+        }">
           <li :class="{ 'h-50px text-2xl': !isOpen }">
             <router-link to="/" class="header-link" @click="isOpen = true">
               Home
@@ -271,19 +247,18 @@ const { hasAuth } = useUserStore()
 
 <style scoped>
 .wave-animation {
-  background: linear-gradient(
-    to right,
-    #8a2be2,
-    rgb(106, 103, 206),
-    #aa00ff,
-    #7a2df3
-  );
+  background: linear-gradient(to right,
+      #8a2be2,
+      rgb(106, 103, 206),
+      #aa00ff,
+      #7a2df3);
   background-size: 200% 200%;
   box-shadow: 0 0 150px 2px rgb(106, 103, 206);
 }
 
 .Header {
-  position: fixed; /* or sticky */
+  position: fixed;
+  /* or sticky */
   top: 0;
   z-index: 1000;
   align-items: center;
@@ -291,7 +266,7 @@ const { hasAuth } = useUserStore()
   margin: auto;
 }
 
-.router-link-active  {
+.router-link-active {
   color: var(--color-violet) !important;
 }
 </style>
