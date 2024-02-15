@@ -85,15 +85,9 @@ function handleEdit() {
   <div>
     <NuxtLayout name="admin">
       <div class="my-1 flex flex-row">
-        <UButton icon="i-ri:edit-fill" class="mr-2" color="blue" @click="handleEdit">
+        <UButton icon="i-ri:edit-fill" class="mr-2" color="violet" @click="handleEdit">
           Edit
         </UButton>
-        <!-- <UButton icon="i-ri:delete-bin-5-fill" class="mr-2" color="red">
-          Delete
-        </UButton>
-        <UButton icon="i-ri:device-recover-fill" class="mr-2" color="green">
-          Recover
-        </UButton> -->
         <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns" class="mr-2" />
         <UInput v-model="q" placeholder="Search data..." />
       </div>

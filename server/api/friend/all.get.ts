@@ -1,10 +1,10 @@
-import { ArticleSchema } from '~/server/models/article.schema';
+import { FriendSchema } from '~/server/models/friend.schema';
 
 export default defineEventHandler(async event => {
 	console.warn(`start request: ${event.path}`);
 	const startTime = Date.now();
 	try {
-		const res = await ArticleSchema.find({}, { content: 0 });
+		const res = await FriendSchema.find();
 		const endTime = Date.now();
 		const elapsedTime = endTime - startTime;
 		console.warn(`request: ${event.path} takes ${elapsedTime} ms`);

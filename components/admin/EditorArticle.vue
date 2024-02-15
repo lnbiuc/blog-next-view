@@ -2,6 +2,7 @@ import type articleVue from '~/layouts/article.vue';
 <script setup lang="ts">
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { IArticle } from '~/server/types'
+import { useIntervalFn, useThrottleFn } from '@vueuse/core'
 
 const props = defineProps({
   shortLink: {
@@ -91,6 +92,10 @@ const fileCover = ref<File | null>(null)
 
 const tags = ref<string[]>([])
 
+const throttledPublish = useThrottleFn(() => {
+  handlePublish()
+}, 3000)
+
 watchEffect(async () => {
 
   tags.value = []
@@ -108,7 +113,7 @@ function onChangeFile(e: Event) {
     fileCover.value = file
 }
 
-async function handleUpload() {
+async function handleUpload(option: 'cover' | 'content') {
   if (!fileCover.value)
     return
 
@@ -122,7 +127,14 @@ async function handleUpload() {
 
   if (status.value === 'success') {
     if (data.value) {
-      article.value.cover = data.value as string
+
+      if (option === 'cover') {
+        article.value.cover = data.value as string
+      }
+
+      if (option === 'content') {
+        return data.value as string
+      }
       toast.add({ title: `upload ${fileCover.value.name} success` })
     }
   }
@@ -131,6 +143,8 @@ async function handleUpload() {
     console.error(data.value)
     toast.add({ title: `upload ${fileCover.value.name} failed`, description: data.value as string })
   }
+
+  fileCover.value = null
 }
 
 const fileInput = ref()
@@ -167,7 +181,7 @@ async function handlePublish() {
     if (status.value === 'success') {
       if (data.value) {
         publishSetting.value = false
-        toast.add({ title: `update ${data.value.title} success, article id ${data.value._id}` })
+        toast.add({ title: `update ${data.value.title} success, article id ${data.value._id}`, timeout: 3000 })
       }
     }
 
@@ -176,18 +190,116 @@ async function handlePublish() {
     }
   }
 }
+
+onMounted(() => {
+  const textarea = document.querySelector('.md-textarea') as HTMLTextAreaElement
+  if (!textarea)
+    return
+
+  textarea.addEventListener('paste', async (event) => {
+    // 获取粘贴事件的数据
+    if (!event.clipboardData) return
+    const items = (event.clipboardData).items;
+    // 遍历粘贴的内容
+    for (const item of items) {
+      // 如果是图片
+      if (item.type.indexOf('image') !== -1) {
+
+        console.log(item)
+        // 获取图片文件
+        const blob = item.getAsFile();
+
+        if (!blob) return
+
+        // 将图片文件上传到服务器
+        const imageUrl = await uploadImage(blob);
+
+        // 如果成功上传图片
+        if (imageUrl) {
+          // 在textarea中插入图片链接到光标位置
+          insertImageUrlAtCursor(textarea, imageUrl);
+        }
+
+        // 阻止默认粘贴行为
+        event.preventDefault();
+      }
+    }
+  });
+})
+
+// 上传图片到服务器
+async function uploadImage(file: File) {
+  fileCover.value = file
+  const url = await handleUpload('content')
+  fileCover.value = null
+  return url
+}
+
+// 在textarea中插入图片链接到光标位置
+function insertImageUrlAtCursor(textarea: HTMLTextAreaElement, imageUrl: string) {
+  const startPos = textarea.selectionStart;
+  const endPos = textarea.selectionEnd;
+  const textBefore = textarea.value.substring(0, startPos);
+  const textAfter = textarea.value.substring(endPos, textarea.value.length);
+  const newText = `${textBefore}![image](${imageUrl})${textAfter}`;
+  textarea.value = newText;
+  textarea.setSelectionRange(startPos + imageUrl.length + 11, startPos + imageUrl.length + 11);
+}
+
+const autoSave = ref(false)
+
+const { pause, resume, isActive } = useIntervalFn(() => {
+
+  if (article.value._id && article.value._id !== '' && autoSave.value) {
+    // auto save
+    throttledPublish()
+  }
+}, 30000)
+
+watchEffect(() => {
+  if (autoSave.value) {
+    resume()
+  } else {
+    pause()
+  }
+})
+
+onMounted(() => {
+  document.addEventListener('keydown', (event) => {
+    // 检查是否按下了Ctrl键 (Cmd键在Mac上)
+    const ctrlKey = event.ctrlKey || event.metaKey; // metaKey用于检查Cmd键，在Mac上是true
+
+    // 检查是否按下了S键
+    const sKey = event.key === 's';
+
+    // 如果同时按下了Ctrl键和S键
+    if (ctrlKey && sKey) {
+      // 阻止浏览器默认的保存行为
+      event.preventDefault();
+      throttledPublish()
+    }
+  });
+})
 </script>
 
 <template>
   <div>
     <NuxtLayout name="home">
-      <div class="mt-4 flex flex-row items-center">
-        <UButton class="mr-2" @click="publishSetting = true">
-          Publish Settings
-        </UButton>
-        <span>{{ article.shortLink }}</span>
-        <span class="mx-2">/</span>
-        <span>{{ article.title }}</span>
+      <div class="mt-4 flex flex-row items-center justify-between">
+        <div class="flex flex-row items-center">
+          <UButton class="mr-2" @click="publishSetting = true">
+            Publish Settings
+          </UButton>
+          <span>{{ article.shortLink }}</span>
+          <span class="mx-2">/</span>
+          <span>{{ article.title }}</span>
+        </div>
+        <div>
+          <UButton @click="autoSave = !autoSave" :color="autoSave ? 'green' : 'red'" class="mr-2">
+            {{ autoSave ? 'Disable' : 'Enable' }}
+          </UButton>
+          <span class="mr-2">auto save status: {{ isActive ? 'Enable' : 'Disable' }}</span>
+        </div>
       </div>
     </NuxtLayout>
     <div class="p-6 flex flex-row min-h-60vh w-full">
@@ -231,7 +343,7 @@ async function handlePublish() {
           <UFormGroup label="Upload Cover" name="file">
             <div class="flex flex-row">
               <UInput v-model="fileInput" type="file" @change="onChangeFile" />
-              <UButton class="ml-2" @click="handleUpload">
+              <UButton class="ml-2" @click="handleUpload('cover')">
                 upload
               </UButton>
               <UButton color="red" class="ml-2" @click="handleClean">
@@ -269,8 +381,8 @@ async function handlePublish() {
               {{ errorFields.link[0].message }}
             </div>
           </UFormGroup>
-          <UButton type="submit" :disabled="!pass" @click="handlePublish">
-            Publish
+          <UButton type="submit" :disabled="!pass" @click="throttledPublish">
+            Submit
           </UButton>
         </UForm>
       </div>

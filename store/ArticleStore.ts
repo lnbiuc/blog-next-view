@@ -27,7 +27,7 @@ export const useArticleStore = defineStore('articleStore', () => {
 			.filter(article => article.category === category)
 			.sort((a, b) => {
 				// @ts-expect-error no error
-				return new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime();
+				return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
 			});
 	}
 
