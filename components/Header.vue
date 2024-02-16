@@ -102,7 +102,7 @@ const { hasAuth } = useUserStore()
     'justify-center items-center h-60px': width > 767,
     'h-full backdrop-blur-md': !isOpen,
   }"
-    class="bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all dark:bg-dark dark:bg-opacity-0 header-hidden-sign">
+    class="bg-white bg-opacity-60 border-b border-transparent flex flex-row fixed h-60px w-full z-999 transition-all duration-500 dark:bg-dark dark:bg-opacity-0 header-hidden-sign">
     <div class="flex flex-row max-w-1600px items-center" :class="{
       'justify-between w-full': width < 767,
       'justify-center w-80%': width > 767,
@@ -124,55 +124,59 @@ const { hasAuth } = useUserStore()
             </p>
           </div>
         </Transition>
-        <div v-if="!isOpen" :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
-          class="hidden max-w-1000px w-full">
-          <ul class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-end transition-all ring-1" :class="{
-            'flex-col w-full': width < 767,
-            'flex-row': width > 767,
-            'items-start mt-60px mr-4': !isOpen,
-            'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
-          }">
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/" class="header-link" @click="isOpen = true">
-                Home
-              </router-link>
-            </li>
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/blog" class="header-link" @click="isOpen = true">
-                Blog
-              </router-link>
-            </li>
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/shorts" class="header-link" @click="isOpen = true">
-                Short
-              </router-link>
-            </li>
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/project" class="header-link" @click="isOpen = true">
-                Project
-              </router-link>
-            </li>
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/friend" class="header-link" @click="isOpen = true">
-                Friend
-              </router-link>
-            </li>
-            <li :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/about" class="header-link" @click="isOpen = true">
-                About
-              </router-link>
-            </li>
-            <li v-if="hasAuth()" :class="{ 'leading-12 text-2xl': !isOpen }">
-              <router-link to="/violet" class="header-link" @click="isOpen = true">
-                Admin
-              </router-link>
-            </li>
-            <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }"
-              class="hidden">
-              <DarkToggle @click="isOpen = true" />
-            </li>
-          </ul>
-        </div>
+        <Transition name="slide-fade">
+          <div v-if="!isOpen" :class="{ 'flex justify-center': width > 767, 'flex justify-end': !isOpen }"
+            class="hidden max-w-1000px w-full transition-all duration-500">
+            <ul
+              class="rounded-full ring-transparent ring-inset flex flex-row h-0px items-end transition-all duration-500 ring-1"
+              :class="{
+                'flex-col w-full': width < 767,
+                'flex-row': width > 767,
+                'items-start mt-60px mr-4': !isOpen,
+                'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
+              }">
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/" class="header-link" @click="isOpen = true">
+                  Home
+                </router-link>
+              </li>
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/blog" class="header-link" @click="isOpen = true">
+                  Blog
+                </router-link>
+              </li>
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/shorts" class="header-link" @click="isOpen = true">
+                  Short
+                </router-link>
+              </li>
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/project" class="header-link" @click="isOpen = true">
+                  Project
+                </router-link>
+              </li>
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/friend" class="header-link" @click="isOpen = true">
+                  Friend
+                </router-link>
+              </li>
+              <li :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/about" class="header-link" @click="isOpen = true">
+                  About
+                </router-link>
+              </li>
+              <li v-if="hasAuth()" :class="{ 'leading-12 text-2xl': !isOpen }">
+                <router-link to="/violet" class="header-link" @click="isOpen = true">
+                  Admin
+                </router-link>
+              </li>
+              <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }"
+                class="hidden">
+                <DarkToggle @click="isOpen = true" />
+              </li>
+            </ul>
+          </div>
+        </Transition>
       </div>
 
       <div class="w-100px" :class="{ 'flex justify-end': width < 767 }">

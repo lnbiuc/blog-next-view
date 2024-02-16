@@ -511,3 +511,18 @@ html:not(.dark) [img-dark] {
   transition: all 0.1s ease;
   transform-style: preserve-3d;
 }
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out 0.2s; /* 添加延迟 */
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1); /* 添加延迟 */
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+
