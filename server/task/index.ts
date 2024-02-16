@@ -4,7 +4,7 @@ import axios from 'axios';
 import process from 'node:process';
 import path from 'node:path';
 import fs from 'node:fs';
-import { getFileHashSync, uuidv4, upload } from '~/composables/fileUpload';
+import { getFileHashSync, uuidv4, uploadToR2 } from '~/composables/fileUpload';
 import { ArticleSchema } from '~/server/models/article.schema';
 
 export async function updateFriendScreenShotTask() {
@@ -45,7 +45,7 @@ export async function updateFriendScreenShotTask() {
 					} else {
 						const fileHash = getFileHashSync(filePath);
 						console.warn('file hash:', fileHash);
-						const previewUrl = upload(filePath, `${fileHash}.png`);
+						const previewUrl = uploadToR2(filePath, `${fileHash}.png`, 'screenshot');
 						console.log('previewUrl:', previewUrl);
 						resolve(previewUrl);
 					}
@@ -99,7 +99,7 @@ export async function updateArticleObImageTask() {
 					} else {
 						const fileHash = getFileHashSync(filePath);
 						console.warn('file hash:', fileHash);
-						const previewUrl = upload(filePath, `${fileHash}.png`);
+						const previewUrl = uploadToR2(filePath, `${fileHash}.png`, 'og');
 						console.log('previewUrl:', previewUrl);
 						resolve(previewUrl);
 					}

@@ -1,7 +1,7 @@
 import process from 'node:process';
 import path from 'node:path';
 import fs from 'node:fs';
-import { upload, getFileHashSync, uuidv4 } from '~/composables/fileUpload';
+import { uploadToR2, getFileHashSync, uuidv4 } from '~/composables/fileUpload';
 
 export default defineEventHandler(async event => {
 	console.warn(`start request: ${event.path}`);
@@ -21,5 +21,5 @@ export default defineEventHandler(async event => {
 	const hash = getFileHashSync(filePath);
 	const hashName = `${hash}.${extension}`;
 	// upload to COS
-	return upload(filePath, hashName);
+	return uploadToR2(filePath, hashName, 'blog');
 });
