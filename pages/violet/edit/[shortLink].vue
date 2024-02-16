@@ -7,7 +7,6 @@ const shortLink = route.params.shortLink as string
 
 <template>
   <div>
-    <NuxtLayout name="admin" />
     <AdminEditorArticle v-if="shortLink" :short-link="shortLink" />
   </div>
 </template>

@@ -3,6 +3,40 @@ import type articleVue from '~/layouts/article.vue';
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { IArticle } from '~/server/types'
 import { useIntervalFn, useThrottleFn } from '@vueuse/core'
+import Vditor from 'vditor';
+import 'vditor/dist/index.css';
+const vditor = ref<Vditor | null>(null);
+
+const color = useColorMode()
+
+onMounted(() => {
+  vditor.value = new Vditor('vditor', {
+    after: () => {
+      // vditor.value is a instance of Vditor now and thus can be safely used here
+      if (article.value.content) {
+        vditor.value?.setValue(article.value.content.replace(/\\n/g, '\n'))
+      } else {
+        vditor.value?.setValue('')
+      }
+    },
+    width: '100%',
+    theme: color.value === 'dark' ? 'dark' : 'classic',
+    upload: {
+      // @ts-expect-error no error
+      handler: async (files: File[]) => {
+        const url = await uploadImage(files[0])
+        vditor.value?.insertValue(`![image](${url})`)
+        return url
+      },
+    },
+    keydown: (e: KeyboardEvent) => {
+      if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
+        e.preventDefault()
+        throttledPublish()
+      }
+    },
+  });
+});
 
 const props = defineProps({
   shortLink: {
@@ -36,8 +70,6 @@ const article = ref<IArticle>({
 if (props.shortLink) {
   const { data } = await useFetch(`/api/article/${props.shortLink}`)
   article.value = data.value as IArticle
-  if (article.value.content)
-    article.value.content = article.value.content.replace(/\\n/g, '\n')
 }
 
 onMounted(() => {
@@ -113,6 +145,8 @@ function onChangeFile(e: Event) {
     fileCover.value = file
 }
 
+const uploading = ref(false)
+
 async function handleUpload(option: 'cover' | 'content') {
   if (!fileCover.value)
     return
@@ -120,6 +154,7 @@ async function handleUpload(option: 'cover' | 'content') {
   toast.add({ title: `start upload ${fileCover.value.name}` })
   const formData = new FormData()
   formData.append('file', fileCover.value)
+  uploading.value = true
   const { data, status } = await useFetch('/api/upload', {
     method: 'POST',
     body: formData,
@@ -143,7 +178,7 @@ async function handleUpload(option: 'cover' | 'content') {
     console.error(data.value)
     toast.add({ title: `upload ${fileCover.value.name} failed`, description: data.value as string })
   }
-
+  uploading.value = false
   fileCover.value = null
 }
 
@@ -156,7 +191,9 @@ function handleClean() {
 }
 
 async function handlePublish() {
-  if (!article.value._id || article.value._id === '') {
+  console.warn('publish')
+  article.value.content = vditor.value?.getValue() as string
+  if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
       method: 'POST',
       body: article.value
@@ -164,6 +201,7 @@ async function handlePublish() {
     if (status.value === 'success') {
       if (data.value) {
         publishSetting.value = false
+        article.value = data.value
         toast.add({ title: `publish ${data.value.title} success, article id ${data.value._id}` })
       }
     }
@@ -173,7 +211,7 @@ async function handlePublish() {
     }
   }
 
-  if (article.value._id && article.value._id !== '') {
+  if (article.value._id && article.value._id !== '' && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/update', {
       method: 'PUT',
       body: article.value
@@ -191,59 +229,12 @@ async function handlePublish() {
   }
 }
 
-onMounted(() => {
-  const textarea = document.querySelector('.md-textarea') as HTMLTextAreaElement
-  if (!textarea)
-    return
-
-  textarea.addEventListener('paste', async (event) => {
-    // 获取粘贴事件的数据
-    if (!event.clipboardData) return
-    const items = (event.clipboardData).items;
-    // 遍历粘贴的内容
-    for (const item of items) {
-      // 如果是图片
-      if (item.type.indexOf('image') !== -1) {
-
-        console.log(item)
-        // 获取图片文件
-        const blob = item.getAsFile();
-
-        if (!blob) return
-
-        // 将图片文件上传到服务器
-        const imageUrl = await uploadImage(blob);
-
-        // 如果成功上传图片
-        if (imageUrl) {
-          // 在textarea中插入图片链接到光标位置
-          insertImageUrlAtCursor(textarea, imageUrl);
-        }
-
-        // 阻止默认粘贴行为
-        event.preventDefault();
-      }
-    }
-  });
-})
-
 // 上传图片到服务器
 async function uploadImage(file: File) {
   fileCover.value = file
   const url = await handleUpload('content')
   fileCover.value = null
   return url
-}
-
-// 在textarea中插入图片链接到光标位置
-function insertImageUrlAtCursor(textarea: HTMLTextAreaElement, imageUrl: string) {
-  const startPos = textarea.selectionStart;
-  const endPos = textarea.selectionEnd;
-  const textBefore = textarea.value.substring(0, startPos);
-  const textAfter = textarea.value.substring(endPos, textarea.value.length);
-  const newText = `${textBefore}![image](${imageUrl})${textAfter}`;
-  textarea.value = newText;
-  textarea.setSelectionRange(startPos + imageUrl.length + 11, startPos + imageUrl.length + 11);
 }
 
 const autoSave = ref(false)
@@ -263,28 +254,11 @@ watchEffect(() => {
     pause()
   }
 })
-
-onMounted(() => {
-  document.addEventListener('keydown', (event) => {
-    // 检查是否按下了Ctrl键 (Cmd键在Mac上)
-    const ctrlKey = event.ctrlKey || event.metaKey; // metaKey用于检查Cmd键，在Mac上是true
-
-    // 检查是否按下了S键
-    const sKey = event.key === 's';
-
-    // 如果同时按下了Ctrl键和S键
-    if (ctrlKey && sKey) {
-      // 阻止浏览器默认的保存行为
-      event.preventDefault();
-      throttledPublish()
-    }
-  });
-})
 </script>
 
 <template>
   <div>
-    <NuxtLayout name="home">
+    <NuxtLayout name="admin-home">
       <div class="mt-4 flex flex-row items-center justify-between">
         <div class="flex flex-row items-center">
           <UButton class="mr-2" @click="publishSetting = true">
@@ -303,12 +277,13 @@ onMounted(() => {
       </div>
     </NuxtLayout>
     <div class="p-6 flex flex-row min-h-60vh w-full">
-      <div class="p-2 w-1/2">
+      <!-- <div class="p-2 w-1/2">
         <UTextarea v-model="article.content" textarea-class="md-textarea" type="textarea" autoresize />
       </div>
       <div class="p-2 w-1/2">
         <MDRender id="md-result" :source="article.content ? article.content : ''" />
-      </div>
+      </div> -->
+      <div id="vditor" class="w-full" />
     </div>
     <UModal v-model="publishSetting" class="z-2000">
       <div class="p-4">
@@ -343,7 +318,7 @@ onMounted(() => {
           <UFormGroup label="Upload Cover" name="file">
             <div class="flex flex-row">
               <UInput v-model="fileInput" type="file" @change="onChangeFile" />
-              <UButton class="ml-2" @click="handleUpload('cover')">
+              <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
                 upload
               </UButton>
               <UButton color="red" class="ml-2" @click="handleClean">

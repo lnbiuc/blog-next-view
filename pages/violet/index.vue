@@ -13,7 +13,6 @@ onMounted(() => {
 
 <template>
   <div>
-    <NuxtLayout name="admin" />
     <AdminEditorArticle />
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <NuxtLayout name="home">
+    <NuxtLayout name="admin-home">
       <AdminHeader />
     </NuxtLayout>
     <RouterView />

@@ -231,7 +231,7 @@ function handleCancel() {
 </script>
 <template>
   <div>
-    <NuxtLayout name="admin">
+    <NuxtLayout name="admin-home">
       <div class="my-1 flex flex-row">
         <UButton icon="i-ri:edit-fill" class="mr-2" color="violet" @click="handleModel('new')">
           Add New
@@ -243,53 +243,55 @@ function handleCancel() {
           @click="handleModel('edit')" class="mr-2" />
         <UInput v-model="q" placeholder="Search data..." />
       </div>
+    </NuxtLayout>
 
-      <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
-        @select="select">
+    <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
+      @select="select">
 
-        <template #status-data="{ row }">
-          <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)" variant="subtle" />
-        </template>
+      <template #status-data="{ row }">
+        <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)" variant="subtle" />
+      </template>
 
-        <template #avatar-data="{ row }">
-          <UPopover mode="hover">
-            <UAvatar v-if="row.avatar" img-class="object-cover" :src="`${row.avatar}`" alt="Avatar" />
-            <div v-else>
-              null
+      <template #avatar-data="{ row }">
+        <UPopover mode="hover">
+          <UAvatar v-if="row.avatar" img-class="object-cover" :src="`${row.avatar}`" alt="Avatar" />
+          <div v-else>
+            null
+          </div>
+          <template #panel>
+            <div class="h-full w-full">
+              <img :src="`${row.avatar}`" class="object-cover h-50 w-full">
             </div>
-            <template #panel>
-              <div class="h-full w-full">
-                <img :src="`${row.avatar}`" class="object-cover h-50 w-full">
-              </div>
-            </template>
-          </UPopover>
-        </template>
-        <template #url-data="{ row }">
-          <ULink target="_blank" :to="`${row.url}`" class="text-violet-400 transition-all hover:text-violet-600">
-            {{ row.url }}
-          </ULink>
-        </template>
-        <template #screenShot-data="{ row }">
-          <UPopover mode="hover">
-            <UAvatar v-if="row.screenShot" img-class="object-cover" :src="`${row.screenShot}/thumbnail`" alt="Avatar" />
-            <div v-else>
-              null
+          </template>
+        </UPopover>
+      </template>
+      <template #url-data="{ row }">
+        <ULink target="_blank" :to="`${row.url}`" class="text-violet-400 transition-all hover:text-violet-600">
+          {{ row.url }}
+        </ULink>
+      </template>
+      <template #screenShot-data="{ row }">
+        <UPopover mode="hover">
+          <UAvatar v-if="row.screenShot" img-class="object-cover" :src="`${row.screenShot}/thumbnail`" alt="Avatar" />
+          <div v-else>
+            null
+          </div>
+          <template #panel>
+            <div class="h-full w-full">
+              <img :src="`${row.screenShot}/comporess1600x900`" class="object-cover h-50 w-full">
             </div>
-            <template #panel>
-              <div class="h-full w-full">
-                <img :src="`${row.screenShot}/comporess1600x900`" class="object-cover h-50 w-full">
-              </div>
-            </template>
-          </UPopover>
-        </template>
-        <template #createdAt-data="{ row }">
-          {{ formatZHTime(row.createdAt) }}
-        </template>
-        <template #updatedAt-data="{ row }">
-          {{ formatZHTime(row.updatedAt) }}
-        </template>
-      </UTable>
-      <UAccordion :items="metaData" class="mt-2" />
+          </template>
+        </UPopover>
+      </template>
+      <template #createdAt-data="{ row }">
+        {{ formatZHTime(row.createdAt) }}
+      </template>
+      <template #updatedAt-data="{ row }">
+        {{ formatZHTime(row.updatedAt) }}
+      </template>
+    </UTable>
+    <NuxtLayout name="home">
+      <UAccordion :items="metaData" />
     </NuxtLayout>
 
     <UModal v-model="editFriend" class="z-2000">
