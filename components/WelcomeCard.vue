@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { addHoverEffect } from '~/composables/hoverEffect'
+
 const link = [
   {
     index: 0,
@@ -38,66 +40,13 @@ function handleScroll() {
 }
 
 onMounted(() => {
-  // const favicon: HTMLElement | null = document.querySelector('.favicon-shadown')
-  // const yRotate = [-20, 20]
-  // const xRotate = [-20, 20]
-  // function getRotateDeg(range: number[], value: number, length: number) {
-  //   return (value / length) * (range[1] - range[0]) + range[0]
-  // }
-
-  // if (!favicon)
-  //   return
-  // favicon.onmousemove = (e: any) => {
-  //   const { offsetX, offsetY } = e
-  //   const { offsetWidth, offsetHeight } = favicon
-  //   const ry = -getRotateDeg(yRotate, offsetX, offsetWidth)
-  //   const rx = getRotateDeg(xRotate, offsetY, offsetHeight)
-  //   favicon.style.setProperty('--rx', `${rx}deg`)
-  //   favicon.style.setProperty('--ry', `${ry}deg`)
-  // }
-
-  // favicon.onmouseleave = () => {
-  //   favicon.style.setProperty('--rx', `0deg`)
-  //   favicon.style.setProperty('--ry', `0deg`)
-  // }
-  const card: HTMLElement | null = document.querySelector('.favicon-shadown')
-  const motionMatchMedia = window.matchMedia('(prefers-reduced-motion)')
-  const THRESHOLD = 10
-  /*
- * Read the blog post here:
- * https://letsbuildui.dev/articles/a-3d-hover-effect-using-css-transforms
- */
-  function handleHover(e: any) {
-    if (!card)
-      return
-    const { clientX, clientY, currentTarget } = e
-    const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget
-
-    const horizontal = (clientX - offsetLeft) / clientWidth
-    const vertical = (clientY - offsetTop) / clientHeight
-    const rotateX = (THRESHOLD / 2 - horizontal * THRESHOLD).toFixed(2)
-    const rotateY = (vertical * THRESHOLD - THRESHOLD / 2).toFixed(2)
-
-    card.style.transform = `perspective(${clientWidth}px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(1, 1, 1)`
-  }
-
-  function resetStyles(e: any) {
-    if (!card)
-      return
-    card.style.transform = `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`
-  }
-
-  if (!motionMatchMedia.matches) {
-    if (!card)
-      return
-    card.addEventListener('mousemove', handleHover)
-    card.addEventListener('mouseleave', resetStyles)
-  }
+  addHoverEffect('.favicon-shadow', 10)
 })
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)" class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
+  <div style="height: calc(100vh - 160px)"
+    class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
     <div class="flex flex-col justify-start items-start md:justify-start md:items-start">
       <h1 class="text-6xl font-bold text-left">
         Hi!👋
@@ -105,9 +54,11 @@ onMounted(() => {
       <h1 class="mt-5 text-6xl font-bold">
         I'm <span class="text-violet" style="font-family: 'MyFont', sans-serif;">violet</span>
       </h1>
-      <span class="mb-2 mt-5 text-2xl">
-        A Web {{ '<Developer />' }}. {{ 'Code_' }} for Fun.
+      <span class="mb-2 mt-5 text-xl">
+        A Web {{ `
+        <Developer /> ` }}.
       </span>
+      <span class="text-xl mb-2">{{ 'Code' }} for Fun.</span>
       <div class="my-3 flex flex-row">
         <MyButton @click="$router.push('/blog')">
           Read the Blog
@@ -117,10 +68,8 @@ onMounted(() => {
         </MyButton>
       </div>
       <div class="flex flex-row">
-        <a
-          v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center" :href="l.url"
-          target="_blank"
-        >
+        <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
+          :href="l.url" target="_blank" aria-label="icon">
           <UIcon :name="l.icon" class="text-xl" />
           <span class="ml-1">
             {{ l.name }}
@@ -129,11 +78,13 @@ onMounted(() => {
       </div>
     </div>
     <div class="hidden transition-all md:block">
-      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo" class="favicon-shadown rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
+      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo"
+        class="favicon-shadow rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
     </div>
   </div>
   <div class="flex flex-row h-[100px] w-full justify-center">
-    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer" @click="handleScroll" />
+    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer"
+      @click="handleScroll" />
   </div>
 </template>
 
@@ -141,27 +92,6 @@ onMounted(() => {
 @font-face {
   font-family: 'MyFont';
   src: url('/Spacewar.ttf') format('truetype');
-}
-
-.favicon-shadown:hover {
-  transform: translateZ(12px);
-  transition: all 0.1s ease;
-}
-
-.dark .favicon-shadown:hover {
-  transform: translateZ(12px);
-  transition: all 0.1s ease;
-}
-
-.favicon-shadown {
-  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-  transition: all 0.1s ease;
-  transform-style: preserve-3d;
-}
-
-.dark .favicon-shadown {
-  transition: all 0.1s ease;
-  transform-style: preserve-3d;
 }
 
 @keyframes jump {

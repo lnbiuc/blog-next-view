@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import type { Article } from '~/server/types/article'
-import { usePreloadCacheStore } from '~/store'
-import { getArticleByCategory } from '~/server/api/article'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 
 const online = useOnline()
 
@@ -26,77 +25,37 @@ useHead({
   ],
 })
 
-const articlePage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
+const articles: Ref<IArticle[]> = ref([])
+const shorts: Ref<IArticle[]> = ref([])
+const projects: Ref<IArticle[]> = ref([])
 
-const shortsPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
+const { getAll, category } = useArticleStore()
 
-const projectPage = ref<{ pageNumber: number, pageSize: number, total: number, data: Article[] }>({
-  pageNumber: 1,
-  pageSize: 50,
-  total: 0,
-  data: [],
-})
-
-const { cacheCategoryArticle, getCategoryArticleCache } = usePreloadCacheStore()
-
-function preloadArticles() {
-  if (!getCategoryArticleCache('ARTICLE') || getCategoryArticleCache('ARTICLE')?.total === 0) {
-    getArticleByCategory('ARTICLE', articlePage.value.pageNumber, articlePage.value.pageSize).then((res) => {
-      articlePage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      articlePage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('ARTICLE', articlePage.value)
+getAll().then(() => {
+  category('article').then((data) => {
+    data.forEach((article) => {
+      articles.value.push(article)
     })
-  }
-  else {
-    articlePage.value = getCategoryArticleCache('ARTICLE') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-  }
+  })
 
-  if (!getCategoryArticleCache('SHORTS') || getCategoryArticleCache('SHORTS')?.total === 0) {
-    getArticleByCategory('SHORTS', shortsPage.value.pageNumber, shortsPage.value.pageSize).then((res) => {
-      shortsPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      shortsPage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('SHORTS', shortsPage.value)
+  category('short').then((data) => {
+    data.forEach((short) => {
+      shorts.value.push(short)
     })
-  }
-  else {
-    shortsPage.value = getCategoryArticleCache('SHORTS') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-  }
+  })
 
-  if (!getCategoryArticleCache('PROJECT') || getCategoryArticleCache('PROJECT')?.total === 0) {
-    getArticleByCategory('PROJECT', projectPage.value.pageNumber, projectPage.value.pageSize).then((res) => {
-      projectPage.value = res.data.value?.data as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-      projectPage.value.data.sort((a, b) => {
-        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-      })
-      cacheCategoryArticle('PROJECT', projectPage.value)
+  category('project').then((data) => {
+    data.forEach((project) => {
+      projects.value.push(project)
     })
-  }
-  else {
-    projectPage.value = getCategoryArticleCache('PROJECT') as { pageNumber: number, pageSize: number, total: number, data: Article[] }
-  }
-}
-
-preloadArticles()
+  })
+})
 </script>
 
 <template>
   <div>
     <NuxtLayout name="default">
-      <IndexIGImage />
+      <!-- <IndexIGImage /> -->
       <div>
         <Suspense>
           <ClientOnly>
@@ -112,11 +71,11 @@ preloadArticles()
         </Suspense>
         <WelcomeCard />
         <NuxtLayout name="home">
-          <div v-if="articlePage.data.length > 3" id="featured">
+          <div v-if="articles.length > 3" id="featured">
             <div class="title-font">
               Featured Article
             </div>
-            <BlogCards :articles="articlePage.data.slice(0, 6)" />
+            <BlogCards :articles="articles.slice(0, 6)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/blog')">
                 See More
@@ -124,11 +83,11 @@ preloadArticles()
               </MyButton>
             </div>
           </div>
-          <div v-if="shortsPage.data.length > 3">
+          <div v-if="shorts.length > 3">
             <div class="title-font">
               Featured Short
             </div>
-            <ShortCards :articles="shortsPage.data.slice(0, 6)" />
+            <ShortCards :articles="shorts.slice(0, 6)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/shorts')">
                 See More
@@ -136,11 +95,11 @@ preloadArticles()
               </MyButton>
             </div>
           </div>
-          <div v-if="projectPage.data.length > 1">
+          <div v-if="projects.length > 1">
             <div class="title-font">
               Featured Project
             </div>
-            <ProjectCards :articles="projectPage.data.slice(0, 3)" />
+            <ProjectCards :articles="projects.slice(0, 3)" />
             <div class="title-btn">
               <MyButton @click="$router.push('/project')">
                 See More

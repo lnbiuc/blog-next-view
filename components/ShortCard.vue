@@ -1,38 +1,31 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
-import type { Article, ArticleWithContent } from '~/server/types/article'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import { usePreloadCacheStore } from '~/store'
-import { getArticleByShortLink } from '~/server/api/article'
 
 const props = defineProps({
   article: {
-    type: Object as PropType<Article>,
+    type: Object as PropType<IArticle>,
     required: true,
   },
 })
 
-const article = ref<ArticleWithContent>()
+const article = ref<IArticle>()
 
-const { cacheArticle, getArticleCache } = usePreloadCacheStore()
+const { one } = useArticleStore()
 
 const preloadArticle = useThrottleFn(() => {
-  const res: ArticleWithContent | undefined = getArticleCache(props.article.shortLink)
-  if (res)
-    return
-
-  getArticleByShortLink(props.article.shortLink).then((res) => {
-    article.value = res.data.value?.data as ArticleWithContent
-    cacheArticle(article.value)
-  },
-  )
+  one(props.article.shortLink).then((data) => {
+    article.value = data
+  })
 }, 1000)
 </script>
 
 <template>
   <div
-    class="card-bg-filter card-border"
+    class="card-bg-filter backdrop-blur-sm card-border"
     @click="$router.push(`/article/${props.article.shortLink}`)"
     @mouseover="preloadArticle()"
   >

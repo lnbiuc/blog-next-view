@@ -1,96 +1,115 @@
-import { appDescription } from './constants/index'
+import process from 'node:process';
+import { appDescription } from './constants/index';
 
 export default defineNuxtConfig({
-  modules: [
-    '@vueuse/nuxt',
-    '@unocss/nuxt',
-    '@pinia/nuxt',
-    '@nuxtjs/color-mode',
-    '@nuxt/ui',
-    '@nuxtseo/module',
-    '@formkit/auto-animate/nuxt',
-  ],
+	modules: [
+		'@vueuse/nuxt',
+		'@unocss/nuxt',
+		'@pinia/nuxt',
+		'@nuxtjs/color-mode',
+		'@nuxt/ui',
+		'@nuxtseo/module',
+		'@formkit/auto-animate/nuxt',
+		'nuxt-mongoose',
+		'nuxt-scheduler',
+	],
 
-  site: {
-    url: 'https://vio.vin',
-    name: '薇尔薇',
-    description: 'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
-    defaultLocale: 'en',
-    identity: {
-      type: 'Person',
-    },
-    github: 'lnbiuc',
-    email: 'hi@lnbiuc.com',
-    trailingSlash: true,
-    twitterCard: 'summary_large_image',
-    twitterSite: '@ZZSLL_53387',
-    twitterCreator: '@ZZSLL_53387',
-    twitterImage: 'https://vio.vin/favicon.ico',
-  },
+	mongoose: {
+		uri: process.env.MONGODB_URI,
+		devtools: true,
+		options: {
+			dbName: 'blog_v2',
+		},
+	},
 
-  routeRules: {
-    // '/api/**': { proxy: { to: process ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
-    '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
-    // '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
-    // '/api/**': { proxy: { to: 'http://blog-next-api:6060/api/**' } },
-  },
+	site: {
+		url: 'https://vio.vin',
+		name: '薇尔薇',
+		description:
+			'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
+		defaultLocale: 'en',
+		identity: {
+			type: 'Person',
+		},
+		github: 'lnbiuc',
+		email: 'hi@lnbiuc.com',
+		trailingSlash: true,
+		twitterCard: 'summary_large_image',
+		twitterSite: '@ZZSLL_53387',
+		twitterCreator: '@ZZSLL_53387',
+		twitterImage: 'https://vio.vin/favicon.ico',
+	},
 
-  experimental: {
-    // when using generate, payload js assets included in sw precache manifest
-    // but missing on offline, disabling extraction it until fixed
-    payloadExtraction: false,
-    // inlineSSRStyles: false,
-    renderJsonPayloads: true,
-    typedPages: true,
-  },
+	routeRules: {
+		// '/api/**': { proxy: { to: process ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
+		// '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
+		// '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
+		// '/api/**': { proxy: { to: 'http://blog-next-api:6060/api/**' } },
+		// '/api/**': { proxy: { to: 'https://violet-blog-api.zeabur.app/api/**' } },
+		//   '/api/**': { proxy: { to: `http://${}/api/**` } },
+		// '/api/**': { proxy: { to: process.env.PROXY_ADDR } },
+	},
 
-  css: [
-    // '@unocss/reset/tailwind.css',
-  ],
+	experimental: {
+		// when using generate, payload js assets included in sw precache manifest
+		// but missing on offline, disabling extraction it until fixed
+		payloadExtraction: false,
+		// inlineSSRStyles: false,
+		renderJsonPayloads: true,
+		typedPages: true,
+	},
 
-  colorMode: {
-    classSuffix: '',
-  },
+	css: [
+		// '@unocss/reset/tailwind.css',
+	],
 
-  nitro: {
-    esbuild: {
-      options: {
-        target: 'esnext',
-      },
-    },
-    prerender: {
-      crawlLinks: false,
-      //   routes: ['/', '/blog', '/shorts', '/project', '/about'],
-      ignore: ['/hi'],
-    },
-  },
+	colorMode: {
+		classSuffix: '',
+	},
 
-  app: {
-    pageTransition: { name: 'page', mode: 'out-in' },
-    head: {
-      viewport: 'width=device-width,initial-scale=1',
-      link: [
-        { rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
-        // <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
-        // { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css' },
-      ],
-      meta: [
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { name: 'description', content: appDescription },
-        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
-      ],
-      // umami analytics
-      script: [
-        // <script async src="https://analytics.eu.umami.is/script.js" data-website-id="afdca035-1988-40f8-89a0-e9ed73267348"></script>
-        { 'async': true, 'src': 'https://analytics.eu.umami.is/script.js', 'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348' },
-        // <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
-        // { src: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js' },
-      ],
-    },
-  },
+	nitro: {
+		esbuild: {
+			options: {
+				target: 'esnext',
+			},
+		},
+		prerender: {
+			crawlLinks: false,
+			//   routes: ['/', '/blog', '/shorts', '/project', '/about'],
+			ignore: ['/hi'],
+		},
+	},
 
-  devtools: {
-    enabled: true,
-  },
-})
+	app: {
+		pageTransition: { name: 'page', mode: 'out-in' },
+		head: {
+			viewport: 'width=device-width,initial-scale=1',
+			link: [
+				{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
+				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+				// <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css">
+				// { rel: 'stylesheet', href: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.css' },
+			],
+			meta: [
+				{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
+				{ name: 'description', content: appDescription },
+				{ name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+			],
+			// umami analytics
+			script: [
+				// <script async src="https://analytics.eu.umami.is/script.js" data-website-id="afdca035-1988-40f8-89a0-e9ed73267348"></script>
+				{
+					async: true,
+					src: 'https://analytics.eu.umami.is/script.js',
+					'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348',
+				},
+				// <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js"></script>
+				// { src: 'https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.18.2/tocbot.min.js' },
+			],
+		},
+	},
+
+	devtools: {
+		enabled: true,
+	},
+});

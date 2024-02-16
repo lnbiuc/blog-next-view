@@ -5,11 +5,9 @@
   --md-color: #050505 !important;
   --toc-height: calc(100vh - 100px);
   --color-violet: rgb(167 139 250);
+  --line: hsl(0 0% 5% / 0.25);
 }
 
-/* * {
-    border: 1px solid red;
-} */
 
 html {
   background-color: var(--c-bg);
@@ -23,7 +21,187 @@ html.dark {
   --c-scrollbar: #111;
   --c-scrollbar-hover: #222;
   --md-color: #c9d1d9  !important;
+  --line: hsl(0 0% 95% / 0.25);
 }
+
+
+body::before {
+	--size: 55px;
+	content: "";
+	height: 100vh;
+	width: 100vw;
+	position: fixed;
+	background:
+		linear-gradient(90deg, var(--line) 1px, transparent 1px var(--size)) 0 -5vmin / var(--size) var(--size),
+		linear-gradient(var(--line) 1px, transparent 1px var(--size)) 0 -5vmin / var(--size) var(--size);
+	mask: linear-gradient(165deg, transparent 60%, white);
+	bottom: 0;
+	z-index: -1;
+}
+
+
+html,
+body,
+#__nuxt {
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  font-family: 'DefaultEnFont', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* 1. declare transition */
+.fade-move,
+.fade-enter-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease;
+}
+
+/* 2. declare enter from and leave to state */
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: scaleY(1) translate(50px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.fade-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease reverse;
+}
+
+@keyframes up-to-down {
+  from {
+    transform: translateY(50%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+
+
+.right-enter-active {
+  animation: right-to-left .5s ease;
+}
+
+@keyframes right-to-left {
+  from {
+    transform: translateX(50%);
+  }
+
+  to {
+    transform: translateX(0%);
+  }
+}
+
+.downUp-enter-active {
+  animation: down-up .5s ease;
+}
+
+.downUp-leave-active {
+  animation: down-up .5s ease reverse;
+}
+
+@keyframes one-in {
+  from {
+    transform: translateY(50%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
+}
+
+@keyframes multi-step-spin {
+  0% {
+    transform: rotate(0turn);
+  }
+
+  25% {
+    transform: rotate(0.25turn);
+  }
+
+  50% {
+    transform: rotate(0.5turn);
+  }
+
+  75% {
+    transform: rotate(0.75turn);
+  }
+
+  100% {
+    transform: rotate(1turn);
+  }
+}
+
+.common-shadow {
+  box-shadow:
+    2.8px 2.8px 2.2px rgba(0, 0, 0, 0.02),
+    6.7px 6.7px 5.3px rgba(0, 0, 0, 0.028),
+    12.5px 12.5px 10px rgba(0, 0, 0, 0.035),
+    22.3px 22.3px 17.9px rgba(0, 0, 0, 0.042),
+    41.8px 41.8px 33.4px rgba(0, 0, 0, 0.05),
+    100px 100px 80px rgba(0, 0, 0, 0.07);
+}
+
+.my-open-tab {
+  cursor: url(/new-tab.png) 10 10, pointer
+}
+
+@font-face {
+  font-family: 'CodeFont';
+  src: url('/MonaspaceArgon-Regular.woff') format('truetype');
+}
+
+@font-face {
+  font-family: 'DefaultEnFont';
+  src: url('/GeistMono-Regular.woff2') format('truetype')
+}
+
+.github-theme h1 {
+  font-size: 2rem !important;
+}
+
+.github-theme h2 {
+  font-size: 1.75rem;
+}
+
+.github-theme h3 {
+  font-size: 1.5rem;
+}
+
+.github-theme h4 {
+  font-size: 1.25rem;
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: all 0.2s;
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+.link-active {
+  transition: all 0.2s;
+  border-radius:  0.5rem;
+  background-color: #a78bfa2c;
+}
+
+.link-hover:hover {
+    transition: all 0.2s;
+    border-radius:  0.5rem;
+    background-color: #a78bfa2c;
+}
+
+/* * {
+    border: 1px solid red;
+} */
+
 
 ::selection {
   background: #a78bfa55;
@@ -259,41 +437,91 @@ html:not(.dark) [img-dark] {
 }
 
 
-
+/* 1. declare transition */
+.slide-move,
 .slide-enter-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: ease-in;
-   -webkit-transition-timing-function: ease-in;
-   -o-transition-timing-function: ease-in;
-   transition-timing-function: ease-in;
-   transition: all;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease;
 }
 
+/* 2. declare enter from and leave to state */
+.slide-enter-from,
+.slide-leave-to {
+  opacity: 0;
+  transform: scaleY(1) translate(50px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
 .slide-leave-active {
-   -moz-transition-duration: 0.3s;
-   -webkit-transition-duration: 0.3s;
-   -o-transition-duration: 0.3s;
-   transition-duration: 0.3s;
-   -moz-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -webkit-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   -o-transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
-   transition: all;
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease reverse;
 }
 
-.slide-enter-to, .slide-leave {
-   max-height: 100px;
-   overflow: hidden;
+@keyframes down-to-up {
+  from {
+    transform: translateY(100%);
+  }
+
+  to {
+    transform: translateY(0%);
+  }
 }
 
-.slide-enter, .slide-leave-to {
-   overflow: hidden;
-   max-height: 0;
+/* 1. declare transition */
+.reslide-move,
+.reslide-enter-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: down-to-up .5s ease;
 }
 
-/* .is-active-li ol {
-    display: flex;
-} */
+/* 2. declare enter from and leave to state */
+.reslide-enter-from,
+.reslide-leave-to {
+  opacity: 0;
+  transform: scaleY(1) translate(50px, 0);
+}
+
+/* 3. ensure leaving items are taken out of layout flow so that moving
+      animations can be calculated correctly. */
+.reslide-leave-active {
+  transition: all 0.5s cubic-bezier(0.55, 0, 0.1, 1);
+  animation: up-to-down .5s ease reverse;
+}
+
+
+.favicon-shadow:hover {
+  transform: translateZ(12px);
+  transition: all 0.1s ease;
+}
+
+.dark .favicon-shadow:hover {
+  transform: translateZ(12px);
+  transition: all 0.1s ease;
+}
+
+.favicon-shadow {
+  transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: all 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+.dark .favicon-shadow {
+  transition: all 0.1s ease;
+  transform-style: preserve-3d;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.3s ease-out 0.2s; /* 添加延迟 */
+}
+
+.slide-fade-leave-active {
+  transition: all 0.2s cubic-bezier(1, 0.5, 0.8, 1); /* 添加延迟 */
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
+}
+

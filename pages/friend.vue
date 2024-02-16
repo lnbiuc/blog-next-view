@@ -1,24 +1,14 @@
 <script setup lang="ts">
-import { getFriendsList } from '~/server/api/friend'
-import type { Friend } from '~/server/types/friend'
-import { usePreloadCacheStore } from '~/store'
+import type { IFriend } from '~/server/types'
+import { useFriendStore } from '~/store/FriendStore'
 
-const friends = ref<Friend[]>()
+const friends = ref<IFriend[]>()
 
-const { cacheFriend, getFriendCache } = usePreloadCacheStore()
-function preloadFriends() {
-  if (getFriendCache().length > 0) {
-    friends.value = getFriendCache()
-  }
-  else {
-    getFriendsList().then((res) => {
-      friends.value = res.data.value?.data as Friend[]
-      cacheFriend(friends.value)
-    })
-  }
-}
+const { get } = useFriendStore()
 
-preloadFriends()
+get().then((res) => {
+  friends.value = res
+})
 
 useSeoMeta({
   ogImage: '/ogabout.png',

@@ -34,7 +34,7 @@ onMounted(() => {
 
 <template>
   <div>
-    <main class="w-full px-4">
+    <main class="px-4 w-full">
       <slot />
       <!-- <div class="mx-auto mt-5 text-center text-sm opacity-25">
         [Default Layout]

@@ -1,10 +1,8 @@
 <script setup lang="ts">
-import { ca } from 'date-fns/locale'
-import { getTagByCategory } from '~/server/api/tag'
-import { usePreloadCacheStore } from '~/store'
+import { useTagStore } from '~/store/TagStore'
 
 const props = defineProps<{
-  category: 'ARTICLE' | 'SHORTS'
+  category: 'article' | 'short'
   isLoading: boolean
 }>()
 
@@ -12,6 +10,8 @@ const emit = defineEmits<{
   paramsChange: [searchVal: string]
   sortByChange: [selectVal: string]
 }>()
+
+const { tagCategory } = useTagStore()
 
 const searchVal: Ref<string> = ref('')
 
@@ -21,27 +21,13 @@ const options: Ref<string[]> = ref(['Sort by date', 'Sort by view'])
 
 const selectVal: Ref<string> = ref(options.value[0])
 
-const { cacheTags, getTagsCache } = usePreloadCacheStore()
-
-async function getTags() {
-  getTagByCategory(props.category).then((res) => {
-    const resTag = res.data.value?.data as string[]
-    // push res to tags
-    resTag.forEach(e => tags.value.push(e))
-    cacheTags(props.category, tags.value)
-  })
-}
-
-function loadTags() {
-  const res: string[] | undefined = getTagsCache(props.category)
-  if (res) {
-    tags.value = res
-    return
+tagCategory(props.category).then((data) => {
+  if (data) {
+    data.forEach((tag) => {
+      tags.value.push(tag)
+    })
   }
-  getTags()
-}
-
-loadTags()
+})
 
 const debouncedFn = useDebounceFn(() => {
   if (!tags.value.includes(searchVal.value))
@@ -71,7 +57,7 @@ async function tagClick(tag: string) {
       id="search" v-model="searchVal" :loading="isLoading" class="w-full" color="gray"
       icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
     />
-    <USelectMenu v-model="selectVal" class="z-1000 ml-2" size="lg" :options="options" color="gray" />
+    <USelectMenu v-model="selectVal" class="ml-2 z-1000" size="lg" :options="options" color="gray" />
   </div>
   <Transition name="fade">
     <div v-if="tags.length > 1" class="mt-2">

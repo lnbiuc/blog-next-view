@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import type { Friend } from '~/server/types/friend'
+import type { IFriend } from '~/server/types'
 
 const props = defineProps({
   friend: {
-    type: Object as PropType<Friend>,
+    type: Object as PropType<IFriend>,
     required: true,
   },
 })
@@ -15,7 +15,7 @@ function openLink() {
 
 <template>
   <div
-    class="card-bg-filter overflow-hidden card-border"
+    class="card-bg-filter backdrop-blur-sm overflow-hidden card-border"
     @click="openLink"
   >
     <div class="relative overflow-hidden">

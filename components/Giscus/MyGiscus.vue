@@ -37,22 +37,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <giscus-widget
-    v-if="mounted"
-    :id="id"
-    :host="host"
-    :repo="repo"
-    :repoid="repoId"
-    :category="category"
-    :categoryid="categoryId"
-    :mapping="mapping"
-    :term="term"
-    :strict="strict"
-    :reactionsenabled="reactionsEnabled"
-    :emitmetadata="emitMetadata"
-    :inputposition="inputPosition"
-    :theme="theme"
-    :lang="lang"
-    :loading="loading"
-  />
+  <ClientOnly>
+    <giscus-widget v-if="mounted" :id="id" :host="host" :repo="repo" :repoid="repoId" :category="category"
+      :categoryid="categoryId" :mapping="mapping" :term="term" :strict="strict" :reactionsenabled="reactionsEnabled"
+      :emitmetadata="emitMetadata" :inputposition="inputPosition" :theme="theme" :lang="lang" :loading="loading" />
+  </ClientOnly>
 </template>

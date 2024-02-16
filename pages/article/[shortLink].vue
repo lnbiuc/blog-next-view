@@ -4,46 +4,25 @@ import { useRoute } from 'vue-router'
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
-import { getArticleByShortLink, increaseView } from '~/server/api/article'
-import type { ArticleWithContent } from '~/server/types/article'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import { usePreloadCacheStore } from '~/store'
+import { addHoverEffect } from '~/composables/hoverEffect'
 
 const route = useRoute()
-const article = ref<ArticleWithContent>()
+const article = ref<IArticle>()
 
 const afterFetchData = ref(false)
 
 // @ts-expect-error no error
-const shortLink = route.params.shortLink
+const shortLink = route.params.shortLink as string
 
-function getFirstLink(shortLink: string | string[]): string {
-  if (Array.isArray(shortLink) && shortLink.length > 0)
-    return shortLink[0]
-  else if (typeof shortLink === 'string')
-    return shortLink
-  else
-    throw new Error('Invalid input')
-}
+const { one } = useArticleStore()
 
-const { cacheArticle, getArticleCache } = usePreloadCacheStore()
-
-function getArticle() {
-  const res: ArticleWithContent | undefined = getArticleCache(getFirstLink(shortLink))
-  if (res) {
-    article.value = res
-    afterFetchData.value = true
-    return
-  }
-  getArticleByShortLink(getFirstLink(shortLink)).then((res) => {
-    article.value = res.data.value?.data as ArticleWithContent
-    afterFetchData.value = true
-    cacheArticle(article.value)
-  },
-  )
-}
-
-getArticle()
+one(shortLink).then((data) => {
+  article.value = data
+  afterFetchData.value = true
+})
 
 const hasCatalog = ref(false)
 
@@ -61,30 +40,38 @@ useHead({
 })
 
 function initTOC() {
-  tocbot.init({
-    // Where to render the table of contents.
-    tocSelector: '#violetToc',
-    // Where to grab the headings to build the table of contents.
-    contentSelector: '#violetMD',
-    // Which headings to grab inside of the contentSelector element.
-    headingSelector: 'h1, h2, h3',
-    // For headings inside relative or absolute positioned containers within content.
-    // hasInnerContainers: true,
-    scrollSmoothOffset: -80,
-    headingsOffset: 80,
-  })
+  if (!document) return
+
+  if (document.querySelector('#violetToc') && document.querySelector('#violetMD')) {
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '#violetToc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: '#violetMD',
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: 'h1, h2, h3',
+      // For headings inside relative or absolute positioned containers within content.
+      // hasInnerContainers: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: 80,
+    })
+  } else {
+    setTimeout(() => {
+      initTOC()
+    }, 50)
+  }
 }
 
-const { start, stop } = useTimeoutFn(() => {
-  increaseView(shortLink)
+const { start, stop } = useTimeoutFn(async () => {
+  useFetch<string>(`/api/article/views/${article.value?._id}`, {
+    method: 'PUT',
+  })
 }, 10000)
 
 onMounted(() => {
-  nextTick(() => {
-    initTOC()
-  })
 
   start()
+  addHoverEffect('.cover-image', 5)
 })
 
 onBeforeRouteLeave(() => {
@@ -110,11 +97,11 @@ watchEffect(() => {
 
 <template>
   <div>
+
     <Head>
       <Meta
         :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
-        name="keywords"
-      />
+        name="keywords" />
       <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
       <Meta :content="article?.ogImage || '/og.png'" property="og:image" />
@@ -129,10 +116,8 @@ watchEffect(() => {
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
             <Transition name="fade">
-              <img
-                v-if="article?.cover[0]" :src="`${article?.cover[0]}/comporess1600x900`" alt="cover"
-                class="object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
-              >
+              <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all">
             </Transition>
 
             <div class="my-6 text-4xl font-bold">
@@ -155,13 +140,12 @@ watchEffect(() => {
           </div>
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
-              <div
-                class="text-left"
-              >
-                <MDRender :source="article!.content" />
+              <div class="text-left">
+                <MDRender :source="article?.content ? article?.content : ''" @render-finished="initTOC" />
               </div>
             </div>
-            <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+            <div v-if="hasCatalog" id="violetToc"
+              class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer">
             <a class="text-xl" @click="$router.back">cd ..</a>
