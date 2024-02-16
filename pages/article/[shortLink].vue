@@ -40,18 +40,26 @@ useHead({
 })
 
 function initTOC() {
-  tocbot.init({
-    // Where to render the table of contents.
-    tocSelector: '#violetToc',
-    // Where to grab the headings to build the table of contents.
-    contentSelector: '#violetMD',
-    // Which headings to grab inside of the contentSelector element.
-    headingSelector: 'h1, h2, h3',
-    // For headings inside relative or absolute positioned containers within content.
-    // hasInnerContainers: true,
-    scrollSmoothOffset: -80,
-    headingsOffset: 80,
-  })
+  if (!document) return
+
+  if (document.querySelector('#violetToc') && document.querySelector('#violetMD')) {
+    tocbot.init({
+      // Where to render the table of contents.
+      tocSelector: '#violetToc',
+      // Where to grab the headings to build the table of contents.
+      contentSelector: '#violetMD',
+      // Which headings to grab inside of the contentSelector element.
+      headingSelector: 'h1, h2, h3',
+      // For headings inside relative or absolute positioned containers within content.
+      // hasInnerContainers: true,
+      scrollSmoothOffset: -80,
+      headingsOffset: 80,
+    })
+  } else {
+    setTimeout(() => {
+      initTOC()
+    }, 50)
+  }
 }
 
 const { start, stop } = useTimeoutFn(async () => {
@@ -61,9 +69,6 @@ const { start, stop } = useTimeoutFn(async () => {
 }, 10000)
 
 onMounted(() => {
-  nextTick(() => {
-    initTOC()
-  })
 
   start()
   addHoverEffect('.cover-image', 5)
@@ -92,11 +97,11 @@ watchEffect(() => {
 
 <template>
   <div>
+
     <Head>
       <Meta
         :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
-        name="keywords"
-      />
+        name="keywords" />
       <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
       <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
       <Meta :content="article?.ogImage || '/og.png'" property="og:image" />
@@ -111,10 +116,8 @@ watchEffect(() => {
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
             <Transition name="fade">
-              <img
-                v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10"
-              >
+              <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10">
             </Transition>
 
             <div class="my-6 text-4xl font-bold">
@@ -137,13 +140,12 @@ watchEffect(() => {
           </div>
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
-              <div
-                class="text-left"
-              >
-                <MDRender :source="article?.content ? article?.content : ''" />
+              <div class="text-left">
+                <MDRender :source="article?.content ? article?.content : ''" @render-finished="initTOC" />
               </div>
             </div>
-            <div v-if="hasCatalog" id="violetToc" class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+            <div v-if="hasCatalog" id="violetToc"
+              class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer">
             <a class="text-xl" @click="$router.back">cd ..</a>

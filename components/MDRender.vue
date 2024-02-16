@@ -12,11 +12,16 @@ const props = defineProps({
   },
 })
 
+const emit = defineEmits(['renderFinished'])
+
 const result = ref<string>('')
 
 watchEffect(() => {
   render(props.source).then((res) => {
     result.value = res
+  }).finally(() => {
+    // gen toc
+    emit('renderFinished')
   })
 })
 
@@ -73,10 +78,9 @@ onMounted(() => {
     <!-- <NuxtMarkdown /> -->
     <article @mouseup="checkSelection" v-html="result" />
     <div v-if="isSupported">
-      <div
-        v-show="openPop" class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
-        @click="copySelection"
-      >
+      <div v-show="openPop"
+        class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
+        @click="copySelection">
         Copy
       </div>
     </div>
