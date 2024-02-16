@@ -45,7 +45,7 @@ useHead({
             </h1>
             <div class="py-4">
               <span>
-                My projects and interesting projects that I deploy
+                My projects and interesting projects that I deploy.
               </span>
             </div>
           </div>

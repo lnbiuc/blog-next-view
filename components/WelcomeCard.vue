@@ -54,10 +54,11 @@ onMounted(() => {
       <h1 class="mt-5 text-6xl font-bold">
         I'm <span class="text-violet" style="font-family: 'MyFont', sans-serif;">violet</span>
       </h1>
-      <span class="mb-2 mt-5 text-2xl">
+      <span class="mb-2 mt-5 text-xl">
         A Web {{ `
-        < Developer /> ` }}. {{ 'Code_' }} for Fun.
+        <Developer /> ` }}.
       </span>
+      <span class="text-xl mb-2">{{ 'Code' }} for Fun.</span>
       <div class="my-3 flex flex-row">
         <MyButton @click="$router.push('/blog')">
           Read the Blog

@@ -117,7 +117,7 @@ watchEffect(() => {
           <div class="text-left flex flex-col">
             <Transition name="fade">
               <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10">
+                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all">
             </Transition>
 
             <div class="my-6 text-4xl font-bold">
