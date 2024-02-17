@@ -56,10 +56,10 @@ onMounted(() => {
       </div>
 
       <div class="mt-10 text-4xl text-white flex flex-row justify-end items-end">
-        <div class="i-carbon-view mr-2 text-violet" />
-        <div class="text-shadow">
+        <!-- <div class="i-carbon-view mr-2 text-violet" /> -->
+        <!-- <div class="text-shadow">
           {{ article?.views }} views
-        </div>
+        </div> -->
         <div class="i-carbon-alarm mx-2 scale-110 text-violet" />
         <div class="text-shadow">
           Posted in {{ formatTime(article?.updatedAt) }}

@@ -8,24 +8,26 @@ export default defineNitroPlugin(() => {
 function startScheduler() {
 	const scheduler = useScheduler();
 
-	scheduler
-		.run(() => {
-			console.warn('cool beans! I run once a second! 😀');
-			updateFriendScreenShotTask();
-		})
-		.dailyAt(0, 22);
+	// disabled
 
-	scheduler
-		.run(() => {
-			console.warn('cool beans! I run once a second! 😀');
-			updateArticleObImageTask();
-		})
-		.dailyAt(1, 3);
+	// scheduler
+	// 	.run(() => {
+	// 		console.warn('cool beans! I run once a second! 😀');
+	// 		updateFriendScreenShotTask();
+	// 	})
+	// 	.dailyAt(0, 22);
 
-	scheduler
-		.run(() => {
-			console.warn('cool beans! I run once a second! 😀');
-		})
-		.everyMinutes(1);
+	// scheduler
+	// 	.run(() => {
+	// 		console.warn('cool beans! I run once a second! 😀');
+	// 		updateArticleObImageTask();
+	// 	})
+	// 	.dailyAt(1, 3);
+
+	// scheduler
+	// 	.run(() => {
+	// 		console.warn('cool beans! I run once a second! 😀');
+	// 	})
+	// 	.everyMinutes(1);
 	// create as many tasks as you want here
 }
