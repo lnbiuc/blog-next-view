@@ -24,19 +24,26 @@ const rules = {
   },
 }
 
+const toast = useToast()
+
 // @ts-expect-error no error
 const { pass, errorFields } = useAsyncValidator(form, rules)
 
 async function onSubmit() {
-  const { data, status } = await useFetch<string>('/api/user/login', {
+  const { data } = await useFetch<{ code: number, msg: string, token: string, res: { _id: string, nickname: string } }>('/api/user/login', {
     method: 'POST',
     body: form.value,
   })
 
-  if (data && status.value === 'success') {
-    useStorage('user', data)
+  if (data.value?.code === 200) {
+    useStorage('user', data.value.res)
+    useStorage('token', data.value.token)
     const router = useRouter()
     router.push('/violet')
+  } else {
+    toast.add({
+      title: data.value?.msg,
+    })
   }
 }
 

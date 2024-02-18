@@ -525,3 +525,19 @@ html:not(.dark) [img-dark] {
   opacity: 0;
 }
 
+
+.blog-card-bg-filter img {
+  transition: transform 100ms;
+}
+
+.blog-card-bg-filter:hover img {
+  transform: scale(0.988);
+}
+
+.project-card-bg-filter img {
+  transition: transform 500ms;
+}
+
+.project-card-bg-filter:hover img {
+  transform: scale(1.05);
+}

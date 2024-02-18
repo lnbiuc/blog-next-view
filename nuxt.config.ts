@@ -14,6 +14,12 @@ export default defineNuxtConfig({
 		'nuxt-scheduler',
 	],
 
+	linkChecker: {
+		enabled: false,
+		showLiveInspections: false,
+		runOnBuild: false,
+	},
+
 	mongoose: {
 		uri: process.env.MONGODB_URI,
 		devtools: true,
@@ -40,16 +46,6 @@ export default defineNuxtConfig({
 		twitterImage: 'https://vio.vin/favicon.ico',
 	},
 
-	routeRules: {
-		// '/api/**': { proxy: { to: process ? 'http://47.109.97.85:6060/api/**' : 'https://blog-api.vio.vin/api/**' } },
-		// '/api/**': { proxy: { to: 'http://47.109.97.85:6060/api/**' } },
-		// '/api/**': { proxy: { to: 'https://blog-api.vio.vin/api/**' } },
-		// '/api/**': { proxy: { to: 'http://blog-next-api:6060/api/**' } },
-		// '/api/**': { proxy: { to: 'https://violet-blog-api.zeabur.app/api/**' } },
-		//   '/api/**': { proxy: { to: `http://${}/api/**` } },
-		// '/api/**': { proxy: { to: process.env.PROXY_ADDR } },
-	},
-
 	experimental: {
 		// when using generate, payload js assets included in sw precache manifest
 		// but missing on offline, disabling extraction it until fixed
@@ -58,10 +54,6 @@ export default defineNuxtConfig({
 		renderJsonPayloads: true,
 		typedPages: true,
 	},
-
-	css: [
-		// '@unocss/reset/tailwind.css',
-	],
 
 	colorMode: {
 		classSuffix: '',

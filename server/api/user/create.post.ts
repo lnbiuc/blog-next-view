@@ -1,15 +1,9 @@
-export default defineEventHandler(async (event) => {
-  console.warn(`start request: ${event.path}`)
-  const startTime = Date.now()
-  const body = await readBody(event)
-  try {
-    const res = await new UserSchema(body).save()
-    const endTime = Date.now()
-    const elapsedTime = endTime - startTime
-    console.warn(`request: ${event.path} takes ${elapsedTime} ms`)
-    return res
-  }
-  catch (error) {
-    return error
-  }
-})
+export default defineEventHandler(async event => {
+	// const body = await readBody(event);
+	try {
+		// return await new UserSchema(body).save();
+		return { code: 401, msg: 'reject' };
+	} catch (error) {
+		return error;
+	}
+});

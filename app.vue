@@ -27,8 +27,7 @@ onMounted(() => {
       <div v-if="isScroll" class="flex flex-row fixed justify-end bottom-4 right-4 z-1000">
         <div
           class="bg-violet rounded-full flex flex-row h-35px w-35px justify-center items-center transition-all duration-150 hover:bg-violet-500 active:scale-90 hover:scale-110"
-          @click="handleToTop"
-        >
+          @click="handleToTop">
           <div class="i-carbon-chevron-up" />
         </div>
       </div>

@@ -68,7 +68,12 @@ const article = ref<IArticle>({
 })
 
 if (props.shortLink) {
-  const { data } = await useFetch(`/api/article/${props.shortLink}`)
+  const { data } = await useFetch(`/api/article/${props.shortLink}`, {
+    method: 'GET',
+    headers: {
+      'Authorization': localStorage.getItem('token') || '',
+    }
+  })
   article.value = data.value as IArticle
 }
 
@@ -133,7 +138,11 @@ watchEffect(async () => {
   tags.value = []
   if (!article.value.category)
     return
-  const { data } = await useFetch(`/api/tag/${article.value.category}`)
+  const { data } = await useFetch(`/api/tag/${article.value.category}`, {
+    headers: {
+      'Authorization': localStorage.getItem('token') || '',
+    }
+  })
 
   tags.value = data.value as string[]
 })
@@ -158,6 +167,9 @@ async function handleUpload(option: 'cover' | 'content') {
   const { data, status } = await useFetch('/api/upload', {
     method: 'POST',
     body: formData,
+    headers: {
+      'Authorization': localStorage.getItem('token') || '',
+    }
   })
 
   if (status.value === 'success') {
@@ -196,7 +208,10 @@ async function handlePublish() {
   if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
       method: 'POST',
-      body: article.value
+      body: article.value,
+      headers: {
+        'Authorization': localStorage.getItem('token') || '',
+      }
     })
     if (status.value === 'success') {
       if (data.value) {
@@ -214,7 +229,10 @@ async function handlePublish() {
   if (article.value._id && article.value._id !== '' && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/update', {
       method: 'PUT',
-      body: article.value
+      body: article.value,
+      headers: {
+        'Authorization': localStorage.getItem('token') || '',
+      }
     })
     if (status.value === 'success') {
       if (data.value) {

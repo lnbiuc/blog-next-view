@@ -2,7 +2,6 @@
 import type { IFriend } from '~/server/types';
 import { formatZHTime } from '~/composables/formatTime'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
-import { is } from 'date-fns/locale';
 
 const { data, pending } = useFetch<IFriend[]>('/api/friend/all', {
   method: 'GET',
@@ -168,6 +167,9 @@ async function handleSubmit() {
     const { data, error } = await useFetch<IFriend>('/api/friend/create', {
       method: 'POST',
       body: friend.value,
+      headers: {
+        'Authorization': localStorage.getItem('token') || '',
+      }
     })
 
     if (error.value) {
@@ -186,6 +188,9 @@ async function handleSubmit() {
     const { data, error } = await useFetch<IFriend>('/api/friend/update', {
       method: 'PUT',
       body: friend.value,
+      headers: {
+        'Authorization': localStorage.getItem('token') || '',
+      }
     })
 
     if (error.value) {
@@ -211,6 +216,9 @@ async function handleGenScreenShot() {
     body: {
       url,
     },
+    headers: {
+      'Authorization': localStorage.getItem('token') || '',
+    }
   })
 
   if (error.value) {
