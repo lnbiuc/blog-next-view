@@ -1,8 +1,6 @@
 import { ArticleSchema } from '~/server/models/article.schema';
 
 export default defineEventHandler(async event => {
-	console.warn(`start request: ${event.path}`);
-	const startTime = Date.now();
 	try {
 		const body = await readBody(event);
 
@@ -21,11 +19,7 @@ export default defineEventHandler(async event => {
 			};
 
 			// 执行查询
-			const result = await ArticleSchema.find(query, { content: 0 });
-			const endTime = Date.now();
-			const elapsedTime = endTime - startTime;
-			console.warn(`request: ${event.path} takes ${elapsedTime} ms`);
-			return result;
+			return await ArticleSchema.find(query, { content: 0 });
 		} else {
 			// 如果category或keyword为空，则返回空数组
 			return [];

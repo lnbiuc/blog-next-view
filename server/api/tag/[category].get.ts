@@ -1,8 +1,6 @@
 import { ArticleSchema } from '~/server/models/article.schema';
 
 export default defineEventHandler(async event => {
-	console.warn(`start request: ${event.path}`);
-	const startTime = Date.now();
 	try {
 		const category = event.context.params?.category;
 
@@ -16,11 +14,7 @@ export default defineEventHandler(async event => {
 		const allTags = articles.map(article => article.tags).flat();
 
 		// 使用Set对象去重
-		const uniqueTags = Array.from(new Set(allTags));
-		const endTime = Date.now();
-		const elapsedTime = endTime - startTime;
-		console.warn(`request: ${event.path} takes ${elapsedTime} ms`);
-		return uniqueTags;
+		return Array.from(new Set(allTags));
 	} catch (error) {
 		return error;
 	}

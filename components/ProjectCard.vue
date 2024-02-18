@@ -17,9 +17,8 @@ function openNewTab(url: string | undefined) {
 
 <template>
   <div
-    class="card-bg-filter backdrop-blur-sm my-open-tab flex flex-col overflow-hidden justify-between card-border"
-    @click="openNewTab(props.article.link)"
-  >
+    class="project-card-bg-filter backdrop-blur-sm my-open-tab flex flex-col overflow-hidden justify-between card-border"
+    @click="openNewTab(props.article.link)">
     <div class="p-4 text-left">
       <div class="text-lg font-bold">
         {{ props.article.title }}
@@ -38,13 +37,3 @@ function openNewTab(url: string | undefined) {
     </div>
   </div>
 </template>
-
-<style scoped>
-.card-bg-filter img {
-  transition: transform 500ms;
-}
-
-.card-bg-filter:hover img {
-  transform: scale(1.05);
-}
-</style>

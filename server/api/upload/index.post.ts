@@ -4,7 +4,6 @@ import fs from 'node:fs';
 import { uploadToR2, getFileHashSync, uuidv4 } from '~/composables/fileUpload';
 
 export default defineEventHandler(async event => {
-	console.warn(`start request: ${event.path}`);
 	const files = await readMultipartFormData(event);
 	if (!files) return new Response('Bad Request', { status: 400 });
 

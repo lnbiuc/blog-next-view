@@ -1,14 +1,8 @@
 import { FriendSchema } from '~/server/models/friend.schema';
 
 export default defineEventHandler(async event => {
-	console.warn(`start request: ${event.path}`);
-	const startTime = Date.now();
 	try {
-		const res = await FriendSchema.find();
-		const endTime = Date.now();
-		const elapsedTime = endTime - startTime;
-		console.warn(`request: ${event.path} takes ${elapsedTime} ms`);
-		return res;
+		return await FriendSchema.find();
 	} catch (error) {
 		return error;
 	}

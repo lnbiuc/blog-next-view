@@ -23,7 +23,6 @@ const { logout } = useUserStore()
 
 function handleClick(path: string) {
   if (path === '/') {
-    localStorage.removeItem('user')
     logout()
   }
 }

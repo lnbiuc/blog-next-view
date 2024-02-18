@@ -24,13 +24,11 @@ const preloadArticle = useThrottleFn(() => {
 </script>
 
 <template>
-  <div
-    class="card-bg-filter backdrop-blur-sm overflow-hidden card-border"
-    @click="$router.push(`/article/${props.article.shortLink}`)"
-    @mouseover="preloadArticle()"
-  >
+  <div class="blog-card-bg-filter backdrop-blur-sm overflow-hidden card-border"
+    @click="$router.push(`/article/${props.article.shortLink}`)" @mouseover="preloadArticle()">
     <div class="relative overflow-hidden">
-      <img :src="`${props.article.cover}/comporess1600x900`" alt="cover" class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
+      <img :src="`${props.article.cover}/comporess1600x900`" alt="cover"
+        class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
       <div class="p-1 text-right absolute bottom-0 right-0">
         <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90" :tag="t">
           {{ t }}
@@ -57,13 +55,3 @@ const preloadArticle = useThrottleFn(() => {
     </div>
   </div>
 </template>
-
-<style scoped>
-.card-bg-filter img {
-  transition: transform 100ms;
-}
-
-.card-bg-filter:hover img {
-  transform: scale(0.988);
-}
-</style>
