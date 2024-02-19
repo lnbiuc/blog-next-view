@@ -16,9 +16,14 @@ export default defineEventHandler(event => {
 		if (!token) {
 			return event.respondWith(new Response('Unauthorized', { status: 401 }));
 		}
-		const decoded = jwt.verify(token, 'violet__=');
-		if (!decoded) {
-			return event.respondWith(new Response('Unauthorized', { status: 401 }));
+		const secretKey = process.env.JWT_SECRET_KEY;
+		if (!secretKey) {
+			return event.respondWith(new Response('jwt secretKey is required', { status: 500 }));
+		} else {
+			const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY as string);
+			if (!decoded) {
+				return event.respondWith(new Response('Unauthorized', { status: 401 }));
+			}
 		}
 	}
 });
