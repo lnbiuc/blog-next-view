@@ -10,20 +10,23 @@ import { formatTime } from '~/composables/formatTime'
 import { addHoverEffect } from '~/composables/hoverEffect'
 
 const route = useRoute()
-const article = ref<IArticle>()
+// const article = ref<IArticle>()
 
-const afterFetchData = ref(false)
+// const afterFetchData = ref(false)
 
 // @ts-expect-error no error
 const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-one(shortLink).then((data) => {
-  article.value = data
-  afterFetchData.value = true
-})
+// one(shortLink).then((data) => {
+//   article.value = data
+//   afterFetchData.value = true
+// })
 
+const article = await one(shortLink)
+
+console.warn(article)
 const hasCatalog = ref(false)
 
 useHead({
@@ -63,7 +66,7 @@ function initTOC() {
 }
 
 const { start, stop } = useTimeoutFn(async () => {
-  useFetch<string>(`/api/article/views/${article.value?._id}`, {
+  useFetch<string>(`/api/article/views/${article?._id}`, {
     method: 'PUT',
   })
 }, 10000)
@@ -112,7 +115,7 @@ watchEffect(() => {
       <Meta :content="article?.ogImage || '/og.png'" name="twitter:image" />
     </Head>
     <NuxtLayout name="default">
-      <div v-if="afterFetchData">
+      <div v-if="article">
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
             <Transition name="fade">

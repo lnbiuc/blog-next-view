@@ -14,16 +14,11 @@ const props = defineProps({
 
 const emit = defineEmits(['renderFinished'])
 
-const result = ref<string>('')
+// const result = ref<string>('')
 
-watchEffect(() => {
-  render(props.source).then((res) => {
-    result.value = res
-  }).finally(() => {
-    // gen toc
-    emit('renderFinished')
-  })
-})
+const result = await render(props.source)
+
+emit('renderFinished')
 
 const openPop = ref<boolean>(false)
 
