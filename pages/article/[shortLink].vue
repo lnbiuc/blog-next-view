@@ -4,7 +4,6 @@ import { useRoute } from 'vue-router'
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
-import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
 import { addHoverEffect } from '~/composables/hoverEffect'
@@ -148,7 +147,7 @@ watchEffect(() => {
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"
-              class="catalog p-2 pl-6 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+              class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer">
             <a class="text-xl" @click="$router.back">cd ..</a>

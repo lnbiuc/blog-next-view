@@ -10,12 +10,24 @@ const isLoading = ref<boolean>(false)
 
 const { category } = useArticleStore()
 
+const selected = ref('Sort by date')
+
 async function getArticles() {
-  category('short').then((data) => {
-    data.forEach((short) => {
-      shorts.value.push(short)
+  const data = await category('short')
+
+  data.forEach(article => {
+    let include = false
+    shorts.value.forEach(existArticle => {
+      if (article._id == existArticle._id) {
+        include = true
+      }
     })
+    if (!include) {
+      shorts.value.push(article)
+    }
   })
+
+  handleSortByChange(selected.value)
 }
 
 getArticles()
@@ -30,7 +42,7 @@ async function handleParamsChange(searchVal: string) {
     const { data } = await useFetch<IArticle[]>('/api/search', {
       method: 'POST',
       body: {
-        category: 'article',
+        category: 'short',
         keyword: searchVal,
       },
     })
@@ -51,6 +63,8 @@ async function handleParamsChange(searchVal: string) {
 }
 
 async function handleSortByChange(selectVal: string) {
+
+  selected.value = selectVal
   if (selectVal === options.value[0]) {
     shorts.value.sort((a, b) => {
       // @ts-expect-error no error
@@ -100,10 +114,8 @@ useHead({
               <span>Short articles, usually some notes and code snippets.
               </span>
             </div>
-            <Search
-              :is-loading="isLoading" category="short" @params-change="handleParamsChange"
-              @sort-by-change="handleSortByChange"
-            />
+            <Search :is-loading="isLoading" category="short" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange" />
           </div>
         </div>
         <ShortCards :articles="shorts" />
