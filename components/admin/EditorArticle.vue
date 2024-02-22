@@ -91,14 +91,6 @@ const rules = {
     type: 'string',
     required: true,
   },
-  description: {
-    type: 'string',
-    required: true,
-  },
-  cover: {
-    type: 'string',
-    required: true,
-  },
   category: {
     type: 'string',
     required: true,

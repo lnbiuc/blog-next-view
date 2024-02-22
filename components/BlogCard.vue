@@ -24,11 +24,11 @@ const preloadArticle = useThrottleFn(() => {
 </script>
 
 <template>
-  <div class="blog-card-bg-filter backdrop-blur-sm overflow-hidden card-border"
-    @click="$router.push(`/article/${props.article.shortLink}`)" @mouseover="preloadArticle()">
+  <div class="backdrop-blur-sm overflow-hidden card-border" @click="$router.push(`/article/${props.article.shortLink}`)"
+    @mouseover="preloadArticle()">
     <div class="relative overflow-hidden">
       <img :src="`${props.article.cover}/comporess1600x900`" alt="cover"
-        class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
+        class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform p-2px">
       <div class="p-1 text-right absolute bottom-0 right-0">
         <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90" :tag="t">
           {{ t }}
@@ -41,13 +41,13 @@ const preloadArticle = useThrottleFn(() => {
         {{ props.article.title }}
       </div>
       <div class="my-2 flex flex-row items-center">
-        <div class="i-carbon-view" />
-        <div class="ml-2 text-violet">
+        <div class="text-violet">
           {{ props.article.views }} views
         </div>
-      </div>
-      <div class="mt-1 font-bold">
-        {{ formatTime(props.article.createdAt) }}
+        <div class="mx-2">/</div>
+        <div class="font-bold text-violet">
+          {{ formatTime(props.article.createdAt) }}
+        </div>
       </div>
       <div class="mt-2 text-sm">
         {{ props.article.description }}

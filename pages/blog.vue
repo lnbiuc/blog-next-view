@@ -10,12 +10,24 @@ const isLoading = ref<boolean>(false)
 
 const { category } = useArticleStore()
 
+const selected = ref('Sort by date')
+
 async function getArticles() {
-  category('article').then((data) => {
-    data.forEach((article) => {
-      articles.value.push(article)
+  const data = await category('article')
+
+  data.forEach(article => {
+    let include = false
+    articles.value.forEach(existArticle => {
+      if (article._id == existArticle._id) {
+        include = true
+      }
     })
+    if (!include) {
+      articles.value.push(article)
+    }
   })
+
+  handleSortByChange(selected.value)
 }
 
 getArticles()
@@ -51,6 +63,8 @@ async function handleParamsChange(searchVal: string) {
 }
 
 async function handleSortByChange(selectVal: string) {
+  selected.value = selectVal
+
   if (selectVal === options.value[0]) {
     articles.value.sort((a, b) => {
       // @ts-expect-error no error
@@ -101,10 +115,8 @@ useHead({
                 A collection of my thoughts and experiences.
               </span>
             </div>
-            <Search
-              :is-loading="isLoading" category="article" @params-change="handleParamsChange"
-              @sort-by-change="handleSortByChange"
-            />
+            <Search :is-loading="isLoading" category="article" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange" />
           </div>
         </div>
         <BlogCards :articles="articles" />
