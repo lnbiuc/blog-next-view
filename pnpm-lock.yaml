@@ -20,6 +20,9 @@ devDependencies:
   '@iconify-json/carbon':
     specifier: ^1.1.30
     version: 1.1.30
+  '@iconify-json/ri':
+    specifier: ^1.1.19
+    version: 1.1.19
   '@iconify-json/twemoji':
     specifier: ^1.1.15
     version: 1.1.15

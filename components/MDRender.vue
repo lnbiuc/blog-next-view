@@ -1,6 +1,34 @@
 <script setup lang="ts">
 import { useClipboard, useMouse, useTextSelection } from '@vueuse/core'
-import { render } from '~/composables/markdownIt'
+import mdcPlugin from 'markdown-it-mdc'
+
+import shikiji from '@shikijs/markdown-it';
+import {
+  transformerMetaHighlight,
+  transformerNotationDiff,
+  transformerNotationFocus,
+  transformerNotationHighlight,
+  transformerNotationWordHighlight,
+} from '@shikijs/transformers';
+import anchor from 'markdown-it-anchor';
+
+// @ts-expect-error miss type
+import video from '@vrcd-community/markdown-it-video';
+import container from 'markdown-it-container';
+
+// @ts-expect-error miss type
+import { full as emoji } from 'markdown-it-emoji';
+
+// @ts-expect-error miss type
+import lazy_loading from 'markdown-it-image-lazy-loading';
+
+// @ts-expect-error miss type
+import todo from 'markdown-it-task-lists';
+
+// @ts-expect-error miss type
+import codeCopy from 'markdown-it-code-copy';
+
+import Card from '~/components/content/Card.vue'
 
 import '~/styles/markdown.css'
 import '~/styles/prose.css'
@@ -12,11 +40,9 @@ const props = defineProps({
   },
 })
 
+const computedSource = computed(() => props.source.replace(/\\n/g, '\n'))
+
 const emit = defineEmits(['renderFinished'])
-
-// const result = ref<string>('')
-
-const result = await render(props.source)
 
 emit('renderFinished')
 
@@ -66,12 +92,52 @@ onMounted(() => {
     })
   })
 })
+
+const { rendered: NuxtMarkdown, md } = useNuxtMarkdown(computedSource, {
+  components: {
+    Card,
+  },
+  plugins: [
+    mdcPlugin,
+    anchor,
+    await shikiji({
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+      transformers: [
+        transformerNotationDiff(),
+        transformerNotationHighlight(),
+        transformerNotationWordHighlight(),
+        transformerNotationFocus(),
+        transformerMetaHighlight(),
+      ],
+    })
+  ],
+})
+
+md.value.use(container);
+
+md.value.use(video);
+
+md.value.use(emoji);
+
+md.value.use(lazy_loading);
+
+md.value.use(todo);
+
+md.value.use(codeCopy, {
+  iconClass:
+    'i-carbon-copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all',
+  iconStyle:
+    'font-size: 1.5em;width: 20px;height: 20px;background-size: cover;display: inline-block;',
+});
+
 </script>
 
 <template>
-  <div id="violetMD" class="violet-prose mb-20 mt-5 text-left">
-    <!-- <NuxtMarkdown /> -->
-    <article @mouseup="checkSelection" v-html="result" />
+  <div id="violetMD" class="violet-prose mb-20 mt-5 text-left" @mouseup="checkSelection">
+    <NuxtMarkdown />
     <div v-if="isSupported">
       <div v-show="openPop"
         class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"

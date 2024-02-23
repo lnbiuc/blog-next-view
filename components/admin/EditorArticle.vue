@@ -19,7 +19,7 @@ onMounted(() => {
         vditor.value?.setValue('')
       }
     },
-    width: '100%',
+    width: '50%',
     theme: color.value === 'dark' ? 'dark' : 'classic',
     upload: {
       // @ts-expect-error no error
@@ -35,7 +35,63 @@ onMounted(() => {
         throttledPublish()
       }
     },
+    mode: 'sv',
+    preview: {
+      mode: 'editor',
+    },
+    toolbar: [
+      "emoji",
+      "headings",
+      "bold",
+      "italic",
+      "strike",
+      "link",
+      "|",
+      "list",
+      "ordered-list",
+      "check",
+      "outdent",
+      "indent",
+      "|",
+      "quote",
+      "line",
+      "code",
+      "inline-code",
+      "insert-before",
+      "insert-after",
+      "|",
+      "upload",
+      "table",
+      "|",
+      "undo",
+      "redo",
+      "|",
+      "fullscreen",
+      "edit-mode",
+      {
+        name: "more",
+        toolbar: [
+          "both",
+          "code-theme",
+          "content-theme",
+          "export",
+          "outline",
+          "preview",
+          "devtools",
+          "info",
+          "help",
+        ],
+      },
+    ],
+    toolbarConfig: {
+      hide: false,
+      pin: false,
+    },
   });
+
+  watch(color, () => {
+    vditor.value?.setTheme(color.value === 'dark' ? 'dark' : 'classic')
+  })
 });
 
 const props = defineProps({
@@ -70,9 +126,6 @@ const article = ref<IArticle>({
 if (props.shortLink) {
   const { data } = await useFetch(`/api/article/${props.shortLink}`, {
     method: 'GET',
-    headers: {
-      'Authorization': localStorage.getItem('token') || '',
-    }
   })
   article.value = data.value as IArticle
 }
@@ -130,11 +183,7 @@ watchEffect(async () => {
   tags.value = []
   if (!article.value.category)
     return
-  const { data } = await useFetch(`/api/tag/${article.value.category}`, {
-    headers: {
-      'Authorization': localStorage.getItem('token') || '',
-    }
-  })
+  const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
   tags.value = data.value as string[]
 })
@@ -264,6 +313,43 @@ watchEffect(() => {
     pause()
   }
 })
+
+const isPending = ref(false)
+
+async function handleGenerateOgImage() {
+
+  if (article.value.shortLink === '') {
+    toast.add({ title: `shortLink is empty.` })
+    return
+  }
+
+  if (article.value._id === undefined || article.value._id === null || article.value._id === '') {
+    toast.add({ title: `article id is empty.` })
+    return
+  }
+
+  const url = `https://vio.vin/og/${article.value.shortLink}`
+  isPending.value = true
+  const { data, error } = await useFetch<string>('/api/friend/screenshot', {
+    method: 'POST',
+    body: {
+      url,
+    },
+    headers: {
+      'Authorization': localStorage.getItem('token') || '',
+    }
+  })
+
+  if (error.value) {
+    isPending.value = false
+    toast.add({ title: error.value?.message })
+  }
+  if (data.value) {
+    isPending.value = false
+    article.value.ogImage = data.value
+    toast.add({ title: `gen screenShot success.` })
+  }
+}
 </script>
 
 <template>
@@ -287,13 +373,11 @@ watchEffect(() => {
       </div>
     </NuxtLayout>
     <div class="p-6 flex flex-row min-h-60vh w-full">
-      <!-- <div class="p-2 w-1/2">
-        <UTextarea v-model="article.content" textarea-class="md-textarea" type="textarea" autoresize />
+      <div id="vditor" class="w-1/2" />
+      <div
+        class="w-1/2 dark:border-[#333] border-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md border p-2 rounded">
+        <MDRender :source="article.content ? article.content : ''" />
       </div>
-      <div class="p-2 w-1/2">
-        <MDRender id="md-result" :source="article.content ? article.content : ''" />
-      </div> -->
-      <div id="vditor" class="w-full" />
     </div>
     <UModal v-model="publishSetting" class="z-2000">
       <div class="p-4">
@@ -317,7 +401,7 @@ watchEffect(() => {
             </div>
           </UFormGroup>
           <UFormGroup label="Cover" name="cover">
-            <UInput v-model="article.cover" :disabled="true" />
+            <UInput v-model="article.cover" />
             <div v-if="errorFields?.cover?.length" class="text-xs text-red">
               {{ errorFields.cover[0].message }}
             </div>
@@ -327,7 +411,7 @@ watchEffect(() => {
           </div>
           <UFormGroup label="Upload Cover" name="file">
             <div class="flex flex-row">
-              <UInput v-model="fileInput" type="file" @change="onChangeFile" />
+              <UInput v-model="fileInput" type="file" @change="onChangeFile" class="w-full" />
               <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
                 upload
               </UButton>
@@ -366,9 +450,23 @@ watchEffect(() => {
               {{ errorFields.link[0].message }}
             </div>
           </UFormGroup>
-          <UButton type="submit" :disabled="!pass" @click="throttledPublish">
-            Submit
-          </UButton>
+          <UFormGroup label="Og Image" name="ogImage">
+            <div class="flex flex-row w-full">
+              <UInput v-model="article.ogImage" class="w-full" />
+              <UButton class="ml-2" @click="handleGenerateOgImage" :loading="isPending" :disabled="isPending">
+                Generate Og Image
+              </UButton>
+            </div>
+            <div v-if="article.ogImage" class="my-4">
+              <img :src="article.ogImage" alt="cover" class="object-cover rounded-md shadow w-full">
+            </div>
+          </UFormGroup>
+          <div class="w-full">
+            <UButton type="submit" color="blue" :disabled="!pass" @click="throttledPublish">
+              Submit
+            </UButton>
+          </div>
+
         </UForm>
       </div>
     </UModal>

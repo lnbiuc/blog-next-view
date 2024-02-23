@@ -7,21 +7,12 @@ import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
 import { addHoverEffect } from '~/composables/hoverEffect'
-
 const route = useRoute()
-// const article = ref<IArticle>()
-
-// const afterFetchData = ref(false)
 
 // @ts-expect-error no error
 const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
-
-// one(shortLink).then((data) => {
-//   article.value = data
-//   afterFetchData.value = true
-// })
 
 const article = await one(shortLink)
 
