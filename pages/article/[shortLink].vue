@@ -16,7 +16,6 @@ const { one } = useArticleStore()
 
 const article = await one(shortLink)
 
-console.warn(article)
 const hasCatalog = ref(false)
 
 useHead({
