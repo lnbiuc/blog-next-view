@@ -99,11 +99,11 @@ export default defineNuxtConfig({
 			],
 			// umami analytics
 			script: [
-				// {
-				// 	async: true,
-				// 	src: 'https://analytics.eu.umami.is/script.js',
-				// 	'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348',
-				// },
+				{
+					async: true,
+					src: 'https://analytics.eu.umami.is/script.js',
+					'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348',
+				},
 			],
 		},
 	},
