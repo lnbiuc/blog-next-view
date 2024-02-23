@@ -4,7 +4,7 @@ import { useUserStore } from '~/store/UserStore'
 const links = [[{
   label: 'Publish',
   icon: 'i-ri:edit-fill',
-  to: '/violet',
+  to: '/violet/publish',
 }, {
   label: 'Articles',
   icon: 'i-ri:article-fill',

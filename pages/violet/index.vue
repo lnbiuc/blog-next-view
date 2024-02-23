@@ -5,9 +5,3 @@ definePageMeta({
   ],
 });
 </script>
-
-<template>
-  <div>
-    <AdminEditorArticle />
-  </div>
-</template>
