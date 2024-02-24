@@ -19,14 +19,18 @@ import container from 'markdown-it-container';
 // @ts-expect-error miss type
 import { full as emoji } from 'markdown-it-emoji';
 
-// @ts-expect-error miss type
-import lazy_loading from 'markdown-it-image-lazy-loading';
+// import lazy_loading from 'markdown-it-image-lazy-loading';
 
 // @ts-expect-error miss type
-import todo from 'markdown-it-task-lists';
+import implicitFigures  from 'markdown-it-image-figures'
+
+// @ts-expect-error miss type
+import todo from 'markdown-it-task-checkbox';
 
 // @ts-expect-error miss type
 import codeCopy from 'markdown-it-code-copy';
+import '~/styles/md-alert.css'
+import { alert } from "@mdit/plugin-alert";
 
 import Card from '~/components/content/Card.vue'
 
@@ -98,7 +102,6 @@ const { rendered: NuxtMarkdown, md } = useNuxtMarkdown(computedSource, {
     Card,
   },
   plugins: [
-    mdcPlugin,
     anchor,
     await shikiji({
       themes: {
@@ -116,13 +119,27 @@ const { rendered: NuxtMarkdown, md } = useNuxtMarkdown(computedSource, {
   ],
 })
 
+md.value.use(mdcPlugin, {
+  syntax: {
+    inlineSpan: false,
+  }
+});
+
 md.value.use(container);
 
-md.value.use(video);
+md.value.use(video,{
+  bilibili: { width: '100%', height: '490' },
+});
 
 md.value.use(emoji);
 
-md.value.use(lazy_loading);
+// md.value.use(lazy_loading);
+
+md.value.use(implicitFigures, {
+  lazy: true,
+  async: true,
+  classes: 'w-full h-auto rounded-md shadow hover:shadow-lg transition-all',
+});
 
 md.value.use(todo);
 
@@ -133,6 +150,7 @@ md.value.use(codeCopy, {
     'font-size: 1.5em;width: 20px;height: 20px;background-size: cover;display: inline-block;',
 });
 
+md.value.use(alert);
 </script>
 
 <template>
