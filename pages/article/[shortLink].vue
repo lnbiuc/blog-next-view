@@ -82,24 +82,26 @@ watchEffect(() => {
     hasCatalog.value = true
   }
 })
+
+useSeoMeta({
+  title: () => { return article.title },
+  ogTitle: () => { return article.title },
+  description: () => { return article.description },
+  ogDescription: () => { return article.description },
+  ogImage: () => { return article.ogImage },
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => { return article.title },
+  twitterDescription: () => { return article.description },
+  twitterImage: () => { return article.ogImage },
+  articleAuthor: ['violet'],
+  author: 'violet',
+  articleModifiedTime: () => { return formatTime(article.updatedAt) },
+  articlePublishedTime: () => { return formatTime(article.createdAt) },
+})
 </script>
 
 <template>
   <div>
-
-    <Head>
-      <Meta
-        :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
-        name="keywords" />
-      <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
-      <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
-      <Meta :content="article?.ogImage || '/og.png'" property="og:image" />
-      <Meta content="summary_large_image" name="twitter:card" />
-      <Meta content="@lnbiuc" name="twitter:creator" />
-      <Meta :content="article?.title || 'Violet\'s Blog'" name="twitter:title" />
-      <Meta :content="article?.description || 'A blog for sharing knowledge.'" name="twitter:description" />
-      <Meta :content="article?.ogImage || '/og.png'" name="twitter:image" />
-    </Head>
     <NuxtLayout name="default">
       <div v-if="article">
         <NuxtLayout name="home">
