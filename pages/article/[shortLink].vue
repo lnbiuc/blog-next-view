@@ -6,6 +6,9 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
+import '~/styles/markdown.css'
+import '~/styles/prose.css'
+
 const route = useRoute()
 
 // @ts-expect-error no error
@@ -132,7 +135,7 @@ useSeoMeta({
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div class="text-left">
-                <MDRender :source="article?.content ? article?.content : ''" @render-finished="initTOC" />
+                <MDRender v-if="article.html" :html="article.html"  @render-finished="initTOC" />
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"
