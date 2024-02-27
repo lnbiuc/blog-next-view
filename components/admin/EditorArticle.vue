@@ -5,7 +5,6 @@ import type { IArticle } from '~/server/types'
 import { useIntervalFn, useThrottleFn } from '@vueuse/core'
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
-import { EmitFlags } from 'typescript';
 
 const vditor = ref<Vditor | null>(null);
 

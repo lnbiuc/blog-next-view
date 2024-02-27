@@ -6,8 +6,6 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import '~/styles/markdown.css'
-import '~/styles/prose.css'
 
 const route = useRoute()
 
