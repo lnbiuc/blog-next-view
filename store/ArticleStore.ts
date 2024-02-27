@@ -1,3 +1,4 @@
+import { ar } from 'date-fns/locale';
 import { defineStore } from 'pinia';
 import type { IArticle } from '~/server/types';
 
@@ -16,6 +17,18 @@ export const useArticleStore = defineStore('articleStore', () => {
 	}
 
 	async function getOne(shortLink: string) {
+
+		for (let i = 0; i < articles.value.length; i++) {
+			if (articles.value[i].shortLink === shortLink) {
+				const { data } = await useFetch<{id: string, html:string}>(`/api/article/rendered/${shortLink}`);
+				 if (data.value) {
+						articles.value[i].html = data.value.html;
+						article[shortLink] = articles.value[i];
+				 }
+				return articles.value[i];
+			}
+		}
+
 		const { data } = await useFetch<IArticle>(`/api/article/${shortLink}`);
 		if (data.value) article[shortLink] = data.value;
 	}
