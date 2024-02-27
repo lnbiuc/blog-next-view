@@ -73,7 +73,6 @@ onMounted(async() => {
     const roundedEnd = Math.round(end);
     const roundedDuration = roundedEnd - roundedStart;
     emit('renderFinished', renderRes.value, roundedDuration)
-    console.log(renderRes.value)
   }
 })
 </script>
