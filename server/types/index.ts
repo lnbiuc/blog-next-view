@@ -23,7 +23,6 @@ export interface IArticle {
 	link?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
-	html?: string;
 }
 
 export interface IFriend {
