@@ -6,7 +6,7 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import { addHoverEffect } from '~/composables/hoverEffect'
+
 const route = useRoute()
 
 // @ts-expect-error no error
@@ -16,7 +16,6 @@ const { one } = useArticleStore()
 
 const article = await one(shortLink)
 
-console.warn(article)
 const hasCatalog = ref(false)
 
 useHead({
@@ -62,9 +61,7 @@ const { start, stop } = useTimeoutFn(async () => {
 }, 10000)
 
 onMounted(() => {
-
   start()
-  addHoverEffect('.cover-image', 5)
 })
 
 onBeforeRouteLeave(() => {
@@ -86,24 +83,26 @@ watchEffect(() => {
     hasCatalog.value = true
   }
 })
+
+useSeoMeta({
+  title: () => { return article.title },
+  ogTitle: () => { return article.title },
+  description: () => { return article.description },
+  ogDescription: () => { return article.description },
+  ogImage: () => { return article.ogImage },
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => { return article.title },
+  twitterDescription: () => { return article.description },
+  twitterImage: () => { return article.ogImage },
+  articleAuthor: ['violet'],
+  author: 'violet',
+  articleModifiedTime: () => { return formatTime(article.updatedAt) },
+  articlePublishedTime: () => { return formatTime(article.createdAt) },
+})
 </script>
 
 <template>
   <div>
-
-    <Head>
-      <Meta
-        :content="article?.tags?.join(',') || 'Violet, Blog, Vue, Nuxt, TypeScript, JavaScript, Node.js, Web, Frontend, Backend, Fullstack, Developer, Programmer, Engineer, Software, Software Engineer, Software Developer, Software Programmer, Software Engineer, Software Developer'"
-        name="keywords" />
-      <Meta :content="article?.title || 'Violet\'s Blog'" property="og:title" />
-      <Meta :content="article?.description || 'A blog for sharing knowledge.'" property="og:description" />
-      <Meta :content="article?.ogImage || '/og.png'" property="og:image" />
-      <Meta content="summary_large_image" name="twitter:card" />
-      <Meta content="@lnbiuc" name="twitter:creator" />
-      <Meta :content="article?.title || 'Violet\'s Blog'" name="twitter:title" />
-      <Meta :content="article?.description || 'A blog for sharing knowledge.'" name="twitter:description" />
-      <Meta :content="article?.ogImage || '/og.png'" name="twitter:image" />
-    </Head>
     <NuxtLayout name="default">
       <div v-if="article">
         <NuxtLayout name="home">
@@ -134,7 +133,7 @@ watchEffect(() => {
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div class="text-left">
-                <MDRender :source="article?.content ? article?.content : ''" @render-finished="initTOC" />
+                <MDRender v-if="article.html" :html="article.html"  @render-finished="initTOC" />
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"
@@ -149,40 +148,3 @@ watchEffect(() => {
     </NuxtLayout>
   </div>
 </template>
-
-<style scoped>
-.catalog {
-  position: sticky;
-  top: 80px;
-  overflow: auto;
-  height: auto;
-  max-height: var(--toc-height);
-  max-width: calc(1000px - 760px);
-}
-
-/* HTML: <div class="loader"></div> */
-/* HTML: <div class="loader"></div> */
-.loader {
-  width: fit-content;
-  font-weight: bold;
-  font-family: monospace;
-  white-space: pre;
-  font-size: 30px;
-  line-height: 1.2em;
-  height: 1.2em;
-  overflow: hidden;
-}
-
-.loader:before {
-  content: "Loading...\AgodnLai...\Aoiaglni...\ALiongad...\Agindola...\Analoidg...";
-  white-space: pre;
-  display: inline-block;
-  animation: l38 1s infinite steps(6);
-}
-
-@keyframes l38 {
-  100% {
-    transform: translateY(-100%)
-  }
-}
-</style>

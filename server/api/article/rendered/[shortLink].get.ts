@@ -2,7 +2,9 @@ import { ArticleSchema } from '~/server/models/article.schema';
 
 export default defineEventHandler(async event => {
 	try {
-		return await ArticleSchema.find({ status: 'PUBLISHED' }, { content: 0, html: 0 });
+		const shortLink = event.context.params?.shortLink;
+
+		return await ArticleSchema.findOne({ shortLink }, { html: 1 });
 	} catch (error) {
 		return error;
 	}

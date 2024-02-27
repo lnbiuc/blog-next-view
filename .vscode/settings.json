@@ -5,7 +5,7 @@
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": false,
 	// Theming
-	"editor.fontFamily": "'monospace argon', Monaco, 'Courier New'",
+	"editor.fontFamily": "'Monospace Argon', 'Fira Code', Monaco, 'Courier New'",
 	"editor.fontLigatures": true,
 	"terminal.integrated.fontFamily": "'monospace argon'",
 	"window.autoDetectColorScheme": true,

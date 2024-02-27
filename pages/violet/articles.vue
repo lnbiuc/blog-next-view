@@ -27,6 +27,7 @@ const columns = [
   { key: 'link', label: 'Link' },
   { key: 'createdAt', label: 'Created At', sortable: true },
   { key: 'updatedAt', label: 'Updated At', sortable: true },
+  { key: 'html', label: 'Html' },
 ]
 
 const selectedColumns = ref([...columns])
@@ -107,7 +108,7 @@ function handleEdit() {
         </ULink>
       </template>
       <template #status-data="{ row }">
-        <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)" variant="subtle" />
+        <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)"/>
       </template>
 
       <template #cover-data="{ row }">
@@ -126,7 +127,7 @@ function handleEdit() {
 
       <template #tags-data="{ row }">
         <div class="flex flex-row">
-          <UBadge v-for="t in row.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90" :tag="t">
+          <UBadge v-for="t in row.tags" :key="t" color="gray" class="ml-2 opacity-90" :tag="t">
             {{ t }}
           </UBadge>
         </div>
@@ -145,12 +146,15 @@ function handleEdit() {
           </template>
         </UPopover>
       </template>
-
       <template #createdAt-data="{ row }">
         {{ formatZHTime(row.createdAt) }}
       </template>
       <template #updatedAt-data="{ row }">
         {{ formatZHTime(row.updatedAt) }}
+      </template>
+      <template #html-data="{ row }">
+        <UBadge v-if="row.html" color="green">Generated</UBadge>
+        <UBadge v-else color="red">Null</UBadge>
       </template>
     </UTable>
     <NuxtLayout name="home">

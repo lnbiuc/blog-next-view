@@ -46,6 +46,9 @@ export const ArticleSchema = defineMongooseModel({
     link: {
       type: String,
     },
+    html: {
+      type: String,
+    }
   },
   options: {
     timestamps: true,

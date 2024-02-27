@@ -541,3 +541,38 @@ html:not(.dark) [img-dark] {
 .project-card-bg-filter:hover img {
   transform: scale(1.05);
 }
+
+.catalog {
+  position: sticky;
+  top: 80px;
+  overflow: auto;
+  height: auto;
+  max-height: var(--toc-height);
+  max-width: calc(1000px - 760px);
+}
+
+/* HTML: <div class="loader"></div> */
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-weight: bold;
+  font-family: monospace;
+  white-space: pre;
+  font-size: 30px;
+  line-height: 1.2em;
+  height: 1.2em;
+  overflow: hidden;
+}
+
+.loader:before {
+  content: "Loading...\AgodnLai...\Aoiaglni...\ALiongad...\Agindola...\Analoidg...";
+  white-space: pre;
+  display: inline-block;
+  animation: l38 1s infinite steps(6);
+}
+
+@keyframes l38 {
+  100% {
+    transform: translateY(-100%)
+  }
+}

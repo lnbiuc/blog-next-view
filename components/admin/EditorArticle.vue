@@ -5,6 +5,9 @@ import type { IArticle } from '~/server/types'
 import { useIntervalFn, useThrottleFn } from '@vueuse/core'
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
+import {render} from '~/utils/markdown-render'
+
+
 const vditor = ref<Vditor | null>(null);
 
 const color = useColorMode()
@@ -112,7 +115,7 @@ const article = ref<IArticle>({
   cover: '',
   category: '',
   tags: [],
-  content: '',
+  content: 'empty',
   authorId: '',
   status: '',
   views: 0,
@@ -121,11 +124,12 @@ const article = ref<IArticle>({
   link: '',
   createdAt: undefined,
   updatedAt: undefined,
+  html: '',
 })
 
 if (props.shortLink) {
   const { data } = await useFetch(`/api/article/${props.shortLink}`, {
-    method: 'GET',
+    method: 'PUT',
   })
   article.value = data.value as IArticle
 }
@@ -243,9 +247,15 @@ function handleClean() {
   article.value.cover = ''
 }
 
+const renderRes = ref()
+
 async function handlePublish() {
-  console.warn('publish')
   article.value.content = vditor.value?.getValue() as string
+
+  renderRes.value = await render(article.value.content)
+
+  article.value.html = renderRes.value
+
   if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
       method: 'POST',
@@ -350,6 +360,8 @@ async function handleGenerateOgImage() {
     toast.add({ title: `gen screenShot success.` })
   }
 }
+
+const timeCost = ref(0)
 </script>
 
 <template>
@@ -365,6 +377,7 @@ async function handleGenerateOgImage() {
           <span>{{ article.title }}</span>
         </div>
         <div>
+          <span class="mr-2">{{ timeCost }} ms</span>
           <UButton @click="autoSave = !autoSave" :color="autoSave ? 'green' : 'red'" class="mr-2">
             {{ autoSave ? 'Disable' : 'Enable' }}
           </UButton>
@@ -376,7 +389,7 @@ async function handleGenerateOgImage() {
       <div id="vditor" class="w-1/2" />
       <div
         class="w-1/2 dark:border-[#333] border-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md border p-2 rounded">
-        <MDRender :source="article.content ? article.content : ''" />
+        <MDRender :html="renderRes"/>
       </div>
     </div>
     <UModal v-model="publishSetting" class="z-2000">
