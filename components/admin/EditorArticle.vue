@@ -5,6 +5,8 @@ import type { IArticle } from '~/server/types'
 import { useIntervalFn, useThrottleFn } from '@vueuse/core'
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
+import {render} from '~/utils/markdown-render'
+
 
 const vditor = ref<Vditor | null>(null);
 
@@ -245,9 +247,15 @@ function handleClean() {
   article.value.cover = ''
 }
 
+const renderRes = ref()
+
 async function handlePublish() {
-  console.warn('publish')
   article.value.content = vditor.value?.getValue() as string
+
+  renderRes.value = await render(article.value.content)
+
+  article.value.html = renderRes.value
+
   if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
       method: 'POST',
@@ -354,11 +362,6 @@ async function handleGenerateOgImage() {
 }
 
 const timeCost = ref(0)
-
-function handleRenderFinished(html: string, time: number) {
-  article.value.html = html
-  timeCost.value = time
-}
 </script>
 
 <template>
@@ -386,7 +389,7 @@ function handleRenderFinished(html: string, time: number) {
       <div id="vditor" class="w-1/2" />
       <div
         class="w-1/2 dark:border-[#333] border-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md border p-2 rounded">
-        <MDRender :source="article.content" @render-finished="handleRenderFinished"/>
+        <MDRender :html="renderRes"/>
       </div>
     </div>
     <UModal v-model="publishSetting" class="z-2000">
