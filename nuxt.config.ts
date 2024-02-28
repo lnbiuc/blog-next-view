@@ -98,13 +98,16 @@ export default defineNuxtConfig({
 				{ name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
 			],
 			// umami analytics
-			script: [
-				{
-					async: true,
-					src: 'https://analytics.eu.umami.is/script.js',
-					'data-website-id': 'afdca035-1988-40f8-89a0-e9ed73267348',
-				},
-			],
+			script:
+				process.env.NODE_ENV === 'production'
+					? [
+							{
+								async: true,
+								src: 'https://umami.vio.vin/script.js',
+								'data-website-id': '08d7bbdd-d900-4947-8959-50b8941e4f55',
+							},
+					  ]
+					: [],
 		},
 	},
 
