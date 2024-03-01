@@ -380,8 +380,6 @@ async function handleGenerateOgImage() {
   }
 }
 
-const timeCost = ref(0)
-
 const createTag = ref('')
 
 function handleCreateTag() {
@@ -406,7 +404,6 @@ function handleCreateTag() {
           <span>{{ article.title }}</span>
         </div>
         <div>
-          <span class="mr-2">{{ timeCost }} ms</span>
           <UButton @click="autoSave = !autoSave" :color="autoSave ? 'green' : 'red'" class="mr-2">
             {{ autoSave ? 'Disable' : 'Enable' }}
           </UButton>
