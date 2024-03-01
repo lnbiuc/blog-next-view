@@ -2,10 +2,30 @@
 import type { IFriend } from '~/server/types';
 import { formatZHTime } from '~/composables/formatTime'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import { useUserStore } from '~/store/UserStore'
 
-const { data, pending } = useFetch<IFriend[]>('/api/friend/all', {
+const toast = useToast()
+
+const { getToken } = useUserStore()
+
+const { data, pending, error } = useFetch<IFriend[]>('/api/friend/all', {
   method: 'GET',
+  server: false,
+  headers: {
+    'Authorization': getToken(),
+  }
 })
+
+const router = useRouter()
+
+if (error.value) {
+  if (error.value.statusCode === 401) {
+    toast.add({ title: 'Error', description: 'Unauthorized' })
+    router.push('/violet/login')
+  } else {
+    toast.add({ title: 'Error', description: error.value.message })
+  }
+}
 
 const columns = [
   { key: '_id', label: 'ID' },
@@ -159,8 +179,6 @@ function handleModel(option: 'edit' | 'new') {
   }
   editFriend.value = true
 }
-
-const toast = useToast()
 
 async function handleSubmit() {
   if (optionType.value === 'new') {

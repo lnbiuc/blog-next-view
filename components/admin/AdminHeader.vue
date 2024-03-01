@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { useUserStore } from '~/store/UserStore'
 
+const { logout } = useUserStore()
+
 const links = [[{
   label: 'Publish',
   icon: 'i-ri:edit-fill',
@@ -17,21 +19,14 @@ const links = [[{
   label: 'Logout',
   icon: 'i-ri:logout-circle-line',
   to: '/',
-}]]
-
-const { logout } = useUserStore()
-
-function handleClick(path: string) {
-  if (path === '/') {
+  click: () => {
     logout()
   }
-}
+}]]
+
 </script>
 
 <template>
   <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800">
-    <template #default="{ link }">
-      <span class="group-hover:text-primary relative" @click="handleClick(link.to)">{{ link.label }}</span>
-    </template>
   </UHorizontalNavigation>
 </template>
