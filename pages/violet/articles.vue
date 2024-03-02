@@ -1,10 +1,29 @@
 <script setup lang="ts">
 import type { IArticle } from '~/server/types'
 import { formatZHTime } from '~/composables/formatTime'
+import { useUserStore } from '~/store/UserStore'
 
-const { data, pending } = await useFetch<IArticle[]>('/api/article/all', {
+const toast = useToast()
+
+const router = useRouter()
+
+const { getToken } = useUserStore()
+const { data, pending, error } = await useFetch<IArticle[]>('/api/article/all', {
   method: 'GET',
+  server: false,
+  headers: {
+    'Authorization': getToken(),
+  }
 })
+
+if (error.value) {
+  if (error.value.statusCode === 401) {
+    toast.add({ title: 'Error', description: 'Unauthorized' })
+    router.push('/violet/login')
+  } else {
+    toast.add({ title: 'Error', description: error.value.message })
+  }
+}
 
 data.value?.sort((a, b) => {
   // @ts-expect-error - createdAt is a string
@@ -31,6 +50,19 @@ const columns = [
 ]
 
 const selectedColumns = ref([...columns])
+
+// 要取消选择的列
+const columnsToRemove = ['_id', 'description', 'authorId', 'likes', 'link'];
+
+// 遍历要取消选择的列
+columnsToRemove.forEach(columnKey => {
+  // 找到对应的列在选定的列数组中的索引
+  const index = selectedColumns.value.findIndex(col => col.key === columnKey);
+  // 如果找到了该列，则从选定的列数组中移除它
+  if (index !== -1) {
+    selectedColumns.value.splice(index, 1);
+  }
+});
 
 const q = ref('')
 
@@ -78,7 +110,6 @@ function calcStatusColor(status: string) {
   }
 }
 
-const router = useRouter()
 
 function handleEdit() {
   if (selected.value.length === 0)
@@ -108,9 +139,13 @@ function handleEdit() {
         </ULink>
       </template>
       <template #status-data="{ row }">
-        <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)"/>
+        <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)" />
       </template>
-
+      <template #category-data="{ row }">
+        <UBadge v-if="row.category === 'article'" size="xs" :label="row.category" color="blue" />
+        <UBadge v-if="row.category === 'short'" size="xs" :label="row.category" color="orange" />
+        <UBadge v-if="row.category === 'project'" size="xs" :label="row.category" color="green" />
+      </template>
       <template #cover-data="{ row }">
         <UPopover mode="hover">
           <UAvatar v-if="row.cover" img-class="object-cover" :src="`${row.cover}/thumbnail`" alt="Avatar" />

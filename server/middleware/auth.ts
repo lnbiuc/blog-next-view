@@ -3,8 +3,10 @@ import jwt from 'jsonwebtoken';
 export default defineEventHandler(event => {
 	// return event.respondWith(new Response('Unauthorized', { status: 401 }));
 	const needAuth = [
+		'/api/article/all',
 		'/api/article/create',
 		'/api/article/update',
+		'/api/friend/all',
 		'/api/friend/create',
 		'/api/friend/screenshot',
 		'/api/friend/update',

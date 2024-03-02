@@ -29,5 +29,13 @@ export const useUserStore = defineStore('userStore', () => {
 		localStorage.removeItem('token');
 	}
 
-	return { getUser, hasAuth, logout };
+	function getToken() {
+		if (window) {
+			const token = window.localStorage.getItem('token');
+			if (token) return token;
+		}
+		return '';
+	}
+
+	return { getUser, hasAuth, logout, getToken };
 });

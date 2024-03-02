@@ -2,15 +2,18 @@ import type articleVue from '~/layouts/article.vue';
 <script setup lang="ts">
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { IArticle } from '~/server/types'
-import { useIntervalFn, useThrottleFn } from '@vueuse/core'
+import { useIntervalFn, useThrottleFn, useDebounceFn } from '@vueuse/core'
 import Vditor from 'vditor';
 import 'vditor/dist/index.css';
-import {render} from '~/utils/markdown-render'
+import { render } from '~/utils/markdown-render'
+import { useUserStore } from '~/store/UserStore'
 
 
 const vditor = ref<Vditor | null>(null);
 
 const color = useColorMode()
+
+const renderRes = ref()
 
 onMounted(() => {
   vditor.value = new Vditor('vditor', {
@@ -90,12 +93,21 @@ onMounted(() => {
       hide: false,
       pin: false,
     },
+    input: () => {
+      debouncedRender()
+    }
   });
 
   watch(color, () => {
     vditor.value?.setTheme(color.value === 'dark' ? 'dark' : 'classic')
   })
 });
+
+const debouncedRender = useDebounceFn(async () => {
+  if (article.value.content) {
+    renderRes.value = await render(vditor.value?.getValue() as string)
+  }
+}, 3000)
 
 const props = defineProps({
   shortLink: {
@@ -134,9 +146,13 @@ if (props.shortLink) {
   article.value = data.value as IArticle
 }
 
-onMounted(() => {
+onMounted(async () => {
   const user = localStorage.getItem('user')
   article.value.authorId = user ? JSON.parse(user)._id : ''
+
+  if (article.value.content) {
+    renderRes.value = await render(article.value.content)
+  }
 })
 
 const rules = {
@@ -184,12 +200,15 @@ const throttledPublish = useThrottleFn(() => {
 
 watchEffect(async () => {
 
-  tags.value = []
-  if (!article.value.category)
+  if (!article.value.category) {
     return
-  const { data } = await useFetch(`/api/tag/${article.value.category}`)
+  } else {
+    tags.value = []
+    article.value.tags = []
+    const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
-  tags.value = data.value as string[]
+    tags.value = data.value as string[]
+  }
 })
 
 function onChangeFile(e: Event) {
@@ -213,7 +232,7 @@ async function handleUpload(option: 'cover' | 'content') {
     method: 'POST',
     body: formData,
     headers: {
-      'Authorization': localStorage.getItem('token') || '',
+      'Authorization': getToken()
     }
   })
 
@@ -247,7 +266,7 @@ function handleClean() {
   article.value.cover = ''
 }
 
-const renderRes = ref()
+const { getToken } = useUserStore()
 
 async function handlePublish() {
   article.value.content = vditor.value?.getValue() as string
@@ -261,7 +280,7 @@ async function handlePublish() {
       method: 'POST',
       body: article.value,
       headers: {
-        'Authorization': localStorage.getItem('token') || '',
+        'Authorization': getToken()
       }
     })
     if (status.value === 'success') {
@@ -282,7 +301,7 @@ async function handlePublish() {
       method: 'PUT',
       body: article.value,
       headers: {
-        'Authorization': localStorage.getItem('token') || '',
+        'Authorization': getToken()
       }
     })
     if (status.value === 'success') {
@@ -346,7 +365,7 @@ async function handleGenerateOgImage() {
       url,
     },
     headers: {
-      'Authorization': localStorage.getItem('token') || '',
+      'Authorization': getToken()
     }
   })
 
@@ -361,7 +380,15 @@ async function handleGenerateOgImage() {
   }
 }
 
-const timeCost = ref(0)
+const createTag = ref('')
+
+function handleCreateTag() {
+  if (createTag.value === '') {
+    return
+  }
+  tags.value.push(createTag.value)
+  createTag.value = ''
+}
 </script>
 
 <template>
@@ -377,7 +404,6 @@ const timeCost = ref(0)
           <span>{{ article.title }}</span>
         </div>
         <div>
-          <span class="mr-2">{{ timeCost }} ms</span>
           <UButton @click="autoSave = !autoSave" :color="autoSave ? 'green' : 'red'" class="mr-2">
             {{ autoSave ? 'Disable' : 'Enable' }}
           </UButton>
@@ -389,7 +415,7 @@ const timeCost = ref(0)
       <div id="vditor" class="w-1/2" />
       <div
         class="w-1/2 dark:border-[#333] border-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md border p-2 rounded">
-        <MDRender :html="renderRes"/>
+        <MDRender :html="renderRes" />
       </div>
     </div>
     <UModal v-model="publishSetting" class="z-2000">
@@ -440,9 +466,17 @@ const timeCost = ref(0)
             </div>
           </UFormGroup>
           <UFormGroup label="Tags" name="tags">
-            <USelectMenu v-model="article.tags" :multiple="true" :creatable="true" :options="tags" />
+            <USelectMenu v-model="article.tags" multiple :options="tags" searchable />
             <div v-if="errorFields?.tags?.length" class="text-xs text-red">
               {{ errorFields.tags[0].message }}
+            </div>
+          </UFormGroup>
+          <UFormGroup label="Create Tag" name="createTags">
+            <div class="flex flex-row w-full">
+              <UInput v-model="createTag" class="w-full" />
+              <UButton @click="handleCreateTag" class="ml-2">
+                Create
+              </UButton>
             </div>
           </UFormGroup>
           <UFormGroup label="Status" name="status">

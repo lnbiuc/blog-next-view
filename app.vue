@@ -20,7 +20,7 @@ onMounted(() => {
   <div>
     <div class="opacity-20 h-full w-full z-0" />
     <Header />
-    <div class="relative z-10">
+    <div class="relative z-10 min-h-[85vh]">
       <NuxtPage />
     </div>
     <Footer />
