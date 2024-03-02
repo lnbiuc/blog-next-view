@@ -109,8 +109,8 @@ const { hasAuth } = useUserStore()
       'justify-between w-80': width > 767 && y > 60,
     }">
       <div class="flex flex-row h-60px w-100px items-center">
-        <img src="https://static.vio.vin/favicon.png/thumbnail"
-          class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105" alt="logo" @click="$router.push('/')">
+        <img src="/favicon.ico" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105 rounded-full"
+          alt="logo" @click="$router.push('/')">
       </div>
       <div class="violet-cus flex flex-col w-full">
         <Transition name="slide">
