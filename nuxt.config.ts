@@ -15,7 +15,14 @@ export default defineNuxtConfig({
 	],
 
 	ogImage: {
-		fonts: ['Noto+Sans+SC:400'],
+		// googleFontMirror: true,
+		fonts: [
+			{
+				name: 'Noto+Sans+SC:400',
+				path: '/NotoSansSC-Regular.ttf',
+			},
+			// 'Noto+Sans+SC:400',
+		],
 	},
 	nuxtMarkdownRender: {
 		as: 'article',
@@ -43,7 +50,7 @@ export default defineNuxtConfig({
 	},
 
 	site: {
-		url: 'https://vio.vin',
+		url: process.env.NODE_ENV === 'production' ? 'https://vio.vin' : 'http://localhost:3001',
 		name: '薇尔薇',
 		description:
 			'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
