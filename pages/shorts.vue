@@ -97,7 +97,6 @@ defineOgImage({
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
-  renderer: 'chromium'
 })
 
 useHead({

@@ -94,7 +94,6 @@ const colorModel = useColorMode()
 //   description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
 //   theme: '#a78bfa',
 //   colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
-//   renderer: 'chromium'
 // })
 
 defineOgImage({
@@ -105,7 +104,6 @@ defineOgImage({
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
-  renderer: 'chromium'
 })
 
 useHead({

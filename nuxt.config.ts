@@ -14,6 +14,9 @@ export default defineNuxtConfig({
 		'nuxt-markdown-render',
 	],
 
+	ogImage: {
+		fonts: ['Noto+Sans+SC:400'],
+	},
 	nuxtMarkdownRender: {
 		as: 'article',
 		vueRuntimeCompiler: true,
