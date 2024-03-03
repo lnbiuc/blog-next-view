@@ -17,11 +17,11 @@ export default defineNuxtConfig({
 	ogImage: {
 		// googleFontMirror: true,
 		fonts: [
-			{
-				name: 'Noto+Sans+SC:400',
-				path: '/NotoSansSC-Regular.ttf',
-			},
-			// 'Noto+Sans+SC:400',
+			// {
+			// 	name: 'Noto+Sans+SC:400',
+			// 	path: '/NotoSansSC-Regular.ttf',
+			// },
+			'Noto+Sans+SC:400',
 		],
 	},
 	nuxtMarkdownRender: {
