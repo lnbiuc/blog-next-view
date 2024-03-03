@@ -15,6 +15,7 @@ export default defineNuxtConfig({
 	],
 
 	ogImage: {
+		enabled: false,
 		googleFontMirror: true,
 		fonts: [
 			// {

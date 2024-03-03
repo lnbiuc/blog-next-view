@@ -84,33 +84,33 @@ watchEffect(() => {
   }
 })
 
-// useSeoMeta({
-//   title: () => { return article.title },
-//   ogTitle: () => { return article.title },
-//   description: () => { return article.description },
-//   ogDescription: () => { return article.description },
-//   ogImage: () => { return article.ogImage },
-//   twitterCard: 'summary_large_image',
-//   twitterTitle: () => { return article.title },
-//   twitterDescription: () => { return article.description },
-//   twitterImage: () => { return article.ogImage },
-//   articleAuthor: ['violet'],
-//   author: 'violet',
-//   articleModifiedTime: () => { return formatTime(article.updatedAt) },
-//   articlePublishedTime: () => { return formatTime(article.createdAt) },
-// })
+useSeoMeta({
+  title: () => { return article.title },
+  ogTitle: () => { return article.title },
+  description: () => { return article.description },
+  ogDescription: () => { return article.description },
+  ogImage: () => { return article.ogImage },
+  twitterCard: 'summary_large_image',
+  twitterTitle: () => { return article.title },
+  twitterDescription: () => { return article.description },
+  twitterImage: () => { return article.ogImage },
+  articleAuthor: ['violet'],
+  author: 'violet',
+  articleModifiedTime: () => { return formatTime(article.updatedAt) },
+  articlePublishedTime: () => { return formatTime(article.createdAt) },
+})
 
 const colorModel = useColorMode()
 
-defineOgImage({
-  component: 'NuxtSeo',
-  props: {
-    title: () => { return article.title },
-    description: () => { return article.description },
-    theme: '#a78bfa',
-    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
-  },
-})
+// defineOgImage({
+//   component: 'NuxtSeo',
+//   props: {
+//     title: () => { return article.title },
+//     description: () => { return article.description },
+//     theme: '#a78bfa',
+//     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+//   },
+// })
 </script>
 
 <template>

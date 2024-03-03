@@ -5,25 +5,25 @@ import { useArticleStore } from '~/store/ArticleStore'
 const online = useOnline()
 
 
-// useSeoMeta({
-//   ogImage: '/og.png',
-//   twitterTitle: '薇尔薇',
-//   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-//   twitterImage: '/og.png',
-//   twitterCard: 'summary_large_image',
-// })
+useSeoMeta({
+  ogImage: '/og.png',
+  twitterTitle: '薇尔薇',
+  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+  twitterImage: '/og.png',
+  twitterCard: 'summary_large_image',
+})
 
 const colorModel = useColorMode()
 
-defineOgImage({
-  component: 'NuxtSeo',
-  props: {
-    title: '薇尔薇',
-    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-    theme: '#a78bfa',
-    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
-  },
-})
+// defineOgImage({
+//   component: 'NuxtSeo',
+//   props: {
+//     title: '薇尔薇',
+//     description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//     theme: '#a78bfa',
+//     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+//   },
+// })
 
 useHead({
   htmlAttrs: {
