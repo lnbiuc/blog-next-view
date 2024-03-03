@@ -15,7 +15,7 @@ export default defineNuxtConfig({
 	],
 
 	ogImage: {
-		// googleFontMirror: true,
+		googleFontMirror: true,
 		fonts: [
 			// {
 			// 	name: 'Noto+Sans+SC:400',
