@@ -8,10 +8,9 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@nuxtjs/color-mode',
 		'@nuxt/ui',
-		'@nuxtseo/module',
+		'@nuxtjs/seo',
 		'@formkit/auto-animate/nuxt',
 		'nuxt-mongoose',
-		'nuxt-scheduler',
 		'nuxt-markdown-render',
 	],
 
@@ -55,7 +54,6 @@ export default defineNuxtConfig({
 		twitterCard: 'summary_large_image',
 		twitterSite: '@ZZSLL_53387',
 		twitterCreator: '@ZZSLL_53387',
-		twitterImage: 'https://vio.vin/favicon.ico',
 	},
 
 	experimental: {

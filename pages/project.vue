@@ -12,12 +12,25 @@ category('project').then((data) => {
   })
 })
 
-useSeoMeta({
-  ogImage: '/ogproject.png',
-  twitterTitle: '薇尔薇｜Project',
-  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-  twitterImage: '/ogproject.png',
-  twitterCard: 'summary_large_image',
+// useSeoMeta({
+//   ogImage: '/ogproject.png',
+//   twitterTitle: '薇尔薇｜Project',
+//   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//   twitterImage: '/ogproject.png',
+//   twitterCard: 'summary_large_image',
+// })
+
+const colorModel = useColorMode()
+
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: 'Project | 薇尔薇',
+    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+  renderer: 'chromium'
 })
 
 useHead({

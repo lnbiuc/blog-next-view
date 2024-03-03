@@ -84,20 +84,33 @@ watchEffect(() => {
   }
 })
 
-useSeoMeta({
-  title: () => { return article.title },
-  ogTitle: () => { return article.title },
-  description: () => { return article.description },
-  ogDescription: () => { return article.description },
-  ogImage: () => { return article.ogImage },
-  twitterCard: 'summary_large_image',
-  twitterTitle: () => { return article.title },
-  twitterDescription: () => { return article.description },
-  twitterImage: () => { return article.ogImage },
-  articleAuthor: ['violet'],
-  author: 'violet',
-  articleModifiedTime: () => { return formatTime(article.updatedAt) },
-  articlePublishedTime: () => { return formatTime(article.createdAt) },
+// useSeoMeta({
+//   title: () => { return article.title },
+//   ogTitle: () => { return article.title },
+//   description: () => { return article.description },
+//   ogDescription: () => { return article.description },
+//   ogImage: () => { return article.ogImage },
+//   twitterCard: 'summary_large_image',
+//   twitterTitle: () => { return article.title },
+//   twitterDescription: () => { return article.description },
+//   twitterImage: () => { return article.ogImage },
+//   articleAuthor: ['violet'],
+//   author: 'violet',
+//   articleModifiedTime: () => { return formatTime(article.updatedAt) },
+//   articlePublishedTime: () => { return formatTime(article.createdAt) },
+// })
+
+const colorModel = useColorMode()
+
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: () => { return article.title },
+    description: () => { return article.description },
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+  renderer: 'chromium'
 })
 </script>
 
@@ -133,7 +146,7 @@ useSeoMeta({
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div class="text-left">
-                <MDRender v-if="article.html" :html="article.html"  @render-finished="initTOC" />
+                <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" />
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"

@@ -29,12 +29,24 @@ const md = '# Violet\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
 
-useSeoMeta({
-  ogImage: '/ogabout.png',
-  twitterTitle: '薇尔薇｜About',
-  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-  twitterImage: '/ogabout.png',
-  twitterCard: 'summary_large_image',
+// useSeoMeta({
+//   ogImage: '/ogabout.png',
+//   twitterTitle: '薇尔薇｜About',
+//   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//   twitterImage: '/ogabout.png',
+//   twitterCard: 'summary_large_image',
+// })
+const colorModel = useColorMode()
+
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: 'About | 薇尔薇',
+    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+  renderer: 'chromium'
 })
 
 useHead({
@@ -94,4 +106,5 @@ useHead({
         <Comment />
       </NuxtLayout>
     </NuxtLayout>
-</div></template>
+  </div>
+</template>

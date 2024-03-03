@@ -79,12 +79,33 @@ async function handleSortByChange(selectVal: string) {
   }
 }
 
-useSeoMeta({
-  ogImage: '/ogblog.png',
-  twitterTitle: '薇尔薇｜Blog',
-  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-  twitterImage: '/ogblog.png',
-  twitterCard: 'summary_large_image',
+// useSeoMeta({
+//   ogImage: '/ogblog.png',
+//   twitterTitle: '薇尔薇｜Blog',
+//   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//   twitterImage: '/ogblog.png',
+//   twitterCard: 'summary_large_image',
+// })
+
+const colorModel = useColorMode()
+
+// defineOgImageComponent('NuxtSeo', {
+//   title: 'Blog | 薇尔薇',
+//   description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//   theme: '#a78bfa',
+//   colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+//   renderer: 'chromium'
+// })
+
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: 'Blog | 薇尔薇',
+    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+  renderer: 'chromium'
 })
 
 useHead({

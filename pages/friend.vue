@@ -10,12 +10,25 @@ get().then((res) => {
   friends.value = res
 })
 
-useSeoMeta({
-  ogImage: '/ogabout.png',
-  twitterTitle: '薇尔薇｜Friends',
-  twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-  twitterImage: '/ogabout.png',
-  twitterCard: 'summary_large_image',
+// useSeoMeta({
+//   ogImage: '/ogabout.png',
+//   twitterTitle: '薇尔薇｜Friends',
+//   twitterDescription: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+//   twitterImage: '/ogabout.png',
+//   twitterCard: 'summary_large_image',
+// })
+
+const colorModel = useColorMode()
+
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: 'Friend | 薇尔薇',
+    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+  renderer: 'chromium'
 })
 
 useHead({
