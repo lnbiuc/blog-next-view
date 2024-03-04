@@ -81,7 +81,7 @@ export default defineNuxtConfig({
 		},
 		prerender: {
 			crawlLinks: false,
-			routes: ['/', '/blog', '/shorts', '/project', '/about', '/friend', '/article/md-test'],
+			// routes: ['/', '/blog', '/shorts', '/project', '/about', '/friend', '/article/md-test'],
 			ignore: ['/hi'],
 		},
 	},
