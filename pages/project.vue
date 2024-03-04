@@ -12,13 +12,20 @@ category('project').then((data) => {
   })
 })
 
+useSeoMeta({
+  title: 'Project | 薇尔薇',
+  ogTitle: 'Project | 薇尔薇',
+  description: '薇尔薇 is A Web Developer. Code for Fun.',
+  ogDescription: '薇尔薇 is A Web Developer. Code for Fun.',
+})
+
 const colorModel = useColorMode()
 
 defineOgImage({
   component: 'NuxtSeo',
   props: {
     title: 'Project | 薇尔薇',
-    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    description: '薇尔薇 is A Web Developer. Code for Fun.',
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
@@ -26,7 +33,7 @@ defineOgImage({
 
 useHead({
   htmlAttrs: {
-    lang: 'en',
+    lang: 'zh_CN',
   },
   link: [
     {

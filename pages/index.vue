@@ -6,11 +6,18 @@ const online = useOnline()
 
 const colorModel = useColorMode()
 
+useSeoMeta({
+  title: '薇尔薇',
+  ogTitle: '薇尔薇',
+  description: '薇尔薇 is A Web Developer. Code for Fun.',
+  ogDescription: '薇尔薇 is A Web Developer. Code for Fun.',
+})
+
 defineOgImage({
   component: 'NuxtSeo',
   props: {
     title: '薇尔薇',
-    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    description: '薇尔薇 is A Web Developer. Code for Fun.',
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
@@ -18,7 +25,7 @@ defineOgImage({
 
 useHead({
   htmlAttrs: {
-    lang: 'en',
+    lang: 'zh_CN',
   },
   link: [
     {

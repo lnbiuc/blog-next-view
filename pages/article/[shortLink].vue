@@ -20,7 +20,7 @@ const hasCatalog = ref(false)
 
 useHead({
   htmlAttrs: {
-    lang: 'en',
+    lang: 'zh_CN',
   },
   link: [
     {
@@ -85,8 +85,10 @@ watchEffect(() => {
 })
 
 useSeoMeta({
-  title: () => { return article.title },
-  ogTitle: () => { return article.title },
+  title: () => { return `${article.title} | 薇尔薇` },
+  ogTitle: () => { return `${article.title} | 薇尔薇` },
+  description: () => { return `${article.description} | 薇尔薇` },
+  ogDescription: () => { return `${article.description} | 薇尔薇` },
   articleAuthor: ['violet'],
   author: 'violet',
   articleModifiedTime: () => { return formatTime(article.updatedAt) },
@@ -98,8 +100,8 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return article.title },
-    description: () => { return article.description },
+    title: () => { return `${article.title} | 薇尔薇` },
+    description: () => { return `${article.description} | 薇尔薇` },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },

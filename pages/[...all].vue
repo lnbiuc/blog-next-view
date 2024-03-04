@@ -7,13 +7,20 @@ onMounted(() => {
   }, 3000)
 })
 
+useSeoMeta({
+  title: '404 NotFound | 薇尔薇',
+  ogTitle: '404 NotFound | 薇尔薇',
+  description: '薇尔薇 is A Web Developer. Code for Fun.',
+  ogDescription: '薇尔薇 is A Web Developer. Code for Fun.',
+})
+
 const colorModel = useColorMode()
 
 defineOgImage({
   component: 'NuxtSeo',
   props: {
     title: '404 NotFound | 薇尔薇',
-    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    description: '薇尔薇 is A Web Developer. Code for Fun.',
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },

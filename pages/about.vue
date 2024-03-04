@@ -29,13 +29,20 @@ const md = '# Violet\n'
   + '- [Twitter](https://twitter.com/ZZSLL_53387)\n'
   + '- [Bilibili](https://space.bilibili.com/1258497845)'
 
+useSeoMeta({
+  title: 'About | 薇尔薇',
+  ogTitle: 'About | 薇尔薇',
+  description: '薇尔薇 is A Web Developer. Code for Fun.',
+  ogDescription: '薇尔薇 is A Web Developer. Code for Fun.',
+})
+
 const colorModel = useColorMode()
 
 defineOgImage({
   component: 'NuxtSeo',
   props: {
     title: 'About | 薇尔薇',
-    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    description: '薇尔薇 is A Web Developer. Code for Fun.',
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
@@ -43,7 +50,7 @@ defineOgImage({
 
 useHead({
   htmlAttrs: {
-    lang: 'en',
+    lang: 'zh_CN',
   },
   link: [
     {

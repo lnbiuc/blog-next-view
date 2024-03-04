@@ -15,6 +15,7 @@ export default defineNuxtConfig({
 		'nuxt-simple-robots',
 		'@nuxtjs/sitemap',
 		'nuxt-schema-org',
+		'nuxt-seo-experiments',
 	],
 
 	ogImage: {
@@ -43,10 +44,11 @@ export default defineNuxtConfig({
 	site: {
 		url: process.env.NODE_ENV === 'production' ? 'https://vio.vin' : 'http://localhost:3000',
 		// url: 'http://localhost:3000',
+		title: '薇尔薇',
 		name: '薇尔薇',
 		description:
 			'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
-		defaultLocale: 'en',
+		defaultLocale: 'zh_CN',
 		identity: {
 			type: 'Person',
 		},
@@ -79,7 +81,7 @@ export default defineNuxtConfig({
 		},
 		prerender: {
 			crawlLinks: false,
-			//   routes: ['/', '/blog', '/shorts', '/project', '/about'],
+			routes: ['/', '/blog', '/shorts', '/project', '/about', '/friend', '/article/md-test'],
 			ignore: ['/hi'],
 		},
 	},
