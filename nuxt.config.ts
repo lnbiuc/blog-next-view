@@ -12,6 +12,9 @@ export default defineNuxtConfig({
 		'nuxt-mongoose',
 		'nuxt-markdown-render',
 		'nuxt-og-image',
+		'nuxt-simple-robots',
+		'@nuxtjs/sitemap',
+		'nuxt-schema-org',
 	],
 
 	ogImage: {
