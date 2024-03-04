@@ -8,22 +8,15 @@ export default defineNuxtConfig({
 		'@pinia/nuxt',
 		'@nuxtjs/color-mode',
 		'@nuxt/ui',
-		'@nuxtjs/seo',
 		'@formkit/auto-animate/nuxt',
 		'nuxt-mongoose',
 		'nuxt-markdown-render',
+		'nuxt-og-image',
 	],
 
 	ogImage: {
-		enabled: false,
 		googleFontMirror: true,
-		fonts: [
-			// {
-			// 	name: 'Noto+Sans+SC:400',
-			// 	path: '/NotoSansSC-Regular.ttf',
-			// },
-			'Noto+Sans+SC:400',
-		],
+		fonts: ['Noto+Sans+SC:400'],
 	},
 	nuxtMarkdownRender: {
 		as: 'article',
@@ -36,12 +29,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-	linkChecker: {
-		enabled: false,
-		showLiveInspections: false,
-		runOnBuild: false,
-	},
-
 	mongoose: {
 		uri: process.env.MONGODB_URI,
 		devtools: true,
@@ -51,7 +38,8 @@ export default defineNuxtConfig({
 	},
 
 	site: {
-		url: process.env.NODE_ENV === 'production' ? 'https://vio.vin' : 'http://localhost:3001',
+		url: process.env.NODE_ENV === 'production' ? 'https://vio.vin' : 'http://localhost:3000',
+		// url: 'http://localhost:3000',
 		name: '薇尔薇',
 		description:
 			'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',

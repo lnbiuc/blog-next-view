@@ -9,15 +9,15 @@ onMounted(() => {
 
 const colorModel = useColorMode()
 
-// defineOgImage({
-//   component: 'NuxtSeo',
-//   props: {
-//     title: '404 NotFound | 薇尔薇',
-//     description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
-//     theme: '#a78bfa',
-//     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
-//   },
-// })
+defineOgImage({
+  component: 'NuxtSeo',
+  props: {
+    title: '404 NotFound | 薇尔薇',
+    description: '薇尔薇 is A Web Developer 🖥. Code for Fun.',
+    theme: '#a78bfa',
+    colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
+  },
+})
 </script>
 
 <template>
