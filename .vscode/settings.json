@@ -9,7 +9,7 @@
 	"editor.fontLigatures": true,
 	"terminal.integrated.fontFamily": "'monospace argon'",
 	"window.autoDetectColorScheme": true,
-	"workbench.colorTheme": "Atom One Dark",
+	"workbench.colorTheme": "Default Dark+",
 	"editor.codeLensFontSize": 13,
 	"editor.fontSize": 15,
 	"editor.lineHeight": 1.75,
@@ -31,7 +31,7 @@
 	"workbench.welcomePage.walkthroughs.openOnInstall": false,
 	"breadcrumbs.enabled": false,
 	"workbench.startupEditor": "newUntitledFile",
-	"editor.lightbulb.enabled": false,
+	"editor.lightbulb.enabled": "off",
 	"editor.overviewRulerBorder": false,
 	"editor.renderLineHighlight": "line",
 	"editor.renderControlCharacters": false,
@@ -135,5 +135,6 @@
 	"editor.unicodeHighlight.ambiguousCharacters": false,
 	"editor.unicodeHighlight.invisibleCharacters": false,
 	"zenMode.showTabs": "single",
-	"files.autoSave": "onFocusChange"
+	"files.autoSave": "onFocusChange",
+	"workbench.editor.tabActionCloseVisibility": false
 }

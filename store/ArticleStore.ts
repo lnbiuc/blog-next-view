@@ -6,6 +6,8 @@ export const useArticleStore = defineStore('articleStore', () => {
 	const articles: Ref<IArticle[]> = ref([]);
 
 	const article: Record<string, IArticle> = reactive({});
+
+	const pending = ref(false)
 	async function getAll() {
 		const { data } = await useFetch<IArticle[]>('/api/article');
 		articles.value = [];
@@ -20,12 +22,17 @@ export const useArticleStore = defineStore('articleStore', () => {
 
 		for (let i = 0; i < articles.value.length; i++) {
 			if (articles.value[i].shortLink === shortLink) {
-				const { data } = await useFetch<{id: string, html:string}>(`/api/article/rendered/${shortLink}`);
-				 if (data.value) {
+
+				if (pending.value === false) {
+					pending.value = true;
+					const { data } = await useFetch<{ id: string, html: string }>(`/api/article/rendered/${shortLink}`);
+					if (data.value) {
 						articles.value[i].html = data.value.html;
 						article[shortLink] = articles.value[i];
-				 }
-				return articles.value[i];
+					}
+					pending.value = false;
+					return articles.value[i];
+				}
 			}
 		}
 

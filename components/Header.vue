@@ -136,39 +136,39 @@ const { hasAuth } = useUserStore()
                 'ring-[#ccc] dark:ring-[#333] shadow h-35px': y < 80 && width > 767,
               }">
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/" class="header-link" @click="isOpen = true" :prefetch="true">
                   Home
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/blog" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/blog" class="header-link" @click="isOpen = true" :prefetch="true">
                   Blog
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/shorts" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/shorts" class="header-link" @click="isOpen = true" :prefetch="true">
                   Short
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/project" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/project" class="header-link" @click="isOpen = true" :prefetch="true">
                   Project
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/friend" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/friend" class="header-link" @click="isOpen = true" :prefetch="true">
                   Friend
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/about" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/about" class="header-link" @click="isOpen = true" :prefetch="true">
                   About
-                </router-link>
+                </NuxtLink>
               </li>
               <li v-if="hasAuth()" :class="{ 'leading-12 text-2xl': !isOpen }">
-                <router-link to="/violet" class="header-link" @click="isOpen = true">
+                <NuxtLink to="/violet" class="header-link" @click="isOpen = true">
                   Admin
-                </router-link>
+                </NuxtLink>
               </li>
               <li :class="{ 'mr-4 mt-2 leading-12 text-2xl flex w-full flex-row items-center justify-end': !isOpen }"
                 class="hidden">
@@ -208,39 +208,39 @@ const { hasAuth } = useUserStore()
           'ring-[#ccc] ring-1 dark:ring-[#333] backdrop-blur-md': y < 60 || (isArticlePage && y > showTitleY),
         }">
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/" class="header-link" @click="isOpen = true" :prefetch="true">
               Home
-            </router-link>
+            </NuxtLink>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/blog" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/blog" class="header-link" @click="isOpen = true" :prefetch="true">
               Blog
-            </router-link>
+            </NuxtLink>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/shorts" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/shorts" class="header-link" @click="isOpen = true" :prefetch="true">
               Short
-            </router-link>
+            </NuxtLink>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/project" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/project" class="header-link" @click="isOpen = true" :prefetch="true">
               Project
-            </router-link>
+            </NuxtLink>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/friend" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/friend" class="header-link" @click="isOpen = true" :prefetch="true">
               Friend
-            </router-link>
+            </NuxtLink>
           </li>
           <li :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/about" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/about" class="header-link" @click="isOpen = true" :prefetch="true">
               About
-            </router-link>
+            </NuxtLink>
           </li>
           <li v-if="hasAuth()" :class="{ 'h-50px text-2xl': !isOpen }">
-            <router-link to="/violet" class="header-link" @click="isOpen = true">
+            <NuxtLink to="/violet" class="header-link" @click="isOpen = true">
               Admin
-            </router-link>
+            </NuxtLink>
           </li>
         </ul>
       </div>
@@ -270,7 +270,7 @@ const { hasAuth } = useUserStore()
   margin: auto;
 }
 
-.router-link-active {
+.NuxtLink-active {
   color: var(--color-violet) !important;
 }
 </style>
