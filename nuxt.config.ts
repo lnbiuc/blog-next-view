@@ -157,7 +157,7 @@ export default defineNuxtConfig({
 							{
 								async: true,
 								src: 'https://umami.vio.vin/script.js',
-								'data-website-id': '08d7bbdd-d900-4947-8959-50b8941e4f55',
+								'data-website-id': 'eef5fee4-26c0-4ac4-90eb-21e588de9635',
 							},
 					  ]
 					: [],

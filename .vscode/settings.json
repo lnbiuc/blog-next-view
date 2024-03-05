@@ -134,5 +134,6 @@
 	"editor.guides.indentation": false,
 	"editor.unicodeHighlight.ambiguousCharacters": false,
 	"editor.unicodeHighlight.invisibleCharacters": false,
-	"zenMode.showTabs": "single"
+	"zenMode.showTabs": "single",
+	"files.autoSave": "onFocusChange"
 }
