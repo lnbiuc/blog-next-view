@@ -78,7 +78,7 @@ onMounted(() => {
       </div>
     </div>
     <div class="hidden transition-all md:block">
-      <img src="https://static.vio.vin/favicon.png/comporess1600x900" alt="logo"
+      <img src="/favicon.ico" alt="logo"
         class="favicon-shadow rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
     </div>
   </div>

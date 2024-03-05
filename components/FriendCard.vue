@@ -15,7 +15,7 @@ function openLink() {
 
 <template>
   <div
-    class="card-bg-filter backdrop-blur-sm overflow-hidden card-border"
+    class="card-bg-filter backdrop-blur-sm overflow-hidden card-border card"
     @click="openLink"
   >
     <div class="relative overflow-hidden">
