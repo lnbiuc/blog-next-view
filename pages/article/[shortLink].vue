@@ -16,7 +16,7 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-const article:Ref<IArticle> = ref({
+const article: Ref<IArticle> = ref({
   _id: '',
   shortLink: '',
   title: '',
@@ -61,6 +61,7 @@ useHead({
 function initTOC() {
   if (!document) return
 
+
   if (document.querySelector('#violetToc') && document.querySelector('#violetMD')) {
     tocbot.init({
       // Where to render the table of contents.
@@ -77,7 +78,7 @@ function initTOC() {
   } else {
     setTimeout(() => {
       initTOC()
-    }, 50)
+    }, 1000)
   }
 }
 
@@ -104,9 +105,7 @@ const { width } = useWindowSize()
 watchEffect(() => {
   if (width.value < 1200) { hasCatalog.value = false }
   else {
-    nextTick(() => {
-      initTOC()
-    })
+    initTOC()
     hasCatalog.value = true
   }
 })
@@ -134,7 +133,7 @@ defineOgImage({
   },
 })
 
-onMounted(() => {
+nextTick(() => {
   initTOC()
 })
 </script>
@@ -175,8 +174,10 @@ onMounted(() => {
                 <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div>
               </div>
             </div>
-            <div v-if="hasCatalog" id="violetToc"
-              class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+            <ClientOnly>
+              <div v-if="hasCatalog" id="violetToc"
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+            </ClientOnly>
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer">
             <a class="text-xl" @click="$router.back">cd ..</a>

@@ -39,7 +39,7 @@ async function handleParamsChange(searchVal: string) {
   }
   if (searchVal !== '') {
     isLoading.value = true
-    const { data } = await useFetch<IArticle[]>('/api/search', {
+    const { data } = await useFetch<IArticle[]>('/api/search/orama', {
       method: 'POST',
       body: {
         category: 'short',
