@@ -16,12 +16,14 @@ export default defineNuxtConfig({
 		'@nuxtjs/sitemap',
 		'nuxt-schema-org',
 		'nuxt-seo-experiments',
+		'@nuxtjs/mdc'
 	],
 
 	ogImage: {
 		googleFontMirror: true,
 		fonts: ['Noto+Sans+SC:400'],
 	},
+
 	nuxtMarkdownRender: {
 		as: 'article',
 		vueRuntimeCompiler: true,
@@ -32,6 +34,22 @@ export default defineNuxtConfig({
 			xhtmlOut: true,
 		},
 	},
+
+	mdc: {
+    headings: {
+      anchorLinks: {
+        h1: true,
+				h2: true
+      }
+    },
+		highlight: {
+			theme: {
+        default: 'vitesse-light',
+        dark: 'material-theme-palenight',
+      },
+			preload: ['json', 'yaml', 'toml', 'bash', 'sh', 'shell', 'console', 'plaintext', 'java'],
+		}
+  },
 
 	mongoose: {
 		uri: process.env.MONGODB_URI,

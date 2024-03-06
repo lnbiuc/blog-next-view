@@ -33,7 +33,10 @@ const article:Ref<IArticle> = ref({
   link: '',
   createdAt: undefined,
   updatedAt: undefined,
-  html: '',
+  html: {
+    body: {},
+    data: {},
+  },
 })
 
 one(shortLink).then((data) => {
@@ -172,7 +175,8 @@ onMounted(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div>
+                <!-- <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div> -->
+                <MDCRenderer :body="article.html.body" :data="article.html.data" />
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"

@@ -23,7 +23,12 @@ export interface IArticle {
 	link?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
-	html?: string
+	html: RenderRes
+}
+
+export interface RenderRes {
+	data: any,
+	body: any
 }
 
 export interface IFriend {
