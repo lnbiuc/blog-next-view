@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import '~/styles/md-alert.css';
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
@@ -106,6 +107,10 @@ defineOgImage({
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
 })
+
+onMounted(() => {
+  initTOC()
+})
 </script>
 
 <template>
@@ -140,7 +145,8 @@ defineOgImage({
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div class="text-left">
-                <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" />
+                <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
+                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div>
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"
