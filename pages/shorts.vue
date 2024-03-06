@@ -73,7 +73,6 @@ async function handleSortByChange(selectVal: string) {
   }
   else {
     shorts.value.sort((a, b) => {
-      // @ts-expect-error no error
       return b.views - a.views
     })
   }

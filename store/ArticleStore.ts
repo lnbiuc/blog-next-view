@@ -35,7 +35,6 @@ export const useArticleStore = defineStore('articleStore', () => {
 				const { data } = await useFetch<IArticle>(`/api/article/${shortLink}`);
 				if (data.value) {
 					article[shortLink] = data.value;
-					articles.value.push(data.value);
 					return data.value;
 				}
 			}
