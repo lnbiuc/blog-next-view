@@ -7,18 +7,18 @@ export interface IUser {
 }
 
 export interface IArticle {
-	_id?: string;
+	_id: string;
 	shortLink: string;
 	title: string;
-	description?: string;
+	description: string;
 	cover?: string;
-	category?: string;
+	category: string;
 	tags: string[];
-	content?: string;
+	content: string;
 	authorId: string;
-	status?: string;
-	views?: number;
-	likes?: number;
+	status: string;
+	views: number;
+	likes: number;
 	ogImage?: string;
 	link?: string;
 	createdAt?: Date;
