@@ -1,7 +1,6 @@
 import { useUserStore } from "~/store/UserStore"
 
 export default defineNuxtRouteMiddleware((to, from) => {
-  console.log('to', to.path)
   if (to.path.includes('/violet')) {
     const {hasAuth} = useUserStore()
 

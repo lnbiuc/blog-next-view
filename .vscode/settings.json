@@ -23,7 +23,7 @@
 	"editor.minimap.enabled": false,
 	"editor.glyphMargin": false,
 	"editor.folding": false,
-	"editor.lineNumbers": "off",
+	"editor.lineNumbers": "on",
 	"workbench.sideBar.location": "left",
 	"workbench.editor.showTabs": "multiple",
 	"workbench.editor.pinnedTabSizing": "compact",

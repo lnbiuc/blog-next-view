@@ -1,4 +1,3 @@
-import { ar } from 'date-fns/locale';
 import { defineStore } from 'pinia';
 import type { IArticle } from '~/server/types';
 
@@ -7,7 +6,8 @@ export const useArticleStore = defineStore('articleStore', () => {
 
 	const article: Record<string, IArticle> = reactive({});
 
-	const pending = ref(false)
+	const pending = ref<string[]>([])
+
 	async function getAll() {
 		const { data } = await useFetch<IArticle[]>('/api/article');
 		articles.value = [];
@@ -20,24 +20,25 @@ export const useArticleStore = defineStore('articleStore', () => {
 
 	async function getOne(shortLink: string) {
 
-		for (let i = 0; i < articles.value.length; i++) {
-			if (articles.value[i].shortLink === shortLink) {
+		const cached = article[shortLink];
 
-				if (pending.value === false) {
-					pending.value = true;
-					const { data } = await useFetch<{ id: string, html: string }>(`/api/article/rendered/${shortLink}`);
-					if (data.value) {
-						articles.value[i].html = data.value.html;
-						article[shortLink] = articles.value[i];
-					}
-					pending.value = false;
-					return articles.value[i];
+		if (cached) {
+			return cached;
+		} else {
+			const cachedInfo = articles.value.find(article => article.shortLink === shortLink);
+			if (cachedInfo) {
+				const html = await getHtml(shortLink);
+				cachedInfo.html = html;
+				article[shortLink] = cachedInfo;
+				return article[shortLink];
+			} else {
+				const { data } = await useFetch<IArticle>(`/api/article/${shortLink}`);
+				if (data.value) {
+					article[shortLink] = data.value;
+					return data.value;
 				}
 			}
 		}
-
-		const { data } = await useFetch<IArticle>(`/api/article/${shortLink}`);
-		if (data.value) article[shortLink] = data.value;
 	}
 
 	async function category(category: string): Promise<IArticle[]> {
@@ -51,10 +52,28 @@ export const useArticleStore = defineStore('articleStore', () => {
 			});
 	}
 
-	async function one(shortLink: string): Promise<IArticle> {
-		if (!article[shortLink]) await getOne(shortLink);
-
-		return article[shortLink];
+	async function one(shortLink: string): Promise<IArticle | undefined> {
+		if (!article[shortLink]) {
+			const article = await getOne(shortLink)
+			return article
+		} else {
+			return article[shortLink];
+		}
 	}
+
+	async function getHtml(shortLink: string) {
+		if (pending.value.find(p => p === shortLink) === undefined) {
+			pending.value.push(shortLink);
+			const { data } = await useFetch<string>(`/api/article/rendered/${shortLink}`);
+			if (data.value) {
+				const indexToRemove = pending.value.indexOf(shortLink);
+				if (indexToRemove !== -1) {
+					pending.value.splice(indexToRemove, 1);
+				}
+				return data.value;
+			}
+		}
+	}
+
 	return { category, one, getAll };
 });

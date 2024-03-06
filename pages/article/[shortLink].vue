@@ -1,11 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
+import '~/styles/md-alert.css';
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
+import type { IArticle } from '~/server/types'
 
 const route = useRoute()
 
@@ -14,7 +16,32 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-const article = await one(shortLink)
+const article:Ref<IArticle> = ref({
+  _id: '',
+  shortLink: '',
+  title: '',
+  description: '',
+  cover: '',
+  category: '',
+  tags: [],
+  content: '',
+  authorId: '',
+  status: '',
+  views: 0,
+  likes: 0,
+  ogImage: '',
+  link: '',
+  createdAt: undefined,
+  updatedAt: undefined,
+  html: '',
+})
+
+one(shortLink).then((data) => {
+  if (data) {
+    article.value = data
+  }
+})
+
 
 const hasCatalog = ref(false)
 
@@ -55,7 +82,7 @@ function initTOC() {
 }
 
 const { start, stop } = useTimeoutFn(async () => {
-  useFetch<string>(`/api/article/views/${article?._id}`, {
+  useFetch<string>(`/api/article/views/${article.value?._id}`, {
     method: 'PUT',
   })
 }, 10000)
@@ -85,14 +112,14 @@ watchEffect(() => {
 })
 
 useSeoMeta({
-  title: () => { return `${article.title} | 薇尔薇` },
-  ogTitle: () => { return `${article.title} | 薇尔薇` },
-  description: () => { return `${article.description} | 薇尔薇` },
-  ogDescription: () => { return `${article.description} | 薇尔薇` },
+  title: () => { return `${article.value.title} | 薇尔薇` },
+  ogTitle: () => { return `${article.value.title} | 薇尔薇` },
+  description: () => { return `${article.value.description}` },
+  ogDescription: () => { return `${article.value.description}` },
   articleAuthor: ['violet'],
   author: 'violet',
-  articleModifiedTime: () => { return formatTime(article.updatedAt) },
-  articlePublishedTime: () => { return formatTime(article.createdAt) },
+  articleModifiedTime: () => { return formatTime(article.value.updatedAt) },
+  articlePublishedTime: () => { return formatTime(article.value.createdAt) },
 })
 
 const colorModel = useColorMode()
@@ -100,11 +127,15 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return `${article.title} | 薇尔薇` },
-    description: () => { return `${article.description} | 薇尔薇` },
+    title: () => { return `${article.value.title} | 薇尔薇` },
+    description: () => { return `${article.value.description}` },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
+})
+
+onMounted(() => {
+  initTOC()
 })
 </script>
 
@@ -140,7 +171,8 @@ defineOgImage({
           <div class="pb-10 pt-10 flex flex-row justify-between">
             <div class="max-w-760px w-full">
               <div class="text-left">
-                <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" />
+                <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
+                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div>
               </div>
             </div>
             <div v-if="hasCatalog" id="violetToc"
