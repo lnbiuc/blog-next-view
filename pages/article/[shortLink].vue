@@ -37,7 +37,6 @@ const article:Ref<IArticle> = ref({
 })
 
 one(shortLink).then((data) => {
-  console.log('get store', data)
   if (data) {
     article.value = data
   }
