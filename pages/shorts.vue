@@ -96,19 +96,6 @@ defineOgImage({
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
 })
-
-useHead({
-  htmlAttrs: {
-    lang: 'zh_CN',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
-})
 </script>
 
 <template>

@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import '~/styles/md-alert.css';
+import { useClipboard, useMouse, useTextSelection } from '@vueuse/core'
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
@@ -53,7 +54,7 @@ useHead({
     {
       rel: 'icon',
       type: 'image/png',
-      href: '/favicon.ico',
+      href: '/site-favicon.ico',
     },
   ],
 })
@@ -102,6 +103,57 @@ onBeforeUnmount(() => {
 
 const { width } = useWindowSize()
 
+
+const openPop = ref<boolean>(false)
+
+const { x, y } = useMouse({ touch: false })
+
+function checkSelection() {
+  const selection = window.getSelection()
+  if (selection && selection.toString()) {
+    // 文字被选中
+    openPop.value = true
+    const pop = document.querySelector('.popover') as HTMLElement
+    if (pop) {
+      pop.style.left = `${x.value - 20}px`
+      pop.style.top = `${y.value - 100}px`
+    }
+  }
+  else {
+    // 没有文字被选中
+    openPop.value = false
+  }
+}
+
+const toast = useToast()
+const state = useTextSelection()
+
+const sourceCopy = ref(state.text.value)
+
+watch(() => state.text.value, (val) => {
+  if (val !== '')
+    sourceCopy.value = val
+})
+
+const { copy, isSupported } = useClipboard({ source: sourceCopy })
+
+function copySelection() {
+  copy()
+  toast.add({ title: 'Copied', description: sourceCopy.value, timeout: 3000, icon: 'i-heroicons-check-circle text-violet' })
+  openPop.value = false
+}
+
+onMounted(async () => {
+  document.querySelectorAll('.markdown-it-code-copy').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const code = btn.getAttribute('data-clipboard-text');
+      sourceCopy.value = code as string
+      copy()
+      toast.add({ title: 'Copied', timeout: 1000, icon: 'i-heroicons-check-circle text-violet' })
+    })
+  })
+})
+
 watchEffect(() => {
   if (width.value < 1200) { hasCatalog.value = false }
   else {
@@ -146,7 +198,7 @@ nextTick(() => {
           <div class="text-left flex flex-col">
             <Transition name="fade">
               <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all">
+                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
             </Transition>
 
             <div class="my-6 text-4xl font-bold">
@@ -171,7 +223,15 @@ nextTick(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"></div>
+                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
+                  @mouseup="checkSelection"></div>
+                <div v-if="isSupported">
+                  <div v-show="openPop"
+                    class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
+                    @click="copySelection">
+                    Copy
+                  </div>
+                </div>
               </div>
             </div>
             <ClientOnly>

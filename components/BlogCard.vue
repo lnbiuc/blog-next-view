@@ -25,7 +25,7 @@ const preloadArticle = useThrottleFn(() => {
 
 <template>
   <NuxtLink :to="`/article/${props.article.shortLink}`" :prefetch="true" @mouseover="preloadArticle()">
-    <div class="backdrop-blur-sm overflow-hidden card-border h-full card">
+    <div class="backdrop-blur-sm overflow-hidden card-border h-full card blog-card-cover">
       <div class="relative overflow-hidden">
         <img :src="`${props.article.cover}/comporess1600x900`" alt="cover"
           class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform p-2px">

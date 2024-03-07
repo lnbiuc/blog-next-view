@@ -31,18 +31,6 @@ defineOgImage({
   },
 })
 
-useHead({
-  htmlAttrs: {
-    lang: 'zh_CN',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
-})
 </script>
 
 <template>
