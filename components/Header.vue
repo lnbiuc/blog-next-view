@@ -30,15 +30,6 @@ const article = ref<IArticle>()
 
 const { one } = useArticleStore()
 
-const computedStyle = ref()
-
-watchEffect(() => {
-  if (isArticlePage.value)
-    computedStyle.value = styles
-  else
-    computedStyle.value = {}
-})
-
 watchEffect(() => {
   if (route.path.includes('/article/')) {
     isArticlePage.value = true
@@ -109,7 +100,7 @@ const { hasAuth } = useUserStore()
     'justify-between w-80': width > 767 && y > 60,
   }">
       <div class="flex flex-row h-60px w-100px items-center">
-        <img src="/favicon.ico" class="ml-4 h-40px w-40px transition-all active:scale-95 hover:scale-105 rounded-full"
+        <img src="/site-favicon.ico" class="ml-4 h-45px w-45px transition-all active:scale-95 hover:scale-105"
           alt="logo" @click="$router.push('/')">
       </div>
       <div class="violet-cus flex flex-col w-full">
