@@ -580,7 +580,7 @@ html:not(.dark) [img-dark] {
 }
 
 .blog-card-cover img {
-  opacity: 0.85;
+  opacity: 0.9;
   transition: opacity 0.3s ease;
 }
 
@@ -602,4 +602,18 @@ html:not(.dark) [img-dark] {
   opacity: 1;
 }
 
+/* CSS */
+@keyframes slideInFromBottom {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
 
+.blog-content-image {
+  animation: slideInFromBottom 0.5s ease-in-out; /* 0.5s是动画时长，可以根据需要调整 */
+}
