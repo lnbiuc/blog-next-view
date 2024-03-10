@@ -251,7 +251,6 @@ async function handleUpload(option: 'cover' | 'content') {
   }
 
   if (status.value === 'error') {
-    console.error(data.value)
     toast.add({ title: `upload ${fileCover.value.name} failed`, description: data.value as string })
   }
   uploading.value = false

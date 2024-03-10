@@ -72,7 +72,7 @@ export async function render(source: string) {
 
 	md.use(codeCopy, {
 		iconClass:
-			'i-carbon-copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all',
+			'i-carbon-copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all hover:cursor-pointer',
 		iconStyle:
 			'font-size: 1.5em;width: 20px;height: 20px;background-size: cover;display: inline-block;',
 	});

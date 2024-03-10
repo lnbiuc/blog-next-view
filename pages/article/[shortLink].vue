@@ -63,24 +63,52 @@ function initTOC() {
   if (!document) return
 
 
-  if (document.querySelector('#violetToc') && document.querySelector('#violetMD')) {
-    tocbot.init({
-      // Where to render the table of contents.
-      tocSelector: '#violetToc',
-      // Where to grab the headings to build the table of contents.
-      contentSelector: '#violetMD',
-      // Which headings to grab inside of the contentSelector element.
-      headingSelector: 'h1, h2, h3',
-      // For headings inside relative or absolute positioned containers within content.
-      // hasInnerContainers: true,
-      scrollSmoothOffset: -80,
-      headingsOffset: 80,
-    })
-  } else {
+  if (!document.querySelector('#violetToc') || !document.querySelector('#violetMD')) {
+    // wait for the dom to be ready
     setTimeout(() => {
       initTOC()
-    }, 1000)
+    }, 100)
+    return
   }
+
+  tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '#violetToc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '#violetMD',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h1, h2, h3',
+    // For headings inside relative or absolute positioned containers within content.
+    // hasInnerContainers: true,
+    scrollSmoothOffset: -80,
+    headingsOffset: 80,
+  })
+
+  setTimeout(() => {
+    // check if the toc is empty
+    if (!document.querySelector('.toc-list')) {
+      initTOC()
+    }
+  }, 100)
+}
+
+function initCopyBtn() {
+
+  if (document.querySelectorAll('.markdown-it-code-copy').length === 0) {
+    setTimeout(() => {
+      initCopyBtn()
+    }, 500)
+    return
+  }
+
+  document.querySelectorAll('.markdown-it-code-copy').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const code = btn.getAttribute('data-clipboard-text');
+      sourceCopy.value = code as string
+      copy()
+      toast.add({ title: 'Copied', timeout: 1000, icon: 'i-heroicons-check-circle text-violet' })
+    })
+  })
 }
 
 const { start, stop } = useTimeoutFn(async () => {
@@ -143,17 +171,6 @@ function copySelection() {
   openPop.value = false
 }
 
-onMounted(async () => {
-  document.querySelectorAll('.markdown-it-code-copy').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const code = btn.getAttribute('data-clipboard-text');
-      sourceCopy.value = code as string
-      copy()
-      toast.add({ title: 'Copied', timeout: 1000, icon: 'i-heroicons-check-circle text-violet' })
-    })
-  })
-})
-
 watchEffect(() => {
   if (width.value < 1200) { hasCatalog.value = false }
   else {
@@ -185,8 +202,11 @@ defineOgImage({
   },
 })
 
-nextTick(() => {
-  initTOC()
+onMounted(() => {
+  nextTick(() => {
+    initTOC()
+    initCopyBtn()
+  })
 })
 </script>
 
@@ -223,8 +243,9 @@ nextTick(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
+                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
                   @mouseup="checkSelection"></div>
+                <div v-else>loading</div>
                 <div v-if="isSupported">
                   <div v-show="openPop"
                     class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"

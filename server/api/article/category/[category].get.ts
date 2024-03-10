@@ -5,6 +5,6 @@ export default defineEventHandler(async event => {
 		const category = event.context.params?.category;
 		return await ArticleSchema.find({ category });
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

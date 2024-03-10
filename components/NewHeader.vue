@@ -80,8 +80,6 @@ watchEffect(() => {
     else {
       readProgress.value = calc
     }
-
-    console.log(document.body.scrollHeight)
   }
 })
 
@@ -89,16 +87,29 @@ const isMobile = computed(() => {
   return width.value < 767
 })
 
-const isBetween = computed(() => {
-  if (width.value < 767) {
-    return 'between'
-  } else if (isFixed) {
-    return 'center'
-  }
-  return 'between'
-})
-
 const isOpen = ref(false)
+
+
+function enableScroll() {
+  window.onscroll = function () { }
+}
+
+function disableScroll() {
+  const x = window.scrollX
+  const y = window.scrollY
+  window.onscroll = function () {
+    window.scrollTo(x, y)
+  }
+}
+
+onMounted(() => {
+  watchEffect(() => {
+    if (isOpen.value)
+      disableScroll()
+    else
+      enableScroll()
+  })
+})
 </script>
 
 <template>
@@ -108,8 +119,8 @@ const isOpen = ref(false)
       'dark:border-b-[#333] border-b-[#eee] shadow-sm bg-opacity-50': showShadow && !isOpen,
       'backdrop-blur-md bg-light dark:bg-dark': showShadow
     }">
-    <div class="shadow-md  rounded-3 cursor-pointer mx-2 mr-4 w-50px h-50px">
-      <img src="/site-favicon.ico" class="w-46px h-46px object-cover" @click="$router.push('/')" />
+    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-50px h-50px flex flex-row justify-center items-center">
+      <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
     </div>
     <div
       class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">

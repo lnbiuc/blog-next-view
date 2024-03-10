@@ -3,7 +3,7 @@
   --c-scrollbar: #eee;
   --c-scrollbar-hover: #bbb;
   --md-color: #050505 !important;
-  --toc-height: calc(100vh - 100px);
+  --toc-height: calc(100vh - 300px);
   --color-violet: rgb(167 139 250);
   --line: hsl(0 0% 5% / 0.25);
 }

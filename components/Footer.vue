@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useWindowSize } from '@vueuse/core'
+
 const link = [
   {
     index: 0,
@@ -27,13 +29,74 @@ const link = [
 ]
 
 const colorMode = useColorMode()
+
+const { width } = useWindowSize()
+
+const isMobile = computed(() => {
+  return width.value < 767
+})
+
+const umami = ref({
+  active: 1,
+  pv: 0,
+  uv: 0,
+  recent: {
+    name: '',
+    icon: ''
+  }
+})
+
+onMounted(async () => {
+  await useFetch('/api/umami/active').then((res) => {
+    if (res.data.value) {
+      umami.value.active = res.data.value
+    } else {
+      umami.value.active = 1
+    }
+  })
+
+  await useFetch('/api/umami/stats').then((res) => {
+    umami.value.pv = res.data.value.pageviews.value
+    umami.value.uv = res.data.value.uniques.value
+  })
+
+  await useFetch('/api/umami/metrics').then((res) => {
+    umami.value.recent.name = res.data.value.name
+    umami.value.recent.icon = res.data.value.emoji
+  })
+})
 </script>
 
 <template>
-  <div id="footer"
-    class="mt-20 flex flex-col w-full justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
-    <div text="xs gray4"
-      class="p-5  flex flex-row h-[120px] w-full overflow-hidden justify-between items-start xl:m-2  lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
+  <div text="xs gray4"
+    class="mt-20 flex w-full flex-col justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
+    <div
+      class="mt-6 flex justify-between items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] w-full"
+      :class="{ 'flex-col': isMobile, 'flex-row': !isMobile }">
+      <div>
+        <span>Total PV:</span>
+        <span text="violet">{{ umami.pv }}</span>
+        <span class="mx-1">|</span>
+        <span>UV:</span>
+        <span text="violet">{{ umami.uv }}</span>
+      </div>
+
+      <div class="flex justify-center items-center" :class="{ 'flex-col': isMobile, 'flex-row ': !isMobile }">
+        <div class="flex flex-row m-2">
+          <div class="i-ri:checkbox-blank-circle-fill mr-1 scale-80" text="green"></div>
+          <span>Current Online:</span>
+          <span text="violet">{{ umami.active }}</span>
+        </div>
+        <div>
+          <span>Recent visitors from:</span>
+          <span class="mx-1">{{ umami.recent.icon }}</span>
+          <span text="violet">{{ umami.recent.name }}</span>
+        </div>
+      </div>
+    </div>
+    <div
+      class="py-5  flex min-h-[120px] w-full overflow-hidden xl:m-2  lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
+      :class="{ 'justify-between flex-row items-start': !isMobile, 'justify-center flex-col items-center': isMobile }">
       <div class="flex flex-col items-start">
         <div>
           <span>Copyright © 2024</span>
@@ -75,7 +138,7 @@ const colorMode = useColorMode()
           </ul>
         </div>
       </div>
-      <div class="flex flex-col items-end">
+      <div class="flex flex-col items-end" :class="{ 'mt-10': isMobile }">
         <div class="flex flex-row">
           <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
             :href="l.url" target="_blank" aria-label="icon">
