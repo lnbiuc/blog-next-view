@@ -87,6 +87,10 @@ const isMobile = computed(() => {
   return width.value < 767
 })
 
+const displaySubHeader = computed(() => {
+  return !isMobile
+})
+
 const isOpen = ref(false)
 
 
@@ -114,12 +118,12 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all duration-700 border-b border-transparent dark:bg-opacity-50 bg-opacity-50"
+    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all  border-b border-transparent dark:bg-opacity-50 bg-opacity-50"
     :class="{
-      'dark:border-b-[#333] border-b-[#eee] shadow-sm': showShadow && !isOpen,
-      'backdrop-blur-xl': showShadow
+      'shadow border-[#eee] dark:border-[#222]': showShadow && !isOpen,
+      'backdrop-blur-xl bg-light dark:bg-dark': showShadow
     }">
-    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-40px h-40px flex flex-row justify-center items-center">
+    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-45px h-45px flex flex-row justify-center items-center">
       <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
     </div>
     <div
@@ -140,15 +144,15 @@ onMounted(() => {
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div v-if="!isMobile" class="flex items-center justify-center z-1000"
+        <div v-if="displaySubHeader" class="flex items-center justify-center z-1000"
           :class="{ 'fixed': isFixed, 'relative': !isFixed }">
           <header ref="headerRef" class="flex items-center justify-center m-auto" :style="{
       ...styles,
       position: isFixed ? 'relative' : 'fixed',
     }">
-            <ul class="flex flex-row items-center transition-all duration-700 h-36px border rounded-full" :class="{
-      'mt-52px dark:border-[#333] border-[#ddd] dark:bg-opacity-100 bg-opacity-100 border shadow-md bg-light dark:bg-dark backdrop-blur-xl': !isFixed,
-      'dark:border-[#333] border-[#ddd] border shadow-sm  dark:bg-opacity-100 bg-opacity-100 backdrop-blur-2xl': !showShadow,
+            <ul class="flex flex-row items-center transition-all  h-36px border rounded-full " :class="{
+      'mt-52px dark:border-[#222] border-[#eee] bg-light dark:bg-dark shadow backdrop-blur-2xl': !isFixed,
+      'dark:border-[#222] border-[#eee]  bg-light dark:bg-dark shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50': !showShadow,
       'border-transparent': isTransparent,
     }">
               <li>
@@ -211,7 +215,7 @@ onMounted(() => {
   <div class="h-60px"></div>
 
   <div v-if="isMobile" name="v-header"
-    class="fixed top-60px bg-opacity-50 backdrop-blur-xl z-6000 h-0 w-full transition-all duration-700 "
+    class="fixed top-60px bg-opacity-50 backdrop-blur-xl z-6000 h-0 w-full transition-all  bg-light dark:bg-dark dark:bg-opacity-50 bg-opacity-50"
     :class="{ 'h-full': isOpen }">
     <Transition name="slide-fade">
       <ul class="flex flex-col items-end" v-if="isOpen">

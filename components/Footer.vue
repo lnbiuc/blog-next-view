@@ -69,7 +69,7 @@ onMounted(async () => {
 
 <template>
   <div text="xs gray4"
-    class="mt-20 flex w-full flex-col justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
+    class="p-4 mt-20 flex w-full flex-col justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
     <div
       class="mt-6 flex justify-between items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] w-full"
       :class="{ 'flex-col': isMobile, 'flex-row': !isMobile }">

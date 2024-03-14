@@ -217,7 +217,8 @@ onMounted(() => {
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
             <div class="flex flex-row justify-center items-center my-4">
-              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet" variant="solid" class="mx-1" :tag="t">
+              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
+                variant="solid" class="mx-1" :tag="t">
                 {{ t }}
               </UBadge>
             </div>
@@ -250,7 +251,7 @@ onMounted(() => {
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
                 <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
                   @mouseup="checkSelection"></div>
-                <div v-else>loading</div>
+                <div v-else class="text-2xl text-violet">loading... please wait</div>
                 <div v-if="isSupported">
                   <div v-show="openPop"
                     class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
