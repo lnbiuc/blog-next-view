@@ -216,6 +216,11 @@ onMounted(() => {
       <div v-if="article">
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
+            <div class="flex flex-row justify-center items-center my-4">
+              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet" variant="solid" class="mx-1" :tag="t">
+                {{ t }}
+              </UBadge>
+            </div>
             <Transition name="fade">
               <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
                 class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">

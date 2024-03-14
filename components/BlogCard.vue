@@ -28,18 +28,18 @@ const preloadArticle = useThrottleFn(() => {
     <div class="backdrop-blur-sm overflow-hidden card-border h-full card blog-card-cover">
       <div class="relative overflow-hidden">
         <img :src="`${props.article.cover}/comporess1600x900`" alt="cover"
-          class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform p-2px">
-        <div class="p-1 text-right absolute bottom-0 right-0">
-          <UBadge v-for="t in props.article.tags" :key="t" color="gray" variant="solid" class="ml-2 opacity-90"
-            :tag="t">
-            {{ t }}
-          </UBadge>
-        </div>
+          class="object-cover rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
       </div>
 
       <div class="p-4 text-left h-full">
         <div class="text-xl font-bold">
           {{ props.article.title }}
+        </div>
+        <div class="mt-2">
+          <UBadge v-for="t in props.article.tags" :key="t" color="gray" size="md" variant="solid" class="mr-2"
+            :tag="t">
+            {{ t }}
+          </UBadge>
         </div>
         <div class="my-2 flex flex-row items-center">
           <div class="text-violet">

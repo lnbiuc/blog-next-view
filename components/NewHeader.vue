@@ -114,12 +114,12 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed  z-999 transition-all duration-700 border-b border-transparent"
+    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all duration-700 border-b border-transparent dark:bg-opacity-50 bg-opacity-50"
     :class="{
-      'dark:border-b-[#333] border-b-[#eee] shadow-sm bg-opacity-50': showShadow && !isOpen,
-      'backdrop-blur-md bg-light dark:bg-dark': showShadow
+      'dark:border-b-[#333] border-b-[#eee] shadow-sm': showShadow && !isOpen,
+      'backdrop-blur-xl': showShadow
     }">
-    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-50px h-50px flex flex-row justify-center items-center">
+    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-40px h-40px flex flex-row justify-center items-center">
       <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
     </div>
     <div
@@ -147,8 +147,8 @@ onMounted(() => {
       position: isFixed ? 'relative' : 'fixed',
     }">
             <ul class="flex flex-row items-center transition-all duration-700 h-36px border rounded-full" :class="{
-      'mt-52px dark:border-[#333] border-[#ddd] border shadow-md backdrop-blur-md bg-opacity-80  bg-white dark:bg-dark': !isFixed,
-      'dark:border-[#333] border-[#ddd] border shadow-sm backdrop-blur-md bg-opacity-70  bg-white dark:bg-dark': !showShadow,
+      'mt-52px dark:border-[#333] border-[#ddd] dark:bg-opacity-100 bg-opacity-100 border shadow-md bg-light dark:bg-dark backdrop-blur-xl': !isFixed,
+      'dark:border-[#333] border-[#ddd] border shadow-sm  dark:bg-opacity-100 bg-opacity-100 backdrop-blur-2xl': !showShadow,
       'border-transparent': isTransparent,
     }">
               <li>
@@ -199,7 +199,7 @@ onMounted(() => {
           <div>&nbsp;</div>
         </div>
         <div v-if="isMobile" name="openMenu" @click="isOpen = !isOpen">
-          <div class="scale-180 mr-4" :class="{ 'i-ri:menu-fold-fill': !isOpen, 'i-ri:close-line': isOpen }"></div>
+          <div class="scale-140 mr-4" :class="{ 'i-ri:menu-fold-fill': !isOpen, 'i-ri:close-line': isOpen }"></div>
         </div>
       </div>
     </div>
@@ -211,7 +211,7 @@ onMounted(() => {
   <div class="h-60px"></div>
 
   <div v-if="isMobile" name="v-header"
-    class="fixed top-60px bg-opacity-50 backdrop-blur-md z-1000 h-0 w-full transition-all duration-700 "
+    class="fixed top-60px bg-opacity-50 backdrop-blur-xl z-6000 h-0 w-full transition-all duration-700 "
     :class="{ 'h-full': isOpen }">
     <Transition name="slide-fade">
       <ul class="flex flex-col items-end" v-if="isOpen">
