@@ -46,7 +46,6 @@ const columns = [
   { key: 'link', label: 'Link' },
   { key: 'createdAt', label: 'Created At', sortable: true },
   { key: 'updatedAt', label: 'Updated At', sortable: true },
-  { key: 'html', label: 'Html' },
 ]
 
 const selectedColumns = ref([...columns])
@@ -170,13 +169,10 @@ function handleEdit() {
 
       <template #ogImage-data="{ row }">
         <UPopover mode="hover">
-          <UAvatar v-if="row.ogImage" :src="`${row.ogImage}/thumbnail`" alt="Avatar" />
-          <div v-else>
-            null
-          </div>
+          <UAvatar :src="`/__og-image__/image/article/${row.shortLink}/og.png`" alt="Avatar" />
           <template #panel>
             <div class="h-full w-full">
-              <img :src="`${row.ogImage}/comporess1600x900`" class="object-cover h-50 w-full">
+              <img :src="`/__og-image__/image/article/${row.shortLink}/og.png`" class="object-cover h-50 w-full">
             </div>
           </template>
         </UPopover>

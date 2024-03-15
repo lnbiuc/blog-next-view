@@ -19,7 +19,6 @@ export interface IArticle {
 	status: string;
 	views: number;
 	likes: number;
-	ogImage?: string;
 	link?: string;
 	createdAt?: Date;
 	updatedAt?: Date;

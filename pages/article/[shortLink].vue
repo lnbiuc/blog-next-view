@@ -195,7 +195,7 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return `${article.value.title} | 薇尔薇` },
+    title: () => { return `${article.value.title}` },
     description: () => { return `${article.value.description}` },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',

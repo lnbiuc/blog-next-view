@@ -40,15 +40,9 @@ export const ArticleSchema = defineMongooseModel({
     likes: {
       type: Number,
     },
-    ogImage: {
-      type: String,
-    },
     link: {
       type: String,
     },
-    html: {
-      type: String,
-    }
   },
   options: {
     timestamps: true,
