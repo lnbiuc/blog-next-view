@@ -144,7 +144,7 @@ onMounted(() => {
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div v-if="displaySubHeader" class="flex items-center justify-center z-1000"
+        <div v-if="!isMobile" class="flex items-center justify-center z-1000"
           :class="{ 'fixed': isFixed, 'relative': !isFixed }">
           <header ref="headerRef" class="flex items-center justify-center m-auto" :style="{
       ...styles,
@@ -215,7 +215,7 @@ onMounted(() => {
   <div class="h-60px"></div>
 
   <div v-if="isMobile" name="v-header"
-    class="fixed top-60px bg-opacity-50 backdrop-blur-xl z-6000 h-0 w-full transition-all  bg-light dark:bg-dark dark:bg-opacity-50 bg-opacity-50"
+    class="fixed top-60px backdrop-blur-xl z-6000 h-0 w-full transition-all  bg-light dark:bg-dark dark:bg-opacity-80 bg-opacity-80"
     :class="{ 'h-full': isOpen }">
     <Transition name="slide-fade">
       <ul class="flex flex-col items-end" v-if="isOpen">
