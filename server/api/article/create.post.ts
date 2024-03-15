@@ -5,6 +5,6 @@ export default defineEventHandler(async event => {
 		const body = await readBody(event);
 		return await new ArticleSchema(body).save();
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

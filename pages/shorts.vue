@@ -39,7 +39,7 @@ async function handleParamsChange(searchVal: string) {
   }
   if (searchVal !== '') {
     isLoading.value = true
-    const { data } = await useFetch<IArticle[]>('/api/search', {
+    const { data } = await useFetch<IArticle[]>('/api/search/orama', {
       method: 'POST',
       body: {
         category: 'short',
@@ -95,19 +95,6 @@ defineOgImage({
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
-})
-
-useHead({
-  htmlAttrs: {
-    lang: 'zh_CN',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
 })
 </script>
 

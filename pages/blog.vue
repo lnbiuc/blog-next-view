@@ -39,7 +39,7 @@ async function handleParamsChange(searchVal: string) {
   }
   if (searchVal !== '') {
     isLoading.value = true
-    const { data } = await useFetch<IArticle[]>('/api/search', {
+    const { data } = await useFetch<IArticle[]>('/api/search/orama', {
       method: 'POST',
       body: {
         category: 'article',
@@ -73,7 +73,6 @@ async function handleSortByChange(selectVal: string) {
   }
   else {
     articles.value.sort((a, b) => {
-      // @ts-expect-error no error
       return b.views - a.views
     })
   }
@@ -98,18 +97,6 @@ defineOgImage({
   },
 })
 
-useHead({
-  htmlAttrs: {
-    lang: 'zh_CN',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
-})
 </script>
 
 <template>

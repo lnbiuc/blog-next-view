@@ -23,19 +23,6 @@ defineOgImage({
   },
 })
 
-useHead({
-  htmlAttrs: {
-    lang: 'zh_CN',
-  },
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/png',
-      href: '/favicon.ico',
-    },
-  ],
-})
-
 const articles: Ref<IArticle[]> = ref([])
 const shorts: Ref<IArticle[]> = ref([])
 const projects: Ref<IArticle[]> = ref([])
@@ -119,6 +106,7 @@ getAll().then(() => {
               </MyButton>
             </div>
           </div>
+          <div v-show="false" class="i-carbon-copy"></div>
         </NuxtLayout>
       </div>
     </NuxtLayout>

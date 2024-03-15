@@ -19,7 +19,8 @@ onMounted(() => {
 <template>
   <div>
     <div class="opacity-20 h-full w-full z-0" />
-    <Header />
+    <!-- <Header /> -->
+    <NewHeader></NewHeader>
     <div class="relative z-10 min-h-[85vh]">
       <NuxtPage />
     </div>

@@ -18,6 +18,6 @@ export default defineEventHandler(async event => {
 
 		return { success: true };
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

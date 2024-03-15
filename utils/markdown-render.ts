@@ -30,37 +30,19 @@ import codeCopy from 'markdown-it-code-copy';
 import { alert } from '@mdit/plugin-alert';
 
 import Card from '~/components/content/Card.vue';
-import markdownit from 'markdown-it'
+import markdownit from 'markdown-it';
 
 export async function render(source: string) {
-	// const { content, md } = await useNuxtMarkdown(source.replace(/\\n/g, '\n'), {
-	// 	components: {
-	// 		Card,
-	// 	},
-	// 	plugins: [
-	// 		// await shikiji({
-	// 		// 	themes: {
-	// 		// 		light: 'github-light',
-	// 		// 		dark: 'github-dark',
-	// 		// 	},
-	// 		// 	transformers: [
-	// 		// 		transformerNotationDiff(),
-	// 		// 		transformerNotationHighlight(),
-	// 		// 		transformerNotationWordHighlight(),
-	// 		// 		transformerNotationFocus(),
-	// 		// 		transformerMetaHighlight(),
-	// 		// 	],
-	// 		// }),
-	// 	],
-	// });
-	const md = markdownit()
+	const md = markdownit();
 
-	md.use(await shikiji({
-		themes: {
-			light: 'github-light',
-			dark: 'github-dark',
-		}
-	}))
+	md.use(
+		await shikiji({
+			themes: {
+				light: 'github-light',
+				dark: 'github-dark',
+			},
+		})
+	);
 
 	md.use(anchor);
 
@@ -81,7 +63,8 @@ export async function render(source: string) {
 	md.use(implicitFigures, {
 		lazy: true,
 		async: true,
-		classes: 'w-full h-auto rounded-md shadow hover:shadow-lg transition-all',
+		classes:
+			'w-full h-auto rounded-md shadow hover:shadow-lg transition-all blog-content-image',
 		link: true,
 	});
 
@@ -89,7 +72,7 @@ export async function render(source: string) {
 
 	md.use(codeCopy, {
 		iconClass:
-			'i-carbon-copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all',
+			'i-carbon-copy w-30px h-30px text-violet opacity-50 hover:opacity-100 transition-all hover:cursor-pointer',
 		iconStyle:
 			'font-size: 1.5em;width: 20px;height: 20px;background-size: cover;display: inline-block;',
 	});
@@ -102,8 +85,6 @@ export async function render(source: string) {
 
 		return `<a href="${href}" target="_blank" name="violet-link-inspect">`;
 	};
-
-	
 
 	return md.render(source.replace(/\\n/g, '\n'));
 }

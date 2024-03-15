@@ -16,6 +16,6 @@ export default defineEventHandler(async event => {
 		}
 		return { code: 400, msg: 'login failed' };
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

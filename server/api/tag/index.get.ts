@@ -4,6 +4,6 @@ export default defineEventHandler(async event => {
 	try {
 		return await ArticleSchema.find({ status: 'PUBLISHED' }, { tags: 1 });
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

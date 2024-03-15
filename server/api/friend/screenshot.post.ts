@@ -51,6 +51,6 @@ export default defineEventHandler(async event => {
 			return previewUrl;
 		}
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

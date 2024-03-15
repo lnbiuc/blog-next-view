@@ -16,6 +16,6 @@ export default defineEventHandler(async event => {
 		// 使用Set对象去重
 		return Array.from(new Set(allTags));
 	} catch (error) {
-		return error;
+		return new Response(error as string, { status: 500 });
 	}
 });

@@ -58,6 +58,7 @@ export default defineNuxtConfig({
 		twitterCard: 'summary_large_image',
 		twitterSite: '@ZZSLL_53387',
 		twitterCreator: '@ZZSLL_53387',
+		icon: '/site-favicon.ico',
 	},
 
 	experimental: {
@@ -91,8 +92,8 @@ export default defineNuxtConfig({
 		head: {
 			viewport: 'width=device-width,initial-scale=1',
 			link: [
-				{ rel: 'icon', href: '/favicon.ico', sizes: 'any' },
-				{ rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
+				{ rel: 'icon', href: '/site-favicon.ico', sizes: 'any' },
+				{ rel: 'apple-touch-icon', href: '/site-favicon.ico' },
 			],
 			meta: [
 				{ name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -101,14 +102,16 @@ export default defineNuxtConfig({
 			],
 			// umami analytics
 			script:
-				process.env.NODE_ENV === 'production'
+				process.env.NODE_ENV === 'production' &&
+				process.env.UMAMI_ADDRESS &&
+				process.env.UMAMI_WEBSITE_ID
 					? [
-						{
-							async: true,
-							src: 'https://umami.vio.vin/script.js',
-							'data-website-id': 'eef5fee4-26c0-4ac4-90eb-21e588de9635',
-						},
-					]
+							{
+								async: true,
+								src: `${process.env.UMAMI_ADDRESS}/script.js`,
+								'data-website-id': process.env.UMAMI_WEBSITE_ID,
+							},
+					  ]
 					: [],
 		},
 	},
