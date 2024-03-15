@@ -33,7 +33,7 @@ function openNewTab(url: string | undefined) {
       </div>
     </div>
     <div class="px-4 pb-4 relative">
-      <img :src="`${props.article.cover}/comporess1600x900`" alt="cover" class="object-cover rounded-md h-48 w-full">
+      <img :src="`${props.article.cover}/comporess1600x900`" alt="cover" class="object-cover aspect-[16/9] rounded-md w-full">
     </div>
   </div>
 </template>

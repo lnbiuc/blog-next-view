@@ -109,10 +109,10 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all  border-b border-transparent dark:bg-opacity-50 bg-opacity-50"
+    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all border-b border-transparent"
     :class="{
-      'shadow border-[#eee] dark:border-[#222]': showShadow && !isOpen,
-      'backdrop-blur-xl bg-light dark:bg-dark': showShadow
+      'shadow border-[#eee] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
+      'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen
     }">
     <div class="rounded-3 cursor-pointer mx-2 mr-4 w-45px h-45px flex flex-row justify-center items-center">
       <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
@@ -204,7 +204,7 @@ onMounted(() => {
   <div class="h-60px"></div>
 
   <div name="v-header"
-    class="fixed top-60px backdrop-blur-xl z-6000 h-0 w-full transition-all bg-light dark:bg-dark flex sm:hidden md:hidden lg:hidden xl:hidden justify-end"
+    class="fixed top-60px z-6000 h-0 w-full transition-all bg-light dark:bg-dark flex sm:hidden md:hidden lg:hidden xl:hidden justify-end"
     :class="{ 'h-full': isOpen }">
     <Transition name="slide-fade">
       <ul class="flex flex-col items-end" v-if="isOpen">
