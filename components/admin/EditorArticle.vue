@@ -136,7 +136,7 @@ const article = ref<IArticle>({
   link: '',
   createdAt: undefined,
   updatedAt: undefined,
-  html: '',
+  html: undefined,
 })
 
 if (props.shortLink) {
