@@ -59,12 +59,13 @@ export default defineConfig({
 		}),
 		presetTypography(),
 		presetWebFonts({
+			provider: 'google', // default provider
 			fonts: {
-				sans: 'DM Sans',
-				serif: 'DM Serif Display',
-				mono: 'DM Mono',
+				// these will extend the default theme
+				serif: ['serif', 'Noto Serif SC'],
+				mono: ['Fira Code', 'Fira Mono:400,700'],
 			},
-		}),
+		})
 	],
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 });

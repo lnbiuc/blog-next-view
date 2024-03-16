@@ -20,10 +20,10 @@ function openNewTab(url: string | undefined) {
     class="card project-card-bg-filter backdrop-blur-sm my-open-tab flex flex-col overflow-hidden justify-between card-border"
     @click="openNewTab(props.article.link)">
     <div class="p-4 text-left">
-      <div class="text-lg font-bold">
+      <div class="text-2xl font-bold font-serif">
         {{ props.article.title }}
       </div>
-      <div class="mt-2">
+      <div class="mt-2 dark:text-gray-400 text-gray-800">
         {{ props.article.description }}
       </div>
       <div>

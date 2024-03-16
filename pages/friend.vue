@@ -49,7 +49,7 @@ defineOgImage({
         </div>
         <FriendCards :friends="friends!" class="mb-20" />
         <!-- <MDRender :source="md" /> -->
-        <div class="text-left violet-prose">
+        <div class="text-left violet-prose font-serif">
           <p>你可以通过在下方评论来申请友链，只需满足以下条件即可，通过后博主会手动添加嗷。</p>
           <ul>
             <li>国内可访问</li>

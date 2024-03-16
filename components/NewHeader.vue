@@ -109,7 +109,7 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all border-b border-transparent"
+    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all border-b border-transparent font-sans"
     :class="{
       'shadow border-[#eee] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
       'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen
@@ -120,7 +120,7 @@ onMounted(() => {
     <div
       class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
       <div class="flex flex-row items-center w-full justify-around">
-        <div name="title" class="w-50% flex flex-row justify-start flex-1">
+        <div name="title" class="w-50% flex flex-row justify-start flex-1 font-serif">
           <Transition name="slide">
             <div v-if="!isFixed">
               <div class="text-xl font-semibold text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">

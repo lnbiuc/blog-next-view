@@ -208,7 +208,7 @@ onMounted(() => {
                 class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100"> -->
             </Transition>
 
-            <div class="mt-16 mb-6 text-4xl font-bold">
+            <div class="mt-16 mb-6 text-4xl font-bold font-serif">
               {{ article?.title }}
             </div>
             <div class="mb-1">
@@ -236,7 +236,7 @@ onMounted(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
+                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left font-serif"
                   @mouseup="checkSelection"></div>
                 <div v-else class="text-2xl text-violet">loading... please wait</div>
                 <div v-if="isSupported">
@@ -250,10 +250,10 @@ onMounted(() => {
             </div>
             <ClientOnly>
               <div v-if="hasCatalog" id="violetToc"
-                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb] font-serif" />
             </ClientOnly>
           </div>
-          <div class="violet-prose mb-10 text-left cursor-pointer">
+          <div class="violet-prose mb-10 text-left cursor-pointer font-serif">
             <a class="text-xl" @click="$router.back">cd ..</a>
           </div>
           <Comment />

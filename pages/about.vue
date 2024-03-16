@@ -34,7 +34,7 @@ defineOgImage({
           </div>
           <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
           <!-- <MDRender class="violet-prose" :source="md"/> -->
-          <div class="violet-prose">
+          <div class="violet-prose font-serif">
             <h1 id="violet" tabindex="-1">Violet</h1>
             <h2 id="whoami" tabindex="-1">whoami</h2>
             <p>Hello! I'm Violet. I'm a recent graduate in computer science. A Java programmer based in Xi'an. I have a

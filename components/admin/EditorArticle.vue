@@ -205,7 +205,6 @@ watchEffect(async () => {
     return
   } else {
     tags.value = []
-    article.value.tags = []
     const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
     // @ts-expect-error no error
