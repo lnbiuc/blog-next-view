@@ -17,32 +17,39 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-const article: Ref<IArticle> = ref({
-  _id: '',
-  shortLink: '',
-  title: '',
-  description: '',
-  cover: '',
-  category: '',
-  tags: [],
-  content: '',
-  authorId: '',
-  status: '',
-  views: 0,
-  likes: 0,
-  ogImage: '',
-  link: '',
-  createdAt: undefined,
-  updatedAt: undefined,
-  html: '',
-})
+// const article: Ref<IArticle> = ref({
+//   _id: '',
+//   shortLink: '',
+//   title: '',
+//   description: '',
+//   cover: '',
+//   category: '',
+//   tags: [],
+//   content: '',
+//   authorId: '',
+//   status: '',
+//   views: 0,
+//   likes: 0,
+//   ogImage: '',
+//   link: '',
+//   createdAt: undefined,
+//   updatedAt: undefined,
+//   html: '',
+// })
 
-one(shortLink).then((data) => {
-  if (data) {
-    article.value = data
-  }
-})
+// one(shortLink).then((data) => {
+//   if (data) {
+//     article.value = data
+//   }
+// })
 
+const router = useRouter()
+
+const article = await one(shortLink)
+
+if (!article) {
+  router.back()
+}
 
 const hasCatalog = ref(false)
 
@@ -112,9 +119,12 @@ function initCopyBtn() {
 }
 
 const { start, stop } = useTimeoutFn(async () => {
-  useFetch<string>(`/api/article/views/${article.value?._id}`, {
+
+  if (article) {
+    useFetch<string>(`/api/article/views/${article?._id}`, {
     method: 'PUT',
   })
+  }
 }, 10000)
 
 onMounted(() => {
@@ -180,14 +190,14 @@ watchEffect(() => {
 })
 
 useSeoMeta({
-  title: () => { return `${article.value.title} | 薇尔薇` },
-  ogTitle: () => { return `${article.value.title} | 薇尔薇` },
-  description: () => { return `${article.value.description}` },
-  ogDescription: () => { return `${article.value.description}` },
+  title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
+  ogTitle: () => { return article ? `${article.title} | 薇尔薇`: '404 NotFound | 薇尔薇' },
+  description: () => { return article ? `${article.description}` : '404 NotFound' },
+  ogDescription: () => { return article ? `${article.description}` : '404 NotFound' },
   articleAuthor: ['violet'],
   author: 'violet',
-  articleModifiedTime: () => { return formatTime(article.value.updatedAt) },
-  articlePublishedTime: () => { return formatTime(article.value.createdAt) },
+  articleModifiedTime: () => { return article ? formatTime(article.updatedAt) : '' },
+  articlePublishedTime: () => { return article ? formatTime(article.createdAt) : '' },
 })
 
 const colorModel = useColorMode()
@@ -195,8 +205,8 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return `${article.value.title}` },
-    description: () => { return `${article.value.description}` },
+    title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
+    description: () => { return article ? `${article.description}` : '404 NotFound' },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
