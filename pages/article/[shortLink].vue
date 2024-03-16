@@ -17,32 +17,6 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-// const article: Ref<IArticle> = ref({
-//   _id: '',
-//   shortLink: '',
-//   title: '',
-//   description: '',
-//   cover: '',
-//   category: '',
-//   tags: [],
-//   content: '',
-//   authorId: '',
-//   status: '',
-//   views: 0,
-//   likes: 0,
-//   ogImage: '',
-//   link: '',
-//   createdAt: undefined,
-//   updatedAt: undefined,
-//   html: '',
-// })
-
-// one(shortLink).then((data) => {
-//   if (data) {
-//     article.value = data
-//   }
-// })
-
 const router = useRouter()
 
 const article = await one(shortLink)
@@ -226,22 +200,25 @@ onMounted(() => {
       <div v-if="article">
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
-            <div class="flex flex-row justify-center items-center my-4">
-              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
-                variant="solid" class="mx-1" :tag="t">
-                {{ t }}
-              </UBadge>
-            </div>
-            <Transition name="fade">
-              <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
+            <Transition name="slide-fade">
+              <NuxtImg v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
+              </NuxtImg>
+              <!-- <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100"> -->
             </Transition>
 
-            <div class="my-6 text-4xl font-bold">
+            <div class="mt-16 mb-6 text-4xl font-bold">
               {{ article?.title }}
             </div>
             <div class="mb-1">
               {{ article?.description }}
+            </div>
+            <div class="flex flex-row justify-start items-center mt-3">
+              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
+                variant="solid" class="mx-1" :tag="t">
+                {{ t }}
+              </UBadge>
             </div>
             <div class="mt-4 flex flex-row justify-start items-center">
               <div class="i-carbon-view mr-2" />

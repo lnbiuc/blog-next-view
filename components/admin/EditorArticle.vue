@@ -120,6 +120,7 @@ const props = defineProps({
 const toast = useToast()
 
 const article = ref<IArticle>({
+  // @ts-expect-error no error
   _id: undefined,
   shortLink: '',
   title: '',
@@ -207,6 +208,7 @@ watchEffect(async () => {
     article.value.tags = []
     const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
+    // @ts-expect-error no error
     tags.value = data.value as string[]
   }
 })
