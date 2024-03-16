@@ -27,7 +27,7 @@ const preloadArticle = useThrottleFn(() => {
   <NuxtLink :to="`/article/${props.article.shortLink}`" :prefetch="true" @mouseover="preloadArticle()">
     <div class="card-bg-filter backdrop-blur-sm card-border h-full card">
       <div class="p-4 text-left">
-        <div class="text-lg font-bold">
+        <div class="text-xl font-bold font-serif">
           {{ props.article.title }}
         </div>
         <div class="mt-2">
@@ -36,7 +36,7 @@ const preloadArticle = useThrottleFn(() => {
             {{ t }}
           </UBadge>
         </div>
-        <div class="mt-3 text-sm">
+        <div class="mt-3 text-sm dark:text-gray-400 text-gray-800">
           {{ formatTime(props.article.createdAt) }}
         </div>
       </div>

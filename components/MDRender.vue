@@ -32,7 +32,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="violetMD" class="violet-prose mb-20 mt-5 text-left">
+  <div id="violetMD" class="violet-prose mb-20 mt-5 text-left font-serif">
     <div v-if="$props.html" v-html="$props.html" />
     <div v-else v-html="renderRes" />
   </div>

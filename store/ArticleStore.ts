@@ -9,6 +9,9 @@ export const useArticleStore = defineStore('articleStore', () => {
 	const pending = ref<string[]>([])
 
 	async function getAll() {
+
+		if (articles.value.length > 0) return articles.value;
+
 		const { data } = await useFetch<IArticle[]>('/api/article');
 		articles.value = [];
 		if (data.value) {

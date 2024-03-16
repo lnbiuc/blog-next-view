@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useWindowSize } from '@vueuse/core'
 
 const link = [
   {
@@ -29,12 +28,6 @@ const link = [
 ]
 
 const colorMode = useColorMode()
-
-const { width } = useWindowSize()
-
-const isMobile = computed(() => {
-  return width.value < 767
-})
 
 const umami = ref({
   active: 1,
@@ -71,8 +64,7 @@ onMounted(async () => {
   <div text="xs gray4"
     class="p-4 mt-20 flex w-full flex-col justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
     <div
-      class="mt-6 flex justify-between items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] w-full"
-      :class="{ 'flex-col': isMobile, 'flex-row': !isMobile }">
+      class="mt-6 flex justify-between items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] w-full flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
       <div>
         <span>Total PV:</span>
         <span text="violet">{{ umami.pv }}</span>
@@ -81,7 +73,7 @@ onMounted(async () => {
         <span text="violet">{{ umami.uv }}</span>
       </div>
 
-      <div class="flex justify-center items-center" :class="{ 'flex-col': isMobile, 'flex-row ': !isMobile }">
+      <div class="flex justify-center items-center flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
         <div class="flex flex-row m-2">
           <div class="i-ri:checkbox-blank-circle-fill mr-1 scale-80" text="green"></div>
           <span>Current Online:</span>
@@ -95,8 +87,7 @@ onMounted(async () => {
       </div>
     </div>
     <div
-      class="py-5  flex min-h-[120px] w-full overflow-hidden xl:m-2  lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
-      :class="{ 'justify-between flex-row items-start': !isMobile, 'justify-center flex-col items-center': isMobile }">
+      class="py-5  flex min-h-[120px] w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] justify-center flex-col items-center sm:justify-between sm:flex-row sm:items-start xl:justify-between xl:flex-row xl:items-start lg:justify-between lg:flex-row lg:items-start">
       <div class="flex flex-col items-start">
         <div>
           <span>Copyright © 2024</span>
@@ -138,7 +129,7 @@ onMounted(async () => {
           </ul>
         </div>
       </div>
-      <div class="flex flex-col items-end" :class="{ 'mt-10': isMobile }">
+      <div class="flex flex-col items-end mt-10 sm:mt-unset md:mt-unset xl:mt-unset lg:mt-unset">
         <div class="flex flex-row">
           <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
             :href="l.url" target="_blank" aria-label="icon">
@@ -149,7 +140,7 @@ onMounted(async () => {
           </a>
         </div>
         <div class="mt-6">
-          <a v-if="colorMode.value === 'dark'" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
+          <a v-if="colorMode.preference === 'dark'" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
               src=https://zeabur.com/deployed-on-zeabur-dark.svg alt="Deployed on Zeabur" /></a>
           <a v-else class="shadow" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
               src=https://zeabur.com/deployed-on-zeabur-light.svg alt="Deployed on Zeabur" /></a>

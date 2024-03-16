@@ -17,32 +17,13 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-const article: Ref<IArticle> = ref({
-  _id: '',
-  shortLink: '',
-  title: '',
-  description: '',
-  cover: '',
-  category: '',
-  tags: [],
-  content: '',
-  authorId: '',
-  status: '',
-  views: 0,
-  likes: 0,
-  ogImage: '',
-  link: '',
-  createdAt: undefined,
-  updatedAt: undefined,
-  html: '',
-})
+const router = useRouter()
 
-one(shortLink).then((data) => {
-  if (data) {
-    article.value = data
-  }
-})
+const article = await one(shortLink)
 
+if (!article) {
+  router.back()
+}
 
 const hasCatalog = ref(false)
 
@@ -112,9 +93,12 @@ function initCopyBtn() {
 }
 
 const { start, stop } = useTimeoutFn(async () => {
-  useFetch<string>(`/api/article/views/${article.value?._id}`, {
+
+  if (article) {
+    useFetch<string>(`/api/article/views/${article?._id}`, {
     method: 'PUT',
   })
+  }
 }, 10000)
 
 onMounted(() => {
@@ -180,14 +164,14 @@ watchEffect(() => {
 })
 
 useSeoMeta({
-  title: () => { return `${article.value.title} | 薇尔薇` },
-  ogTitle: () => { return `${article.value.title} | 薇尔薇` },
-  description: () => { return `${article.value.description}` },
-  ogDescription: () => { return `${article.value.description}` },
+  title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
+  ogTitle: () => { return article ? `${article.title} | 薇尔薇`: '404 NotFound | 薇尔薇' },
+  description: () => { return article ? `${article.description}` : '404 NotFound' },
+  ogDescription: () => { return article ? `${article.description}` : '404 NotFound' },
   articleAuthor: ['violet'],
   author: 'violet',
-  articleModifiedTime: () => { return formatTime(article.value.updatedAt) },
-  articlePublishedTime: () => { return formatTime(article.value.createdAt) },
+  articleModifiedTime: () => { return article ? formatTime(article.updatedAt) : '' },
+  articlePublishedTime: () => { return article ? formatTime(article.createdAt) : '' },
 })
 
 const colorModel = useColorMode()
@@ -195,8 +179,8 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return `${article.value.title} | 薇尔薇` },
-    description: () => { return `${article.value.description}` },
+    title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
+    description: () => { return article ? `${article.description}` : '404 NotFound' },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
@@ -216,22 +200,25 @@ onMounted(() => {
       <div v-if="article">
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
-            <div class="flex flex-row justify-center items-center my-4">
-              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
-                variant="solid" class="mx-1" :tag="t">
-                {{ t }}
-              </UBadge>
-            </div>
-            <Transition name="fade">
-              <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
+            <Transition name="slide-fade">
+              <NuxtImg v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
+              </NuxtImg>
+              <!-- <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100"> -->
             </Transition>
 
-            <div class="my-6 text-4xl font-bold">
+            <div class="mt-16 mb-6 text-4xl font-bold font-serif">
               {{ article?.title }}
             </div>
             <div class="mb-1">
               {{ article?.description }}
+            </div>
+            <div class="flex flex-row justify-start items-center mt-3">
+              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
+                variant="solid" class="mx-1" :tag="t">
+                {{ t }}
+              </UBadge>
             </div>
             <div class="mt-4 flex flex-row justify-start items-center">
               <div class="i-carbon-view mr-2" />
@@ -249,7 +236,7 @@ onMounted(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left"
+                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left font-serif"
                   @mouseup="checkSelection"></div>
                 <div v-else class="text-2xl text-violet">loading... please wait</div>
                 <div v-if="isSupported">
@@ -263,10 +250,10 @@ onMounted(() => {
             </div>
             <ClientOnly>
               <div v-if="hasCatalog" id="violetToc"
-                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb] font-serif" />
             </ClientOnly>
           </div>
-          <div class="violet-prose mb-10 text-left cursor-pointer">
+          <div class="violet-prose mb-10 text-left cursor-pointer font-serif">
             <a class="text-xl" @click="$router.back">cd ..</a>
           </div>
           <Comment />

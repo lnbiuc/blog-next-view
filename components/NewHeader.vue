@@ -83,16 +83,7 @@ watchEffect(() => {
   }
 })
 
-const isMobile = computed(() => {
-  return width.value < 767
-})
-
-const displaySubHeader = computed(() => {
-  return !isMobile
-})
-
 const isOpen = ref(false)
-
 
 function enableScroll() {
   window.onscroll = function () { }
@@ -118,10 +109,10 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all  border-b border-transparent dark:bg-opacity-50 bg-opacity-50"
+    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all border-b border-transparent font-sans"
     :class="{
-      'shadow border-[#eee] dark:border-[#222]': showShadow && !isOpen,
-      'backdrop-blur-xl bg-light dark:bg-dark': showShadow
+      'shadow border-[#eee] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
+      'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen
     }">
     <div class="rounded-3 cursor-pointer mx-2 mr-4 w-45px h-45px flex flex-row justify-center items-center">
       <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
@@ -129,22 +120,20 @@ onMounted(() => {
     <div
       class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
       <div class="flex flex-row items-center w-full justify-around">
-        <div name="title" class="w-50% flex flex-row justify-start flex-1">
+        <div name="title" class="w-50% flex flex-row justify-start flex-1 font-serif">
           <Transition name="slide">
             <div v-if="!isFixed">
-              <div class="text-xl font-semibold text-ellipsis overflow-hidden whitespace-no-wrap truncate"
-                :class="{ 'max-w-60': isMobile }">
+              <div class="text-xl font-semibold text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
                 {{ article?.title }}
               </div>
-              <div class="text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-no-wrap truncate"
-                :class="{ 'max-w-60': isMobile }">
+              <div class=" max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-no-wrap truncate">
                 {{ article?.category }} / {{ article?.shortLink }}
               </div>
             </div>
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div v-if="displaySubHeader" class="flex items-center justify-center z-1000"
+        <div class="hidden items-center justify-center z-1000 sm:flex md:flex lg:flex xl:flex"
           :class="{ 'fixed': isFixed, 'relative': !isFixed }">
           <header ref="headerRef" class="flex items-center justify-center m-auto" :style="{
       ...styles,
@@ -193,7 +182,7 @@ onMounted(() => {
             </ul>
           </header>
         </div>
-        <div name="rate" class="w-50% flex flex-row justify-end flex-1" :class="{ 'mr-4': isMobile }">
+        <div name="rate" class="w-50% flex flex-row justify-end flex-1 mr-0 sm:mr-4 md:mr-4 xl:mr-4 lg:mr-4">
           <Transition name="slide">
             <div v-if="!isFixed">
               {{ Math.round(readProgress * 100) }}
@@ -202,20 +191,20 @@ onMounted(() => {
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div v-if="isMobile" name="openMenu" @click="isOpen = !isOpen">
+        <div class="flex sm:hidden md:hidden lg:hidden xl:hidden" name="openMenu" @click="isOpen = !isOpen">
           <div class="scale-140 mr-4" :class="{ 'i-ri:menu-fold-fill': !isOpen, 'i-ri:close-line': isOpen }"></div>
         </div>
       </div>
     </div>
-    <div class="w-50px" v-if="!isMobile">
+    <div class="w-50px hidden sm:flex md:flex lg:flex xl:flex">
       <DarkToggle />
     </div>
   </div>
 
   <div class="h-60px"></div>
 
-  <div v-if="isMobile" name="v-header"
-    class="fixed top-60px bg-opacity-50 backdrop-blur-xl z-6000 h-0 w-full transition-all  bg-light dark:bg-dark dark:bg-opacity-50 bg-opacity-50"
+  <div name="v-header"
+    class="fixed top-60px z-6000 h-0 w-full transition-all bg-light dark:bg-dark flex sm:hidden md:hidden lg:hidden xl:hidden justify-end"
     :class="{ 'h-full': isOpen }">
     <Transition name="slide-fade">
       <ul class="flex flex-col items-end" v-if="isOpen">

@@ -120,6 +120,7 @@ const props = defineProps({
 const toast = useToast()
 
 const article = ref<IArticle>({
+  // @ts-expect-error no error
   _id: undefined,
   shortLink: '',
   title: '',
@@ -136,7 +137,7 @@ const article = ref<IArticle>({
   link: '',
   createdAt: undefined,
   updatedAt: undefined,
-  html: '',
+  html: undefined,
 })
 
 if (props.shortLink) {
@@ -204,9 +205,9 @@ watchEffect(async () => {
     return
   } else {
     tags.value = []
-    article.value.tags = []
     const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
+    // @ts-expect-error no error
     tags.value = data.value as string[]
   }
 })
@@ -344,40 +345,40 @@ watchEffect(() => {
 
 const isPending = ref(false)
 
-async function handleGenerateOgImage() {
+// async function handleGenerateOgImage() {
 
-  if (article.value.shortLink === '') {
-    toast.add({ title: `shortLink is empty.` })
-    return
-  }
+//   if (article.value.shortLink === '') {
+//     toast.add({ title: `shortLink is empty.` })
+//     return
+//   }
 
-  if (article.value._id === undefined || article.value._id === null || article.value._id === '') {
-    toast.add({ title: `article id is empty.` })
-    return
-  }
+//   if (article.value._id === undefined || article.value._id === null || article.value._id === '') {
+//     toast.add({ title: `article id is empty.` })
+//     return
+//   }
 
-  const url = `https://vio.vin/og/${article.value.shortLink}`
-  isPending.value = true
-  const { data, error } = await useFetch<string>('/api/friend/screenshot', {
-    method: 'POST',
-    body: {
-      url,
-    },
-    headers: {
-      'Authorization': getToken()
-    }
-  })
+//   const url = `https://vio.vin/og/${article.value.shortLink}`
+//   isPending.value = true
+//   const { data, error } = await useFetch<string>('/api/friend/screenshot', {
+//     method: 'POST',
+//     body: {
+//       url,
+//     },
+//     headers: {
+//       'Authorization': getToken()
+//     }
+//   })
 
-  if (error.value) {
-    isPending.value = false
-    toast.add({ title: error.value?.message })
-  }
-  if (data.value) {
-    isPending.value = false
-    article.value.ogImage = data.value
-    toast.add({ title: `gen screenShot success.` })
-  }
-}
+//   if (error.value) {
+//     isPending.value = false
+//     toast.add({ title: error.value?.message })
+//   }
+//   if (data.value) {
+//     isPending.value = false
+//     article.value.ogImage = data.value
+//     toast.add({ title: `gen screenShot success.` })
+//   }
+// }
 
 const createTag = ref('')
 
@@ -496,7 +497,7 @@ function handleCreateTag() {
               {{ errorFields.link[0].message }}
             </div>
           </UFormGroup>
-          <UFormGroup label="Og Image" name="ogImage">
+          <!-- <UFormGroup label="Og Image" name="ogImage">
             <div class="flex flex-row w-full">
               <UInput v-model="article.ogImage" class="w-full" />
               <UButton class="ml-2" @click="handleGenerateOgImage" :loading="isPending" :disabled="isPending">
@@ -506,7 +507,7 @@ function handleCreateTag() {
             <div v-if="article.ogImage" class="my-4">
               <img :src="article.ogImage" alt="cover" class="object-cover rounded-md shadow w-full">
             </div>
-          </UFormGroup>
+          </UFormGroup> -->
           <div class="w-full">
             <UButton type="submit" color="blue" :disabled="!pass" @click="throttledPublish">
               Submit
