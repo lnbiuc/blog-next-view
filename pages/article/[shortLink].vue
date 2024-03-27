@@ -201,10 +201,10 @@ onMounted(() => {
         <NuxtLayout name="home">
           <div class="text-left flex flex-col">
             <Transition name="slide-fade">
-              <NuxtImg v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+              <NuxtImg v-if="article?.cover" :src="`${article?.cover}/compress1600x900`" alt="cover"
                 class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
               </NuxtImg>
-              <!-- <img v-if="article?.cover" :src="`${article?.cover}/comporess1600x900`" alt="cover"
+              <!-- <img v-if="article?.cover" :src="`${article?.cover}/compress1600x900`" alt="cover"
                 class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100"> -->
             </Transition>
 
