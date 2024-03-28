@@ -304,7 +304,7 @@ function handleCancel() {
           </div>
           <template #panel>
             <div class="h-full w-full">
-              <img :src="`${row.screenShot}/comporess1600x900`" class="object-cover h-50 w-full">
+              <img :src="`${row.screenShot}/compress1600x900`" class="object-cover h-50 w-full">
             </div>
           </template>
         </UPopover>
