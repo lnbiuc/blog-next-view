@@ -2,112 +2,25 @@ import type articleVue from '~/layouts/article.vue';
 <script setup lang="ts">
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import type { IArticle } from '~/server/types'
-import { useIntervalFn, useThrottleFn, useDebounceFn } from '@vueuse/core'
-import Vditor from 'vditor';
-import 'vditor/dist/index.css';
+import { useThrottleFn, useDebounceFn } from '@vueuse/core'
+// import Vditor from 'vditor';
+// import 'vditor/dist/index.css';
 import { render } from '~/utils/markdown-render'
 import { useUserStore } from '~/store/UserStore'
+import MarkdownEditor from '~/components/MarkdownEditor.vue'
 
 
-const vditor = ref<Vditor | null>(null);
+// const vditor = ref<Vditor | null>(null);
 
 const color = useColorMode()
 
 const renderRes = ref()
 
-onMounted(() => {
-  vditor.value = new Vditor('vditor', {
-    after: () => {
-      // vditor.value is a instance of Vditor now and thus can be safely used here
-      if (article.value.content) {
-        vditor.value?.setValue(article.value.content.replace(/\\n/g, '\n'))
-      } else {
-        vditor.value?.setValue('')
-      }
-    },
-    width: '50%',
-    theme: color.value === 'dark' ? 'dark' : 'classic',
-    upload: {
-      // @ts-expect-error no error
-      handler: async (files: File[]) => {
-        const url = await uploadImage(files[0])
-        vditor.value?.insertValue(`![image](${url})`)
-        return url
-      },
-    },
-    keydown: (e: KeyboardEvent) => {
-      if ((e.ctrlKey && e.key === 's') || (e.metaKey && e.key === 's')) {
-        e.preventDefault()
-        throttledPublish()
-      }
-    },
-    mode: 'sv',
-    preview: {
-      mode: 'editor',
-    },
-    toolbar: [
-      "emoji",
-      "headings",
-      "bold",
-      "italic",
-      "strike",
-      "link",
-      "|",
-      "list",
-      "ordered-list",
-      "check",
-      "outdent",
-      "indent",
-      "|",
-      "quote",
-      "line",
-      "code",
-      "inline-code",
-      "insert-before",
-      "insert-after",
-      "|",
-      "upload",
-      "table",
-      "|",
-      "undo",
-      "redo",
-      "|",
-      "fullscreen",
-      "edit-mode",
-      {
-        name: "more",
-        toolbar: [
-          "both",
-          "code-theme",
-          "content-theme",
-          "export",
-          "outline",
-          "preview",
-          "devtools",
-          "info",
-          "help",
-        ],
-      },
-    ],
-    toolbarConfig: {
-      hide: false,
-      pin: false,
-    },
-    input: () => {
-      debouncedRender()
-    }
-  });
-
-  watch(color, () => {
-    vditor.value?.setTheme(color.value === 'dark' ? 'dark' : 'classic')
-  })
-});
-
-const debouncedRender = useDebounceFn(async () => {
-  if (article.value.content) {
-    renderRes.value = await render(vditor.value?.getValue() as string)
-  }
-}, 3000)
+// const debouncedRender = useDebounceFn(async () => {
+//   if (article.value.content) {
+//     renderRes.value = await render(vditor.value?.getValue() as string)
+//   }
+// }, 3000)
 
 const props = defineProps({
   shortLink: {
@@ -128,7 +41,7 @@ const article = ref<IArticle>({
   cover: '',
   category: '',
   tags: [],
-  content: 'empty',
+  content: '',
   authorId: '',
   status: '',
   views: 0,
@@ -151,9 +64,9 @@ onMounted(async () => {
   const user = localStorage.getItem('user')
   article.value.authorId = user ? JSON.parse(user)._id : ''
 
-  if (article.value.content) {
-    renderRes.value = await render(article.value.content)
-  }
+  // if (article.value.content) {
+  //   renderRes.value = await render(article.value.content)
+  // }
 })
 
 const rules = {
@@ -269,11 +182,10 @@ function handleClean() {
 const { getToken } = useUserStore()
 
 async function handlePublish() {
-  article.value.content = vditor.value?.getValue() as string
 
-  renderRes.value = await render(article.value.content)
+  // renderRes.value = await render(article.value.content)
 
-  article.value.html = renderRes.value
+  // article.value.html = renderRes.value
 
   if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
@@ -325,61 +237,6 @@ async function uploadImage(file: File) {
   return url
 }
 
-const autoSave = ref(false)
-
-const { pause, resume, isActive } = useIntervalFn(() => {
-
-  if (article.value._id && article.value._id !== '' && autoSave.value) {
-    // auto save
-    throttledPublish()
-  }
-}, 30000)
-
-watchEffect(() => {
-  if (autoSave.value) {
-    resume()
-  } else {
-    pause()
-  }
-})
-
-const isPending = ref(false)
-
-// async function handleGenerateOgImage() {
-
-//   if (article.value.shortLink === '') {
-//     toast.add({ title: `shortLink is empty.` })
-//     return
-//   }
-
-//   if (article.value._id === undefined || article.value._id === null || article.value._id === '') {
-//     toast.add({ title: `article id is empty.` })
-//     return
-//   }
-
-//   const url = `https://vio.vin/og/${article.value.shortLink}`
-//   isPending.value = true
-//   const { data, error } = await useFetch<string>('/api/friend/screenshot', {
-//     method: 'POST',
-//     body: {
-//       url,
-//     },
-//     headers: {
-//       'Authorization': getToken()
-//     }
-//   })
-
-//   if (error.value) {
-//     isPending.value = false
-//     toast.add({ title: error.value?.message })
-//   }
-//   if (data.value) {
-//     isPending.value = false
-//     article.value.ogImage = data.value
-//     toast.add({ title: `gen screenShot success.` })
-//   }
-// }
-
 const createTag = ref('')
 
 function handleCreateTag() {
@@ -389,115 +246,163 @@ function handleCreateTag() {
   tags.value.push(createTag.value)
   createTag.value = ''
 }
+
+const preview = ref(false)
+
+const handleEmitContent = (value: string) => {
+  article.value.content = value
+}
+
+watchEffect(async () => {
+  if (preview.value) {
+    renderRes.value = await render(article.value.content)
+  } else {
+    renderRes.value = ''
+  }
+})
+
+onMounted(() => {
+  document.addEventListener('keydown', handleKeyDown)
+})
+
+onBeforeUnmount(() => {
+  document.removeEventListener('keydown', handleKeyDown)
+})
+
+function handleKeyDown(event: KeyboardEvent) {
+  if ((event.ctrlKey || event.metaKey) && event.key === 's') {
+    handlePublish()
+    event.preventDefault()
+  }
+}
 </script>
 
 <template>
   <div>
     <NuxtLayout name="admin-home">
-      <div class="mt-4 flex flex-row items-center justify-between">
-        <div class="flex flex-row items-center">
-          <UButton class="mr-2" @click="publishSetting = true">
-            Publish Settings
-          </UButton>
-          <span>{{ article.shortLink }}</span>
-          <span class="mx-2">/</span>
-          <span>{{ article.title }}</span>
+      <div class=" flex flex-col items-center justify-between">
+        <div class="w-full flex flex-row items-center justify-between">
+          <div>
+            <span class="text-violet">{{ article.shortLink }}</span>
+            <em class="mx-2">/</em>
+            <span class="text-violet font-bold">{{ article.title }}</span>
+          </div>
+          <div>
+            <UButton class="mr-2" @click="preview = !preview" color="blue">Preview</UButton>
+            <UButton @click="publishSetting = true">
+              Publish Settings
+            </UButton>
+          </div>
         </div>
-        <div>
-          <UButton @click="autoSave = !autoSave" :color="autoSave ? 'green' : 'red'" class="mr-2">
-            {{ autoSave ? 'Disable' : 'Enable' }}
-          </UButton>
-          <span class="mr-2">auto save status: {{ isActive ? 'Enable' : 'Disable' }}</span>
-        </div>
+      </div>
+      <div class="w-full text-left mt-4">
+        <MarkdownEditor @change="handleEmitContent" :input="article.content" />
       </div>
     </NuxtLayout>
-    <div class="p-6 flex flex-row min-h-60vh w-full">
-      <div id="vditor" class="w-1/2" />
-      <div
-        class="w-1/2 dark:border-[#333] border-[#eee] shadow-sm dark:bg-opacity-50 backdrop-blur-md border p-2 rounded">
-        <MDRender :html="renderRes" />
-      </div>
-    </div>
-    <UModal v-model="publishSetting" class="z-2000">
-      <div class="p-4">
-        <UForm :state="article" class="space-y-4">
-          <UFormGroup label="ShortLink" name="shortLink">
-            <UInput v-model="article.shortLink" />
-            <div v-if="errorFields?.shortLink?.length" class="text-xs text-red">
-              {{ errorFields.shortLink[0].message }}
+
+    <UModal v-model="preview" fullscreen
+      :ui="{ container: 'items-center', fullscreen: 'w-full lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] h-auto min-h-500px my-6' }">
+      <UCard>
+        <template #header>
+          <div class="flex flex-row justify-between items-center">
+            <div class="text-violet">
+              {{ article.title }}
             </div>
-          </UFormGroup>
-          <UFormGroup label="Title" name="title">
-            <UInput v-model="article.title" />
-            <div v-if="errorFields?.title?.length" class="text-xs text-red">
-              {{ errorFields.title[0].message }}
+            <div>
+              <UButton @click="preview = false" color="red">Close</UButton>
             </div>
-          </UFormGroup>
-          <UFormGroup label="Description" name="description">
-            <UInput v-model="article.description" />
-            <div v-if="errorFields?.description?.length" class="text-xs text-red">
-              {{ errorFields.description[0].message }}
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Cover" name="cover">
-            <UInput v-model="article.cover" />
-            <div v-if="errorFields?.cover?.length" class="text-xs text-red">
-              {{ errorFields.cover[0].message }}
-            </div>
-          </UFormGroup>
-          <div v-if="article.cover">
-            <img :src="article.cover" alt="cover" class="object-cover rounded-md shadow w-full">
           </div>
-          <UFormGroup label="Upload Cover" name="file">
-            <div class="flex flex-row">
-              <UInput v-model="fileInput" type="file" @change="onChangeFile" class="w-full" />
-              <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
-                upload
-              </UButton>
-              <UButton color="red" class="ml-2" @click="handleClean">
-                clean
-              </UButton>
+        </template>
+
+        <div class="violet-prose" v-html="renderRes"></div>
+      </UCard>
+    </UModal>
+
+    <USlideover v-model="publishSetting">
+      <UCard class="flex flex-col flex-1"
+        :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+        <template #header>
+          Publish Settings
+        </template>
+        <div class="p-4">
+          <UForm :state="article" class="space-y-4">
+            <UFormGroup label="ShortLink" name="shortLink">
+              <UInput v-model="article.shortLink" />
+              <div v-if="errorFields?.shortLink?.length" class="text-xs text-red">
+                {{ errorFields.shortLink[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Title" name="title">
+              <UInput v-model="article.title" />
+              <div v-if="errorFields?.title?.length" class="text-xs text-red">
+                {{ errorFields.title[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Description" name="description">
+              <UInput v-model="article.description" />
+              <div v-if="errorFields?.description?.length" class="text-xs text-red">
+                {{ errorFields.description[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Cover" name="cover">
+              <UInput v-model="article.cover" />
+              <div v-if="errorFields?.cover?.length" class="text-xs text-red">
+                {{ errorFields.cover[0].message }}
+              </div>
+            </UFormGroup>
+            <div v-if="article.cover">
+              <img :src="article.cover" alt="cover" class="object-cover rounded-md shadow w-full">
             </div>
-          </UFormGroup>
-          <UFormGroup label="Category" name="category">
-            <USelectMenu v-model="article.category" :options="['article', 'short', 'project']" />
-            <div v-if="errorFields?.category?.length" class="text-xs text-red">
-              {{ errorFields.category[0].message }}
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Tags" name="tags">
-            <USelectMenu v-model="article.tags" multiple :options="tags" searchable />
-            <div v-if="errorFields?.tags?.length" class="text-xs text-red">
-              {{ errorFields.tags[0].message }}
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Create Tag" name="createTags">
-            <div class="flex flex-row w-full">
-              <UInput v-model="createTag" class="w-full" />
-              <UButton @click="handleCreateTag" class="ml-2">
-                Create
-              </UButton>
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Status" name="status">
-            <USelectMenu v-model="article.status" :options="['PUBLISHED', 'SAVED', 'DELETED']" />
-            <div v-if="errorFields?.status?.length" class="text-xs text-red">
-              {{ errorFields.status[0].message }}
-            </div>
-          </UFormGroup>
-          <UFormGroup label="AuthorId" name="authorId">
-            <UInput v-model="article.authorId" :disabled="true" />
-            <div v-if="errorFields?.authorId?.length" class="text-xs text-red">
-              {{ errorFields.authorId[0].message }}
-            </div>
-          </UFormGroup>
-          <UFormGroup label="Link" name="link">
-            <UInput v-model="article.link" placeholder="project require link" />
-            <div v-if="errorFields?.link?.length" class="text-xs text-red">
-              {{ errorFields.link[0].message }}
-            </div>
-          </UFormGroup>
-          <!-- <UFormGroup label="Og Image" name="ogImage">
+            <UFormGroup label="Upload Cover" name="file">
+              <div class="flex flex-row">
+                <UInput v-model="fileInput" type="file" @change="onChangeFile" class="w-full" />
+                <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
+                  upload
+                </UButton>
+                <UButton color="red" class="ml-2" @click="handleClean">
+                  clean
+                </UButton>
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Category" name="category">
+              <USelectMenu v-model="article.category" :options="['article', 'short', 'project']" />
+              <div v-if="errorFields?.category?.length" class="text-xs text-red">
+                {{ errorFields.category[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Tags" name="tags">
+              <USelectMenu v-model="article.tags" multiple :options="tags" searchable />
+              <div v-if="errorFields?.tags?.length" class="text-xs text-red">
+                {{ errorFields.tags[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Create Tag" name="createTags">
+              <div class="flex flex-row w-full">
+                <UInput v-model="createTag" class="w-full" />
+                <UButton @click="handleCreateTag" class="ml-2">
+                  Create
+                </UButton>
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Status" name="status">
+              <USelectMenu v-model="article.status" :options="['PUBLISHED', 'SAVED', 'DELETED']" />
+              <div v-if="errorFields?.status?.length" class="text-xs text-red">
+                {{ errorFields.status[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="AuthorId" name="authorId">
+              <UInput v-model="article.authorId" :disabled="true" />
+              <div v-if="errorFields?.authorId?.length" class="text-xs text-red">
+                {{ errorFields.authorId[0].message }}
+              </div>
+            </UFormGroup>
+            <UFormGroup label="Link" name="link">
+              <UInput v-model="article.link" placeholder="project require link" />
+              <div v-if="errorFields?.link?.length" class="text-xs text-red">
+                {{ errorFields.link[0].message }}
+              </div>
+            </UFormGroup>
+            <!-- <UFormGroup label="Og Image" name="ogImage">
             <div class="flex flex-row w-full">
               <UInput v-model="article.ogImage" class="w-full" />
               <UButton class="ml-2" @click="handleGenerateOgImage" :loading="isPending" :disabled="isPending">
@@ -508,15 +413,16 @@ function handleCreateTag() {
               <img :src="article.ogImage" alt="cover" class="object-cover rounded-md shadow w-full">
             </div>
           </UFormGroup> -->
-          <div class="w-full">
-            <UButton type="submit" color="blue" :disabled="!pass" @click="throttledPublish">
-              Submit
-            </UButton>
-          </div>
+            <div class="w-full">
+              <UButton type="submit" color="blue" :disabled="!pass" @click="throttledPublish">
+                Submit
+              </UButton>
+            </div>
 
-        </UForm>
-      </div>
-    </UModal>
+          </UForm>
+        </div>
+      </UCard>
+    </USlideover>
     <NuxtLayout name="home">
       <UAccordion :items="metaData" class="text-left">
         <template #item>

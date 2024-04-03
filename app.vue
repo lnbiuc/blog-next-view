@@ -20,11 +20,11 @@ onMounted(() => {
   <div>
     <div class="opacity-20 h-full w-full z-0" />
     <!-- <Header /> -->
-    <NewHeader></NewHeader>
+    <NewHeader v-if="!$route.path.includes('violet')" />
     <div class="relative z-10 min-h-[85vh]">
       <NuxtPage />
     </div>
-    <Footer />
+    <Footer v-if="!$route.path.includes('violet')" />
     <UNotifications class="b-0 w-[300px] z-4000" />
     <Transition name="fade">
       <div v-if="isScroll" class="flex flex-row fixed justify-end bottom-4 right-4 z-1000">
