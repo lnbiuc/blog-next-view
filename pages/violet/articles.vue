@@ -203,7 +203,7 @@ function handleDelete() {
         </div>
       </template>
 
-      <template #ogImage-data="{ row }">
+      <!-- <template #ogImage-data="{ row }">
         <UPopover mode="hover">
           <UAvatar :src="`/__og-image__/image/article/${row.shortLink}/og.png`" alt="Avatar" />
           <template #panel>
@@ -212,7 +212,7 @@ function handleDelete() {
             </div>
           </template>
         </UPopover>
-      </template>
+      </template> -->
       <template #createdAt-data="{ row }">
         {{ formatZHTime(row.createdAt) }}
       </template>
