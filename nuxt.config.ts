@@ -10,7 +10,6 @@ export default defineNuxtConfig({
 		'@nuxt/ui',
 		'@formkit/auto-animate/nuxt',
 		'nuxt-mongoose',
-		'nuxt-markdown-render',
 		'nuxt-og-image',
 		'nuxt-simple-robots',
 		'@nuxtjs/sitemap',
@@ -31,16 +30,12 @@ export default defineNuxtConfig({
 		fonts: ['Noto+Sans+SC:400'],
 	},
 
-	mdc: {},
-
-	nuxtMarkdownRender: {
-		as: 'article',
-		vueRuntimeCompiler: true,
-		global: true,
-		options: {
-			html: true,
-			linkify: true,
-			xhtmlOut: true,
+	mdc: {
+		components: {
+			map: {
+				img: 'ImageRender',
+				a: 'LinkRender',
+			},
 		},
 	},
 

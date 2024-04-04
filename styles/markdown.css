@@ -45,10 +45,6 @@ html:not(.dark) .shiki span {
   margin: 0.5em 0;
 }
 
-.violet-prose img {
-  width: 100%;
-}
-
 .violet-prose p > img {
   width: 100%;
   --uno: shadow rounded-lg;
@@ -62,17 +58,6 @@ html:not(.dark) .shiki span {
   --fg-deeper: #000;
 
   color: var(--fg);
-}
-
-.violet-prose a {
-  font-weight: inherit;
-  text-decoration: none;
-  border-bottom: 1px solid rgba(125, 125, 125, 0.3);
-  transition: border 0.3s ease-in-out;
-}
-
-.violet-prose a:hover {
-  border-bottom: 1px solid var(--fg);
 }
 
 .violet-prose a code {
