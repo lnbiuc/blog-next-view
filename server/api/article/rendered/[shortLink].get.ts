@@ -1,11 +1,13 @@
 import { ArticleSchema } from '~/server/models/article.schema';
 import { cache } from '~/config/cache.config';
 import process from 'node:process';
-import { render } from '~/utils/markdown-render';
+import { useMarkdownParser } from '~/composables/useMarkdownParser';
 
 export default defineEventHandler(async event => {
 	try {
 		const shortLink = event.context.params?.shortLink;
+		const parse = useMarkdownParser();
+
 		if (process.env.MEMORY_CACHE) {
 			if (shortLink) {
 				const result = await cache.get(shortLink);
@@ -25,7 +27,7 @@ export default defineEventHandler(async event => {
 					const { content } = queryres;
 
 					const start = performance.now();
-					const html = await render(content);
+					const html = await parse(content);
 					const end = performance.now();
 					const executionTime = Math.round(end - start);
 					console.log(`+ render html for [${shortLink}] takes [${executionTime}] ms`);
@@ -41,7 +43,7 @@ export default defineEventHandler(async event => {
 			if (!queryres) {
 				return new Response('404 Not Found', { status: 404 });
 			}
-			const html = await render(queryres.content);
+			const html = await parse(queryres.content);
 			return html;
 		}
 	} catch (error) {

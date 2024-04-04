@@ -27,6 +27,7 @@
 		"@nuxt/image": "^1.5.0",
 		"@nuxt/ui": "^2.15.1",
 		"@nuxtjs/color-mode": "^3.3.3",
+		"@nuxtjs/mdc": "^0.6.1",
 		"@nuxtjs/sitemap": "^5.1.2",
 		"@oramacloud/client": "^1.0.14",
 		"@pinia/nuxt": "^0.5.1",

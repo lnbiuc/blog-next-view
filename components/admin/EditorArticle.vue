@@ -5,12 +5,15 @@ import type { IArticle } from '~/server/types'
 import { useThrottleFn, useDebounceFn } from '@vueuse/core'
 // import Vditor from 'vditor';
 // import 'vditor/dist/index.css';
-import { render } from '~/utils/markdown-render'
+// import { render } from '~/utils/markdown-render'
+// import { render } from '~/utils/nuxt-mdc'
 import { useUserStore } from '~/store/UserStore'
 import MarkdownEditor from '~/components/MarkdownEditor.vue'
-
-
+import '~/styles/md-alert.css';
 // const vditor = ref<Vditor | null>(null);
+import { useMarkdownParser } from '~/composables/useMarkdownParser';
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+
 
 const color = useColorMode()
 
@@ -253,11 +256,14 @@ const handleEmitContent = (value: string) => {
   article.value.content = value
 }
 
+const ast = ref<MDCParserResult | null>(null)
+const parse = useMarkdownParser()
+
 watchEffect(async () => {
   if (preview.value) {
-    renderRes.value = await render(article.value.content)
-  } else {
-    renderRes.value = ''
+    // const data = await render(article.value.content)
+    // renderRes.value = await render(article.value.content)
+    ast.value = await parse(article.value.content)
   }
 })
 
@@ -314,7 +320,14 @@ function handleKeyDown(event: KeyboardEvent) {
           </div>
         </template>
 
-        <div class="violet-prose" v-html="renderRes"></div>
+        <!-- <div class="violet-prose" v-html="renderRes"></div> -->
+        <!-- {{ renderRes }} -->
+        <!-- <MDCRenderer class="violet-prose" v-if="renderRes.status" :body="renderRes.data.body"
+          :data="renderRes.data.data" /> -->
+
+        <Suspense>
+          <MDCRenderer class="violet-prose" v-if="ast?.body" :body="ast.body" :data="ast.data" />
+        </Suspense>
       </UCard>
     </UModal>
 

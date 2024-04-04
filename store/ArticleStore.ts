@@ -1,15 +1,15 @@
 import { defineStore } from 'pinia';
 import type { IArticle } from '~/server/types';
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index';
 
 export const useArticleStore = defineStore('articleStore', () => {
 	const articles: Ref<IArticle[]> = ref([]);
 
 	const article: Record<string, IArticle> = reactive({});
 
-	const pending = ref<string[]>([])
+	const pending = ref<string[]>([]);
 
 	async function getAll() {
-
 		if (articles.value.length > 0) return articles.value;
 
 		const { data } = await useFetch<IArticle[]>('/api/article');
@@ -22,7 +22,6 @@ export const useArticleStore = defineStore('articleStore', () => {
 	}
 
 	async function getOne(shortLink: string) {
-
 		const cached = article[shortLink];
 
 		if (cached) {
@@ -57,8 +56,8 @@ export const useArticleStore = defineStore('articleStore', () => {
 
 	async function one(shortLink: string): Promise<IArticle | undefined> {
 		if (!article[shortLink]) {
-			const article = await getOne(shortLink)
-			return article
+			const article = await getOne(shortLink);
+			return article;
 		} else {
 			return article[shortLink];
 		}
@@ -67,7 +66,7 @@ export const useArticleStore = defineStore('articleStore', () => {
 	async function getHtml(shortLink: string) {
 		if (pending.value.find(p => p === shortLink) === undefined) {
 			pending.value.push(shortLink);
-			const { data } = await useFetch<string>(`/api/article/rendered/${shortLink}`);
+			const { data } = await useFetch<MDCParserResult>(`/api/article/rendered/${shortLink}`);
 			if (data.value) {
 				const indexToRemove = pending.value.indexOf(shortLink);
 				if (indexToRemove !== -1) {

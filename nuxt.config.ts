@@ -16,19 +16,23 @@ export default defineNuxtConfig({
 		'@nuxtjs/sitemap',
 		'nuxt-schema-org',
 		'nuxt-seo-experiments',
-		'@nuxt/image'
+		'@nuxt/image',
+		'@nuxtjs/mdc',
 	],
 
 	image: {
 		unsplash: {
 			baseUrl: 'https://source.unsplash.com',
-		}
+		},
 	},
 
 	ogImage: {
 		googleFontMirror: true,
 		fonts: ['Noto+Sans+SC:400'],
 	},
+
+	mdc: {},
+
 	nuxtMarkdownRender: {
 		as: 'article',
 		vueRuntimeCompiler: true,
