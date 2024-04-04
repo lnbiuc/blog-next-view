@@ -44,7 +44,7 @@ export function uploadToR2(filePath: string, filename: string, dir: string) {
 		})
 		.catch(err => {
 			console.warn(err);
-			return err;
+			throw err;
 		})
 		.finally(() => {
 			fs.unlink(filePath, () => {
