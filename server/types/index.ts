@@ -1,3 +1,5 @@
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index';
+
 export interface IUser {
 	_id: string;
 	nickname: string;
@@ -22,7 +24,7 @@ export interface IArticle {
 	link?: string;
 	createdAt?: Date;
 	updatedAt?: Date;
-	html?: string
+	html?: MDCParserResult;
 }
 
 export interface IFriend {
@@ -34,6 +36,13 @@ export interface IFriend {
 	email?: string;
 	screenShot?: string;
 	status?: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+}
+
+export interface IScreenshot {
+	url: string;
+	filePath: string;
 	createdAt?: Date;
 	updatedAt?: Date;
 }

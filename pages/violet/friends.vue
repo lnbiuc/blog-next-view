@@ -229,7 +229,7 @@ async function handleGenScreenShot() {
   // gen screenShot
   const url = friend.value.url
   isPending.value = true
-  const { data, error } = await useFetch<string>('/api/friend/screenshot', {
+  const { data, error } = await useFetch<string>('/api/screenshot', {
     method: 'POST',
     body: {
       url,
@@ -353,7 +353,8 @@ function handleCancel() {
           <UFormGroup label="ScreenShot" name="screenShot">
             <div class="flex flex-row justify-between">
               <UInput class="w-full" v-model="friend.screenShot" :disabled="true" />
-              <UButton class="ml-2" color="green" @click="handleGenScreenShot" :loading="isPending" :disabled="isPending">
+              <UButton class="ml-2" color="green" @click="handleGenScreenShot" :loading="isPending"
+                :disabled="isPending">
                 Gen
                 ScreenShot
               </UButton>

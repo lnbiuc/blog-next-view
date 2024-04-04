@@ -8,7 +8,8 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import type { IArticle } from '~/server/types'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+
 
 const route = useRoute()
 
@@ -96,8 +97,8 @@ const { start, stop } = useTimeoutFn(async () => {
 
   if (article) {
     useFetch<string>(`/api/article/views/${article?._id}`, {
-    method: 'PUT',
-  })
+      method: 'PUT',
+    })
   }
 }, 10000)
 
@@ -164,8 +165,8 @@ watchEffect(() => {
 })
 
 useSeoMeta({
-  title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
-  ogTitle: () => { return article ? `${article.title} | 薇尔薇`: '404 NotFound | 薇尔薇' },
+  title: () => { return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇' },
+  ogTitle: () => { return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇' },
   description: () => { return article ? `${article.description}` : '404 NotFound' },
   ogDescription: () => { return article ? `${article.description}` : '404 NotFound' },
   articleAuthor: ['violet'],
@@ -179,7 +180,7 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return article ? `${article.title} | 薇尔薇` :'404 NotFound | 薇尔薇' },
+    title: () => { return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇' },
     description: () => { return article ? `${article.description}` : '404 NotFound' },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
@@ -236,8 +237,13 @@ onMounted(() => {
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
-                <div v-if="article.html" v-html="article.html" id="violetMD" class="violet-prose mb-20 mt-5 text-left font-serif"
-                  @mouseup="checkSelection"></div>
+                <!-- <div v-if="article.html" v-html="article.html" id="violetMD"
+                  class="violet-prose mb-20 mt-5 text-left font-serif" @mouseup="checkSelection"></div> -->
+
+                <MDCRenderer id="violetMD" class="violet-prose" @mouseup="checkSelection"
+                  v-if="article?.html && article?.html?.body && article?.html.data" :body="article?.html.body"
+                  :data="article?.html.data" />
+
                 <div v-else class="text-2xl text-violet">loading... please wait</div>
                 <div v-if="isSupported">
                   <div v-show="openPop"

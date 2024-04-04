@@ -10,33 +10,32 @@ export default defineNuxtConfig({
 		'@nuxt/ui',
 		'@formkit/auto-animate/nuxt',
 		'nuxt-mongoose',
-		'nuxt-markdown-render',
 		'nuxt-og-image',
 		'nuxt-simple-robots',
 		'@nuxtjs/sitemap',
 		'nuxt-schema-org',
 		'nuxt-seo-experiments',
-		'@nuxt/image'
+		'@nuxt/image',
+		'@nuxtjs/mdc',
 	],
 
 	image: {
 		unsplash: {
 			baseUrl: 'https://source.unsplash.com',
-		}
+		},
 	},
 
 	ogImage: {
 		googleFontMirror: true,
 		fonts: ['Noto+Sans+SC:400'],
 	},
-	nuxtMarkdownRender: {
-		as: 'article',
-		vueRuntimeCompiler: true,
-		global: true,
-		options: {
-			html: true,
-			linkify: true,
-			xhtmlOut: true,
+
+	mdc: {
+		components: {
+			map: {
+				img: 'ImageRender',
+				a: 'LinkRender',
+			},
 		},
 	},
 

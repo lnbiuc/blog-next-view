@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
-import { formatTime } from '~/composables/formatTime'
+// import { formatTime } from '~/composables/formatTime'
 
 const props = defineProps({
   article: {
@@ -42,14 +42,14 @@ const preloadArticle = useThrottleFn(() => {
         </div>
       </div>
 
-      <div class="p-4 flex flex-row items-center">
-        <!-- <div class="text-violet">
+      <!-- <div class="p-4 flex flex-row items-center">
+        <div class="text-violet">
           {{ props.article.views }} views
         </div>
         <div class="mx-2">/</div>
         <div class="font-bold text-violet">
           {{ formatTime(props.article.createdAt) }}
-        </div> -->
+        </div>
         <div class="mt-4 flex flex-row justify-start items-center">
           <div class="text-violet">
             {{ props.article?.views }} views
@@ -61,7 +61,7 @@ const preloadArticle = useThrottleFn(() => {
             {{ formatTime(props.article?.updatedAt) }}
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </NuxtLink>
 </template>

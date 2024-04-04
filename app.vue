@@ -35,5 +35,6 @@ onMounted(() => {
         </div>
       </div>
     </Transition>
+    <NuxtImg v-show="false" src="/loading.gif" preload />
   </div>
 </template>

@@ -96,8 +96,8 @@
 		"prettier.config.js": true,
 		"**/README.md": true,
 		"yarn.lock": true,
-		"node_modules/": true,
-		".gitignore": true,
+		"node_modules/": false,
+		".gitignore": false,
 		".output/node_modules/": false,
 		// And even more ultra minimal
 		".nuxt": true,

@@ -120,13 +120,15 @@ onMounted(() => {
     <div
       class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
       <div class="flex flex-row items-center w-full justify-around">
-        <div name="title" class="w-50% flex flex-row justify-start flex-1 font-serif">
+        <div name="title" class="w-50% flex flex-row justify-start flex-1">
           <Transition name="slide">
             <div v-if="!isFixed">
-              <div class="text-xl font-semibold text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
+              <div
+                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
                 {{ article?.title }}
               </div>
-              <div class=" max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-no-wrap truncate">
+              <div
+                class=" max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-no-wrap truncate">
                 {{ article?.category }} / {{ article?.shortLink }}
               </div>
             </div>
