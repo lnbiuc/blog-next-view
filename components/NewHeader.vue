@@ -155,11 +155,11 @@ onMounted(() => {
                   Short
                 </NuxtLink>
               </li>
-              <li>
+              <!-- <li>
                 <NuxtLink to="/project" class="header-link" :prefetch="true">
                   Project
                 </NuxtLink>
-              </li>
+              </li> -->
               <li>
                 <NuxtLink to="/friend" class="header-link" :prefetch="true">
                   Friend
@@ -219,11 +219,11 @@ onMounted(() => {
             Short
           </NuxtLink>
         </li>
-        <li class="mobile-head-link">
+        <!-- <li class="mobile-head-link">
           <NuxtLink to="/project" class="header-link" :prefetch="true" @click="isOpen = !isOpen">
             Project
           </NuxtLink>
-        </li>
+        </li> -->
         <li class="mobile-head-link">
           <NuxtLink to="/friend" class="header-link" :prefetch="true" @click="isOpen = !isOpen">
             Friend
