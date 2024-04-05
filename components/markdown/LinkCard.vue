@@ -27,12 +27,12 @@ onMounted(async () => {
   <ClientOnly>
     <div v-if="repoInfo" class="w-full flex flex-row items-center justify-center my-4">
       <NuxtLink :href="props.link" target="_blank"
-        class="h-35 sm:w-100 md:w-100 xl:w-100 lg:w-100 w-full p-2 dark:bg-[#222] bg-[#ddd] rounded-md shadow flex flex-col justify-between">
+        class="h-35 sm:w-100 md:w-100 xl:w-100 lg:w-100 w-full p-4 dark:bg-[#222] bg-[#ddd] rounded-md shadow flex flex-col justify-between">
         <div class="flex flex-row justify-start items-center">
           <div class="w-28 object-cover">
             <NuxtImg :src="repoInfo.owner.avatar_url" class="rounded" />
           </div>
-          <div class="flex flex-col w-full ml-2">
+          <div class="flex flex-col w-full ml-4">
             <div class="text-xl mb-2 line-clamp-1">
               {{ repoInfo?.full_name }}
             </div>
@@ -41,9 +41,8 @@ onMounted(async () => {
             </div>
           </div>
         </div>
-        <div
-          class="w-full text-sm mb-2 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3">
-          <div class="flex flex-row items-center text-amber">
+        <div class="w-full text-sm mt-2.5 px-4 flex flex-row justify-between">
+          <div class="flex flex-row items-center text-amber justify-start">
             <div class="i-ri:star-s-fill mr-2"></div>
             <div>{{ repoInfo?.stargazers_count }}</div>
           </div>

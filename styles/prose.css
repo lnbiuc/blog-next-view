@@ -108,13 +108,12 @@
 	line-height: 1.3333333;
 }
 .violet-prose h3 {
-	color: inherit;
+	color: var(--fg-deep);
 	font-weight: 600;
 	font-size: 1.25em;
 	margin-top: 1.6em;
 	margin-bottom: 0.6em;
 	line-height: 1.6;
-	opacity: 0.7;
 }
 .violet-prose h4 {
 	color: inherit;
@@ -148,9 +147,9 @@
 	overflow-x: auto;
 	font-size: 0.875em;
 	line-height: 1.7142857;
-	margin-top: 1.7142857em;
+	/* margin-top: 1.7142857em; */
 	margin-bottom: 1.7142857em;
-	border-radius: 0.375rem;
+	/* border-radius: 0.375rem; */
 	padding-top: 0.8571429em;
 	padding-right: 1.1428571em;
 	padding-bottom: 0.8571429em;

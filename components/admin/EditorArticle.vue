@@ -232,14 +232,6 @@ async function handlePublish() {
   }
 }
 
-// 上传图片到服务器
-async function uploadImage(file: File) {
-  fileCover.value = file
-  const url = await handleUpload('content')
-  fileCover.value = null
-  return url
-}
-
 const createTag = ref('')
 
 function handleCreateTag() {
@@ -277,7 +269,7 @@ onBeforeUnmount(() => {
 
 function handleKeyDown(event: KeyboardEvent) {
   if ((event.ctrlKey || event.metaKey) && event.key === 's') {
-    handlePublish()
+    throttledPublish()
     event.preventDefault()
   }
 }

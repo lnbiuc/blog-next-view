@@ -43,7 +43,11 @@ export default defineEventHandler(async event => {
 			if (!queryres) {
 				return new Response('404 Not Found', { status: 404 });
 			}
+			const start = performance.now();
 			const html = await parse(queryres.content);
+			const end = performance.now();
+			const executionTime = Math.round(end - start);
+			console.log(`+ render html for [${shortLink}] takes [${executionTime}] ms`);
 			return html;
 		}
 	} catch (error) {
