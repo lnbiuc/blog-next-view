@@ -8,10 +8,13 @@
   background-color: #0e0e0e !important;
 }
 
+.shiki {
+  background-color: #fafafa;
+}
+
 html:not(.dark) .shiki,
 html:not(.dark) .shiki span {
   color: var(--shiki-1, inherit);
-  background-color: #fafafa !important;
   --twoslash-popup-bg: #fafafa;
 }
 
@@ -41,6 +44,10 @@ html:not(.dark) .shiki span {
 
 .dark .violet-prose .shiki .highlight {
   background: rgba(184, 121, 252, 0.2);
+}
+
+.violet-prose .shiki .highlight {
+  background: rgba(184, 121, 252, 0.2) !important;
 }
 
 .violet-prose .shiki {

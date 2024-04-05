@@ -27,7 +27,7 @@ onMounted(async () => {
   <ClientOnly>
     <div v-if="repoInfo" class="w-full flex flex-row items-center justify-center my-4">
       <NuxtLink :href="props.link" target="_blank"
-        class="h-35 sm:w-100 md:w-100 xl:w-100 lg:w-100 w-full p-4 dark:bg-[#222] bg-[#ddd] rounded-md shadow flex flex-col justify-between">
+        class="h-35 sm:w-100 md:w-100 xl:w-100 lg:w-100 w-full p-4 dark:bg-[#222] bg-[#fafafa] rounded-md shadow hover:shadow-md transition-all flex flex-col justify-between">
         <div class="flex flex-row justify-start items-center">
           <div class="w-28 object-cover">
             <NuxtImg :src="repoInfo.owner.avatar_url" class="rounded" />

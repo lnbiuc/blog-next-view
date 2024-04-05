@@ -39,7 +39,9 @@ function openLink() {
 <template>
   <LinkCard v-if="isGithubRepoLink(props.href)" :link="href" />
   <UPopover v-else mode="hover" :popper="{ placement: 'top-start' }" @mouseover="handleFetchImage">
-    <UButton @click="openLink" :to="props.href" :target="props.target" variant="link">{{ props.href }}</UButton>
+    <UButton icon="i-ri:external-link-line" @click="openLink" :to="props.href" :target="props.target" variant="link"
+      :ui="{ padding: 'px-0' }">
+      {{ props.href }}</UButton>
     <template #panel>
       <div class="h-full w-full">
         <NuxtImg :src="image" alt="popover" class="object-cover h-50 w-full" placeholder="/loading.gif" />

@@ -1,6 +1,6 @@
 <template>
   <div v-if="props.filename"
-    class="flex flex-row justify-center items-center dark:bg-[#0e0e0e] bg-[#fafafa] text-center border-b dark:border-b-[#222] border-b-[#aaa] p-2 rounded-lt rounded-rt">
+    class="flex flex-row justify-center items-center dark:bg-[#0e0e0e] bg-[#fafafa] text-center border-b dark:border-b-[#222] border-b-[#eee] p-2 rounded-lt rounded-rt">
     <div class="text-[#222] dark:text-[#aaa]">
       {{ props.filename }}
     </div>
