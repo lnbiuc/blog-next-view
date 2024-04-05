@@ -199,48 +199,46 @@ onMounted(() => {
   <div>
     <NuxtLayout name="default">
       <div v-if="article">
+        <!-- <Transition name="slide-fade">
+          <NuxtImg v-if="article?.cover" :src="`${article?.cover}`" alt="cover"
+            class="object-cover rounded-lg shadow-md w-full scale-110 z-0 transition-all duration-300 op90 dark:op-40 h-[30vh] max-h-[500px] absolute top-[-50px]">
+          </NuxtImg>
+        </Transition> -->
         <NuxtLayout name="home">
-          <div class="text-left flex flex-col">
-            <Transition name="slide-fade">
-              <NuxtImg v-if="article?.cover" :src="`${article?.cover}/compress1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100">
-              </NuxtImg>
-              <!-- <img v-if="article?.cover" :src="`${article?.cover}/compress1600x900`" alt="cover"
-                class="cover-image object-cover rounded-lg shadow-md w-full scale-110 aspect-[16/9] z-10 transition-all duration-300 op90 dark:op-70 hover:op100"> -->
-            </Transition>
-
-            <div class="mt-16 mb-6 text-4xl font-bold font-serif">
+          <!-- <div v-if="article?.cover" class="mt-[20vh]"></div> -->
+          <div class="text-left flex flex-col ">
+            <div class="mb-6 text-4xl font-bold font-serif z-2 ">
               {{ article?.title }}
             </div>
-            <div class="mb-1">
+            <div class="mb-1 z-2 mt-8">
               {{ article?.description }}
             </div>
-            <div class="flex flex-row justify-start items-center mt-3">
+            <div class="flex flex-row justify-start items-center mt-3 z-2">
               <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
                 variant="solid" class="mx-1" :tag="t">
                 {{ t }}
               </UBadge>
             </div>
             <div class="mt-4 flex flex-row justify-start items-center">
-              <div class="i-carbon-view mr-2" />
-              <div class="text-violet">
+              <div class="i-carbon-view mr-2 z-2" />
+              <div class="text-violet z-2">
                 {{ article?.views }} views
               </div>
-              <div class="i-carbon-alarm mx-2 scale-110" />
-              <div class="text-violet">
+              <div class="i-carbon-alarm mx-2 scale-110 z-2" />
+              <div class="text-violet z-2">
                 {{ formatTime(article?.updatedAt) }}
               </div>
             </div>
             <UDivider class="my-6" />
           </div>
-          <div class="pb-10 pt-10 flex flex-row justify-between">
+          <div class="pb-10 pt-10 flex flex-row justify-between z-2">
             <div class="max-w-760px w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
                 <!-- <div v-if="article.html" v-html="article.html" id="violetMD"
                   class="violet-prose mb-20 mt-5 text-left font-serif" @mouseup="checkSelection"></div> -->
 
-                <MDCRenderer id="violetMD" class="violet-prose" @mouseup="checkSelection"
+                <MDCRenderer id="violetMD" class="violet-prose z-2" @mouseup="checkSelection"
                   v-if="article?.html && article?.html?.body && article?.html.data" :body="article?.html.body"
                   :data="article?.html.data" />
 

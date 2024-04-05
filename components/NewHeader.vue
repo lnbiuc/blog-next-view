@@ -34,19 +34,13 @@ watchEffect(() => {
     one(shortLink.value).then((data) => {
       article.value = data
     })
-    if (article.value && article.value.cover) {
-      if (width.value < 767)
-        showTitleY.value = 350
-
-      else
-        showTitleY.value = 700
-    }
   }
 
   else {
     isArticlePage.value = false
-    showTitleY.value = 100
   }
+
+  showTitleY.value = 80
 })
 
 const { hasAuth } = useUserStore()
@@ -124,7 +118,7 @@ onMounted(() => {
           <Transition name="slide">
             <div v-if="!isFixed">
               <div
-                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
+                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset font-serif">
                 {{ article?.title }}
               </div>
               <div

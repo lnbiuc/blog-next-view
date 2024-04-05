@@ -5,15 +5,15 @@
       {{ props.filename }}
     </div>
   </div>
+  <div class="relative flex flex-row justify-end">
+    <div class="absolute pt-2.5 pr-2">
+      <UButton color="white" :icon="icon" @click="copyCode" :trailing="false" size="xs">
+        {{ copied ? 'Copied' : 'Copy' }}
+      </UButton>
+    </div>
+  </div>
   <pre :class="$props.class + (!props.filename ? ' rounded-lt rounded-rt' : '')"
     class="whitespace-normal rounded-lb rounded-rb">
-    <div class="relative flex flex-row justify-end">
-      <div class="absolute top-[-3px] right-[-8px]">
-        <UButton color="white" :icon="icon" @click="copyCode" :trailing="false" size="xs">
-        {{ copied ? 'Copied' : 'Copy' }}
-        </UButton>
-      </div>
-    </div>
     <slot />
   </pre>
 </template>

@@ -23,6 +23,7 @@ import MDXLang from 'shiki/langs/mdx.mjs';
 import BatLang from 'shiki/langs/bat.mjs';
 import BashLang from 'shiki/langs/bash.mjs';
 import IniLang from 'shiki/langs/ini.mjs';
+import XMLLang from 'shiki/langs/xml.mjs';
 
 export function useMarkdownParser() {
 	let parser: Awaited<ReturnType<typeof createMarkdownParser>>;
@@ -72,6 +73,7 @@ export function useMarkdownParser() {
 										mdx: MDXLang,
 										bat: BatLang,
 										ini: IniLang,
+										xml: XMLLang,
 									},
 								}),
 							},
