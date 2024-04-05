@@ -11,12 +11,12 @@ export default defineEventHandler(async event => {
 	try {
 		const shortLink = event.context.params?.shortLink as string;
 		if (!shortLink) {
-			return new Response('404 Not Found', { status: 404 });
+			return new Response('ShortLink Require', { status: 404 });
 		}
 
 		const article = (await ArticleSchema.findOne({ shortLink })) as IArticle;
 		if (!article) {
-			return new Response('404 Not Found', { status: 404 });
+			return new Response('Article Not Found', { status: 404 });
 		}
 		const { content } = article;
 
