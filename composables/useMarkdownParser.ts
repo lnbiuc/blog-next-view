@@ -19,6 +19,10 @@ import NginxLang from 'shiki/langs/nginx.mjs';
 import DockerfileLang from 'shiki/langs/dockerfile.mjs';
 import GraphQLLang from 'shiki/langs/graphql.mjs';
 import MarkdownLang from 'shiki/langs/markdown.mjs';
+import MDXLang from 'shiki/langs/mdx.mjs';
+import BatLang from 'shiki/langs/bat.mjs';
+import BashLang from 'shiki/langs/bash.mjs';
+import IniLang from 'shiki/langs/ini.mjs';
 
 export function useMarkdownParser() {
 	let parser: Awaited<ReturnType<typeof createMarkdownParser>>;
@@ -54,7 +58,7 @@ export function useMarkdownParser() {
 										javascript: JavaScriptLang,
 										shell: ShellLang,
 										sh: ShellLang,
-										bash: ShellLang,
+										bash: BashLang,
 										sql: SQLLang,
 										mermaid: MermaidLang,
 										nginx: NginxLang,
@@ -65,7 +69,9 @@ export function useMarkdownParser() {
 										gql: GraphQLLang,
 										md: MarkdownLang,
 										markdown: MarkdownLang,
-										'': MarkdownLang,
+										mdx: MDXLang,
+										bat: BatLang,
+										ini: IniLang,
 									},
 								}),
 							},

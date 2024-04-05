@@ -27,7 +27,7 @@ function isGithubRepoLink(link: string): boolean {
 
   <!-- <UPopover v-else mode="hover" id="UPopover" class="w-auto"> -->
 
-  <NuxtLink :href="href" :target="target">
+  <NuxtLink v-else :href="href" :target="target">
     <slot />
   </NuxtLink>
 

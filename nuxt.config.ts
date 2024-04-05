@@ -31,10 +31,19 @@ export default defineNuxtConfig({
 	},
 
 	mdc: {
+		remarkPlugins: {
+			behead: {
+				src: 'remark-behead',
+				options: {
+					minDepth: 2,
+				},
+			},
+		},
 		components: {
 			map: {
 				img: 'ImageRender',
 				a: 'LinkRender',
+				pre: 'PreRender',
 			},
 		},
 	},
