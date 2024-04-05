@@ -1,14 +1,12 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import '~/styles/md-alert.css';
 import { useClipboard, useMouse, useTextSelection } from '@vueuse/core'
 
 import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
-import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
 
 
 const route = useRoute()
@@ -18,13 +16,7 @@ const shortLink = route.params.shortLink as string
 
 const { one } = useArticleStore()
 
-const router = useRouter()
-
 const article = await one(shortLink)
-
-if (!article) {
-  router.back()
-}
 
 const hasCatalog = ref(false)
 
@@ -72,25 +64,6 @@ function initTOC() {
       initTOC()
     }
   }, 100)
-}
-
-function initCopyBtn() {
-
-  if (document.querySelectorAll('.markdown-it-code-copy').length === 0) {
-    setTimeout(() => {
-      initCopyBtn()
-    }, 500)
-    return
-  }
-
-  document.querySelectorAll('.markdown-it-code-copy').forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const code = btn.getAttribute('data-clipboard-text');
-      sourceCopy.value = code as string
-      copy()
-      toast.add({ title: 'Copied', timeout: 1000, icon: 'i-heroicons-check-circle text-violet' })
-    })
-  })
 }
 
 const { start, stop } = useTimeoutFn(async () => {
@@ -190,7 +163,6 @@ defineOgImage({
 onMounted(() => {
   nextTick(() => {
     initTOC()
-    initCopyBtn()
   })
 })
 </script>
