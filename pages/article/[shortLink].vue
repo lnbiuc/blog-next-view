@@ -7,6 +7,7 @@ import * as tocbot from 'tocbot'
 import { useTimeoutFn } from '@vueuse/core'
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
+import { useUserStore } from '~/store/UserStore'
 
 
 const route = useRoute()
@@ -160,10 +161,16 @@ defineOgImage({
   },
 })
 
+const isLogin = ref(false)
+
 onMounted(() => {
   nextTick(() => {
     initTOC()
   })
+
+  const { hasAuth } = useUserStore()
+
+  if (hasAuth()) isLogin.value = true
 })
 </script>
 
@@ -191,14 +198,21 @@ onMounted(() => {
                 {{ t }}
               </UBadge>
             </div>
-            <div class="mt-4 flex flex-row justify-start items-center">
-              <div class="i-carbon-view mr-2 z-2" />
-              <div class="text-violet z-2">
-                {{ article?.views }} views
+            <div class="mt-4 flex flex-row justify-between items-center">
+              <div class="flex flex-row justify-start items-center">
+                <div class="i-carbon-view mr-2 z-2" />
+                <div class="text-violet z-2">
+                  {{ article?.views }} views
+                </div>
+                <div class="i-carbon-alarm mx-2 scale-110 z-2" />
+                <div class="text-violet z-2">
+                  {{ formatTime(article?.updatedAt) }}
+                </div>
               </div>
-              <div class="i-carbon-alarm mx-2 scale-110 z-2" />
-              <div class="text-violet z-2">
-                {{ formatTime(article?.updatedAt) }}
+              <div>
+                <UButton v-if="isLogin" icon="i-ri:edit-fill" variant="link" :to="`/violet/edit/${article.shortLink}`" target="_blank">
+                  Edit this Page
+                </UButton>
               </div>
             </div>
             <UDivider class="my-6" />
