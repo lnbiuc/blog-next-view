@@ -9,6 +9,7 @@ import {
 	transformerVariantGroup,
 } from 'unocss';
 import { _ringColor } from '#tailwind-config/theme';
+import { presetExtra } from 'unocss-preset-extra';
 
 export default defineConfig({
 	rules: [
@@ -43,7 +44,7 @@ export default defineConfig({
 		['card-border', 'rounded-md z-50 hover:cursor-default'],
 		[
 			'header-link',
-			'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet',
+			'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet font-500 text-md',
 		],
 		[
 			'card',
@@ -66,6 +67,7 @@ export default defineConfig({
 				mono: ['Fira Code', 'Fira Mono:400,700'],
 			},
 		}),
+		presetExtra(),
 	],
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 });

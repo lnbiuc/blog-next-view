@@ -31,11 +31,11 @@ const link = [
 <template>
   <NuxtLayout name="home">
     <div
-      class="m-auto flex flex-col-reverse sm:flex-col-reverse md:flex-row xl:flex-row lg:flex-row justify-center items-center md:flex-row md:justify-between p-8 my-0 sm:my-0 md:my-10 xl:my-10 lg:my-10 rounded sm:card md:card xl:card lg:card card-border sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm rounded-lg">
+      class="animated animated-fade-in-up m-auto flex flex-col-reverse sm:flex-col-reverse md:flex-row xl:flex-row lg:flex-row justify-center items-center md:flex-row md:justify-between p-8 my-0 sm:my-0 md:my-10 xl:my-10 lg:my-10 rounded sm:card md:card xl:card lg:card card-border sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm rounded-lg">
       <div
         class="flex flex-col justify-start items-start md:justify-start md:items-start sm:w-full md:w-1/2 xl:w-1/2 lg:w-1/2 w-full">
         <h2 class="text-6xl font-bold text-left mb-2">
-          Hello!
+          Hello! ✨
         </h2>
         <h2 class="text-6xl font-bold text-left">
           I'm
@@ -64,7 +64,7 @@ const link = [
       <div
         class="transition-all sm:w-full md:w-1/2 xl:w-1/2 lg:w-1/2 w-full mb-6 sm:mb-6 md:mb-0 xl:mb-0 lg:mb-0 flex flex-row items-center justify-center sm:justify-center md:justify-end xl:justify-end lg:justify-end">
         <img src="/favicon.ico" alt="logo"
-          class="rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
+          class="rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl animated animated-rotate-in">
       </div>
     </div>
   </NuxtLayout>

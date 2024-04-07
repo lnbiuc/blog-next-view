@@ -109,7 +109,7 @@ onMounted(() => {
       'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen
     }">
     <div class="rounded-3 cursor-pointer mx-2 mr-4 w-45px h-45px flex flex-row justify-center items-center">
-      <img src="/site-favicon.ico" class="object-cover" @click="$router.push('/')" />
+      <img src="/site-favicon.ico" class="object-cover shadow-md rounded-3" @click="$router.push('/')" />
     </div>
     <div
       class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
@@ -135,7 +135,7 @@ onMounted(() => {
       ...styles,
       position: isFixed ? 'relative' : 'fixed',
     }">
-            <ul class="flex flex-row items-center transition-all  h-36px border rounded-full " :class="{
+            <ul class="flex flex-row items-center transition-all  h-40px border rounded-full " :class="{
       'mt-52px dark:border-[#222] border-[#eee] bg-light dark:bg-dark shadow backdrop-blur-2xl': !isFixed,
       'dark:border-[#222] border-[#eee]  bg-light dark:bg-dark shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50': !showShadow,
       'border-transparent': isTransparent,

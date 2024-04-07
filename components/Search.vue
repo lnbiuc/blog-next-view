@@ -60,7 +60,7 @@ async function tagClick(tag: string) {
   <!-- <Transition name="fade"> -->
   <div v-if="tags.length > 1" class="mt-2">
     <UBadge v-for="t in tags" :key="t" size="md" color="gray" variant="solid"
-      class="animate-shadow my-1 mr-2 cursor-pointer transition-transform duration-150 active:scale-[0.97]"
+      class="my-1 mr-2 cursor-pointer transition-transform duration-150 active:scale-[0.97] animated animated-fade-in-right animated-faster"
       @click="tagClick(t)">
       {{ t }}
     </UBadge>

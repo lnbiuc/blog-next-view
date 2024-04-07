@@ -70,7 +70,7 @@ getAll().then(() => {
         </Suspense>
         <WelcomeCard />
         <NuxtLayout name="home">
-          <div v-if="articles.length > 3" id="featured">
+          <div v-if="articles.length > 3" id="featured" class="animated animated-fade-in-up">
             <div class="title-font">
               Featured Article
             </div>
@@ -82,7 +82,7 @@ getAll().then(() => {
               </MyButton>
             </div>
           </div>
-          <div v-if="shorts.length > 3">
+          <div v-if="shorts.length > 3" class="animated animated-fade-in-up">
             <div class="title-font">
               Featured Short
             </div>

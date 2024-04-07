@@ -140,7 +140,7 @@ onMounted(async () => {
           </a>
         </div>
         <div class="mt-6">
-          <a v-if="colorMode.preference === 'dark'" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
+          <a v-if="colorMode.value === 'dark'" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
               src=https://zeabur.com/deployed-on-zeabur-dark.svg alt="Deployed on Zeabur" /></a>
           <a v-else class="shadow" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
               src=https://zeabur.com/deployed-on-zeabur-light.svg alt="Deployed on Zeabur" /></a>

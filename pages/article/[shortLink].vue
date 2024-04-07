@@ -240,7 +240,7 @@ onMounted(() => {
             </div>
             <ClientOnly>
               <div v-if="hasCatalog" id="violetToc"
-                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb] animated animated-fade-in-right animated-fast" />
             </ClientOnly>
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer font-serif">
