@@ -111,11 +111,11 @@ onMounted(async () => {
                 Short
               </router-link>
             </li>
-            <li>
+            <!-- <li>
               <router-link to="/project" class="mr-2 hover:text-violet">
                 Project
               </router-link>
-            </li>
+            </li> -->
             <li>
               <router-link to="/friend" class="mr-2 hover:text-violet">
                 Friend

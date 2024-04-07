@@ -94,7 +94,7 @@ getAll().then(() => {
               </MyButton>
             </div>
           </div>
-          <div v-if="projects.length > 1">
+          <!-- <div v-if="projects.length > 1">
             <div class="title-font">
               Featured Project
             </div>
@@ -105,8 +105,7 @@ getAll().then(() => {
                 <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
-          </div>
-          <div v-show="false" class="i-carbon-copy"></div>
+          </div> -->
         </NuxtLayout>
       </div>
     </NuxtLayout>
