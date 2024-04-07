@@ -118,7 +118,7 @@ onMounted(() => {
           <Transition name="slide">
             <div v-if="!isFixed">
               <div
-                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset font-serif">
+                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
                 {{ article?.title }}
               </div>
               <div

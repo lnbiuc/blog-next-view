@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { addHoverEffect } from '~/composables/hoverEffect'
-
 const link = [
   {
     index: 0,
@@ -28,109 +26,53 @@ const link = [
   },
 ]
 
-function handleScroll() {
-  const el = document.getElementById('featured')
-  const yOffset = -80
-  if (el) {
-    const elementPosition = el.getBoundingClientRect().top + window.pageYOffset
-    const offsetPosition = elementPosition + yOffset
-
-    window.scrollTo({ top: offsetPosition, behavior: 'smooth' })
-  }
-}
-
-onMounted(() => {
-  addHoverEffect('.favicon-shadow', 10)
-})
 </script>
 
 <template>
-  <div style="height: calc(100vh - 160px)"
-    class="m-auto flex flex-col max-w-[1000px] w-[100%] justify-center items-center md:flex-row md:justify-between">
-    <div class="flex flex-col justify-start items-start md:justify-start md:items-start">
-      <h1 class="text-6xl font-bold text-left">
-        Hi!👋
-      </h1>
-      <h1 class="mt-5 text-6xl font-bold">
-        I'm <span class="text-violet" style="font-family: 'MyFont', sans-serif;">violet</span>
-      </h1>
-      <span class="mb-2 mt-5 text-xl font-mono">
-        A Web {{ `
-        <Developer /> ` }}.
-      </span>
-      <span class="text-xl mb-2 font-mono">{{ 'Code' }} for Fun.</span>
-      <div class="my-3 flex flex-row">
-        <MyButton @click="$router.push('/blog')">
-          Read the Blog
-        </MyButton>
-        <MyButton @click="$router.push('/about')">
-          About Me
-        </MyButton>
+  <NuxtLayout name="home">
+    <div
+      class="m-auto flex flex-col-reverse sm:flex-col-reverse md:flex-row xl:flex-row lg:flex-row justify-center items-center md:flex-row md:justify-between p-8 my-0 sm:my-0 md:my-10 xl:my-10 lg:my-10 rounded sm:card md:card xl:card lg:card card-border sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm rounded-lg">
+      <div
+        class="flex flex-col justify-start items-start md:justify-start md:items-start sm:w-full md:w-1/2 xl:w-1/2 lg:w-1/2 w-full">
+        <h2 class="text-6xl font-bold text-left mb-2">
+          Hello!
+        </h2>
+        <h2 class="text-6xl font-bold text-left">
+          I'm
+          <NuxtLink class="text-violet ml-2 hover:underline" to="/about" prefetch
+            style="font-family: 'MyFont', sans-serif;">
+            violet
+          </NuxtLink>
+        </h2>
+        <span class="mb-2 mt-5 text-xl font-mono text-left">
+          I focus on Java during work and enjoy anything interesting in my free time.
+        </span>
+        <span class="mb-2 mt-5 text-xl font-mono text-left">
+          Living and working in <a class="text-violet hover:underline" href="https://unsplash.com/s/photos/xian"
+            target="_blank">Xi'an</a>.
+        </span>
+        <div class="flex  mt-4">
+          <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
+            :href="l.url" target="_blank" aria-label="icon">
+            <UIcon :name="l.icon" class="text-xl" />
+            <span class="ml-1">
+              {{ l.name }}
+            </span>
+          </a>
+        </div>
       </div>
-      <div class="flex flex-row">
-        <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
-          :href="l.url" target="_blank" aria-label="icon">
-          <UIcon :name="l.icon" class="text-xl" />
-          <span class="ml-1">
-            {{ l.name }}
-          </span>
-        </a>
+      <div
+        class="transition-all sm:w-full md:w-1/2 xl:w-1/2 lg:w-1/2 w-full mb-6 sm:mb-6 md:mb-0 xl:mb-0 lg:mb-0 flex flex-row items-center justify-center sm:justify-center md:justify-end xl:justify-end lg:justify-end">
+        <img src="/favicon.ico" alt="logo"
+          class="rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
       </div>
     </div>
-    <div class="hidden transition-all md:block">
-      <img src="/favicon.ico" alt="logo"
-        class="favicon-shadow rounded-full shadow-md h-[300px] w-[300px] transition-all hover:shadow-xl">
-    </div>
-  </div>
-  <div class="flex flex-row h-[100px] w-full justify-center">
-    <div class="common-shadow icon-down i-carbon-arrow-down h-[40px] w-[40px] hover:cursor-pointer"
-      @click="handleScroll" />
-  </div>
+  </NuxtLayout>
 </template>
 
 <style scoped>
 @font-face {
   font-family: 'MyFont';
   src: url('/Spacewar.ttf') format('truetype');
-}
-
-@keyframes jump {
-
-  0%,
-  100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(.8, 0, 1, 1);
-  }
-
-  50% {
-    transform: none;
-    animation-timing-function: cubic-bezier(0, 0, .2, 1);
-  }
-}
-
-.icon-down {
-  animation: jump 1s ease-in-out infinite;
-}
-
-@media (max-width: 767px) {
-  .flex-col.md\\:flex-row {
-    flex-direction: column;
-  }
-
-  .md\\:items-center {
-    align-items: center;
-  }
-
-  .md\\:justify-start {
-    justify-content: flex-start;
-  }
-
-  .md\\:block {
-    display: block;
-  }
-
-  .hidden {
-    display: none;
-  }
 }
 </style>

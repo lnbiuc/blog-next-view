@@ -3,7 +3,7 @@
 	font-size: 1.05rem;
 	line-height: 1.75;
 	width: 100%;
-	overflow: hidden;
+	/* overflow: hidden; */
 	/* max-width: 65ch; */
 }
 .violet-prose [class~='lead'] {

@@ -43,7 +43,7 @@ export default defineConfig({
 		['card-border', 'rounded-md z-50 hover:cursor-default'],
 		[
 			'header-link',
-			'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet font-bold',
+			'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet',
 		],
 		[
 			'card',
@@ -65,7 +65,7 @@ export default defineConfig({
 				serif: ['serif', 'Noto Serif SC'],
 				mono: ['Fira Code', 'Fira Mono:400,700'],
 			},
-		})
+		}),
 	],
 	transformers: [transformerDirectives(), transformerVariantGroup()],
 });

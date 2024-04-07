@@ -7,6 +7,7 @@ import { watchDebounced } from '@vueuse/core'
 import { githubLight } from '@uiw/codemirror-theme-github';
 import { useUserStore } from '~/store/UserStore'
 import { EditorView } from '@codemirror/view'
+import { useClipboard } from '@vueuse/core'
 
 
 
@@ -94,23 +95,13 @@ async function uploadImage(file: File) {
   if (status.value === 'success') {
     if (data.value) {
 
-      const length = content.value.replace(/\\n/g, '\n')
-      const cursor = getCurrentCursor()
       const imageString = `\n![${file.name}](${data.value})\n`
 
-      if (cursor <= length) {
-        function insertString(originalString: string, insertString: string, index: number) {
-          return originalString.slice(0, index) + insertString + originalString.slice(index);
-        }
-
-        insertString(content.value, imageString, cursor)
-      } else {
-        content.value = content.value + imageString
-      }
+      handleCopy(imageString)
 
       emit('change', content.value)
 
-      toast.add({ title: `upload ${file.name} success` })
+      toast.add({ title: `upload ${file.name} success, Link copied.`, description: imageString })
     }
   }
 
@@ -118,6 +109,19 @@ async function uploadImage(file: File) {
     toast.add({ title: `upload ${file.name} failed`, description: data.value as string })
   }
 }
+
+function handleCopy(text: string) {
+
+  const sourceCopy = ref(text)
+
+  const { copy, isSupported } = useClipboard({ source: sourceCopy })
+
+  if (isSupported) {
+    copy()
+    toast.add({ title: 'Copied', description: sourceCopy.value, timeout: 3000, icon: 'i-heroicons-check-circle text-violet' })
+  }
+}
+
 
 onMounted(() => {
   document.addEventListener('paste', handlePaste)

@@ -360,7 +360,7 @@ function handleKeyDown(event: KeyboardEvent) {
             </div>
             <UFormGroup label="Upload Cover" name="file">
               <div class="flex flex-row">
-                <UInput v-model="fileInput" type="file" @change="onChangeFile" class="w-full" />
+                <input type="file" @change="onChangeFile" class="w-full" />
                 <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
                   upload
                 </UButton>

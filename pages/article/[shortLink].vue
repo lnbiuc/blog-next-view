@@ -186,15 +186,14 @@ onMounted(() => {
         <NuxtLayout name="home">
           <!-- <div v-if="article?.cover" class="mt-[20vh]"></div> -->
           <div class="text-left flex flex-col ">
-            <div class="mb-6 text-4xl font-bold font-serif z-2 ">
+            <div class="mb-6 text-4xl font-bold z-2 ">
               {{ article?.title }}
             </div>
             <div class="mb-1 z-2 mt-8">
               {{ article?.description }}
             </div>
             <div class="flex flex-row justify-start items-center mt-3 z-2">
-              <UBadge v-for="t in article.tags" :key="t" size="lg" :ui="{ rounded: 'rounded-full' }" color="violet"
-                variant="solid" class="mx-1" :tag="t">
+              <UBadge v-for="t in article.tags" :key="t" size="sm" color="violet" variant="solid" class="mx-1" :tag="t">
                 {{ t }}
               </UBadge>
             </div>
@@ -210,7 +209,8 @@ onMounted(() => {
                 </div>
               </div>
               <div>
-                <UButton v-if="isLogin" icon="i-ri:edit-fill" variant="link" :to="`/violet/edit/${article.shortLink}`" target="_blank">
+                <UButton v-if="isLogin" icon="i-ri:edit-fill" variant="link" :to="`/violet/edit/${article.shortLink}`"
+                  target="_blank">
                   Edit this Page
                 </UButton>
               </div>
@@ -240,11 +240,11 @@ onMounted(() => {
             </div>
             <ClientOnly>
               <div v-if="hasCatalog" id="violetToc"
-                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb] font-serif" />
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb]" />
             </ClientOnly>
           </div>
           <div class="violet-prose mb-10 text-left cursor-pointer font-serif">
-            <a class="text-xl" @click="$router.back">cd ..</a>
+            <a class="text-xl" @click="$router.back" hover:underline>cd ..</a>
           </div>
           <Comment />
         </NuxtLayout>
