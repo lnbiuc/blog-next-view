@@ -1,6 +1,6 @@
 <template>
-  <NuxtImg :src="refinedSrc" :alt="alt" width="100%" :placeholder="[50, 25, 75, 5]" format="webp"
-    loading="lazy" class="my-2 rounded shadow hover:shadow-md op75 hover:op100 transition-all" />
+  <NuxtImg :src="refinedSrc" :alt="alt" width="100%" :placeholder="[50, 25, 75, 5]" format="webp" loading="lazy"
+    class="my-2 rounded shadow hover:shadow-md op75 hover:op100 transition-all animated animated-fade-in-up-big" />
 </template>
 
 <script setup lang="ts">

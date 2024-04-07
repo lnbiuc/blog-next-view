@@ -33,7 +33,7 @@ const preloadArticle = useThrottleFn(() => {
         </div>
 
         <div class="p-4 text-left">
-          <div class="text-2xl font-bold font-serif">
+          <div class="text-2xl">
             {{ props.article.title }}
           </div>
           <div class="mt-2 text-sm dark:text-gray-400 text-gray-800">

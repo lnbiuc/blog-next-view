@@ -45,8 +45,8 @@ function useToggleDark(event: MouseEvent) {
   transition.ready
     .then(() => {
       const clipPath = [
-                `circle(0px at ${x}px ${y}px)`,
-                `circle(${endRadius}px at ${x}px ${y}px)`,
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
       ]
       document.documentElement.animate(
         {
@@ -64,10 +64,26 @@ function useToggleDark(event: MouseEvent) {
       )
     })
 }
+
+const icon = ref()
+
+watchEffect(() => {
+  if (colorMode.preference == 'dark') {
+    icon.value = 'i-ri:moon-foggy-fill'
+  } else if (colorMode.preference == 'light') {
+    icon.value = 'i-ri:sun-foggy-fill'
+  } else {
+    icon.value = 'i-ri:contrast-line'
+  }
+
+
+})
 </script>
 
 <template>
-  <div class="!outline-none" @click="useToggleDark">
-    <div class="scale-120" :class="{ 'i-ri:sun-foggy-fill dark:i-ri:moon-foggy-fill': colorMode.preference !== 'system', 'i-ri:contrast-line': colorMode.preference === 'system' }" />
-  </div>
+  <UButton @click="useToggleDark" color="white" size="lg" square>
+    <template #trailing>
+      <UIcon :name="icon" class="w-5 h-5" />
+    </template>
+  </UButton>
 </template>

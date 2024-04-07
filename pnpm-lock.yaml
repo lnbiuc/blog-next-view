@@ -167,6 +167,9 @@ devDependencies:
   unocss-preset-chinese:
     specifier: ^0.3.2
     version: 0.3.2(@unocss/nuxt@0.58.9)(unocss@0.58.9)
+  unocss-preset-extra:
+    specifier: ^0.5.3
+    version: 0.5.3(unocss@0.58.9)
   vue-codemirror:
     specifier: ^6.1.1
     version: 6.1.1(codemirror@6.0.1)(vue@3.4.21)
@@ -13959,6 +13962,14 @@ packages:
       '@unocss/core': 0.58.9
       '@unocss/nuxt': 0.58.9(postcss@8.4.38)(vite@5.1.1)(webpack@5.91.0)
       '@unocss/preset-mini': 0.58.9
+      unocss: 0.58.9(@unocss/webpack@0.58.9)(postcss@8.4.38)(vite@5.1.1)
+    dev: true
+
+  /unocss-preset-extra@0.5.3(unocss@0.58.9):
+    resolution: {integrity: sha512-rRosBmJ3S8/97o/l4J1lc3AJnSGMSD1FgDs4bvUWmrz2OQvPheuZluL8xULEd5MGwHjw4vAwYkue114pnVelzA==}
+    peerDependencies:
+      unocss: '>= 0.31.0 < 1'
+    dependencies:
       unocss: 0.58.9(@unocss/webpack@0.58.9)(postcss@8.4.38)(vite@5.1.1)
     dev: true
 

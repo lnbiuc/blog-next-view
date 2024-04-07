@@ -39,7 +39,8 @@ function openLink() {
 <template>
   <LinkCard v-if="isGithubRepoLink(props.href)" :link="href" />
   <div v-else class="inline-block align-middle mx-1">
-    <UPopover mode="hover" :popper="{ placement: 'top-start' }" :ui="{wrapper: 'inline-flex items-center'}" @mouseover="handleFetchImage">
+    <UPopover mode="hover" :popper="{ placement: 'top-start' }" :ui="{ wrapper: 'inline-flex items-center' }"
+      @mouseover="handleFetchImage">
       <UButton icon="i-ri:external-link-line" @click="openLink" :to="props.href" :target="props.target" variant="link"
         :ui="{ padding: 'px-0' }">
         {{ props.href }}
