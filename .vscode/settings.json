@@ -19,7 +19,7 @@
 	"terminal.integrated.lineHeight": 1,
 	"debug.console.fontSize": 10,
 	// More minimal UI
-	"window.zoomLevel": 1.5,
+	"window.zoomLevel": 1,
 	"editor.minimap.enabled": false,
 	"editor.glyphMargin": false,
 	"editor.folding": false,
