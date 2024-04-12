@@ -1,23 +1,25 @@
-import { ArticleSchema } from '~/server/models/article.schema';
-import process from 'node:process';
-export default defineEventHandler(async event => {
-	const id = event.context.params?.id;
+import process from 'node:process'
+import { ArticleSchema } from '~/server/models/article.schema'
 
-	if (process.env.NODE_ENV !== 'production') {
-		return new Response('not in production', { status: 200 });
-	}
+export default defineEventHandler(async (event) => {
+  const id = event.context.params?.id
 
-	try {
-		const result = await ArticleSchema.findOneAndUpdate(
-			{ _id: id },
-			{ $inc: { views: 1 } },
-			{ new: true }
-		);
+  if (process.env.NODE_ENV !== 'production')
+    return new Response('not in production', { status: 200 })
 
-		if (!result) throw new Error('article not found');
+  try {
+    const result = await ArticleSchema.findOneAndUpdate(
+      { _id: id },
+      { $inc: { views: 1 } },
+      { new: true },
+    )
 
-		return { success: true };
-	} catch (error) {
-		return new Response(error as string, { status: 500 });
-	}
-});
+    if (!result)
+      throw new Error('article not found')
+
+    return { success: true }
+  }
+  catch (error) {
+    return new Response(error as string, { status: 500 })
+  }
+})
