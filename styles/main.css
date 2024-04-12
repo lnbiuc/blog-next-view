@@ -176,16 +176,6 @@ body,
   font-size: 1.25rem;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: all 0.1s;
-}
-.page-enter-from,
-.page-leave-to {
-  opacity: 0;
-  filter: blur(1rem);
-}
-
 .link-active {
   transition: all 0.2s;
   border-radius:  0.5rem;
@@ -618,3 +608,30 @@ html:not(.dark) [img-dark] {
 .blog-content-image {
   animation: slideInFromBottom 0.5s ease-in-out; /* 0.5s是动画时长，可以根据需要调整 */
 }
+
+/*.page-enter-active,*/
+/*.page-leave-active {*/
+/*  transition: all 0.3s ease;*/
+/*}*/
+
+/*.page-enter-from {*/
+/*  transform: translateY(30%);*/
+/*  opacity: 0;*/
+/*  filter: blur(1rem);*/
+/*}*/
+
+/*.page-enter-to {*/
+/*  transform: translateY(0);*/
+/*  opacity: 1;*/
+/*}*/
+
+/*.page-leave-from {*/
+/*  transform: translateY(0);*/
+/*  opacity: 1;*/
+/*}*/
+
+/*.page-leave-to {*/
+/*  transform: translateY(30%);*/
+/*  opacity: 0;*/
+/*  filter: blur(1rem);*/
+/*}*/

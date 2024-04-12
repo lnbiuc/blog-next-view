@@ -30,7 +30,6 @@ defineOgImage({
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
 })
-
 </script>
 
 <template>
