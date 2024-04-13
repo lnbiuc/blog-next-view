@@ -88,7 +88,7 @@ onMounted(async () => {
     </div>
     <div
       class="py-5  flex min-h-[120px] w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] justify-center flex-col items-center sm:justify-between sm:flex-row sm:items-start xl:justify-between xl:flex-row xl:items-start lg:justify-between lg:flex-row lg:items-start">
-      <div class="flex flex-col items-start">
+      <div class="flex flex-col items-center sm:items-start md:items-start xl:items-start lg:items-start">
         <div>
           <span>Copyright © 2024</span>
           <span class="mx-1">|</span>
