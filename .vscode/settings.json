@@ -1,10 +1,7 @@
 {
-	// Disable telemetry
 	"telemetry.telemetryLevel": "off",
-	// Zen mode
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": false,
-	// Theming
 	"editor.fontFamily": "'Monospace Argon', 'Fira Code', Monaco, 'Courier New'",
 	"editor.fontLigatures": true,
 	"terminal.integrated.fontFamily": "'monospace argon'",
@@ -18,7 +15,6 @@
 	"terminal.integrated.fontSize": 12,
 	"terminal.integrated.lineHeight": 1,
 	"debug.console.fontSize": 10,
-	// More minimal UI
 	"window.zoomLevel": 1,
 	"editor.minimap.enabled": false,
 	"editor.glyphMargin": false,
@@ -42,7 +38,6 @@
 	"editor.gotoLocation.multipleImplementations": "goto",
 	"editor.gotoLocation.multipleTypeDefinitions": "goto",
 	"volar.icon.splitEditors": false,
-	// Theme-specific UI
 	"diffEditor.renderSideBySide": false,
 	"editor.copyWithSyntaxHighlighting": false,
 	"editor.snippetSuggestions": "bottom",
@@ -55,7 +50,6 @@
 	"workbench.editor.enablePreview": false,
 	"workbench.editor.highlightModifiedTabs": true,
 	"workbench.editor.tabCloseButton": "off",
-	// Search
 	"search.smartCase": true,
 	"search.useIgnoreFiles": false,
 	"search.exclude": {
@@ -66,15 +60,12 @@
 		"**/package-lock.json": true,
 		"**/yarn.lock": true
 	},
-	// Code
-	// Include "-" in word selection.
 	"editor.wordSeparators": "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?",
 	"editor.cursorBlinking": "smooth",
 	"editor.cursorSmoothCaretAnimation": "on",
 	"editor.wordWrap": "on",
 	"editor.tabCompletion": "on",
 	"explorer.openEditors.visible": 0,
-	// Files to display
 	"files.enableTrash": false,
 	"files.exclude": {
 		".cache-loader/": true,
@@ -91,7 +82,6 @@
 		"LICENSE.md": true,
 		"package-lock.json": true,
 		"phpcs.xml": true,
-		// For more minimal option
 		".editorconfig": true,
 		"prettier.config.js": true,
 		"**/README.md": true,
@@ -99,7 +89,6 @@
 		"node_modules/": false,
 		".gitignore": false,
 		".output/node_modules/": false,
-		// And even more ultra minimal
 		".nuxt": true,
 		".output": true,
 		"package.json": false,
@@ -107,9 +96,6 @@
 		".idea": true
 	},
 	"window.title": "",
-	// "git.decorations.enabled": false,
-	// "scm.diffDecorationsGutterVisibility": "hover",
-	// "scm.diffDecorations": "none",
 	"files.watcherExclude": {
 		"**/.output/**": true,
 		"**/.yarn/**": true,
@@ -119,7 +105,6 @@
 	"editor.semanticHighlighting.enabled": true,
 	"editor.linkedEditing": true,
 	"editor.bracketPairColorization.enabled": true,
-	// Suggestions
 	"editor.inlineSuggest.enabled": true,
 	"editor.acceptSuggestionOnEnter": "smart",
 	"editor.quickSuggestions": {

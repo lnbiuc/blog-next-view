@@ -9,7 +9,7 @@ const props = defineProps({
     default: '',
   },
   target: {
-    type: String as PropType<'_blank' | '_parent' | '_self' | '_top' | (string & {}) | null | undefined>,
+    type: String as PropType<'_blank' | '_parent' | '_self' | '_top' | string | null | undefined>,
     default: undefined,
     required: false,
   },

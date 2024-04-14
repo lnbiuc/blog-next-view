@@ -11,7 +11,7 @@ const { getToken } = useUserStore()
 
 const articles = ref<IArticle[]>([])
 
-const { data, pending, error, refresh } = await useFetch<IArticle[]>('/api/article/all', {
+const { data, pending, error } = await useFetch<IArticle[]>('/api/article/all', {
   method: 'GET',
   server: false,
   headers: {

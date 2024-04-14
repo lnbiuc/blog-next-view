@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
       if (shortLink) {
         const result = await cache.get(shortLink)
         if (result) {
-          console.log('= recover from cache:', shortLink)
+          console.warn('= recover from cache:', shortLink)
           return result
         }
         else {
@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
           const html = await parse(content)
           const end = performance.now()
           const executionTime = Math.round(end - start)
-          console.log(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
+          console.warn(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
           await cache.set(shortLink, html)
           return html
         }
@@ -48,7 +48,7 @@ export default defineEventHandler(async (event) => {
       const html = await parse(queryres.content)
       const end = performance.now()
       const executionTime = Math.round(end - start)
-      console.log(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
+      console.warn(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
       return html
     }
   }

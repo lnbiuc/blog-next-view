@@ -127,6 +127,7 @@ function copySelection() {
 }
 
 watchEffect(() => {
+  // eslint-disable-next-line style/max-statements-per-line
   if (width.value < 1200) { hasCatalog.value = false }
   else {
     initTOC()

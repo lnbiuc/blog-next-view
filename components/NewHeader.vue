@@ -57,7 +57,7 @@ const isTransparent = computed(() => {
 
 const readProgress = ref<number>(0)
 
-const { width, height } = useWindowSize()
+const { height } = useWindowSize()
 
 watchEffect(() => {
   if (document) {

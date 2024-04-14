@@ -2,25 +2,12 @@ import type articleVue from '~/layouts/article.vue';
 <script setup lang="ts">
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { useThrottleFn } from '@vueuse/core'
+import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
 import type { IArticle } from '~/server/types'
-
-// import Vditor from 'vditor';
-// import 'vditor/dist/index.css';
-// import { render } from '~/utils/markdown-render'
-// import { render } from '~/utils/nuxt-mdc'
 import { useUserStore } from '~/store/UserStore'
 import MarkdownEditor from '~/components/MarkdownEditor.vue'
 import '~/styles/md-alert.css'
-
-// const vditor = ref<Vditor | null>(null);
 import { useMarkdownParser } from '~/composables/useMarkdownParser'
-import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
-
-// const debouncedRender = useDebounceFn(async () => {
-//   if (article.value.content) {
-//     renderRes.value = await render(vditor.value?.getValue() as string)
-//   }
-// }, 3000)
 
 const props = defineProps({
   shortLink: {
@@ -29,10 +16,6 @@ const props = defineProps({
     default: undefined,
   },
 })
-
-const color = useColorMode()
-
-const renderRes = ref()
 
 const toast = useToast()
 
@@ -117,10 +100,7 @@ const throttledPublish = useThrottleFn(() => {
 }, 3000)
 
 watchEffect(async () => {
-  if (!article.value.category) {
-
-  }
-  else {
+  if (article.value.category) {
     tags.value = []
     const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
@@ -137,6 +117,8 @@ function onChangeFile(e: Event) {
 }
 
 const uploading = ref(false)
+
+const { getToken } = useUserStore()
 
 async function handleUpload(option: 'cover' | 'content') {
   if (!fileCover.value)
@@ -180,8 +162,6 @@ function handleClean() {
   fileInput.value = null
   article.value.cover = ''
 }
-
-const { getToken } = useUserStore()
 
 async function handlePublish() {
   // renderRes.value = await render(article.value.content)

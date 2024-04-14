@@ -36,7 +36,7 @@ const icon = computed(() => {
 
 const source = ref(props.code)
 
-const { text, copy, isSupported } = useClipboard({ source })
+const { copy } = useClipboard({ source })
 
 function copyCode() {
   copy(source.value)

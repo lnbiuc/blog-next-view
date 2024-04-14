@@ -1,7 +1,7 @@
 import process from 'node:process'
 import axios from 'axios'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     if (
       !process.env.UMAMI_ADDRESS
@@ -13,11 +13,11 @@ export default defineEventHandler(async (event) => {
     const startDay = new Date('2024-01-01 00:00:00')
 
     const { data } = await axios.get(
-			`${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/stats`,
-			{
-			  headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
-			  params: { startAt: startDay.getTime(), endAt: new Date().getTime() },
-			},
+        `${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/stats`,
+        {
+          headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
+          params: { startAt: startDay.getTime(), endAt: new Date().getTime() },
+        },
     )
     if (data)
       return data

@@ -34,13 +34,6 @@ function handleReady(payload: any) {
   view.value = payload.view
 }
 
-function getCurrentCursor() {
-  const state = view.value.state
-  const ranges = state.selection.ranges
-
-  return ranges[0].anchor
-}
-
 const content = ref<string>('')
 
 if (props.input)
@@ -78,7 +71,6 @@ async function uploadImage(file: File) {
 
   const formData = new FormData()
   formData.append('file', file)
-  console.log(file)
   const { data, status } = await useFetch('/api/upload', {
     method: 'POST',
     body: formData,

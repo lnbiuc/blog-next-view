@@ -1,6 +1,6 @@
 import { ArticleSchema } from '~/server/models/article.schema'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     const article = await ArticleSchema.find({ status: 'PUBLISHED' }, { content: 0 })
     if (article)

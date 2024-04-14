@@ -41,7 +41,7 @@ export function uploadToR2(filePath: string, filename: string, dir: string) {
   return client
     .send(command)
     .then((res) => {
-      console.log(res)
+      console.warn(res)
       return `${process.env.IMAGE_PREVIEW_URI}/${key}`
     })
     .catch((err) => {

@@ -18,7 +18,7 @@ async function getArticles() {
   data.forEach((article) => {
     let include = false
     articles.value.forEach((existArticle) => {
-      if (article._id == existArticle._id)
+      if (article._id === existArticle._id)
         include = true
     })
     if (!include)

@@ -54,7 +54,7 @@ export default defineEventHandler(async (event) => {
         else {
           const fileHash = getFileHashSync(filePath)
           const previewUrl = uploadToR2(filePath, `${fileHash}.png`, 'screenshot')
-          console.log('previewUrl:', previewUrl)
+          console.warn('previewUrl:', previewUrl)
           resolve(previewUrl)
         }
       })

@@ -68,9 +68,9 @@ function useToggleDark(event: MouseEvent) {
 const icon = ref()
 
 watchEffect(() => {
-  if (colorMode.preference == 'dark')
+  if (colorMode.preference === 'dark')
     icon.value = 'i-ri:moon-foggy-fill'
-  else if (colorMode.preference == 'light')
+  else if (colorMode.preference === 'light')
     icon.value = 'i-ri:sun-foggy-fill'
   else
     icon.value = 'i-ri:contrast-line'

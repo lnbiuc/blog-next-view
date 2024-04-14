@@ -1,4 +1,4 @@
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   // const body = await readBody(event);
   try {
     // return await new UserSchema(body).save();

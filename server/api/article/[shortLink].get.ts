@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
     if (process.env.MEMORY_CACHE) {
       const result = (await cache.get(article.shortLink)) as MDCParserResult
       if (result) {
-        console.log('= recover from cache:', shortLink)
+        console.warn('= recover from cache:', shortLink)
         articleData.html = result as MDCParserResult
         return articleData
       }
@@ -65,7 +65,7 @@ export default defineEventHandler(async (event) => {
         const html = await parse(content as string)
         const end = performance.now()
         const executionTime = Math.round(end - start)
-        console.log(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
+        console.warn(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
         await cache.set(article.shortLink, html)
         articleData.html = html as MDCParserResult
         return articleData
