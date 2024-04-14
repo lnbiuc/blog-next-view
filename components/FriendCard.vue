@@ -15,12 +15,14 @@ function openLink() {
 
 <template>
   <div
-      class="card-bg-filter backdrop-blur-sm overflow-hidden card-border card"
-      @click="openLink"
+    class="card-bg-filter backdrop-blur-sm card-border overflow-hidden card"
+    @click="openLink"
   >
     <div class="relative overflow-hidden">
-      <img :src="props.friend.screenShot" alt="cover"
-           class="object-cover p-2px rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform">
+      <img
+        :src="props.friend.screenShot" alt="cover"
+        class="object-cover p-2px rounded-tl-md rounded-tr-md shadow h-48 w-full z-0 transform"
+      >
     </div>
     <div class="m-2 flex flex-row">
       <div class="max-w-150px items-start">

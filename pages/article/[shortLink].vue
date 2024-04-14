@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useClipboard, useMouse, useTextSelection } from '@vueuse/core'
+import { useClipboard, useMouse, useTextSelection, useTimeoutFn } from '@vueuse/core'
 
 import * as tocbot from 'tocbot'
-import { useTimeoutFn } from '@vueuse/core'
+
 import { useArticleStore } from '~/store/ArticleStore'
 import { formatTime } from '~/composables/formatTime'
 import { useUserStore } from '~/store/UserStore'
-
 
 const route = useRoute()
 
@@ -35,8 +34,8 @@ useHead({
 })
 
 function initTOC() {
-  if (!document) return
-
+  if (!document)
+    return
 
   if (!document.querySelector('#violetToc') || !document.querySelector('#violetMD')) {
     // wait for the dom to be ready
@@ -61,14 +60,12 @@ function initTOC() {
 
   setTimeout(() => {
     // check if the toc is empty
-    if (!document.querySelector('.toc-list')) {
+    if (!document.querySelector('.toc-list'))
       initTOC()
-    }
   }, 100)
 }
 
 const { start, stop } = useTimeoutFn(async () => {
-
   if (article) {
     useFetch<string>(`/api/article/views/${article?._id}`, {
       method: 'PUT',
@@ -89,7 +86,6 @@ onBeforeUnmount(() => {
 })
 
 const { width } = useWindowSize()
-
 
 const openPop = ref<boolean>(false)
 
@@ -172,7 +168,8 @@ onMounted(() => {
 
   const { hasAuth } = useUserStore()
 
-  if (hasAuth()) isLogin.value = true
+  if (hasAuth())
+    isLogin.value = true
 })
 </script>
 
@@ -187,14 +184,14 @@ onMounted(() => {
         </Transition> -->
         <NuxtLayout name="home">
           <!-- <div v-if="article?.cover" class="mt-[20vh]"></div> -->
-          <div class="text-left flex flex-col ">
-            <div class="mb-6 text-4xl font-bold z-2 ">
+          <div class="text-left flex flex-col">
+            <div class="mb-6 text-4xl font-bold z-2">
               {{ article?.title }}
             </div>
-            <div class="mb-1 z-2 mt-8">
+            <div class="mb-1 mt-8 z-2">
               {{ article?.description }}
             </div>
-            <div class="flex flex-row justify-start items-center mt-3 z-2">
+            <div class="mt-3 flex flex-row justify-start items-center z-2">
               <UBadge v-for="t in article.tags" :key="t" size="sm" color="violet" variant="solid" class="mx-1" :tag="t">
                 {{ t }}
               </UBadge>
@@ -205,14 +202,16 @@ onMounted(() => {
                 <div class="text-violet z-2">
                   {{ article?.views }} views
                 </div>
-                <div class="i-carbon-alarm mx-2 scale-110 z-2" />
+                <div class="i-carbon-alarm mx-2 z-2 scale-110" />
                 <div class="text-violet z-2">
                   {{ formatTime(article?.updatedAt) }}
                 </div>
               </div>
               <div>
-                <UButton v-if="isLogin" icon="i-ri:edit-fill" variant="link" :to="`/violet/edit/${article.shortLink}`"
-                  target="_blank">
+                <UButton
+                  v-if="isLogin" icon="i-ri:edit-fill" variant="link" :to="`/violet/edit/${article.shortLink}`"
+                  target="_blank"
+                >
                   Edit this Page
                 </UButton>
               </div>
@@ -226,27 +225,35 @@ onMounted(() => {
                 <!-- <div v-if="article.html" v-html="article.html" id="violetMD"
                   class="violet-prose mb-20 mt-5 text-left font-serif" @mouseup="checkSelection"></div> -->
 
-                <MDCRenderer id="violetMD" class="violet-prose z-2 animated animated-fade-in-up-big"
-                             @mouseup="checkSelection" v-if="article?.html && article?.html?.body && article?.html.data"
-                             :body="article?.html.body" :data="article?.html.data"/>
+                <MDCRenderer
+                  v-if="article?.html && article?.html?.body && article?.html.data" id="violetMD"
+                  class="violet-prose z-2" :body="article?.html.body"
+                  :data="article?.html.data" @mouseup="checkSelection"
+                />
 
-                <div v-else class="text-2xl text-violet">loading... please wait</div>
+                <div v-else class="text-2xl text-violet">
+                  loading... please wait
+                </div>
                 <div v-if="isSupported">
-                  <div v-show="openPop"
+                  <div
+                    v-show="openPop"
                     class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
-                    @click="copySelection">
+                    @click="copySelection"
+                  >
                     Copy
                   </div>
                 </div>
               </div>
             </div>
             <ClientOnly>
-              <div v-if="hasCatalog" id="violetToc"
-                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start dark:text-[#bbb] animated animated-fade-in-right animated-fast" />
+              <div
+                v-if="hasCatalog" id="violetToc"
+                class="catalog p-2 pl-6 mt-8 text-[#555] text-left flex flex-row w-full justify-start animated animated-fade-in-right animated-fast dark:text-[#bbb]"
+              />
             </ClientOnly>
           </div>
-          <div class="violet-prose mb-10 text-left cursor-pointer font-serif">
-            <a class="text-xl" @click="$router.back" hover:underline>cd ..</a>
+          <div class="violet-prose mb-10 font-serif text-left cursor-pointer">
+            <a class="text-xl hover:underline" @click="$router.back">cd ..</a>
           </div>
           <Comment />
         </NuxtLayout>

@@ -1,5 +1,5 @@
 import process from 'node:process'
-import {appDescription} from './constants/index'
+import { appDescription } from './constants/index'
 
 export default defineNuxtConfig({
   modules: [
@@ -107,31 +107,31 @@ export default defineNuxtConfig({
   },
 
   app: {
-    // pageTransition: { name: 'page', mode: 'out-in' },
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       viewport: 'width=device-width,initial-scale=1',
       link: [
-        {rel: 'icon', href: '/site-favicon.ico', sizes: 'any'},
-        {rel: 'apple-touch-icon', href: '/site-favicon.ico'},
+        { rel: 'icon', href: '/site-favicon.ico', sizes: 'any' },
+        { rel: 'apple-touch-icon', href: '/site-favicon.ico' },
       ],
       meta: [
-        {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-        {name: 'description', content: appDescription},
-        {name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent'},
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'description', content: appDescription },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
       ],
       // umami analytics
       script:
           process.env.NODE_ENV === 'production'
           && process.env.UMAMI_ADDRESS
           && process.env.UMAMI_WEBSITE_ID
-              ? [
+            ? [
                 {
                   'async': true,
                   'src': `${process.env.UMAMI_ADDRESS}/script.js`,
                   'data-website-id': process.env.UMAMI_WEBSITE_ID,
                 },
               ]
-              : [],
+            : [],
     },
   },
 

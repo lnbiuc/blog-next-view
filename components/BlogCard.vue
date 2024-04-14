@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
+
 // import { formatTime } from '~/composables/formatTime'
 
 const props = defineProps({
@@ -25,18 +26,20 @@ const preloadArticle = useThrottleFn(() => {
 
 <template>
   <NuxtLink :to="`/article/${props.article.shortLink}`" :prefetch="true" @mouseover="preloadArticle()">
-    <div class="backdrop-blur-sm overflow-hidden card-border h-full card blog-card-cover flex flex-col justify-between">
+    <div class="backdrop-blur-sm blog-card-cover card-border flex flex-col h-full overflow-hidden justify-between card">
       <div>
         <div class="relative overflow-hidden">
-          <img :src="`${props.article.cover}/compress1600x900`" alt="cover"
-               class="object-cover rounded-tl-md rounded-tr-md shadow aspect-[16/9] w-full z-0 transform">
+          <img
+            :src="`${props.article.cover}/compress1600x900`" alt="cover"
+            class="object-cover rounded-tl-md rounded-tr-md shadow w-full aspect-[16/9] z-0 transform"
+          >
         </div>
 
         <div class="p-4 text-left">
           <div class="text-2xl">
             {{ props.article.title }}
           </div>
-          <div class="mt-2 text-sm dark:text-gray-400 text-gray-800">
+          <div class="mt-2 text-sm text-gray-800 dark:text-gray-400">
             {{ props.article.description }}
           </div>
         </div>
