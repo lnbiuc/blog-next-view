@@ -5,11 +5,11 @@
 	"zenMode.fullScreen": false,
 	"zenMode.centerLayout": false,
 	// Theming
-	"editor.fontFamily": "'Monospace Argon', 'Fira Code', Monaco, 'Courier New'",
+	"editor.fontFamily": "Fira Code, 'Monospace Argon' , Monaco, 'Courier New'",
 	"editor.fontLigatures": true,
 	"terminal.integrated.fontFamily": "'monospace argon'",
 	"window.autoDetectColorScheme": true,
-	"workbench.colorTheme": "Catppuccin Mocha",
+	"workbench.colorTheme": "Default Dark Modern",
 	"editor.codeLensFontSize": 13,
 	"editor.fontSize": 13,
 	"editor.lineHeight": 1.75,
@@ -73,7 +73,6 @@
 	"editor.cursorSmoothCaretAnimation": "on",
 	"editor.wordWrap": "on",
 	"editor.tabCompletion": "on",
-	"explorer.openEditors.visible": 0,
 	// Files to display
 	"files.enableTrash": false,
 	"files.exclude": {

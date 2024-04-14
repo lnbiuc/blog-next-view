@@ -50,8 +50,8 @@ export default defineConfig({
 			'rounded-md shadow-sm border border-[#ddd] dark:border-[#333] transition-all ease-in-out  hover:border-violet  hover:dark:border-violet ring-inset hover:border-violet hover:ring-2 hover:ring-violet',
 		],
 		['mobile-head-link', 'header-link text-2xl my-1 mt-1 mr-2'],
-		['anim-fade-in', 'animated animated-fade-in-up animated-fast'],
-		['anim-fade', 'animated animated-fade-in animated-fast'],
+		// ['anim-fade-in', 'animated animated-fade-in-up animated-fast'],
+		// ['anim-fade', 'animated animated-fade-in animated-fast'],
 	],
 	presets: [
 		presetMini(),

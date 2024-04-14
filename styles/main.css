@@ -609,9 +609,14 @@ html:not(.dark) [img-dark] {
   animation: slideInFromBottom 0.5s ease-in-out; /* 0.5s是动画时长，可以根据需要调整 */
 }
 
- .page-enter-active,
+ .page-enter-active {
+  /* transition: all 0.2s ease-in; */
+  transition: all 0.24s ease-out;
+}
+
 .page-leave-active {
-  transition: all 0.2s ease-in-out;
+  /* transition: all 0.25s ease-out; */
+  transition: all 0.2s ease-in;
 }
 
 .page-enter-from {
