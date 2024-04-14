@@ -1,6 +1,6 @@
 <!-- components/content/Card.vue -->
 <template>
-  <div class="py-2 px-4 border bg-white dark:bg-black dark:border-gray-700 rounded">
+  <div class="px-4 py-2 bg-white border rounded dark:bg-black dark:border-gray-700">
     <slot />
   </div>
 </template>

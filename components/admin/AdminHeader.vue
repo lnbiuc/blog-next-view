@@ -21,12 +21,10 @@ const links = [[{
   to: '/',
   click: () => {
     logout()
-  }
+  },
 }]]
-
 </script>
 
 <template>
-  <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800">
-  </UHorizontalNavigation>
+  <UHorizontalNavigation :links="links" class="border-b border-gray-200 dark:border-gray-800" />
 </template>

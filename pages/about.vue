@@ -17,8 +17,6 @@ defineOgImage({
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
 })
-
-
 </script>
 
 <template>
@@ -35,15 +33,23 @@ defineOgImage({
           <!-- <MdPreview :model-value="md" :theme="theme" class="preview" editor-id="about-me" /> -->
           <!-- <MDRender class="violet-prose" :source="md"/> -->
           <div class="violet-prose mt-6">
-            <h2 id="whoami" tabindex="-1">whoami</h2>
-            <p>Hello! I'm Violet. I'm a recent graduate in computer science. A Java programmer based in Xi'an. I have a
+            <h2 id="whoami" tabindex="-1">
+              whoami
+            </h2>
+            <p>
+              Hello! I'm Violet. I'm a recent graduate in computer science. A Java programmer based in Xi'an. I have a
               passion for exploring everything interesting, ranging from peculiar gadgets like charger,NAS and routers.
               Additionally, I find great joy in delving into the world of frontend development. Currently residing and
               working in Xi'an, I document my professional and learning journey through work and study notes, which you
-              can find on this website. Feel free to reach out and connect!</p>
-            <h2 id="what-can-i-do" tabindex="-1">What can I do</h2>
+              can find on this website. Feel free to reach out and connect!
+            </p>
+            <h2 id="what-can-i-do" tabindex="-1">
+              What can I do
+            </h2>
             <p>As you can see, I am a programmer, I developing interesting things.</p>
-            <h2 id="tech-stack" tabindex="-1">Tech Stack</h2>
+            <h2 id="tech-stack" tabindex="-1">
+              Tech Stack
+            </h2>
             <ul>
               <li>Language: Java、JavaScript、TypeScript</li>
               <li>Framework: Spring &amp; SpringCloud、Vue、Nuxt</li>
@@ -51,7 +57,9 @@ defineOgImage({
               <li>Middleware: Redis、Elasticsearch、Zookeeper、Kafka、RabbitMQ、Nginx</li>
               <li>Ops: Docker、Centos、Ubuntu</li>
             </ul>
-            <h2 id="contact" tabindex="-1">Contact</h2>
+            <h2 id="contact" tabindex="-1">
+              Contact
+            </h2>
             <ul>
               <li><a href="mailto:hi@lnbiuc.com">Mail</a></li>
               <li><a href="https://github.com/lnbiuc">Github</a></li>

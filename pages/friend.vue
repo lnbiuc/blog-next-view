@@ -1,7 +1,7 @@
 <script setup lang="ts">
+import { useClipboard } from '@vueuse/core'
 import type { IFriend } from '~/server/types'
 import { useFriendStore } from '~/store/FriendStore'
-import { useClipboard } from '@vueuse/core'
 
 const friends = ref<IFriend[]>()
 
@@ -33,7 +33,6 @@ defineOgImage({
 const toast = useToast()
 
 function handleCopy(text: string) {
-
   const sourceCopy = ref(text)
 
   const { copy, isSupported } = useClipboard({ source: sourceCopy })
@@ -43,7 +42,6 @@ function handleCopy(text: string) {
     toast.add({ title: 'Copied', description: sourceCopy.value, timeout: 3000, icon: 'i-heroicons-check-circle text-violet' })
   }
 }
-
 </script>
 
 <template>
@@ -64,7 +62,7 @@ function handleCopy(text: string) {
         </div>
         <FriendCards :friends="friends!" class="mb-20" />
         <!-- <MDRender :source="md" /> -->
-        <div class="text-left violet-prose">
+        <div class="violet-prose text-left">
           <p>你可以通过在下方评论来申请友链，只需满足以下条件即可，通过后博主会手动添加嗷。</p>
           <ul>
             <li>国内可访问</li>
@@ -81,27 +79,27 @@ function handleCopy(text: string) {
           <p>欢迎添加本站:（点击复制）</p>
           <ul>
             <li>
-              <UButton class="mr-1 text-md" variant="link" @click="handleCopy('薇尔薇')">
+              <UButton class="text-md mr-1" variant="link" @click="handleCopy('薇尔薇')">
                 名称：薇尔薇
               </UButton>
             </li>
             <li>
-              <UButton class="mr-1 text-md" variant="link" @click="handleCopy('A Web Developer. Code for Fun.')">
+              <UButton class="text-md mr-1" variant="link" @click="handleCopy('A Web Developer. Code for Fun.')">
                 描述：A Web Developer. Code for Fun.
               </UButton>
             </li>
             <li>
-              <UButton class="mr-1 text-md" variant="link" @click="handleCopy('https://vio.vin/favicon.ico')">
+              <UButton class="text-md mr-1" variant="link" @click="handleCopy('https://vio.vin/favicon.ico')">
                 头像：https://vio.vin/favicon.ico
               </UButton>
             </li>
             <li>
-              <UButton class="mr-1 text-md" variant="link" @click="handleCopy('https://vio.vin')">
+              <UButton class="text-md mr-1" variant="link" @click="handleCopy('https://vio.vin')">
                 链接：https://vio.vin
               </UButton>
             </li>
             <li>
-              <UButton class="mr-1 text-md" variant="link" @click="handleCopy('hi@lnbiuc.com')">
+              <UButton class="text-md mr-1" variant="link" @click="handleCopy('hi@lnbiuc.com')">
                 邮箱：hi@lnbiuc.com
               </UButton>
             </li>

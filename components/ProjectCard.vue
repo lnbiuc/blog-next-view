@@ -17,13 +17,14 @@ function openNewTab(url: string | undefined) {
 
 <template>
   <div
-    class="card project-card-bg-filter backdrop-blur-sm my-open-tab flex flex-col overflow-hidden justify-between card-border"
-    @click="openNewTab(props.article.link)">
+    class="backdrop-blur-sm my-open-tab project-card-bg-filter card-border flex flex-col overflow-hidden justify-between card"
+    @click="openNewTab(props.article.link)"
+  >
     <div class="p-4 text-left">
       <div class="text-2xl font-bold font-serif">
         {{ props.article.title }}
       </div>
-      <div class="mt-2 dark:text-gray-400 text-gray-800">
+      <div class="mt-2 text-gray-800 dark:text-gray-400">
         {{ props.article.description }}
       </div>
       <div>
@@ -33,7 +34,10 @@ function openNewTab(url: string | undefined) {
       </div>
     </div>
     <div class="px-4 pb-4 relative">
-      <img :src="`${props.article.cover}/compress1600x900`" alt="cover" class="object-cover aspect-[16/9] rounded-md w-full">
+      <img
+        :src="`${props.article.cover}/compress1600x900`" alt="cover"
+        class="object-cover rounded-md w-full aspect-[16/9]"
+      >
     </div>
   </div>
 </template>

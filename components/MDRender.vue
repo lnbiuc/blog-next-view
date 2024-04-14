@@ -10,7 +10,7 @@ const props = defineProps({
   source: {
     type: String,
     required: false,
-  }
+  },
 })
 
 const emit = defineEmits(['renderFinished'])
@@ -18,21 +18,20 @@ const emit = defineEmits(['renderFinished'])
 const renderRes = ref()
 
 onMounted(async () => {
-
   if (props.source) {
     const start = performance.now()
     renderRes.value = await render(props.source)
     const end = performance.now()
-    const roundedStart = Math.round(start);
-    const roundedEnd = Math.round(end);
-    const roundedDuration = roundedEnd - roundedStart;
+    const roundedStart = Math.round(start)
+    const roundedEnd = Math.round(end)
+    const roundedDuration = roundedEnd - roundedStart
     emit('renderFinished', renderRes.value, roundedDuration)
   }
 })
 </script>
 
 <template>
-  <div id="violetMD" class="violet-prose mb-20 mt-5 text-left font-serif">
+  <div id="violetMD" class="violet-prose mb-20 mt-5 font-serif text-left">
     <div v-if="$props.html" v-html="$props.html" />
     <div v-else v-html="renderRes" />
   </div>

@@ -1,2 +1,2 @@
-export { default } from './MyGiscus.vue';
-export * from './types';
+export { default } from './MyGiscus.vue'
+export * from './types'

@@ -11,7 +11,6 @@ const { y } = useWindowScroll()
 const route = useRoute()
 const showTitleY = ref(100)
 
-
 const isFixed = computed(() => (!route.path.includes('/article')) || y.value < showTitleY.value)
 
 const { styles } = useFixedHeader(headerRef, {
@@ -50,11 +49,10 @@ const showShadow = computed(() => {
 })
 
 const isTransparent = computed(() => {
-  if (route.path.includes('/article')) {
+  if (route.path.includes('/article'))
     return false
-  } else {
+  else
     return y.value > showTitleY.value
-  }
 })
 
 const readProgress = ref<number>(0)
@@ -62,18 +60,15 @@ const readProgress = ref<number>(0)
 const { width, height } = useWindowSize()
 
 watchEffect(() => {
-
   if (document) {
     const calc = (y.value - showTitleY.value) / (document.body.scrollHeight - height.value - showTitleY.value)
-    if (calc < 0) {
+    if (calc < 0)
       readProgress.value = 0
-    } else if (calc > 1) {
+    else if (calc > 1)
       readProgress.value = 1
-    }
 
-    else {
+    else
       readProgress.value = calc
-    }
   }
 })
 
@@ -103,43 +98,53 @@ onMounted(() => {
 
 <template>
   <div
-    class="w-full flex flex-row justify-around h-60px items-center fixed z-999 transition-all border-b border-transparent font-sans"
+    class="border-b border-transparent font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all"
     :class="{
       'shadow border-[#eee] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
-      'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen
-    }">
-    <div class="rounded-3 cursor-pointer mx-2 mr-4 w-45px h-45px flex flex-row justify-center items-center">
-      <img src="/site-favicon.ico" class="object-cover shadow-md rounded-3" @click="$router.push('/')" />
+      'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen,
+    }"
+  >
+    <div class="mx-2 mr-4 rounded-3 flex flex-row h-45px w-45px cursor-pointer justify-center items-center">
+      <img src="/site-favicon.ico" class="object-cover rounded-3 shadow-md" @click="$router.push('/')">
     </div>
     <div
-      class="flex flex-row items-center w-full justify-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]">
-      <div class="flex flex-row items-center w-full justify-around">
-        <div name="title" class="w-50% flex flex-row justify-start flex-1">
+      class="flex flex-row w-full justify-center items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
+    >
+      <div class="flex flex-row w-full justify-around items-center">
+        <div name="title" class="flex flex-1 flex-row w-50% justify-start">
           <Transition name="slide">
             <div v-if="!isFixed">
               <div
-                class="text-xl text-ellipsis overflow-hidden whitespace-no-wrap truncate max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset">
+                class="whitespace-no-wrap text-xl truncate text-ellipsis max-w-50 overflow-hidden lg:max-w-unset md:max-w-unset sm:max-w-unset xl:max-w-unset"
+              >
                 {{ article?.title }}
               </div>
               <div
-                class=" max-w-50 sm:max-w-unset md:max-w-unset xl:max-w-unset lg:max-w-unset text-xs text-gray-500 text-ellipsis overflow-hidden whitespace-no-wrap truncate">
+                class="whitespace-no-wrap text-xs text-gray-500 truncate text-ellipsis max-w-50 overflow-hidden lg:max-w-unset md:max-w-unset sm:max-w-unset xl:max-w-unset"
+              >
                 {{ article?.category }} / {{ article?.shortLink }}
               </div>
             </div>
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div class="hidden items-center justify-center z-1000 sm:flex md:flex lg:flex xl:flex"
-          :class="{ 'fixed': isFixed, 'relative': !isFixed }">
-          <header ref="headerRef" class="flex items-center justify-center m-auto" :style="{
-      ...styles,
-      position: isFixed ? 'relative' : 'fixed',
-    }">
-            <ul class="flex flex-row items-center transition-all  h-40px border rounded-full " :class="{
-      'mt-52px dark:border-[#222] border-[#eee] bg-light dark:bg-dark shadow backdrop-blur-2xl': !isFixed,
-      'dark:border-[#222] border-[#eee]  bg-light dark:bg-dark shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50': !showShadow,
-      'border-transparent': isTransparent,
-    }">
+        <div
+          class="hidden justify-center items-center z-1000 lg:flex md:flex sm:flex xl:flex"
+          :class="{ fixed: isFixed, relative: !isFixed }"
+        >
+          <header
+            ref="headerRef" class="m-auto flex justify-center items-center" :style="{
+              ...styles,
+              position: isFixed ? 'relative' : 'fixed',
+            }"
+          >
+            <ul
+              class="border rounded-full flex flex-row h-40px items-center transition-all" :class="{
+                'mt-52px dark:border-[#222] border-[#eee] bg-light dark:bg-dark shadow backdrop-blur-2xl': !isFixed,
+                'dark:border-[#222] border-[#eee]  bg-light dark:bg-dark shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50': !showShadow,
+                'border-transparent': isTransparent,
+              }"
+            >
               <li>
                 <NuxtLink to="/" class="header-link" :prefetch="true">
                   Home
@@ -178,7 +183,7 @@ onMounted(() => {
             </ul>
           </header>
         </div>
-        <div name="rate" class="w-50% flex flex-row justify-end flex-1 mr-0 sm:mr-4 md:mr-4 xl:mr-4 lg:mr-4">
+        <div name="rate" class="mr-0 flex flex-1 flex-row w-50% justify-end lg:mr-4 md:mr-4 sm:mr-4 xl:mr-4">
           <Transition name="slide">
             <div v-if="!isFixed">
               {{ Math.round(readProgress * 100) }}
@@ -187,23 +192,25 @@ onMounted(() => {
           </Transition>
           <div>&nbsp;</div>
         </div>
-        <div class="flex sm:hidden md:hidden lg:hidden xl:hidden" name="openMenu" @click="isOpen = !isOpen">
-          <div class="scale-140 mr-4" :class="{ 'i-ri:menu-fold-fill': !isOpen, 'i-ri:close-line': isOpen }"></div>
+        <div class="flex lg:hidden md:hidden sm:hidden xl:hidden" name="openMenu" @click="isOpen = !isOpen">
+          <div class="mr-4 scale-140" :class="{ 'i-ri:menu-fold-fill': !isOpen, 'i-ri:close-line': isOpen }" />
         </div>
       </div>
     </div>
-    <div class="w-50px hidden sm:flex md:flex lg:flex xl:flex">
+    <div class="hidden w-50px lg:flex md:flex sm:flex xl:flex">
       <DarkToggle />
     </div>
   </div>
 
-  <div class="h-60px"></div>
+  <div class="h-60px" />
 
-  <div name="v-header"
-    class="fixed top-60px z-6000 h-0 w-full transition-all bg-light dark:bg-dark flex sm:hidden md:hidden lg:hidden xl:hidden justify-end"
-    :class="{ 'h-full': isOpen }">
+  <div
+    name="v-header"
+    class="bg-light flex fixed h-0 w-full justify-end top-60px z-6000 transition-all lg:hidden md:hidden sm:hidden xl:hidden dark:bg-dark"
+    :class="{ 'h-full': isOpen }"
+  >
     <Transition name="slide-fade">
-      <ul class="flex flex-col items-end" v-if="isOpen">
+      <ul v-if="isOpen" class="flex flex-col items-end">
         <li class="mobile-head-link">
           <NuxtLink to="/" class="header-link" :prefetch="true" @click="isOpen = !isOpen">
             Home
@@ -239,7 +246,7 @@ onMounted(() => {
             Admin
           </NuxtLink>
         </li>
-        <li class="mobile-head-link mr-5">
+        <li class="mr-5 mobile-head-link">
           <DarkToggle @click="isOpen = !isOpen" />
         </li>
       </ul>

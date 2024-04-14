@@ -15,16 +15,14 @@ const selected = ref('Sort by date')
 async function getArticles() {
   const data = await category('article')
 
-  data.forEach(article => {
+  data.forEach((article) => {
     let include = false
-    articles.value.forEach(existArticle => {
-      if (article._id == existArticle._id) {
+    articles.value.forEach((existArticle) => {
+      if (article._id == existArticle._id)
         include = true
-      }
     })
-    if (!include) {
+    if (!include)
       articles.value.push(article)
-    }
   })
 
   handleSortByChange(selected.value)
@@ -96,7 +94,6 @@ defineOgImage({
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
   },
 })
-
 </script>
 
 <template>
@@ -113,8 +110,10 @@ defineOgImage({
                 A collection of my thoughts and experiences.
               </span>
             </div>
-            <Search :is-loading="isLoading" category="article" @params-change="handleParamsChange"
-              @sort-by-change="handleSortByChange" />
+            <Search
+              :is-loading="isLoading" category="article" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange"
+            />
           </div>
         </div>
         <BlogCards :articles="articles" />

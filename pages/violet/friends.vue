@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { IFriend } from '~/server/types';
-import { formatZHTime } from '~/composables/formatTime'
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import type { IFriend } from '~/server/types'
+import { formatZHTime } from '~/composables/formatTime'
 import { useUserStore } from '~/store/UserStore'
 
 const toast = useToast()
@@ -12,8 +12,8 @@ const { data, pending, error } = useFetch<IFriend[]>('/api/friend/all', {
   method: 'GET',
   server: false,
   headers: {
-    'Authorization': getToken(),
-  }
+    Authorization: getToken(),
+  },
 })
 
 const router = useRouter()
@@ -22,7 +22,8 @@ if (error.value) {
   if (error.value.statusCode === 401) {
     toast.add({ title: 'Error', description: 'Unauthorized' })
     router.push('/violet/login')
-  } else {
+  }
+  else {
     toast.add({ title: 'Error', description: error.value.message })
   }
 }
@@ -37,7 +38,7 @@ const columns = [
   { key: 'screenShot', label: 'ScreenShot' },
   { key: 'status', label: 'Status' },
   { key: 'createdAt', label: 'CreatedAt' },
-  { key: 'updatedAt', label: 'UpdatedAt' }
+  { key: 'updatedAt', label: 'UpdatedAt' },
 ]
 
 const selectedColumns = ref([...columns])
@@ -58,7 +59,6 @@ const filteredRows = computed(() => {
   })
 })
 
-
 const metaData = [{
   label: 'meta data',
   icon: 'i-heroicons-information-circle',
@@ -75,7 +75,6 @@ function select(row: any) {
   else
     selected.value.splice(index, 1)
 }
-
 
 function calcStatusColor(status: string) {
   switch (status) {
@@ -171,10 +170,11 @@ function handleModel(option: 'edit' | 'new') {
       createdAt: undefined,
       updatedAt: undefined,
     }
-  } else {
-    if (selected.value.length === 0) {
+  }
+  else {
+    if (selected.value.length === 0)
       return
-    }
+
     friend.value = selected.value[0]
   }
   editFriend.value = true
@@ -186,13 +186,12 @@ async function handleSubmit() {
       method: 'POST',
       body: friend.value,
       headers: {
-        'Authorization': localStorage.getItem('token') || '',
-      }
+        Authorization: localStorage.getItem('token') || '',
+      },
     })
 
-    if (error.value) {
+    if (error.value)
       toast.add({ title: error.value?.message })
-    }
 
     if (data.value) {
       toast.add({ title: `create success.` })
@@ -207,13 +206,12 @@ async function handleSubmit() {
       method: 'PUT',
       body: friend.value,
       headers: {
-        'Authorization': localStorage.getItem('token') || '',
-      }
+        Authorization: localStorage.getItem('token') || '',
+      },
     })
 
-    if (error.value) {
+    if (error.value)
       toast.add({ title: error.value?.message })
-    }
 
     if (data.value) {
       toast.add({ title: `update success.` })
@@ -235,8 +233,8 @@ async function handleGenScreenShot() {
       url,
     },
     headers: {
-      'Authorization': localStorage.getItem('token') || '',
-    }
+      Authorization: localStorage.getItem('token') || '',
+    },
   })
 
   if (error.value) {
@@ -255,6 +253,7 @@ function handleCancel() {
   editFriend.value = false
 }
 </script>
+
 <template>
   <div>
     <NuxtLayout name="admin-home">
@@ -265,15 +264,18 @@ function handleCancel() {
         <UButton icon="i-ri:edit-fill" class="mr-2" color="violet" @click="handleModel('edit')">
           Edit
         </UButton>
-        <USelectMenu v-model="selectedColumns" :options="columns" multiple placeholder="Columns"
-          @click="handleModel('edit')" class="mr-2" />
+        <USelectMenu
+          v-model="selectedColumns" :options="columns" multiple placeholder="Columns"
+          class="mr-2" @click="handleModel('edit')"
+        />
         <UInput v-model="q" placeholder="Search data..." />
       </div>
     </NuxtLayout>
 
-    <UTable v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
-      @select="select">
-
+    <UTable
+      v-if="data" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
+      @select="select"
+    >
       <template #status-data="{ row }">
         <UBadge size="xs" :label="row.status" :color="calcStatusColor(row.status)" variant="subtle" />
       </template>
@@ -352,9 +354,11 @@ function handleCancel() {
           </UFormGroup>
           <UFormGroup label="ScreenShot" name="screenShot">
             <div class="flex flex-row justify-between">
-              <UInput class="w-full" v-model="friend.screenShot" :disabled="true" />
-              <UButton class="ml-2" color="green" @click="handleGenScreenShot" :loading="isPending"
-                :disabled="isPending">
+              <UInput v-model="friend.screenShot" class="w-full" :disabled="true" />
+              <UButton
+                class="ml-2" color="green" :loading="isPending" :disabled="isPending"
+                @click="handleGenScreenShot"
+              >
                 Gen
                 ScreenShot
               </UButton>
@@ -379,7 +383,9 @@ function handleCancel() {
             </div>
           </UFormGroup>
           <div class="flex flex-row justify-between">
-            <UButton @click="handleCancel" color="red">Cancel</UButton>
+            <UButton color="red" @click="handleCancel">
+              Cancel
+            </UButton>
             <UButton type="submit" :disabled="!pass" @click="handleSubmit">
               Submit
             </UButton>

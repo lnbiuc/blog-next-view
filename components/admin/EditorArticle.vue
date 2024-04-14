@@ -1,23 +1,20 @@
 import type articleVue from '~/layouts/article.vue';
 <script setup lang="ts">
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
+import { useThrottleFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
-import { useThrottleFn, useDebounceFn } from '@vueuse/core'
+
 // import Vditor from 'vditor';
 // import 'vditor/dist/index.css';
 // import { render } from '~/utils/markdown-render'
 // import { render } from '~/utils/nuxt-mdc'
 import { useUserStore } from '~/store/UserStore'
 import MarkdownEditor from '~/components/MarkdownEditor.vue'
-import '~/styles/md-alert.css';
+import '~/styles/md-alert.css'
+
 // const vditor = ref<Vditor | null>(null);
-import { useMarkdownParser } from '~/composables/useMarkdownParser';
+import { useMarkdownParser } from '~/composables/useMarkdownParser'
 import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
-
-
-const color = useColorMode()
-
-const renderRes = ref()
 
 // const debouncedRender = useDebounceFn(async () => {
 //   if (article.value.content) {
@@ -32,6 +29,10 @@ const props = defineProps({
     default: undefined,
   },
 })
+
+const color = useColorMode()
+
+const renderRes = ref()
 
 const toast = useToast()
 
@@ -116,10 +117,10 @@ const throttledPublish = useThrottleFn(() => {
 }, 3000)
 
 watchEffect(async () => {
-
   if (!article.value.category) {
-    return
-  } else {
+
+  }
+  else {
     tags.value = []
     const { data } = await useFetch(`/api/tag/${article.value.category}`)
 
@@ -149,27 +150,25 @@ async function handleUpload(option: 'cover' | 'content') {
     method: 'POST',
     body: formData,
     headers: {
-      'Authorization': getToken()
-    }
+      Authorization: getToken(),
+    },
   })
 
   if (status.value === 'success') {
     if (data.value) {
-
-      if (option === 'cover') {
+      if (option === 'cover')
         article.value.cover = data.value as string
-      }
 
-      if (option === 'content') {
+      if (option === 'content')
         return data.value as string
-      }
+
       toast.add({ title: `upload ${fileCover.value.name} success` })
     }
   }
 
-  if (status.value === 'error') {
+  if (status.value === 'error')
     toast.add({ title: `upload ${fileCover.value.name} failed`, description: data.value as string })
-  }
+
   uploading.value = false
   fileCover.value = null
 }
@@ -185,18 +184,17 @@ function handleClean() {
 const { getToken } = useUserStore()
 
 async function handlePublish() {
-
   // renderRes.value = await render(article.value.content)
 
   // article.value.html = renderRes.value
 
-  if ((!article.value._id || article.value._id === undefined || article.value._id === null || article.value._id === '') && pass.value) {
+  if ((!article.value._id || article.value._id === '') && pass.value) {
     const { data, status, error } = await useFetch<IArticle>('/api/article/create', {
       method: 'POST',
       body: article.value,
       headers: {
-        'Authorization': getToken()
-      }
+        Authorization: getToken(),
+      },
     })
     if (status.value === 'success') {
       if (data.value) {
@@ -206,9 +204,8 @@ async function handlePublish() {
       }
     }
 
-    if (status.value === 'error') {
+    if (status.value === 'error')
       toast.add({ title: `publish failed, ${error.value}` })
-    }
   }
 
   if (article.value._id && article.value._id !== '' && pass.value) {
@@ -216,8 +213,8 @@ async function handlePublish() {
       method: 'PUT',
       body: article.value,
       headers: {
-        'Authorization': getToken()
-      }
+        Authorization: getToken(),
+      },
     })
     if (status.value === 'success') {
       if (data.value) {
@@ -226,25 +223,24 @@ async function handlePublish() {
       }
     }
 
-    if (status.value === 'error') {
+    if (status.value === 'error')
       toast.add({ title: `update failed, ${error.value}` })
-    }
   }
 }
 
 const createTag = ref('')
 
 function handleCreateTag() {
-  if (createTag.value === '') {
+  if (createTag.value === '')
     return
-  }
+
   tags.value.push(createTag.value)
   createTag.value = ''
 }
 
 const preview = ref(false)
 
-const handleEmitContent = (value: string) => {
+function handleEmitContent(value: string) {
   article.value.content = value
 }
 
@@ -278,28 +274,32 @@ function handleKeyDown(event: KeyboardEvent) {
 <template>
   <div>
     <NuxtLayout name="admin-home">
-      <div class=" flex flex-col items-center justify-between">
-        <div class="w-full flex flex-row items-center justify-between">
+      <div class="flex flex-col justify-between items-center">
+        <div class="flex flex-row w-full justify-between items-center">
           <div>
             <span class="text-violet">{{ article.shortLink }}</span>
             <em class="mx-2">/</em>
             <span class="text-violet font-bold">{{ article.title }}</span>
           </div>
           <div>
-            <UButton class="mr-2" @click="preview = !preview" color="blue">Preview</UButton>
+            <UButton class="mr-2" color="blue" @click="preview = !preview">
+              Preview
+            </UButton>
             <UButton @click="publishSetting = true">
               Publish Settings
             </UButton>
           </div>
         </div>
       </div>
-      <div class="w-full text-left mt-4">
-        <MarkdownEditor @change="handleEmitContent" :input="article.content" />
+      <div class="mt-4 text-left w-full">
+        <MarkdownEditor :input="article.content" @change="handleEmitContent" />
       </div>
     </NuxtLayout>
 
-    <UModal v-model="preview" fullscreen
-      :ui="{ container: 'items-center', fullscreen: 'w-full lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] h-auto min-h-500px my-6' }">
+    <UModal
+      v-model="preview" fullscreen
+      :ui="{ container: 'items-center', fullscreen: 'w-full lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] h-auto min-h-500px my-6' }"
+    >
       <UCard>
         <template #header>
           <div class="flex flex-row justify-between items-center">
@@ -307,7 +307,9 @@ function handleKeyDown(event: KeyboardEvent) {
               {{ article.title }}
             </div>
             <div>
-              <UButton @click="preview = false" color="red">Close</UButton>
+              <UButton color="red" @click="preview = false">
+                Close
+              </UButton>
             </div>
           </div>
         </template>
@@ -318,14 +320,16 @@ function handleKeyDown(event: KeyboardEvent) {
           :data="renderRes.data.data" /> -->
 
         <Suspense>
-          <MDCRenderer class="violet-prose" v-if="ast?.body" :body="ast.body" :data="ast.data" />
+          <MDCRenderer v-if="ast?.body" class="violet-prose" :body="ast.body" :data="ast.data" />
         </Suspense>
       </UCard>
     </UModal>
 
     <USlideover v-model="publishSetting">
-      <UCard class="flex flex-col flex-1"
-        :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
+      <UCard
+        class="flex flex-1 flex-col"
+        :ui="{ body: { base: 'flex-1' }, ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }"
+      >
         <template #header>
           Publish Settings
         </template>
@@ -360,8 +364,8 @@ function handleKeyDown(event: KeyboardEvent) {
             </div>
             <UFormGroup label="Upload Cover" name="file">
               <div class="flex flex-row">
-                <input type="file" @change="onChangeFile" class="w-full" />
-                <UButton class="ml-2" @click="handleUpload('cover')" :disabled="uploading" :loading="uploading">
+                <input type="file" class="w-full" @change="onChangeFile">
+                <UButton class="ml-2" :disabled="uploading" :loading="uploading" @click="handleUpload('cover')">
                   upload
                 </UButton>
                 <UButton color="red" class="ml-2" @click="handleClean">
@@ -376,7 +380,7 @@ function handleKeyDown(event: KeyboardEvent) {
               </div>
             </UFormGroup>
             <UFormGroup label="Tags" name="tags">
-              <USelectMenu v-model="article.tags" multiple :options="tags" searchable />
+              <USelectMenu v-model="article.tags" :options="tags" searchable multiple />
               <div v-if="errorFields?.tags?.length" class="text-xs text-red">
                 {{ errorFields.tags[0].message }}
               </div>
@@ -384,7 +388,7 @@ function handleKeyDown(event: KeyboardEvent) {
             <UFormGroup label="Create Tag" name="createTags">
               <div class="flex flex-row w-full">
                 <UInput v-model="createTag" class="w-full" />
-                <UButton @click="handleCreateTag" class="ml-2">
+                <UButton class="ml-2" @click="handleCreateTag">
                   Create
                 </UButton>
               </div>
@@ -423,7 +427,6 @@ function handleKeyDown(event: KeyboardEvent) {
                 Submit
               </UButton>
             </div>
-
           </UForm>
         </div>
       </UCard>

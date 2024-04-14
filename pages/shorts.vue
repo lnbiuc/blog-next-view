@@ -15,16 +15,14 @@ const selected = ref('Sort by date')
 async function getArticles() {
   const data = await category('short')
 
-  data.forEach(article => {
+  data.forEach((article) => {
     let include = false
-    shorts.value.forEach(existArticle => {
-      if (article._id == existArticle._id) {
+    shorts.value.forEach((existArticle) => {
+      if (article._id == existArticle._id)
         include = true
-      }
     })
-    if (!include) {
+    if (!include)
       shorts.value.push(article)
-    }
   })
 
   handleSortByChange(selected.value)
@@ -63,7 +61,6 @@ async function handleParamsChange(searchVal: string) {
 }
 
 async function handleSortByChange(selectVal: string) {
-
   selected.value = selectVal
   if (selectVal === options.value[0]) {
     shorts.value.sort((a, b) => {
@@ -111,8 +108,10 @@ defineOgImage({
               <span>Short articles, usually some notes and code snippets.
               </span>
             </div>
-            <Search :is-loading="isLoading" category="short" @params-change="handleParamsChange"
-              @sort-by-change="handleSortByChange" />
+            <Search
+              :is-loading="isLoading" category="short" @params-change="handleParamsChange"
+              @sort-by-change="handleSortByChange"
+            />
           </div>
         </div>
         <ShortCards :articles="shorts" />

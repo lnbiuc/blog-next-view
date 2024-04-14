@@ -40,7 +40,8 @@ async function onSubmit() {
     useStorage('token', data.value.token)
     const router = useRouter()
     router.push('/violet')
-  } else {
+  }
+  else {
     toast.add({
       title: data.value?.msg,
     })
