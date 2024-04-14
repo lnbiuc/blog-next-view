@@ -154,7 +154,9 @@ const colorModel = useColorMode()
 defineOgImage({
   component: 'NuxtSeo',
   props: {
-    title: () => { return article ? `${article.title}` : '404 NotFound | 薇尔薇' },
+    title: () => {
+      return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇'
+    },
     description: () => { return article ? `${article.description}` : '404 NotFound' },
     theme: '#a78bfa',
     colorMode: () => colorModel.preference === 'dark' ? 'dark' : 'light',
@@ -224,9 +226,9 @@ onMounted(() => {
                 <!-- <div v-if="article.html" v-html="article.html" id="violetMD"
                   class="violet-prose mb-20 mt-5 text-left font-serif" @mouseup="checkSelection"></div> -->
 
-                <MDCRenderer id="violetMD" class="violet-prose z-2" @mouseup="checkSelection"
-                  v-if="article?.html && article?.html?.body && article?.html.data" :body="article?.html.body"
-                  :data="article?.html.data" />
+                <MDCRenderer id="violetMD" class="violet-prose z-2 animated animated-fade-in-up-big"
+                             @mouseup="checkSelection" v-if="article?.html && article?.html?.body && article?.html.data"
+                             :body="article?.html.body" :data="article?.html.data"/>
 
                 <div v-else class="text-2xl text-violet">loading... please wait</div>
                 <div v-if="isSupported">

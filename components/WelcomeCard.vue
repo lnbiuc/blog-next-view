@@ -30,16 +30,20 @@ const link = [
 <template>
   <NuxtLayout name="home">
     <div
-      class="sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm p-2 my-0 card-border rounded rounded-lg flex flex-col-reverse justify-center items-center lg:p-8 md:p-8 sm:p-2 xl:p-8 lg:my-10 md:my-10 sm:my-0 xl:my-10 lg:flex-row md:flex-row md:flex-row xl:flex-row sm:flex-col-reverse md:justify-between lg:card md:card sm:card xl:card anim-fade-in">
+        class="sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm p-2 my-0 card-border rounded rounded-lg flex flex-col-reverse justify-center items-center lg:p-8 md:p-8 sm:p-2 xl:p-8 lg:my-10 md:my-10 sm:my-0 xl:my-10 lg:flex-row md:flex-row md:flex-row xl:flex-row sm:flex-col-reverse md:justify-between lg:card md:card sm:card xl:card"
+    >
       <div
-        class="flex flex-col w-full justify-start items-start lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 md:justify-start md:items-start">
+          class="flex flex-col w-full justify-start items-start lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 md:justify-start md:items-start"
+      >
         <h2 class="mb-2 text-6xl font-bold text-left">
           Hello! ✨
         </h2>
         <h2 class="text-6xl font-bold text-left">
           I'm
-          <NuxtLink class="ml-2 text-violet hover:underline" to="/about" prefetch
-            style="font-family: 'MyFont', sans-serif;">
+          <NuxtLink
+              class="ml-2 text-violet hover:underline" to="/about" prefetch
+              style="font-family: 'MyFont', sans-serif;"
+          >
             violet
           </NuxtLink>
         </h2>
@@ -47,12 +51,16 @@ const link = [
           I focus on Java during work and enjoy anything interesting in my free time.
         </span>
         <span class="mb-2 mt-5 text-xl font-mono text-left">
-          Living and working in <a class="text-violet hover:underline" href="https://unsplash.com/s/photos/xian"
-            target="_blank">Xi'an</a>.
+          Living and working in <a
+            class="text-violet hover:underline" href="https://unsplash.com/s/photos/xian"
+            target="_blank"
+        >Xi'an</a>.
         </span>
         <div class="mt-4 flex">
-          <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
-            :href="l.url" target="_blank" aria-label="icon">
+          <a
+              v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
+              :href="l.url" target="_blank" aria-label="icon"
+          >
             <UIcon :name="l.icon" class="text-xl" />
             <span class="ml-1">
               {{ l.name }}
@@ -61,9 +69,12 @@ const link = [
         </div>
       </div>
       <div
-        class="mb-6 flex flex-row w-full justify-center items-center transition-all lg:mb-0 md:mb-0 sm:mb-6 xl:mb-0 lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 lg:justify-end md:justify-end xl:justify-end sm:justify-center">
-        <img src="/favicon.ico" alt="logo"
-          class="rounded-full shadow-md h-[200px] w-[200px] transition-all animated animated-jack-in-the-box animated-fast hover:shadow-xl lg:h-[250px] lg:w-[250px] md:h-[250px] md:w-[250px] sm:h-[200px] sm:w-[200px] xl:h-[250px] xl:w-[250px]">
+          class="mb-6 flex flex-row w-full justify-center items-center transition-all lg:mb-0 md:mb-0 sm:mb-6 xl:mb-0 lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 lg:justify-end md:justify-end xl:justify-end sm:justify-center"
+      >
+        <img
+            src="/favicon.ico" alt="logo"
+            class="rounded-full shadow-md h-[200px] w-[200px] transition-all animated animated-rotate-in hover:shadow-xl lg:h-[250px] lg:w-[250px] md:h-[250px] md:w-[250px] sm:h-[200px] sm:w-[200px] xl:h-[250px] xl:w-[250px]"
+        >
       </div>
     </div>
   </NuxtLayout>

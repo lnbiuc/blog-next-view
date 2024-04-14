@@ -24,8 +24,7 @@ const preloadArticle = useThrottleFn(() => {
 </script>
 
 <template>
-  <NuxtLink :to="`/article/${props.article.shortLink}`" :prefetch="true" @mouseover="preloadArticle()"
-    class="anim-fade-in">
+  <NuxtLink :to="`/article/${props.article.shortLink}`" :prefetch="true" @mouseover="preloadArticle()">
     <div class="card-bg-filter backdrop-blur-sm card-border h-full card">
       <div class="p-4 text-left">
         <div class="text-xl">

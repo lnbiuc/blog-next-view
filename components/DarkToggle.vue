@@ -81,9 +81,9 @@ watchEffect(() => {
 </script>
 
 <template>
-  <UButton @click="useToggleDark" color="white" size="xl" square>
+  <UButton @click="useToggleDark" color="white" size="lg" square>
     <template #trailing>
-      <UIcon :name="icon" class="w-4 h-4" />
+      <UIcon :name="icon" class="w-5 h-5"/>
     </template>
   </UButton>
 </template>
