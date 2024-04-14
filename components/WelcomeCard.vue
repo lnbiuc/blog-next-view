@@ -73,7 +73,7 @@ const link = [
       >
         <img
           src="/favicon.ico" alt="logo"
-          class="rounded-full shadow-md h-[200px] w-[200px] transition-all animated animated-rotate-in hover:shadow-xl lg:h-[250px] lg:w-[250px] md:h-[250px] md:w-[250px] sm:h-[200px] sm:w-[200px] xl:h-[250px] xl:w-[250px]"
+          class="rounded-full shadow-md h-[200px] w-[200px] transition-all hover:shadow-xl lg:h-[250px] lg:w-[250px] md:h-[250px] md:w-[250px] sm:h-[200px] sm:w-[200px] xl:h-[250px] xl:w-[250px]"
         >
       </div>
     </div>
