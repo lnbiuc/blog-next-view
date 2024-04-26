@@ -52,13 +52,13 @@ function copyCode() {
 <template>
   <div
     v-if="props.filename"
-    class="p-2 mt-4 bg-[#fafafa] border-b border-b-[#eee] rounded-lt rounded-rt text-center shadow flex flex-row justify-center items-center dark:bg-[#0e0e0e] dark:border-b-[#222]"
+    class="p-2 mt-4 bg-[#fafafa] border-b border-b-[#eee] rounded-lt rounded-rt text-center flex flex-row justify-center items-center dark:bg-[#0e0e0e] dark:border-b-[#222]"
   >
     <div class="text-[#222] dark:text-[#aaa]">
       {{ props.filename }}
     </div>
   </div>
-  <div class="pre-container shadow">
+  <div class="pre-container">
     <div class="flex flex-row relative justify-end">
       <div class="pr-2 pt-2.5 absolute">
         <UButton class="copy-button" color="white" :icon="icon" :trailing="false" size="xs" @click="copyCode">

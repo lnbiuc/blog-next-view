@@ -80,9 +80,6 @@ devDependencies:
   '@unocss/postcss':
     specifier: ^0.58.9
     version: 0.58.9(postcss@8.4.38)
-  '@unocss/transformer-directives':
-    specifier: ^0.58.9
-    version: 0.58.9
   '@vueuse/integrations':
     specifier: ^10.9.0
     version: 10.9.0(async-validator@4.2.5)(axios@1.6.8)(fuse.js@6.6.2)(vue@3.4.25)
@@ -164,9 +161,6 @@ devDependencies:
   unocss:
     specifier: ^0.58.9
     version: 0.58.9(@unocss/webpack@0.58.9)(postcss@8.4.38)(vite@5.1.1)
-  unocss-preset-chinese:
-    specifier: ^0.3.2
-    version: 0.3.2(@unocss/nuxt@0.58.9)(unocss@0.58.9)
   unocss-preset-extra:
     specifier: ^0.5.3
     version: 0.5.3(unocss@0.58.9)
@@ -14139,23 +14133,6 @@ packages:
   /universalify@2.0.1:
     resolution: {integrity: sha512-gptHNQghINnc/vTGIk0SOFGFNXw7JVrlRUtConJRlvaw6DuX0wO5Jeko9sWrMBhh+PsYAZ7oXAiOnf/UKogyiw==}
     engines: {node: '>= 10.0.0'}
-    dev: true
-
-  /unocss-preset-chinese@0.3.2(@unocss/nuxt@0.58.9)(unocss@0.58.9):
-    resolution: {integrity: sha512-/0Y7DfwRMOntb/drvhz+FxZ6jisapBH8W+u+1Lkt6LYW19m9fg/xiQeWodcWhZrAaoSuv42mvsALBzZLngzo6Q==}
-    peerDependencies:
-      '@unocss/nuxt': '*'
-      unocss: '*'
-    peerDependenciesMeta:
-      '@unocss/nuxt':
-        optional: true
-      unocss:
-        optional: true
-    dependencies:
-      '@unocss/core': 0.58.9
-      '@unocss/nuxt': 0.58.9(postcss@8.4.38)(vite@5.1.1)(webpack@5.91.0)
-      '@unocss/preset-mini': 0.58.9
-      unocss: 0.58.9(@unocss/webpack@0.58.9)(postcss@8.4.38)(vite@5.1.1)
     dev: true
 
   /unocss-preset-extra@0.5.3(unocss@0.58.9):
