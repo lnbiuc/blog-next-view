@@ -237,13 +237,17 @@ onMounted(() => {
                   loading... please wait
                 </div>
                 <div v-if="isSupported">
-                  <div
+                  <UButton
                     v-show="openPop"
-                    class="backdrop-blur-md popover rounded text-gray-600 shadow ring-[#ccc] ring-inset flex flex-row absolute h-30px w-50px cursor-pointer justify-center items-center transition-all ring-1 dark:text-gray-400 dark:ring-[#333] active:scale-95 hover:scale-105"
+                    icon="i-heroicons-clipboard-document"
+                    class="popover absolute transition-all"
+                    color="white"
+                    size="sm"
+                    variant="solid"
                     @click="copySelection"
                   >
-                    Copy
-                  </div>
+                    copy
+                  </UButton>
                 </div>
               </div>
             </div>
