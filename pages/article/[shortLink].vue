@@ -3,6 +3,7 @@ import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import { useClipboard, useMouse, useTextSelection, useTimeoutFn } from '@vueuse/core'
 
+// @ts-expect-error miss type
 import * as tocbot from 'tocbot'
 
 import { useArticleStore } from '~/store/ArticleStore'
