@@ -354,7 +354,7 @@ function handleCancel() {
           </UFormGroup>
           <UFormGroup label="ScreenShot" name="screenShot">
             <div class="flex flex-row justify-between">
-              <UInput v-model="friend.screenShot" class="w-full" :disabled="true" />
+              <UInput v-model="friend.screenShot" class="w-full" />
               <UButton
                 class="ml-2" color="green" :loading="isPending" :disabled="isPending"
                 @click="handleGenScreenShot"
