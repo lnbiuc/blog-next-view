@@ -17,7 +17,12 @@ export default defineNuxtConfig({
     'nuxt-seo-experiments',
     '@nuxt/image',
     '@nuxtjs/mdc',
+    "@nuxthub/core"
   ],
+
+  hub: {
+    
+  },
 
   image: {
     unsplash: {
