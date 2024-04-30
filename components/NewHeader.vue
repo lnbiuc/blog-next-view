@@ -44,9 +44,7 @@ watchEffect(() => {
 
 const { hasAuth } = useUserStore()
 
-const showShadow = computed(() => {
-  return !isFixed.value || y.value > showTitleY.value
-})
+const showShadow = ref(false)
 
 const isTransparent = computed(() => {
   if (route.path.includes('/article'))
@@ -92,20 +90,29 @@ onMounted(() => {
       disableScroll()
     else
       enableScroll()
+
+  showShadow.value = !isFixed.value || y.value > showTitleY.value
   })
 })
+
+const router = useRouter()
+
+function handleClickFavicon() {
+  router.push('/')
+  window.scrollTo({top:0, behavior: 'smooth'})
+}
 </script>
 
 <template>
   <div
     class="border-b border-transparent font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all"
     :class="{
-      'shadow border-[#eee] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
+      'shadow border-[#bbb] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
       'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen,
     }"
   >
     <div class="mx-2 mr-4 rounded-3 flex flex-row h-45px w-45px cursor-pointer justify-center items-center">
-      <img src="/site-favicon.ico" class="object-cover rounded-3 shadow-md" @click="$router.push('/')">
+      <img src="/site-favicon.ico" class="object-cover rounded-3 shadow-md" @click="handleClickFavicon">
     </div>
     <div
       class="flex flex-row w-full justify-center items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"

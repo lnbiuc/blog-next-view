@@ -25,14 +25,19 @@ function openLink() {
       >
     </div>
     <div class="m-2 flex flex-row">
-      <div class="max-w-150px items-start">
-        <img :src="props.friend.avatar" alt="avatar" class="object-cover rounded h-15 w-15 z-0 transform">
-      </div>
+      <UAvatar
+        :src="props.friend.avatar"
+        size="2xl"
+        alt="Avatar"
+      />
+      <!-- <div class="items-start w-15">
+        <img :src="props.friend.avatar" alt="avatar" class="object-cover rounded z-0 transform w-15">
+      </div> -->
       <div class="ml-2 flex flex-col justify-center">
-        <div class="text-xl font-bold text-left">
+        <div class="text-xl font-500 text-left">
           {{ props.friend.title }}
         </div>
-        <div class="text-sm text-gray-600 text-left dark:text-gray-400">
+        <div class="text-sm text-gray-600 text-left dark:text-gray-400 text-ellipsis">
           {{ props.friend.bio }}
         </div>
       </div>

@@ -33,7 +33,7 @@ export default defineConfig({
       'card-hover',
       'transition duration-200 ease-in-out dark:hover:border-violet hover:border-violet border',
     ],
-    ['title-font', 'text-left text-violet font-bold text-3xl my-4 text-shadow'],
+    ['title-font', 'text-left text-violet font-600 text-2xl my-4 text-shadow'],
     ['title-btn', 'my-4 mb-[150px] flex flex-row justify-start'],
     [
       'common-border',
@@ -42,7 +42,7 @@ export default defineConfig({
     ['card-border', 'rounded-md z-50 hover:cursor-default'],
     [
       'header-link',
-      'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet font-500 text-md',
+      'px-3 mx-1 py-2 transition-all duration-150 hover:cursor-default hover:text-violet font-500 hover:cursor-pointer',
     ],
     [
       'card',

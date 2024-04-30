@@ -646,3 +646,10 @@ html:not(.dark) [img-dark] {
   opacity: 0;
   filter: blur(.1rem);
 }
+
+.toc-list {
+  -webkit-line-clamp: 1; /* 设置文本显示的行数 */
+  -webkit-box-orient: vertical;
+  overflow-x: hidden;
+  text-overflow: ellipsis; /* 显示省略号 */
+}

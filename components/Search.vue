@@ -55,7 +55,7 @@ async function tagClick(tag: string) {
   <div class="flex flex-row">
     <UInput
       id="search" v-model="searchVal" :loading="isLoading" class="w-full" color="gray"
-      icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Search..."
+      icon="i-heroicons-magnifying-glass-20-solid" size="lg" placeholder="Full Text Search..."
     />
     <USelectMenu v-model="selectVal" class="ml-2 z-1000" size="lg" :options="options" color="gray" />
   </div>

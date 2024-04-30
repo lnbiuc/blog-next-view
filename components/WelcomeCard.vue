@@ -35,10 +35,10 @@ const link = [
       <div
         class="flex flex-col w-full justify-start items-start lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 md:justify-start md:items-start"
       >
-        <h2 class="mb-2 text-6xl font-bold text-left">
+        <h2 class="mb-2 text-4xl text-left">
           Hello! ✨
         </h2>
-        <h2 class="text-6xl font-bold text-left">
+        <h2 class="text-4xl text-left">
           I'm
           <NuxtLink
             class="ml-2 text-violet hover:underline" to="/about" prefetch
@@ -47,10 +47,10 @@ const link = [
             violet
           </NuxtLink>
         </h2>
-        <span class="mb-2 mt-5 text-xl font-mono text-left">
-          I focus on Java during work and enjoy anything interesting in my free time.
+        <span class="mb-2 mt-5 text-left">
+          Currently focus on Java during work, and enjoy anything interesting in my free time.
         </span>
-        <span class="mb-2 mt-5 text-xl font-mono text-left">
+        <span class="mb-2 mt-5 text-left">
           Living and working in <a
             class="text-violet hover:underline" href="https://unsplash.com/s/photos/xian"
             target="_blank"
