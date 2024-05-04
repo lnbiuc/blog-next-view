@@ -354,18 +354,18 @@ function handleKeyDown(event: KeyboardEvent) {
               </div>
             </UFormGroup>
             <UFormGroup label="Category" name="category">
-              <USelectMenu v-model="article.category" :options="['article', 'short', 'project']" />
+              <USelectMenu v-model="article.category" :options="['article', 'short', 'project', 'page']" />
               <div v-if="errorFields?.category?.length" class="text-xs text-red">
                 {{ errorFields.category[0].message }}
               </div>
             </UFormGroup>
-            <UFormGroup label="Tags" name="tags">
+            <UFormGroup label="Tags" name="tags" v-if="article.category != 'page'">
               <USelectMenu v-model="article.tags" :options="tags" searchable multiple />
               <div v-if="errorFields?.tags?.length" class="text-xs text-red">
                 {{ errorFields.tags[0].message }}
               </div>
             </UFormGroup>
-            <UFormGroup label="Create Tag" name="createTags">
+            <UFormGroup label="Create Tag" name="createTags" v-if="article.category != 'page'">
               <div class="flex flex-row w-full">
                 <UInput v-model="createTag" class="w-full" />
                 <UButton class="ml-2" @click="handleCreateTag">
