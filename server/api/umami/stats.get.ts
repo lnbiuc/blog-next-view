@@ -15,7 +15,7 @@ export default defineEventHandler(async () => {
     const { data } = await axios.get(
         `${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/stats`,
         {
-          headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
+          headers: { Authorization: `Bearer ${process.env.UMAMI_AUTH_TOKEN}` },
           params: { startAt: startDay.getTime(), endAt: new Date().getTime() },
         },
     )

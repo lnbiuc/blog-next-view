@@ -48,7 +48,7 @@ onMounted(async () => {
 
   await useFetch('/api/umami/stats').then((res) => {
     umami.value.pv = res.data.value.pageviews.value
-    umami.value.uv = res.data.value.uniques.value
+    umami.value.uv = res.data.value.visitors.value
   })
 
   await useFetch('/api/umami/metrics').then((res) => {
@@ -67,21 +67,22 @@ onMounted(async () => {
       class="mt-6 flex flex-col w-full justify-between items-center lg:flex-row md:flex-row sm:flex-row xl:flex-row lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
     >
       <div>
-        <span>Total PV:</span>
+        <span>Total PV : </span>
         <span text="violet">{{ umami.pv }}</span>
         <span class="mx-1">|</span>
-        <span>UV:</span>
+        <span>UV : </span>
         <span text="violet">{{ umami.uv }}</span>
       </div>
 
       <div class="flex flex-col justify-center items-center lg:flex-row md:flex-row sm:flex-row xl:flex-row">
         <div class="m-2 flex flex-row">
           <div class="i-ri:checkbox-blank-circle-fill mr-1 scale-80" text="green" />
-          <span>Current Online:</span>
-          <span text="violet">{{ umami.active }}</span>
+          <span>Current Online</span>
+          <span class="mx-1">:</span>
+          <span text="violet mx-1">{{ umami.active }}</span>
         </div>
         <div>
-          <span>Recent visitors from:</span>
+          <span>From : </span>
           <span class="mx-1">{{ umami.recent.icon }}</span>
           <span text="violet">{{ umami.recent.name }}</span>
         </div>

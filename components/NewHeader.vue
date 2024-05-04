@@ -105,9 +105,9 @@ function handleClickFavicon() {
 
 <template>
   <div
-    class="border-b border-transparent font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all"
+    class="font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all"
     :class="{
-      'shadow border-[#bbb] dark:border-[#222] dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
+      'shadow dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl': showShadow && !isOpen,
       'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen,
     }"
   >
