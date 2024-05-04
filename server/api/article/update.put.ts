@@ -1,12 +1,13 @@
 import { ArticleSchema } from '~/server/models/article.schema'
-import { cache } from '~/config/cache.config'
+import { storage } from '~/config/unstorage.config'
+
 
 export default defineEventHandler(async (event) => {
   try {
     const body = await readBody(event)
     if (!body._id || body._id === '')
       return { error: 'missing _id' }
-    cache.del(body.shortLink)
+    await storage.removeItem(body.shortLink)
     return await ArticleSchema.findByIdAndUpdate(body._id, body, { new: true })
   }
   catch (error) {

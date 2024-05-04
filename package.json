@@ -43,7 +43,6 @@
     "async-validator": "^4.2.5",
     "axios": "^1.6.8",
     "bcryptjs": "^2.4.3",
-    "cache-manager": "^5.5.2",
     "codemirror": "^6.0.1",
     "consola": "^3.2.3",
     "country-flag-emoji": "^1.0.3",
