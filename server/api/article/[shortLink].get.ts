@@ -69,14 +69,7 @@ export default defineEventHandler(async (event) => {
       articleData.html = html as MDCParserResult
     }
 
-    const jsonData = JSON.stringify(articleData)
-    const compressedData = zlib.gzipSync(jsonData)
-    const headers = new Headers()
-    headers.set('Content-Encoding', 'gzip')
-    headers.set('Content-Length', compressedData.length.toString())
-    return new Response(compressedData, {
-      headers
-    })
+    return articleData
   }
   catch (error) {
     return new Response(error as string, { status: 500 })

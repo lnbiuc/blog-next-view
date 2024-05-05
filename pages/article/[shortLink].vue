@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { ref } from "vue";
-import { useRoute } from "vue-router";
 import {
   useClipboard,
   useMouse,
@@ -8,7 +6,6 @@ import {
   useTimeoutFn,
 } from "@vueuse/core";
 
-// @ts-expect-error miss type
 import * as tocbot from "tocbot";
 
 import { useArticleStore } from "~/store/ArticleStore";
