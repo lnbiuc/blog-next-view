@@ -180,6 +180,7 @@ function handleDelete() {
         <UBadge v-if="row.category === 'article'" size="xs" :label="row.category" color="blue" />
         <UBadge v-if="row.category === 'short'" size="xs" :label="row.category" color="orange" />
         <UBadge v-if="row.category === 'project'" size="xs" :label="row.category" color="green" />
+        <UBadge v-if="row.category === 'page'" size="xs" :label="row.category" color="violet" />
       </template>
       <template #cover-data="{ row }">
         <UPopover mode="hover">

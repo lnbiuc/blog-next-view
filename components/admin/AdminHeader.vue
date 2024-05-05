@@ -11,10 +11,6 @@ const links = [[{
   label: 'Articles',
   icon: 'i-ri:article-fill',
   to: '/violet/articles',
-}, {
-  label: 'Friends',
-  icon: 'i-ri:account-pin-circle-fill',
-  to: '/violet/friends',
 }], [{
   label: 'Logout',
   icon: 'i-ri:logout-circle-line',
