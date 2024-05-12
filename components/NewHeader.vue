@@ -1,128 +1,133 @@
 <script setup lang="ts">
-import { useFixedHeader } from "vue-use-fixed-header";
-import { useWindowScroll, useWindowSize } from "@vueuse/core";
-import type { IArticle } from "~/server/types";
-import { useArticleStore } from "~/store/ArticleStore";
-import { useUserStore } from "~/store/UserStore";
+import { useFixedHeader } from 'vue-use-fixed-header'
+import { useWindowScroll, useWindowSize } from '@vueuse/core'
+import type { IArticle } from '~/server/types'
+import { useArticleStore } from '~/store/ArticleStore'
+import { useUserStore } from '~/store/UserStore'
 
-const headerRef = ref(null);
+const headerRef = ref(null)
 // const width = ref(1200)
-const { y } = useWindowScroll();
-const route = useRoute();
-const showTitleY = ref(100);
+const { y } = useWindowScroll()
+const route = useRoute()
+const showTitleY = ref(100)
 
 const isFixed = computed(
-  () => !route.path.includes("/article") || y.value < showTitleY.value
-);
+  () => !route.path.includes('/article') || y.value < showTitleY.value,
+)
 
 const { styles } = useFixedHeader(headerRef, {
   watch: isFixed, // Will perform a check everytime the value changes
-});
+})
 
-const isArticlePage = ref(false);
+const isArticlePage = ref(false)
 
-const shortLink = ref("");
+const shortLink = ref('')
 
-const article = ref<IArticle>();
+const article = ref<IArticle>()
 
-const { one } = useArticleStore();
+const { one } = useArticleStore()
 
 watchEffect(() => {
-  if (route.path.includes("/article/")) {
-    isArticlePage.value = true;
-    const params = route.params as { shortLink: string };
-    shortLink.value = params.shortLink;
+  if (route.path.includes('/article/')) {
+    isArticlePage.value = true
+    const params = route.params as { shortLink: string }
+    shortLink.value = params.shortLink
     one(shortLink.value).then((data) => {
-      article.value = data;
-    });
-  } else {
-    isArticlePage.value = false;
+      article.value = data
+    })
+  }
+  else {
+    isArticlePage.value = false
   }
 
-  showTitleY.value = 80;
-});
+  showTitleY.value = 80
+})
 
-const { hasAuth } = useUserStore();
+const { hasAuth } = useUserStore()
 
-const showShadow = ref(false);
+const showShadow = ref(false)
 
 const isTransparent = computed(() => {
-  if (route.path.includes("/article")) return false;
-  else return y.value > showTitleY.value;
-});
+  if (route.path.includes('/article'))
+    return false
+  else return y.value > showTitleY.value
+})
 
-const readProgress = ref<number>(0);
+const readProgress = ref<number>(0)
 
-const { height } = useWindowSize();
+const { height } = useWindowSize()
 
 watchEffect(() => {
   if (document) {
-    const calc =
-      (y.value - showTitleY.value) /
-      (document.body.scrollHeight - height.value - showTitleY.value);
-    if (calc < 0) readProgress.value = 0;
-    else if (calc > 1) readProgress.value = 1;
-    else readProgress.value = calc;
+    const calc
+      = (y.value - showTitleY.value)
+      / (document.body.scrollHeight - height.value - showTitleY.value)
+    if (calc < 0)
+      readProgress.value = 0
+    else if (calc > 1)
+      readProgress.value = 1
+    else readProgress.value = calc
   }
-});
+})
 
-const isOpen = ref(false);
+const isOpen = ref(false)
 
 function enableScroll() {
-  window.onscroll = function () {};
+  window.onscroll = function () {}
 }
 
 function disableScroll() {
-  const x = window.scrollX;
-  const y = window.scrollY;
+  const x = window.scrollX
+  const y = window.scrollY
   window.onscroll = function () {
-    window.scrollTo(x, y);
-  };
+    window.scrollTo(x, y)
+  }
 }
 
 onMounted(() => {
   watchEffect(() => {
-    if (isOpen.value) disableScroll();
-    else enableScroll();
+    if (isOpen.value)
+      disableScroll()
+    else enableScroll()
 
-    showShadow.value = !isFixed.value || y.value > showTitleY.value;
-  });
-});
+    showShadow.value = !isFixed.value || y.value > showTitleY.value
+  })
+})
 
-const router = useRouter();
+const router = useRouter()
 
 function handleClickFavicon() {
-  router.push("/");
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  router.push('/')
+  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-let links = [
+const links = [
   {
-    name: "Home",
-    href: "/",
+    name: 'Home',
+    href: '/',
   },
   {
-    name: "Blog",
-    href: "/blog",
+    name: 'Blog',
+    href: '/blog',
   },
   {
-    name: "Short",
-    href: "/shorts",
+    name: 'Short',
+    href: '/shorts',
   },
-];
+]
 
-const { data } = useFetch<Array<IArticle>>("/api/article/pages");
+const { data } = useFetch<Array<IArticle>>('/api/article/pages')
 
 if (data.value) {
   data.value
-    .sort((a, b) => parseInt(a.link as string) - parseInt(b.link as string))
+    .sort((a, b) => Number.parseInt(a.link as string) - Number.parseInt(b.link as string))
     .forEach((item) => {
       const link = {
         name: item.title,
         href: item.shortLink,
-      };
-      links.push(link);
-    });
+      }
+      links.push(link)
+    })
 }
 </script>
 
@@ -142,7 +147,7 @@ if (data.value) {
         src="/site-favicon.ico"
         class="object-cover rounded-3 shadow-md"
         @click="handleClickFavicon"
-      />
+      >
     </div>
     <div
       class="flex flex-row w-full justify-center items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
@@ -187,13 +192,15 @@ if (data.value) {
                 'border-transparent': isTransparent,
               }"
             >
-              <li v-for="link in links">
-                <NuxtLink :to="link.href" class="header-link" :prefetch="true">
+              <li v-for="link in links" :key="link.href">
+                <NuxtLink :to="`/${link.href}`" class="header-link" :prefetch="true">
                   {{ link.name }}
                 </NuxtLink>
               </li>
               <li v-if="hasAuth()">
-                <NuxtLink to="/violet" class="header-link"> Admin </NuxtLink>
+                <NuxtLink to="/violet" class="header-link">
+                  Admin
+                </NuxtLink>
               </li>
             </ul>
           </header>
@@ -239,13 +246,15 @@ if (data.value) {
   >
     <Transition name="slide-fade">
       <ul v-if="isOpen" class="flex flex-col items-end">
-        <li v-for="link in links" @click="isOpen = !isOpen">
-          <NuxtLink :to="link.href" class="mobile-head-link" :prefetch="true">
+        <li v-for="link in links" :key="link.href" @click="isOpen = !isOpen">
+          <NuxtLink :href="`/${link.href}`" class="mobile-head-link" :prefetch="true">
             {{ link.name }}
           </NuxtLink>
         </li>
         <li v-if="hasAuth()" class="mobile-head-link" @click="isOpen = !isOpen">
-          <NuxtLink to="/violet" class="header-link"> Admin </NuxtLink>
+          <NuxtLink to="/violet" class="header-link">
+            Admin
+          </NuxtLink>
         </li>
         <li class="mr-5 mobile-head-link">
           <DarkToggle @click="isOpen = !isOpen" />
