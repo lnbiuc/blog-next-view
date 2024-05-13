@@ -31,12 +31,14 @@ const preloadArticle = useThrottleFn(() => {
           {{ props.article.title }}
         </div>
         <div class="mt-2">
-          <UBadge v-for="t in props.article.tags" :key="t" color="gray" size="md" variant="solid"
-            class="my-1 mr-2 opacity-90" :tag="t">
+          <UBadge
+            v-for="t in props.article.tags" :key="t" color="gray" size="md" variant="solid"
+            class="my-1 mr-2 opacity-90" :tag="t"
+          >
             {{ t }}
           </UBadge>
         </div>
-        <div class="mt-3 text-sm dark:text-gray-400 text-gray-800">
+        <div class="mt-3 text-sm text-gray-800 dark:text-gray-400">
           {{ formatTime(props.article.createdAt) }}
         </div>
       </div>

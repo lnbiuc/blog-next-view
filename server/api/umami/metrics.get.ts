@@ -4,7 +4,7 @@ import axios from 'axios'
 // @ts-expect-error miss type
 import countryFlagEmoji from 'country-flag-emoji'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     if (
       !process.env.UMAMI_ADDRESS
@@ -15,16 +15,16 @@ export default defineEventHandler(async (event) => {
 
     const now = new Date()
     const { data } = await axios.get(
-			`${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/metrics`,
-			{
-			  headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
-			  params: {
-			    startAt: now.getTime() - 60 * 1000 * 60,
-			    endAt: now.getTime(),
-			    type: 'country',
-			    limit: 1,
-			  },
-			},
+        `${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/metrics`,
+        {
+          headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
+          params: {
+            startAt: now.getTime() - 60 * 1000 * 60,
+            endAt: now.getTime(),
+            type: 'country',
+            limit: 1,
+          },
+        },
     )
     if (Array.isArray(data) && data.length > 0) {
       const code = data[0].x

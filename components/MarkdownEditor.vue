@@ -3,52 +3,41 @@ import { Codemirror } from 'vue-codemirror'
 import { oneDark } from '@codemirror/theme-one-dark'
 import { markdown } from '@codemirror/lang-markdown'
 import { shallowRef } from 'vue'
-import { watchDebounced } from '@vueuse/core'
-import { githubLight } from '@uiw/codemirror-theme-github';
-import { useUserStore } from '~/store/UserStore'
+import { useClipboard, watchDebounced } from '@vueuse/core'
+import { githubLight } from '@uiw/codemirror-theme-github'
 import { EditorView } from '@codemirror/view'
-import { useClipboard } from '@vueuse/core'
+import { useUserStore } from '~/store/UserStore'
 
-
-
-let extensions: any[] = [markdown(), EditorView.lineWrapping]
-
-const color = useColorMode()
-
-if (color.preference === 'light') {
-  extensions.push(githubLight)
-} else {
-  extensions.push(oneDark)
-}
-
-// Codemirror EditorView instance ref
-const view = shallowRef()
-const handleReady = (payload: any) => {
-  view.value = payload.view
-}
-
-const getCurrentCursor = () => {
-  const state = view.value.state
-  const ranges = state.selection.ranges
-
-  return ranges[0].anchor
-}
-
-const content = ref<string>('')
+const props = defineProps({
+  input: {
+    type: String,
+  },
+})
 
 const emit = defineEmits<{
   change: [value: string]
 }>()
 
-const props = defineProps({
-  input: {
-    type: String,
-  }
-})
+const extensions: any[] = [markdown(), EditorView.lineWrapping]
 
-if (props.input) {
-  content.value = props.input
+const color = useColorMode()
+
+if (color.preference === 'light')
+  extensions.push(githubLight)
+else
+  extensions.push(oneDark)
+
+// Codemirror EditorView instance ref
+const view = shallowRef()
+
+function handleReady(payload: any) {
+  view.value = payload.view
 }
+
+const content = ref<string>('')
+
+if (props.input)
+  content.value = props.input
 
 watchDebounced(
   content,
@@ -57,7 +46,6 @@ watchDebounced(
 )
 
 function handlePaste(event: ClipboardEvent) {
-
   if (event.clipboardData) {
     const items = (event.clipboardData).items
     for (const item of items) {
@@ -83,18 +71,16 @@ async function uploadImage(file: File) {
 
   const formData = new FormData()
   formData.append('file', file)
-  console.log(file)
   const { data, status } = await useFetch('/api/upload', {
     method: 'POST',
     body: formData,
     headers: {
-      'Authorization': getToken()
-    }
+      Authorization: getToken(),
+    },
   })
 
   if (status.value === 'success') {
     if (data.value) {
-
       const imageString = `\n![${file.name}](${data.value})\n`
 
       handleCopy(imageString)
@@ -105,13 +91,11 @@ async function uploadImage(file: File) {
     }
   }
 
-  if (status.value === 'error') {
+  if (status.value === 'error')
     toast.add({ title: `upload ${file.name} failed`, description: data.value as string })
-  }
 }
 
 function handleCopy(text: string) {
-
   const sourceCopy = ref(text)
 
   const { copy, isSupported } = useClipboard({ source: sourceCopy })
@@ -121,7 +105,6 @@ function handleCopy(text: string) {
     toast.add({ title: 'Copied', description: sourceCopy.value, timeout: 3000, icon: 'i-heroicons-check-circle text-violet' })
   }
 }
-
 
 onMounted(() => {
   document.addEventListener('paste', handlePaste)
@@ -133,6 +116,8 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <codemirror v-model="content" placeholder="" :style="{ minHeight: '1000px', fontSize: '1.05rem' }" :autofocus="true"
-    :indent-with-tab="true" :tab-size="2" :extensions="extensions" @ready="handleReady" />
+  <Codemirror
+    v-model="content" placeholder="" :style="{ minHeight: '1000px', fontSize: '1.05rem' }" :autofocus="true"
+    :indent-with-tab="true" :tab-size="2" :extensions="extensions" @ready="handleReady"
+  />
 </template>

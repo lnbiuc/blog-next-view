@@ -1,7 +1,7 @@
 import process from 'node:process'
 import axios from 'axios'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     if (
       !process.env.UMAMI_ADDRESS
@@ -10,11 +10,7 @@ export default defineEventHandler(async (event) => {
     )
       return new Response('func disabled, umami env not init', { status: 500 })
 
-    const { data } = await axios.get(
-			`${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/active`,
-			{
-			  headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` },
-			},
+    const { data } = await axios.get(`${process.env.UMAMI_ADDRESS}/api/websites/${process.env.UMAMI_WEBSITE_ID}/active`, { headers: { Authorization: `Beare ${process.env.UMAMI_AUTH_TOKEN}` } },
     )
 
     if (data)

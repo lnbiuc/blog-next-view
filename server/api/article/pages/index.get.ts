@@ -2,7 +2,11 @@ import { ArticleSchema } from '~/server/models/article.schema'
 
 export default defineEventHandler(async () => {
   try {
-    return await ArticleSchema.find({ status: 'PUBLISHED' }, { html: 0 })
+    const article = await ArticleSchema.find({ status: 'PUBLISHED', category: 'page' }, { content: 0 })
+    if (article)
+      return article
+    else
+      return { title: '404 Not Found' }
   }
   catch (error) {
     return new Response(error as string, { status: 500 })

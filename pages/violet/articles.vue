@@ -11,26 +11,26 @@ const { getToken } = useUserStore()
 
 const articles = ref<IArticle[]>([])
 
-const { data, pending, error, refresh } = await useFetch<IArticle[]>('/api/article/all', {
+const { data, pending, error } = await useFetch<IArticle[]>('/api/article/all', {
   method: 'GET',
   server: false,
   headers: {
-    'Authorization': getToken(),
-  }
+    Authorization: getToken(),
+  },
 })
 
 if (error.value) {
   if (error.value.statusCode === 401) {
     toast.add({ title: 'Error', description: 'Unauthorized' })
     router.push('/violet/login')
-  } else {
+  }
+  else {
     toast.add({ title: 'Error', description: error.value.message })
   }
 }
 
 watchEffect(() => {
   if (data.value) {
-
     articles.value = []
 
     data.value?.sort((a, b) => {
@@ -65,17 +65,16 @@ const columns = [
 const selectedColumns = ref([...columns])
 
 // 要取消选择的列
-const columnsToRemove = ['_id', 'description', 'authorId', 'likes', 'link'];
+const columnsToRemove = ['_id', 'description', 'authorId', 'likes', 'link']
 
 // 遍历要取消选择的列
-columnsToRemove.forEach(columnKey => {
+columnsToRemove.forEach((columnKey) => {
   // 找到对应的列在选定的列数组中的索引
-  const index = selectedColumns.value.findIndex(col => col.key === columnKey);
+  const index = selectedColumns.value.findIndex(col => col.key === columnKey)
   // 如果找到了该列，则从选定的列数组中移除它
-  if (index !== -1) {
-    selectedColumns.value.splice(index, 1);
-  }
-});
+  if (index !== -1)
+    selectedColumns.value.splice(index, 1)
+})
 
 const q = ref('')
 
@@ -123,7 +122,6 @@ function calcStatusColor(status: string) {
   }
 }
 
-
 function handleEdit() {
   if (selected.value.length === 0)
     return
@@ -136,17 +134,15 @@ function handleDelete() {
   const { data, error } = useFetch<{ acknowledged: boolean, deletedCount: number }>(`/api/article/${selected.value[0].shortLink}`, {
     method: 'DELETE',
     headers: {
-      'Authorization': getToken(),
-    }
+      Authorization: getToken(),
+    },
   })
 
-  if (data.value) {
+  if (data.value)
     toast.add({ title: 'Success', description: 'Deleted' })
-  }
 
-  if (error.value) {
+  if (error.value)
     toast.add({ title: 'Error', description: error.value.message })
-  }
 }
 </script>
 
@@ -165,11 +161,15 @@ function handleDelete() {
       </div>
     </NuxtLayout>
 
-    <UTable v-if="articles" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
-      @select="select">
+    <UTable
+      v-if="articles" v-model="selected" :loading="pending" :rows="filteredRows" :columns="selectedColumns"
+      @select="select"
+    >
       <template #shortLink-data="{ row }">
-        <ULink target="_blank" :to="`/article/${row.shortLink}`"
-          class="text-violet-400 transition-all hover:text-violet-600">
+        <ULink
+          target="_blank" :to="`/article/${row.shortLink}`"
+          class="text-violet-400 transition-all hover:text-violet-600"
+        >
           {{ row.shortLink }}
         </ULink>
       </template>
@@ -180,6 +180,7 @@ function handleDelete() {
         <UBadge v-if="row.category === 'article'" size="xs" :label="row.category" color="blue" />
         <UBadge v-if="row.category === 'short'" size="xs" :label="row.category" color="orange" />
         <UBadge v-if="row.category === 'project'" size="xs" :label="row.category" color="green" />
+        <UBadge v-if="row.category === 'page'" size="xs" :label="row.category" color="violet" />
       </template>
       <template #cover-data="{ row }">
         <UPopover mode="hover">
@@ -220,8 +221,12 @@ function handleDelete() {
         {{ formatZHTime(row.updatedAt) }}
       </template>
       <template #html-data="{ row }">
-        <UBadge v-if="row.html" color="green">Generated</UBadge>
-        <UBadge v-else color="red">Null</UBadge>
+        <UBadge v-if="row.html" color="green">
+          Generated
+        </UBadge>
+        <UBadge v-else color="red">
+          Null
+        </UBadge>
       </template>
     </UTable>
     <NuxtLayout name="home">

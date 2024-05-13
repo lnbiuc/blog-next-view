@@ -1,6 +1,6 @@
 import { ArticleSchema } from '~/server/models/article.schema'
 
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async () => {
   try {
     return await ArticleSchema.find({}, { content: 0 })
   }

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 const link = [
   {
     index: 0,
@@ -35,22 +34,21 @@ const umami = ref({
   uv: 0,
   recent: {
     name: '',
-    icon: ''
-  }
+    icon: '',
+  },
 })
 
 onMounted(async () => {
   await useFetch('/api/umami/active').then((res) => {
-    if (res.data.value) {
+    if (res.data.value)
       umami.value.active = res.data.value
-    } else {
+    else
       umami.value.active = 1
-    }
   })
 
   await useFetch('/api/umami/stats').then((res) => {
     umami.value.pv = res.data.value.pageviews.value
-    umami.value.uv = res.data.value.uniques.value
+    umami.value.uv = res.data.value.visitors.value
   })
 
   await useFetch('/api/umami/metrics').then((res) => {
@@ -61,33 +59,38 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div text="xs gray4"
-    class="p-4 mt-20 flex w-full flex-col justify-center items-center backdrop-blur-md border-t border-t-gray-300 dark:border-t-gray-700">
+  <div
+    text="xs gray4"
+    class="backdrop-blur-md p-4 mt-20 border-t border-t-gray-300 flex flex-col w-full justify-center items-center dark:border-t-gray-700"
+  >
     <div
-      class="mt-6 flex justify-between items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] w-full flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
+      class="mt-6 flex flex-col w-full justify-between items-center lg:flex-row md:flex-row sm:flex-row xl:flex-row lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
+    >
       <div>
-        <span>Total PV:</span>
+        <span>Total PV : </span>
         <span text="violet">{{ umami.pv }}</span>
         <span class="mx-1">|</span>
-        <span>UV:</span>
+        <span>UV : </span>
         <span text="violet">{{ umami.uv }}</span>
       </div>
 
-      <div class="flex justify-center items-center flex-col sm:flex-row md:flex-row lg:flex-row xl:flex-row">
-        <div class="flex flex-row m-2">
-          <div class="i-ri:checkbox-blank-circle-fill mr-1 scale-80" text="green"></div>
-          <span>Current Online:</span>
-          <span text="violet">{{ umami.active }}</span>
+      <div class="flex flex-col justify-center items-center lg:flex-row md:flex-row sm:flex-row xl:flex-row">
+        <div class="m-2 flex flex-row">
+          <div class="i-ri:checkbox-blank-circle-fill mr-1 scale-80" text="green" />
+          <span>Current Online</span>
+          <span class="mx-1">:</span>
+          <span text="violet mx-1">{{ umami.active }}</span>
         </div>
         <div>
-          <span>Recent visitors from:</span>
+          <span>From : </span>
           <span class="mx-1">{{ umami.recent.icon }}</span>
           <span text="violet">{{ umami.recent.name }}</span>
         </div>
       </div>
     </div>
     <div
-      class="py-5  flex min-h-[120px] w-full overflow-hidden xl:m-2 lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] justify-center flex-col items-center sm:justify-between sm:flex-row sm:items-start xl:justify-between xl:flex-row xl:items-start lg:justify-between lg:flex-row lg:items-start">
+      class="py-5 flex flex-col min-h-[120px] w-full overflow-hidden justify-center items-center xl:m-2 lg:flex-row sm:flex-row xl:flex-row lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%] lg:justify-between sm:justify-between xl:justify-between lg:items-start sm:items-start xl:items-start"
+    >
       <div class="flex flex-col items-start">
         <div>
           <span>Copyright © 2024</span>
@@ -129,10 +132,12 @@ onMounted(async () => {
           </ul>
         </div>
       </div>
-      <div class="flex flex-col items-end mt-10 sm:mt-unset md:mt-unset xl:mt-unset lg:mt-unset">
+      <div class="mt-10 flex flex-col items-end lg:mt-unset md:mt-unset sm:mt-unset xl:mt-unset">
         <div class="flex flex-row">
-          <a v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
-            :href="l.url" target="_blank" aria-label="icon">
+          <a
+            v-for="l in link" :key="l.index" class="my-open-tab mr-3 flex flex-row justify-center items-center"
+            :href="l.url" target="_blank" aria-label="icon"
+          >
             <UIcon :name="l.icon" class="text-xl" />
             <span class="ml-1">
               {{ l.name }}
@@ -141,9 +146,11 @@ onMounted(async () => {
         </div>
         <div class="mt-6">
           <a v-if="colorMode.value === 'dark'" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
-              src=https://zeabur.com/deployed-on-zeabur-dark.svg alt="Deployed on Zeabur" /></a>
+            src="https://zeabur.com/deployed-on-zeabur-dark.svg" alt="Deployed on Zeabur"
+          ></a>
           <a v-else class="shadow" href="https://zeabur.com?referralCode=lnbiuc&utm_source=lnbiuc"><img
-              src=https://zeabur.com/deployed-on-zeabur-light.svg alt="Deployed on Zeabur" /></a>
+            src="https://zeabur.com/deployed-on-zeabur-light.svg" alt="Deployed on Zeabur"
+          ></a>
         </div>
       </div>
     </div>
