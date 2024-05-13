@@ -124,7 +124,7 @@ if (data.value) {
     .forEach((item) => {
       const link = {
         name: item.title,
-        href: item.shortLink,
+        href: `/${item.shortLink}`,
       }
       links.push(link)
     })
@@ -193,7 +193,7 @@ if (data.value) {
               }"
             >
               <li v-for="link in links" :key="link.href">
-                <NuxtLink :to="`/${link.href}`" class="header-link" :prefetch="true">
+                <NuxtLink :to="`${link.href}`" class="header-link" :prefetch="true">
                   {{ link.name }}
                 </NuxtLink>
               </li>
@@ -247,7 +247,7 @@ if (data.value) {
     <Transition name="slide-fade">
       <ul v-if="isOpen" class="flex flex-col items-end">
         <li v-for="link in links" :key="link.href" @click="isOpen = !isOpen">
-          <NuxtLink :href="`/${link.href}`" class="mobile-head-link" :prefetch="true">
+          <NuxtLink :to="`${link.href}`" class="mobile-head-link" :prefetch="true">
             {{ link.name }}
           </NuxtLink>
         </li>
