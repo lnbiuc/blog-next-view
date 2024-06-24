@@ -70,23 +70,23 @@ Editor
 
 -   全文搜索
 
-![image](https://static.vio.vin/blog/2024/02/2183ab9bfce23f50dd39994b521a44f5ea408fcab6d5fe525b2124527a7ea58e.gif)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/2183ab9bfce23f50dd39994b521a44f5ea408fcab6d5fe525b2124527a7ea58e.gif)
 
 -   复制选中的文字
 
-![image](https://static.vio.vin/blog/2024/02/ac7f1ae9cb91cbc854b3fd1f546a77a6aab9b81125b052129314a7d95075d97e.gif)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/ac7f1ae9cb91cbc854b3fd1f546a77a6aab9b81125b052129314a7d95075d97e.gif)
 
 -   集成管理功能
 
-![image](https://static.vio.vin/blog/2024/02/778bcda66ce1cd8fc5353f664ad7db688fa5ccaaeea0e8f83480531ca26e4133.gif)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/778bcda66ce1cd8fc5353f664ad7db688fa5ccaaeea0e8f83480531ca26e4133.gif)
 
 -   生成友链网站截图
 
-![image](https://static.vio.vin/blog/2024/02/795217bb78e0e06735174c020e0ad71c84c57184980c963c1de4ae0690fdc633.gif)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/795217bb78e0e06735174c020e0ad71c84c57184980c963c1de4ae0690fdc633.gif)
 
 -   所见即所得的在线编辑器
 
-![image](https://static.vio.vin/blog/2024/02/d413820eee0bb39b9df6732629ce9e757e84097658d6d8ad67a8ac8ffb2896c0.png)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/d413820eee0bb39b9df6732629ce9e757e84097658d6d8ad67a8ac8ffb2896c0.png)
 
 ## 本地运行
 
@@ -132,18 +132,18 @@ pnpm dev
 -   在 Zeabur 创建 Project
 -   创建数据库实例
 
-![image](https://static.vio.vin/blog/2024/02/0b25696f98d61cefa0788a772080235ae1d37fb284ac667562501176e93f18eb.png)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/0b25696f98d61cefa0788a772080235ae1d37fb284ac667562501176e93f18eb.png)
 
-![image](https://static.vio.vin/blog/2024/02/4cdf4cbefbf6a99ebdeb580379384da535c3e5e2e9ed97720cbd9a644909b841.png)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/4cdf4cbefbf6a99ebdeb580379384da535c3e5e2e9ed97720cbd9a644909b841.png)
 
 -   新建服务，使用 Git 仓库，选择刚才 Fork 的仓库
 -   设置环境变量
 
-![image](https://static.vio.vin/blog/2024/02/5fe2a384723b41a53a165f836cf986df877758ed0e1f277321ffff0ba3ce2abf.png)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/5fe2a384723b41a53a165f836cf986df877758ed0e1f277321ffff0ba3ce2abf.png)
 
 -   设置域名
 
-![image](https://static.vio.vin/blog/2024/02/4406c7cd4c0afaab718ce5fae741ca06d7cbf1f04616679b17fdd668ee6e67a1.png)
+![image](https://r2-img.lnbiuc.com/blog/2024/02/4406c7cd4c0afaab718ce5fae741ca06d7cbf1f04616679b17fdd668ee6e67a1.png)
 
 -   CDN
 

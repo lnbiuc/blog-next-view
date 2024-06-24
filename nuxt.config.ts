@@ -105,8 +105,8 @@ export default defineNuxtConfig({
       ignore: ['/hi'],
     },
     compressPublicAssets: {
-      gzip: true
-    }
+      gzip: true,
+    },
   },
 
   app: {

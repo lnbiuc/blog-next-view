@@ -5,7 +5,6 @@
     "antfu.iconify",
     "antfu.slidev",
     "antfu.unocss",
-    "antfu.vite",
     "antfu.where-am-i",
     "antfu.open-in-github-button",
     "lokalise.i18n-ally",
@@ -16,7 +15,6 @@
     // life savers!
     "dbaeumer.vscode-eslint",
     "Vue.volar",
-    "GitHub.copilot",
     "usernamehw.errorlens",
     "streetsidesoftware.code-spell-checker",
     // up to you
