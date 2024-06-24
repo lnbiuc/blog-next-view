@@ -30,7 +30,7 @@ const preloadArticle = useThrottleFn(() => {
       <div>
         <div class="relative overflow-hidden">
           <img
-            :src="`${props.article.cover}/compress1600x900`" alt="cover"
+            :src="`${props.article.cover}`" alt="cover"
             class="object-cover rounded-tl-md rounded-tr-md shadow w-full aspect-[16/9] z-0 transform"
           >
         </div>

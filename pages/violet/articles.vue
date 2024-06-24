@@ -190,7 +190,7 @@ function handleDelete() {
           </div>
           <template #panel>
             <div class="h-full w-full">
-              <img :src="`${row.cover}/compress1600x900`" class="object-cover h-50 w-full">
+              <img :src="`${row.cover}`" class="object-cover h-50 w-full">
             </div>
           </template>
         </UPopover>
