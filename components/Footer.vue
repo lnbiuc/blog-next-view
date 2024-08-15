@@ -95,7 +95,7 @@ onMounted(async () => {
         <div>
           <span>Copyright © 2024</span>
           <span class="mx-1">|</span>
-          <a href="https://beian.miit.gov.cn/" target="_blank">陕ICP备2021015553号-1</a>
+          <a href="https://beian.miit.gov.cn/" target="_blank">陕ICP备2021015553号-2</a>
         </div>
         <div class="mt-10">
           <ul class="flex flex-row">
