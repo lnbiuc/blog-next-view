@@ -104,9 +104,9 @@ export default defineNuxtConfig({
       // routes: ['/',],
       ignore: ['/hi'],
     },
-    compressPublicAssets: {
-      gzip: true,
-    },
+    // compressPublicAssets: {
+    //   gzip: true,
+    // },
   },
 
   app: {
