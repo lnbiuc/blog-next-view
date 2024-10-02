@@ -2,7 +2,7 @@ import { ArticleSchema } from '~/server/models/article.schema'
 
 export default defineEventHandler(async () => {
   try {
-    const article = await ArticleSchema.find({ status: 'PUBLISHED' }, { content: 0 })
+    const article = await ArticleSchema.find({ status: 'PUBLISHED' }, { content: 0 }).sort({ updatedAt: -1 })
     if (article)
       return article
     else
