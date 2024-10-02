@@ -25,6 +25,7 @@ import BatLang from 'shiki/langs/bat.mjs'
 import BashLang from 'shiki/langs/bash.mjs'
 import IniLang from 'shiki/langs/ini.mjs'
 import XMLLang from 'shiki/langs/xml.mjs'
+import Kotlin from 'shiki/langs/kotlin.mjs'
 
 export function useMarkdownParser() {
   let parser: Awaited<ReturnType<typeof createMarkdownParser>>
@@ -75,6 +76,8 @@ export function useMarkdownParser() {
                     bat: BatLang,
                     ini: IniLang,
                     xml: XMLLang,
+                    kt: Kotlin,
+                    kotlin: Kotlin,
                   },
                 }),
               },
