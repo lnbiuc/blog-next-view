@@ -37,7 +37,6 @@ const article = ref<IArticle>({
   link: '',
   createdAt: undefined,
   updatedAt: undefined,
-  html: undefined,
 })
 
 if (props.shortLink) {
@@ -82,12 +81,6 @@ const rules = {
 // @ts-expect-error no error
 const { pass, errorFields } = useAsyncValidator(article, rules)
 
-const metaData = [{
-  label: 'meta data',
-  icon: 'i-heroicons-information-circle',
-  defaultOpen: false,
-  content: '',
-}]
 
 const publishSetting = ref(false)
 
@@ -293,12 +286,6 @@ function handleKeyDown(event: KeyboardEvent) {
             </div>
           </div>
         </template>
-
-        <!-- <div class="violet-prose" v-html="renderRes"></div> -->
-        <!-- {{ renderRes }} -->
-        <!-- <MDCRenderer class="violet-prose" v-if="renderRes.status" :body="renderRes.data.body"
-          :data="renderRes.data.data" /> -->
-
         <Suspense>
           <MDCRenderer v-if="ast?.body" class="violet-prose" :body="ast.body" :data="ast.data" />
         </Suspense>
@@ -313,7 +300,7 @@ function handleKeyDown(event: KeyboardEvent) {
         <template #header>
           Publish Settings
         </template>
-        <div class="p-4">
+        <div class="p-2 max-h-[calc(100vh-100px)] overflow-y-scroll">
           <UForm :state="article" class="space-y-4">
             <UFormGroup label="ShortLink" name="shortLink">
               <UInput v-model="article.shortLink" />
@@ -359,13 +346,13 @@ function handleKeyDown(event: KeyboardEvent) {
                 {{ errorFields.category[0].message }}
               </div>
             </UFormGroup>
-            <UFormGroup label="Tags" name="tags" v-if="article.category != 'page'">
+            <UFormGroup v-if="article.category !== 'page'" label="Tags" name="tags">
               <USelectMenu v-model="article.tags" :options="tags" searchable multiple />
               <div v-if="errorFields?.tags?.length" class="text-xs text-red">
                 {{ errorFields.tags[0].message }}
               </div>
             </UFormGroup>
-            <UFormGroup label="Create Tag" name="createTags" v-if="article.category != 'page'">
+            <UFormGroup v-if="article.category !== 'page'" label="Create Tag" name="createTags">
               <div class="flex flex-row w-full">
                 <UInput v-model="createTag" class="w-full" />
                 <UButton class="ml-2" @click="handleCreateTag">
@@ -391,17 +378,6 @@ function handleKeyDown(event: KeyboardEvent) {
                 {{ errorFields.link[0].message }}
               </div>
             </UFormGroup>
-            <!-- <UFormGroup label="Og Image" name="ogImage">
-            <div class="flex flex-row w-full">
-              <UInput v-model="article.ogImage" class="w-full" />
-              <UButton class="ml-2" @click="handleGenerateOgImage" :loading="isPending" :disabled="isPending">
-                Generate Og Image
-              </UButton>
-            </div>
-            <div v-if="article.ogImage" class="my-4">
-              <img :src="article.ogImage" alt="cover" class="object-cover rounded-md shadow w-full">
-            </div>
-          </UFormGroup> -->
             <div class="w-full">
               <UButton type="submit" color="blue" :disabled="!pass" @click="throttledPublish">
                 Submit
@@ -411,14 +387,5 @@ function handleKeyDown(event: KeyboardEvent) {
         </div>
       </UCard>
     </USlideover>
-    <NuxtLayout name="home">
-      <UAccordion :items="metaData" class="text-left">
-        <template #item>
-          <div>
-            {{ article }}
-          </div>
-        </template>
-      </UAccordion>
-    </NuxtLayout>
   </div>
 </template>

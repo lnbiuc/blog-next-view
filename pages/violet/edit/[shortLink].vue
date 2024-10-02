@@ -5,10 +5,15 @@ const route = useRoute()
 
 // @ts-expect-error no-error
 const shortLink = route.params.shortLink as string
+
+definePageMeta({
+  keepalive: false,
+})
 </script>
 
 <template>
   <div>
-    <EditorArticle v-if="shortLink" :short-link="shortLink" />
+    <!-- {{ shortLink }} -->
+    <EditorArticle :short-link="shortLink" />
   </div>
 </template>

@@ -14,8 +14,10 @@ export default defineEventHandler(async (event) => {
       { new: true },
     )
 
-    if (!result)
+    if (!result) {
+      console.warn(result)
       throw new Error('article not found')
+    }
 
     return { success: true }
   }

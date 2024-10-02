@@ -92,13 +92,6 @@ const filteredRows = computed(() => {
   })
 })
 
-const metaData = [{
-  label: 'meta data',
-  icon: 'i-heroicons-information-circle',
-  defaultOpen: false,
-  content: `${JSON.stringify(data.value)}`,
-}]
-
 const selected: Ref<IArticle[]> = ref([])
 
 function select(row: any) {
@@ -184,9 +177,9 @@ function handleDelete() {
       </template>
       <template #cover-data="{ row }">
         <UPopover mode="hover">
-          <UAvatar v-if="row.cover" img-class="object-cover" :src="`${row.cover}/thumbnail`" alt="Avatar" />
+          <UAvatar v-if="row.cover" img-class="object-cover" :src="`${row.cover}`" alt="Avatar" />
           <div v-else>
-            null
+            &nbsp;
           </div>
           <template #panel>
             <div class="h-full w-full">
@@ -229,8 +222,5 @@ function handleDelete() {
         </UBadge>
       </template>
     </UTable>
-    <NuxtLayout name="home">
-      <UAccordion :items="metaData" />
-    </NuxtLayout>
   </div>
 </template>
