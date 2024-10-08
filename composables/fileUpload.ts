@@ -80,7 +80,7 @@ export function uploadToMinIo(filePath: string, filename: string) {
   const fileExtension = filename.split('.').pop()
   const contentType = mimeTypes.contentType(fileExtension)
 
-  const key = `/${bucket}/${year}/${month}/${filename}`
+  const key = `/${year}/${month}/${filename}`
 
   const metaData = {
     'Content-Type': contentType,
@@ -89,7 +89,7 @@ export function uploadToMinIo(filePath: string, filename: string) {
   return client.fPutObject(bucket, key, filePath, metaData)
     .then((res) => {
       console.warn(res)
-      return key
+      return `/${bucket}${key}`
     })
     .catch((err) => {
       console.warn(err)
