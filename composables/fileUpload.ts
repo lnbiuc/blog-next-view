@@ -68,7 +68,7 @@ export function uploadToMinIo(filePath: string, filename: string, dir: string) {
 
   const client = new Minio.Client({
     port: 9000,
-    // useSSL: true,
+    useSSL: false,
     endPoint: endpoint,
     accessKey: accessKeyId,
     secretKey: secretAccessKey,
