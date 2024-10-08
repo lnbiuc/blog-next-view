@@ -56,7 +56,7 @@ export function uploadToR2(filePath: string, filename: string, dir: string) {
     })
 }
 
-export function uploadToMinIo(filePath: string, filename: string, dir: string) {
+export function uploadToMinIo(filePath: string, filename: string) {
   console.warn(filePath)
   const endpoint = process.env.MINIO_ENDPOINT
   const accessKeyId = process.env.MINIO_ACCESS_KEY
@@ -80,15 +80,16 @@ export function uploadToMinIo(filePath: string, filename: string, dir: string) {
   const fileExtension = filename.split('.').pop()
   const contentType = mimeTypes.contentType(fileExtension)
 
-  const key = `${dir}/${year}/${month}/${filename}`
+  const key = `/${bucket}/${year}/${month}/${filename}`
 
   const metaData = {
     'Content-Type': contentType,
   }
 
-  client.fPutObject(bucket, key, filePath, metaData)
+  return client.fPutObject(bucket, key, filePath, metaData)
     .then((res) => {
       console.warn(res)
+      return key
     })
     .catch((err) => {
       console.warn(err)

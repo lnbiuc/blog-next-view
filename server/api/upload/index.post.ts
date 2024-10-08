@@ -22,5 +22,5 @@ export default defineEventHandler(async (event) => {
   const hash = getFileHashSync(filePath)
   const hashName = `${hash}.${extension}`
   // upload to COS
-  return uploadToMinIo(filePath, hashName, '')
+  return uploadToMinIo(filePath, hashName)
 })
