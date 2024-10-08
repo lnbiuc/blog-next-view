@@ -1,7 +1,7 @@
 import process from 'node:process'
 import path from 'node:path'
 import fs from 'node:fs'
-import { getFileHashSync, uploadToR2, uuidv4 } from '~/composables/fileUpload'
+import { getFileHashSync, uploadToMinIo, uuidv4 } from '~/composables/fileUpload'
 
 export default defineEventHandler(async (event) => {
   const files = await readMultipartFormData(event)
@@ -22,5 +22,5 @@ export default defineEventHandler(async (event) => {
   const hash = getFileHashSync(filePath)
   const hashName = `${hash}.${extension}`
   // upload to COS
-  return uploadToR2(filePath, hashName, 'blog')
+  return uploadToMinIo(filePath, hashName, '')
 })

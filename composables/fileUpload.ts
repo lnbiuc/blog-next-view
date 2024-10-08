@@ -2,6 +2,7 @@ import process from 'node:process'
 import fs from 'node:fs'
 import crypto from 'node:crypto'
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
+import * as Minio from 'minio'
 
 // @ts-expect-error no type
 import mimeTypes from 'mime-types'
@@ -43,6 +44,51 @@ export function uploadToR2(filePath: string, filename: string, dir: string) {
     .then((res) => {
       console.warn(res)
       return `${process.env.IMAGE_PREVIEW_URI}/${key}`
+    })
+    .catch((err) => {
+      console.warn(err)
+      throw err
+    })
+    .finally(() => {
+      fs.unlink(filePath, () => {
+        console.warn('delete temp file: ', filePath)
+      })
+    })
+}
+
+export function uploadToMinIo(filePath: string, filename: string, dir: string) {
+  console.warn(filePath)
+  const endpoint = process.env.MINIO_ENDPOINT
+  const accessKeyId = process.env.MINIO_ACCESS_KEY
+  const secretAccessKey = process.env.MINIO_SECRET_KEY
+  const bucket = process.env.MINIO_BUCKET_NAME
+
+  if (!endpoint || !accessKeyId || !secretAccessKey || !bucket)
+    return
+
+  const client = new Minio.Client({
+    port: 9000,
+    // useSSL: true,
+    endPoint: endpoint,
+    accessKey: accessKeyId,
+    secretKey: secretAccessKey,
+  })
+
+  const date = new Date()
+  const year = date.getFullYear()
+  const month = (date.getMonth() + 1).toString().padStart(2, '0')
+  const fileExtension = filename.split('.').pop()
+  const contentType = mimeTypes.contentType(fileExtension)
+
+  const key = `${dir}/${year}/${month}/${filename}`
+
+  const metaData = {
+    'Content-Type': contentType,
+  }
+
+  client.fPutObject(bucket, key, filePath, metaData)
+    .then((res) => {
+      console.warn(res)
     })
     .catch((err) => {
       console.warn(err)

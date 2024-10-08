@@ -66,7 +66,7 @@ export default defineNuxtConfig({
     name: '薇尔薇',
     description:
     // eslint-disable-next-line style/no-tabs
-			'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
+            'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
     defaultLocale: 'zh_CN',
     identity: {
       type: 'Person',
@@ -141,4 +141,6 @@ export default defineNuxtConfig({
   devtools: {
     enabled: true,
   },
+
+  compatibilityDate: '2024-10-08',
 })

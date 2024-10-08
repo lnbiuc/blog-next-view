@@ -49,6 +49,7 @@
     "eslint": "^8.57.1",
     "jsonwebtoken": "^9.0.2",
     "mime-types": "^2.1.35",
+    "minio": "^8.0.1",
     "nuxt": "3.13.2",
     "nuxt-lodash": "^2.5.3",
     "nuxt-mongoose": "^1.0.6",
