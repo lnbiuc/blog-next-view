@@ -41,7 +41,6 @@ export default defineNuxtConfig({
     },
     components: {
       map: {
-        img: 'ImageRender',
         a: 'LinkRender',
         pre: 'PreRender',
         h2: 'H2Render',
