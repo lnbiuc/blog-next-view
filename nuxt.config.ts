@@ -32,10 +32,17 @@ export default defineNuxtConfig({
 
   mdc: {
     remarkPlugins: {
-      behead: {
+      'behead': {
         src: 'remark-behead',
         options: {
           minDepth: 2,
+        },
+      },
+      'remark-mdc': {
+        options: {
+          experimental: {
+            autoUnwrap: true,
+          },
         },
       },
     },
@@ -46,6 +53,12 @@ export default defineNuxtConfig({
         h2: 'H2Render',
         h3: 'H3Render',
         h4: 'H4Render',
+      },
+    },
+    highlight: {
+      theme: {
+        default: 'vitesse-light',
+        dark: 'vitesse-dark',
       },
     },
   },
@@ -64,7 +77,7 @@ export default defineNuxtConfig({
     title: '薇尔薇',
     name: '薇尔薇',
     description:
-    // eslint-disable-next-line style/no-tabs
+
             'A Web Developer. Code for Fun. AKA ZZSLL, Violet, Vio, VioVin, Lnbiuc, kunkida, hi@lnbiuc.com',
     defaultLocale: 'zh_CN',
     identity: {
@@ -106,6 +119,14 @@ export default defineNuxtConfig({
     // compressPublicAssets: {
     //   gzip: true,
     // },
+
+    routeRules: {
+      '/blog-image/**': {
+        proxy: {
+          to: 'https://minio.vio.vin/blog-image/**',
+        },
+      },
+    },
   },
 
   app: {

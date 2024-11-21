@@ -58,6 +58,7 @@
     "nuxt-seo-experiments": "4.0.0-rc.4",
     "nuxt-simple-robots": "4.0.0-rc.14",
     "pinia": "^2.2.4",
+    "plain-shiki": "^0.0.12",
     "puppeteer": "^22.15.0",
     "remark-behead": "^3.1.0",
     "tocbot": "^4.30.0",

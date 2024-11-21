@@ -30,7 +30,7 @@ const link = [
 <template>
   <NuxtLayout name="home">
     <div
-      class="sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm p-2 my-0 card-border rounded rounded-lg flex flex-col-reverse justify-center items-center lg:p-8 md:p-8 sm:p-2 xl:p-8 lg:my-10 md:my-10 sm:my-0 xl:my-10 lg:flex-row md:flex-row md:flex-row xl:flex-row sm:flex-col-reverse md:justify-between lg:card md:card sm:card xl:card"
+      class="sm:backdrop-blur-sm md:backdrop-blur-sm xl:backdrop-blur-sm lg:backdrop-blur-sm p-2 my-0 card-border rounded flex flex-col-reverse justify-center items-center lg:p-8 md:p-8 sm:p-2 xl:p-8 lg:my-10 md:my-10 sm:my-0 xl:my-10 lg:flex-row md:flex-row xl:flex-row sm:flex-col-reverse md:justify-between lg:card md:card sm:card xl:card"
     >
       <div
         class="flex flex-col w-full justify-start items-start lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 md:justify-start md:items-start"

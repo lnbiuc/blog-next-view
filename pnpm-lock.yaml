@@ -149,6 +149,9 @@ importers:
       pinia:
         specifier: ^2.2.4
         version: 2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2))
+      plain-shiki:
+        specifier: ^0.0.12
+        version: 0.0.12(shiki@1.21.0)
       puppeteer:
         specifier: ^22.15.0
         version: 22.15.0(typescript@5.6.2)
@@ -5481,6 +5484,11 @@ packages:
 
   pkg-types@1.2.0:
     resolution: {integrity: sha512-+ifYuSSqOQ8CqP4MbZA5hDpb97n3E8SVWdJe+Wms9kj745lmd3b7EZJiqvmLwAlmRfjrI7Hi5z3kdBJ93lFNPA==}
+
+  plain-shiki@0.0.12:
+    resolution: {integrity: sha512-jaR0Rhm0wWOn1unMrt0yOTYI83y+ntabQ///GxYyRSYFRsNJZRrT7dpWbtX/QRFL44cznutwCT5EiEXj1KwXVQ==}
+    peerDependencies:
+      shiki: ^1.22.0
 
   playwright-core@1.47.2:
     resolution: {integrity: sha512-3JvMfF+9LJfe16l7AbSmU555PaTl2tPyQsVInqm3id16pdDfvZ8TTZ/pyzmkbDrZTQefyzU7AIHlZqQnxpqHVQ==}
@@ -14201,6 +14209,10 @@ snapshots:
       confbox: 0.1.7
       mlly: 1.7.1
       pathe: 1.1.2
+
+  plain-shiki@0.0.12(shiki@1.21.0):
+    dependencies:
+      shiki: 1.21.0
 
   playwright-core@1.47.2: {}
 

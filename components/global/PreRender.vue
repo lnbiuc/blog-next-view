@@ -52,9 +52,9 @@ function copyCode() {
 <template>
   <div
     v-if="props.filename"
-    class="p-2 mt-4 bg-[#fafafa] border-b border-b-[#eee] rounded-lt rounded-rt text-center flex flex-row justify-center items-center dark:bg-[#0e0e0e] dark:border-b-[#222]"
+    class="p-2 mt-4 bg-[#F8FAFC] border border-[#eee] rounded-lt-md rounded-rt-md text-center flex flex-row justify-center items-center dark:bg-[#121212] dark:border-[#181818]"
   >
-    <div class="text-[#222] dark:text-[#aaa]">
+    <div class="text-[#2a2a2a] dark:text-[#bbb]">
       {{ props.filename }}
     </div>
   </div>
@@ -67,8 +67,8 @@ function copyCode() {
       </div>
     </div>
     <pre
-      :class="$props.class + (!props.filename ? ' rounded-lt rounded-rt' : '')"
-      class="rounded-lb rounded-rb whitespace-normal"
+      :class="$props.class + (!props.filename ? ' rounded-lt-md rounded-rt-md' : '')"
+      class="border border-[#eee] rounded-lb-md rounded-rb-md whitespace-normal dark:border-[#181818]"
     >
     <slot />
   </pre>

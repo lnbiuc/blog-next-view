@@ -3,7 +3,6 @@ import { ref } from 'vue'
 import { useThrottleFn } from '@vueuse/core'
 import type { IArticle } from '~/server/types'
 import { useArticleStore } from '~/store/ArticleStore'
-import { formatTime } from '~/composables/formatTime'
 
 const props = defineProps({
   article: {
@@ -38,9 +37,9 @@ const preloadArticle = useThrottleFn(() => {
             {{ t }}
           </UBadge>
         </div>
-        <div class="mt-3 text-sm text-gray-800 dark:text-gray-400">
-          {{ formatTime(props.article.createdAt) }}
-        </div>
+        <!--        <div class="mt-3 text-sm text-gray-800 dark:text-gray-400"> -->
+        <!--          {{ formatTime(props.article.createdAt) }} -->
+        <!--        </div> -->
       </div>
     </div>
   </NuxtLink>

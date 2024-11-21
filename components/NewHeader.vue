@@ -133,9 +133,9 @@ if (data.value) {
 
 <template>
   <div
-    class="font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all"
+    class="border-b-[#eee] font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all dark:border-b-[#222]"
     :class="{
-      'shadow dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl':
+      'dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl border-b ':
         showShadow && !isOpen,
       'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen,
     }"
@@ -145,7 +145,7 @@ if (data.value) {
     >
       <img
         src="/site-favicon.ico"
-        class="object-cover rounded-3 shadow-md"
+        class="object-cover rounded-3 shadow h-10 w-10"
         @click="handleClickFavicon"
       >
     </div>
@@ -185,9 +185,9 @@ if (data.value) {
             <ul
               class="border rounded-full flex flex-row h-40px items-center transition-all"
               :class="{
-                'mt-52px dark:border-[#222] border-[#eee] bg-light dark:bg-dark shadow backdrop-blur-2xl':
+                'mt-52px dark:border-[#222] border-[#eee] shadow backdrop-blur-2xl':
                   !isFixed,
-                'dark:border-[#222] border-[#eee]  bg-light dark:bg-dark shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50':
+                'dark:border-[#222] border-[#eee] shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50':
                   !showShadow,
                 'border-transparent': isTransparent,
               }"

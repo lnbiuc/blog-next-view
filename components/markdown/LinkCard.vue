@@ -24,13 +24,13 @@ onMounted(async () => {
 
 <template>
   <ClientOnly>
-    <div v-if="repoInfo" class="my-4 flex flex-row w-full justify-center items-center">
+    <div v-if="repoInfo" class="my-4 flex flex-row w-full justify-start items-center">
       <NuxtLink
         :href="props.link" target="_blank"
-        class="p-4 bg-[#fafafa] rounded-md shadow flex flex-col h-35 w-full justify-between transition-all dark:bg-[#222] hover:shadow-md lg:w-100 md:w-100 sm:w-100 xl:w-100"
+        class="p-4 rounded-md flex flex-col h-35 w-full justify-between transition-all lg:w-100 md:w-100 sm:w-100 xl:w-100 card"
       >
         <div class="flex flex-row justify-start items-center">
-          <div class="object-cover w-28">
+          <div class="object-cover w-30">
             <NuxtImg :src="repoInfo.owner.avatar_url" class="rounded" />
           </div>
           <div class="ml-4 flex flex-col w-full">

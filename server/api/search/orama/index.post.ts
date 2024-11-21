@@ -17,14 +17,12 @@ export default defineEventHandler(async (event) => {
       })
 
       if (results) {
-        const ids: string[] = []
         const articles: IArticle[] = []
         const hits = results.hits
-        hits.forEach((hit) => {
+        hits.forEach((hit: any) => {
           const doc = hit.document as IArticle
           if (doc.category === category)
-            ids.push(hit.document._id as string)
-          articles.push(hit.document)
+            articles.push(hit.document)
         })
 
         // const articles = await ArticleSchema.find({ _id: { $in: ids } })

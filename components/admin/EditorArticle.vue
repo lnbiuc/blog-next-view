@@ -7,7 +7,7 @@ import type { IArticle } from '~/server/types'
 import { useUserStore } from '~/store/UserStore'
 import MarkdownEditor from '~/components/MarkdownEditor.vue'
 import '~/styles/md-alert.css'
-import { useMarkdownParser } from '~/composables/useMarkdownParser'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 const props = defineProps({
   shortLink: {
@@ -80,7 +80,6 @@ const rules = {
 
 // @ts-expect-error no error
 const { pass, errorFields } = useAsyncValidator(article, rules)
-
 
 const publishSetting = ref(false)
 
@@ -218,13 +217,12 @@ function handleEmitContent(value: string) {
 }
 
 const ast = ref<MDCParserResult | null>(null)
-const parse = useMarkdownParser()
 
 watchEffect(async () => {
   if (preview.value) {
     // const data = await render(article.value.content)
     // renderRes.value = await render(article.value.content)
-    ast.value = await parse(article.value.content)
+    ast.value = await parseMarkdown(article.value.content)
   }
 })
 

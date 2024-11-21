@@ -143,7 +143,7 @@
 	color: #111827;
 }
 .violet-prose pre {
-	color: #e5e7eb;
+	color: #333;
 	overflow-x: auto;
 	font-size: 0.875em;
 	line-height: 1.7142857;
@@ -154,6 +154,14 @@
 	padding-right: 1.1428571em;
 	padding-bottom: 0.8571429em;
 	padding-left: 1.1428571em;
+	background-color: #F8FAFC;
+	border-color: rgb(238 238 238 / var(--un-border-opacity));
+}
+
+.dark .violet-prose pre {
+	color: #eee;
+	border-color: rgb(24 24 24 / var(--un-border-opacity));
+	background-color: #121212;
 }
 .violet-prose pre code {
 	background-color: transparent;

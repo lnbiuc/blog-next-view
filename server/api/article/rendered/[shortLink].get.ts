@@ -1,15 +1,12 @@
-import { ArticleSchema } from '~/server/models/article.schema'
-import { useMarkdownParser } from '~/composables/useMarkdownParser'
-import { storage } from '~/config/unstorage.config'
 import zlib from 'node:zlib'
+import { ArticleSchema } from '~/server/models/article.schema'
+import { storage } from '~/config/unstorage.config'
 
 export default defineEventHandler(async (event) => {
   try {
     const shortLink = event.context.params?.shortLink
-    const parse = useMarkdownParser()
-    let json = undefined
+    let json
     if (shortLink) {
-
       const result = await storage.getItem(shortLink)
       if (result) {
         console.warn('= recover from cache:', shortLink)
@@ -27,7 +24,7 @@ export default defineEventHandler(async (event) => {
         const { content } = queryres
 
         const start = performance.now()
-        const html = await parse(content)
+        const html = await parseMarkdown(content)
         const end = performance.now()
         const executionTime = Math.round(end - start)
         console.warn(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
@@ -41,7 +38,7 @@ export default defineEventHandler(async (event) => {
       headers.set('Content-Encoding', 'gzip')
       headers.set('Content-Length', compressedData.length.toString())
       return new Response(compressedData, {
-        headers
+        headers,
       })
     }
   }

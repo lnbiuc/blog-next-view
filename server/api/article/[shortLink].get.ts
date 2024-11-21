@@ -1,13 +1,10 @@
-import process from 'node:process'
 import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 import { ArticleSchema } from '~/server/models/article.schema'
 import type { IArticle } from '~/server/types'
-import { useMarkdownParser } from '~/composables/useMarkdownParser'
 import { storage } from '~/config/unstorage.config'
-import zlib from 'node:zlib'
 
 export default defineEventHandler(async (event) => {
-  const parse = useMarkdownParser()
   const shortLink = event.context.params?.shortLink as string
 
   const articleData: Partial<IArticle> = {
@@ -61,7 +58,7 @@ export default defineEventHandler(async (event) => {
     }
     else {
       const start = performance.now()
-      const html = await parse(content as string)
+      const html = await parseMarkdown(content as string)
       const end = performance.now()
       const executionTime = Math.round(end - start)
       console.warn(`+ render html for [${shortLink}] takes [${executionTime}] ms`)
