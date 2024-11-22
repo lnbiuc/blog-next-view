@@ -4,6 +4,14 @@
 
 @layer components {
 
+    .bg-light {
+        @apply bg-zinc-100;
+    }
+
+    .bg-dark {
+        @apply bg-zinc-900;
+    }
+
     .card-hover {
         @apply transition duration-200 ease-in-out dark:hover:border-violet hover:border-violet border;
     }

@@ -4,11 +4,9 @@ const umami = ref({
   uv: 0,
 })
 
-onMounted(async () => {
-  await useFetch('/api/umami/stats').then((res) => {
-    umami.value.pv = res.data.value.pageviews.value
-    umami.value.uv = res.data.value.visitors.value
-  })
+useFetch('/api/umami/stats').then((res) => {
+  umami.value.pv = res.data.value.pageviews.value
+  umami.value.uv = res.data.value.visitors.value
 })
 </script>
 

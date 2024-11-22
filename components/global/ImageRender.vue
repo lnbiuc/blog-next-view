@@ -17,11 +17,20 @@ const props = defineProps({
     default: undefined,
   },
 })
+
+const imageError = ref<boolean>(false)
 </script>
 
 <template>
-  <NuxtImg
-    :src="props.src" :alt="props.alt" width="100%" :placeholder="[50, 25, 75, 5]" format="webp" loading="lazy"
-    class="my-2 op75 rounded transition-all animated animated-fade-in-up-big hover:op100 hover:shadow card"
-  />
+  <div>
+    <img
+      v-if="!imageError"
+      :src="props.src"
+      :alt="props.alt"
+      :width="props.width"
+      :height="props.height"
+      class="my-2 opacity-75 rounded transition-all hover:opacity-100 hover:shadow"
+      @error="imageError = true"
+    >
+  </div>
 </template>

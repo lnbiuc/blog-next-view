@@ -5,13 +5,9 @@ defineProps(['color'])
 
 <template>
   <div class="py-2">
-    <UAlert :color="color" variant="soft" :ui="{ title: 'text-2xl leading-0', description: 'text-base' }">
-      <template #title>
-        <slot />
-      </template>
-
+    <UAlert :color="color" variant="soft" :ui="{ title: 'leading-0', description: 'text-base' }">
       <template #description>
-        <slot name="desc" />
+        <p><slot /> : <slot name="desc" /></p>
       </template>
     </UAlert>
   </div>

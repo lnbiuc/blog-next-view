@@ -55,7 +55,7 @@ const isTransparent = computed(() => {
 
 const readProgress = ref<number>(0)
 
-const { height } = useWindowSize()
+const { height, width } = useWindowSize()
 
 watchEffect(() => {
   if (document) {
@@ -101,7 +101,7 @@ function handleClickFavicon() {
   window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-const links = [
+const links = ref([
   {
     name: 'Home',
     href: '/',
@@ -114,55 +114,55 @@ const links = [
     name: 'Short',
     href: '/shorts',
   },
-]
+])
 
-const { data } = useFetch<Array<IArticle>>('/api/article/pages')
-
-if (data.value) {
-  data.value
-    .sort((a, b) => Number.parseInt(a.link as string) - Number.parseInt(b.link as string))
-    .forEach((item) => {
-      const link = {
-        name: item.title,
-        href: `/${item.shortLink}`,
-      }
-      links.push(link)
-    })
-}
+useFetch<Array<IArticle>>('/api/article/pages').then((res) => {
+  if (res.data.value) {
+    res.data.value
+      .sort((a, b) => Number.parseInt(a.link as string) - Number.parseInt(b.link as string))
+      .forEach((item) => {
+        const link = {
+          name: item.title,
+          href: `/${item.shortLink}`,
+        }
+        links.value.push(link)
+      })
+  }
+})
 </script>
 
 <template>
   <div
-    class="border-b-[#eee] font-sans flex flex-row fixed h-[60px] w-full justify-around items-center z-[999] transition-all dark:border-b-[#222]"
+    class="border-b-[#eee] font-sans flex flex-row fixed h-[60px] w-full justify-around items-center z-[999]  dark:border-b-[#222]"
     :class="{
-      'dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl border-b ':
+      'dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl border-b transition-all':
         showShadow && !isOpen,
-      'bg-light dark:bg-dark dark:bg-opacity-100 bg-opacity-100': isOpen,
+      'dark:bg-dark bg-light': isOpen,
     }"
   >
     <div
-      class="mx-2 mr-4 rounded-3 flex flex-row h-[45px] w-[45px] cursor-pointer justify-center items-center"
+      class="rounded-3 flex flex-row h-[45px] w-[45px] aspect-1/1 cursor-pointer justify-center items-center"
     >
-      <img
-        src="/site-favicon.ico"
-        class="object-cover rounded-3 shadow h-10 w-10"
+      <NuxtImg
+        src="/favicon.ico" alt="logo" :placeholder="[50, 25, 75, 5]" format="webp" loading="lazy" quality="1"
+        class="rounded-lg shadow h-10 w-10 aspect-1/1 ml-2"
         @click="handleClickFavicon"
-      >
+      />
     </div>
     <div
       class="flex flex-row w-full justify-center items-center lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
     >
       <div class="flex flex-row w-full justify-around items-center">
-        <div name="title" class="flex flex-1 flex-row w-50% justify-start">
+        <div name="title" class="flex flex-1 flex-row justify-start ml-2 text-ellipsis truncate" :style="{ maxWidth: `${width - 100}px` }">
           <Transition name="slide">
             <div v-if="!isFixed">
               <div
-                class="whitespace-no-wrap text-xl truncate text-ellipsis max-w-50 overflow-hidden lg:max-w-unset md:max-w-unset sm:max-w-unset xl:max-w-unset"
+                class="whitespace-no-wrap text-xl"
               >
                 {{ article?.title }}
               </div>
               <div
-                class="whitespace-no-wrap text-xs text-gray-500 truncate text-ellipsis max-w-50 overflow-hidden lg:max-w-unset md:max-w-unset sm:max-w-unset xl:max-w-unset"
+                class="whitespace-no-wrap text-xs text-gray-500"
               >
                 {{ article?.category }} / {{ article?.shortLink }}
               </div>
@@ -185,9 +185,9 @@ if (data.value) {
             <ul
               class="border rounded-full flex flex-row h-[40px] items-center transition-all"
               :class="{
-                'mt-52px dark:border-[#222] border-[#eee] shadow backdrop-blur-2xl':
+                'mt-[52px] dark:border-[#222] border-[#eee] dark:bg-dark bg-light':
                   !isFixed,
-                'dark:border-[#222] border-[#eee] shadow backdrop-blur-2xl dark:bg-opacity-50 bg-opacity-50':
+                'dark:border-[#222] border-[#eee]':
                   !showShadow,
                 'border-transparent': isTransparent,
               }"
@@ -206,8 +206,9 @@ if (data.value) {
           </header>
         </div>
         <div
+          v-if="width > 640"
           name="rate"
-          class="mr-0 flex flex-1 flex-row w-50% justify-end lg:mr-4 md:mr-4 sm:mr-4 xl:mr-4"
+          class="mr-0 flex w-[100px] flex-1 flex-row w-20% justify-end lg:mr-4 md:mr-4 sm:mr-4 xl:mr-4"
         >
           <Transition name="slide">
             <div v-if="!isFixed">
@@ -222,17 +223,12 @@ if (data.value) {
           name="openMenu"
           @click="isOpen = !isOpen"
         >
-          <div
-            class="mr-4 scale-140"
-            :class="{
-              'i-ri:menu-fold-fill': !isOpen,
-              'i-ri:close-line': isOpen,
-            }"
-          />
+          <Icon v-if="!isOpen" name="ri:menu-fold-fill" class="mr-4 h-8 w-8" />
+          <Icon v-else name="ri:close-line" class="mr-4 h-8 w-8" />
         </div>
       </div>
     </div>
-    <div class="hidden w-50px lg:flex md:flex sm:flex xl:flex">
+    <div class="hidden w-[50px] lg:flex md:flex sm:flex xl:flex">
       <DarkToggle />
     </div>
   </div>
@@ -241,12 +237,12 @@ if (data.value) {
 
   <div
     name="v-header"
-    class="bg-light flex fixed h-0 w-full justify-end top-60px z-[6000] transition-all lg:hidden md:hidden sm:hidden xl:hidden dark:bg-dark"
+    class=" flex fixed h-0 w-full justify-end top-[60px] z-[6000] transition-all lg:hidden md:hidden sm:hidden xl:hidden dark:bg-dark bg-light"
     :class="{ 'h-full': isOpen }"
   >
     <Transition name="slide-fade">
       <ul v-if="isOpen" class="flex flex-col items-end">
-        <li v-for="link in links" :key="link.href" @click="isOpen = !isOpen">
+        <li v-for="link in links" :key="link.href" class="h-[60px]" @click="isOpen = !isOpen">
           <NuxtLink :to="`${link.href}`" class="mobile-head-link" :prefetch="true">
             {{ link.name }}
           </NuxtLink>

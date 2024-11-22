@@ -71,10 +71,10 @@ const link = [
       <div
         class="mb-6 flex flex-row w-full justify-center items-center transition-all lg:mb-0 md:mb-0 sm:mb-6 xl:mb-0 lg:w-1/2 md:w-1/2 sm:w-full xl:w-1/2 lg:justify-end md:justify-end xl:justify-end sm:justify-center"
       >
-        <img
-          src="/favicon.ico" alt="logo"
+        <NuxtImg
+          src="/favicon.ico" alt="logo" :placeholder="[50, 25, 75, 5]" format="webp" loading="lazy" quality="50"
           class="rounded-full shadow-md h-[200px] w-[200px] transition-all hover:shadow-xl lg:h-[250px] lg:w-[250px] md:h-[250px] md:w-[250px] sm:h-[200px] sm:w-[200px] xl:h-[250px] xl:w-[250px]"
-        >
+        />
       </div>
     </div>
   </NuxtLayout>

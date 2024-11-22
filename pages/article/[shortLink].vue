@@ -4,198 +4,204 @@ import {
   useMouse,
   useTextSelection,
   useTimeoutFn,
-} from "@vueuse/core";
+} from '@vueuse/core'
 
-import * as tocbot from "tocbot";
+import * as tocbot from 'tocbot'
 
-import { useArticleStore } from "~/store/ArticleStore";
-import { formatTime } from "~/composables/formatTime";
-import { useUserStore } from "~/store/UserStore";
+import { useArticleStore } from '~/store/ArticleStore'
+import { formatTime } from '~/composables/formatTime'
+import { useUserStore } from '~/store/UserStore'
 
-const route = useRoute();
+const route = useRoute()
 
 // @ts-expect-error no error
-const shortLink = route.params.shortLink as string;
+const shortLink = route.params.shortLink as string
 
-const { one } = useArticleStore();
+const { one } = useArticleStore()
 
-const article = await one(shortLink);
+const article = await one(shortLink)
 
-const hasCatalog = ref(false);
+const hasCatalog = ref(false)
 
 useHead({
   htmlAttrs: {
-    lang: "zh_CN",
+    lang: 'zh_CN',
   },
   link: [
     {
-      rel: "icon",
-      type: "image/png",
-      href: "/site-favicon.ico",
+      rel: 'icon',
+      type: 'image/png',
+      href: '/site-favicon.ico',
     },
   ],
-});
+})
 
 function initTOC() {
-  if (!document) return;
+  if (!document)
+    return
 
   if (
-    !document.querySelector("#violetToc") ||
-    !document.querySelector("#violetMD")
+    !document.querySelector('#violetToc')
+    || !document.querySelector('#violetMD')
   ) {
     // wait for the dom to be ready
     setTimeout(() => {
-      initTOC();
-    }, 100);
-    return;
+      initTOC()
+    }, 100)
+    return
   }
 
   tocbot.init({
     // Where to render the table of contents.
-    tocSelector: "#violetToc",
+    tocSelector: '#violetToc',
     // Where to grab the headings to build the table of contents.
-    contentSelector: "#violetMD",
+    contentSelector: '#violetMD',
     // Which headings to grab inside of the contentSelector element.
-    headingSelector: "h1, h2, h3",
+    headingSelector: 'h1, h2, h3',
     // For headings inside relative or absolute positioned containers within content.
     // hasInnerContainers: true,
     scrollSmoothOffset: -80,
     headingsOffset: 80,
-  });
+  })
 
   setTimeout(() => {
     // check if the toc is empty
-    if (!document.querySelector(".toc-list")) initTOC();
-  }, 100);
+    if (!document.querySelector('.toc-list'))
+      initTOC()
+  }, 100)
 }
 
 const { start, stop } = useTimeoutFn(async () => {
   if (article) {
     useFetch<string>(`/api/article/views/${article?._id}`, {
-      method: "PUT",
-    });
+      method: 'PUT',
+    })
   }
-}, 10000);
+}, 10000)
 
 onMounted(() => {
-  start();
-});
+  start()
+})
 
 onBeforeRouteLeave(() => {
-  stop();
-});
+  stop()
+})
 
 onBeforeUnmount(() => {
-  tocbot.destroy();
-});
+  tocbot.destroy()
+})
 
-const { width } = useWindowSize();
+const { width } = useWindowSize()
 
-const openPop = ref<boolean>(false);
+const openPop = ref<boolean>(false)
 
-const { x, y } = useMouse({ touch: false });
+const { x, y } = useMouse({ touch: false })
 
 function checkSelection() {
-  const selection = window.getSelection();
+  const selection = window.getSelection()
   if (selection && selection.toString()) {
     // 文字被选中
-    openPop.value = true;
-    const pop = document.querySelector(".popover") as HTMLElement;
+    openPop.value = true
+    const pop = document.querySelector('.popover') as HTMLElement
     if (pop) {
-      pop.style.left = `${x.value - 20}px`;
-      pop.style.top = `${y.value - 100}px`;
+      pop.style.left = `${x.value - 20}px`
+      pop.style.top = `${y.value - 100}px`
     }
-  } else {
+  }
+  else {
     // 没有文字被选中
-    openPop.value = false;
+    openPop.value = false
   }
 }
 
-const toast = useToast();
-const state = useTextSelection();
+const toast = useToast()
+const state = useTextSelection()
 
-const sourceCopy = ref(state.text.value);
+const sourceCopy = ref(state.text.value)
 
 watch(
   () => state.text.value,
   (val) => {
-    if (val !== "") sourceCopy.value = val;
-  }
-);
+    if (val !== '')
+      sourceCopy.value = val
+  },
+)
 
-const { copy, isSupported } = useClipboard({ source: sourceCopy });
+const { copy, isSupported } = useClipboard({ source: sourceCopy })
 
 function copySelection() {
-  copy();
+  copy()
   toast.add({
-    title: "Copied",
+    title: 'Copied',
     description: sourceCopy.value,
     timeout: 3000,
-    icon: "i-heroicons-check-circle text-violet",
-  });
-  openPop.value = false;
+    icon: 'i-heroicons-check-circle text-violet',
+  })
+  openPop.value = false
 }
 
 watchEffect(() => {
-  // eslint-disable-next-line style/max-statements-per-line
   if (width.value < 1200) {
-    hasCatalog.value = false;
-  } else {
-    initTOC();
-    hasCatalog.value = true;
+    hasCatalog.value = false
   }
-});
+  else {
+    initTOC()
+    hasCatalog.value = true
+  }
+})
 
 useSeoMeta({
   title: () => {
-    return article ? `${article.title} | 薇尔薇` : "404 NotFound | 薇尔薇";
+    return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇'
   },
   ogTitle: () => {
-    return article ? `${article.title} | 薇尔薇` : "404 NotFound | 薇尔薇";
+    return article ? `${article.title} | 薇尔薇` : '404 NotFound | 薇尔薇'
   },
   description: () => {
-    return article ? `${article.description}` : "404 NotFound";
+    return article ? `${article.description}` : '404 NotFound'
   },
   ogDescription: () => {
-    return article ? `${article.description}` : "404 NotFound";
+    return article ? `${article.description}` : '404 NotFound'
   },
-  articleAuthor: ["violet"],
-  author: "violet",
+  articleAuthor: ['violet'],
+  author: 'violet',
   articleModifiedTime: () => {
-    return article ? formatTime(article.updatedAt) : "";
+    return article ? formatTime(article.updatedAt) : ''
   },
   articlePublishedTime: () => {
-    return article ? formatTime(article.createdAt) : "";
+    return article ? formatTime(article.createdAt) : ''
   },
-});
+})
 
-const colorModel = useColorMode();
+const colorModel = useColorMode()
 
 defineOgImage({
-  component: "NuxtSeo",
+  component: 'NuxtSeo',
   props: {
     title: () => {
-      return article ? `${article.title}` : "404 NotFound";
+      return article ? `${article.title}` : '404 NotFound'
     },
     description: () => {
-      return article ? `${article.description}` : "404 NotFound";
+      return article ? `${article.description}` : '404 NotFound'
     },
-    theme: "#a78bfa",
-    colorMode: () => (colorModel.preference === "dark" ? "dark" : "light"),
+    theme: '#a78bfa',
+    colorMode: () => (colorModel.preference === 'dark' ? 'dark' : 'light'),
   },
-});
 
-const isLogin = ref(false);
+})
+
+const isLogin = ref(false)
 
 onMounted(() => {
   nextTick(() => {
-    initTOC();
-  });
+    initTOC()
+  })
 
-  const { hasAuth } = useUserStore();
+  const { hasAuth } = useUserStore()
 
-  if (hasAuth()) isLogin.value = true;
-});
+  if (hasAuth())
+    isLogin.value = true
+})
 </script>
 
 <template>
@@ -232,7 +238,9 @@ onMounted(() => {
             <div class="mt-4 flex flex-row justify-between items-center">
               <div class="flex flex-row justify-start items-center">
                 <div class="i-carbon-view mr-2 z-2" />
-                <div class="text-violet z-2">{{ article?.views }} views</div>
+                <div class="text-violet z-2">
+                  {{ article?.views }} views
+                </div>
                 <div class="i-carbon-alarm mx-2 z-2 scale-110" />
                 <div class="text-violet z-2">
                   {{ formatTime(article?.updatedAt) }}
@@ -253,7 +261,7 @@ onMounted(() => {
             <UDivider class="my-6" />
           </div>
           <div class="pb-10 pt-10 flex flex-row justify-between z-2">
-            <div class="max-w-760px w-full">
+            <div class="max-w-[760px] w-full">
               <div class="text-left">
                 <!-- <MDRender v-if="article.html" :html="article.html" @render-finished="initTOC" /> -->
                 <!-- <div v-if="article.html" v-html="article.html" id="violetMD"
@@ -271,9 +279,9 @@ onMounted(() => {
                 />
 
                 <div v-else class="text-2xl text-violet">
-                  <div class="flex flex-col items-start" v-for="i in 3" :key="i">
+                  <div v-for="i in 3" :key="i" class="flex flex-col items-start">
                     <USkeleton class="h-10 w-1/3 my-2 mt-8" />
-                    <USkeleton class="h-4 w-full my-2" v-for="i in 10" :key="i"/>
+                    <USkeleton v-for="i in 10" :key="i" class="h-4 w-full my-2" />
                   </div>
                 </div>
 
@@ -300,7 +308,7 @@ onMounted(() => {
               />
             </ClientOnly>
           </div>
-          <div class="violet-prose mb-10 font-serif text-left cursor-pointer">
+          <div class="violet-prose mb-10 text-left cursor-pointer">
             <a class="text-xl hover:underline" @click="$router.back">cd ..</a>
           </div>
           <Comment />
