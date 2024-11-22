@@ -3,11 +3,11 @@ import type articleVue from '~/layouts/article.vue';
 import { useAsyncValidator } from '@vueuse/integrations/useAsyncValidator'
 import { useThrottleFn } from '@vueuse/core'
 import type { MDCParserResult } from '@nuxtjs/mdc/runtime/types/index'
+import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 import type { IArticle } from '~/server/types'
 import { useUserStore } from '~/store/UserStore'
 import MarkdownEditor from '~/components/MarkdownEditor.vue'
 import '~/styles/md-alert.css'
-import { parseMarkdown } from '@nuxtjs/mdc/runtime'
 
 const props = defineProps({
   shortLink: {
@@ -298,7 +298,7 @@ function handleKeyDown(event: KeyboardEvent) {
         <template #header>
           Publish Settings
         </template>
-        <div class="p-2 max-h-[calc(100vh-100px)] overflow-y-scroll">
+        <div class="p-2 max-h-[calc(100vh - 100px)] overflow-y-scroll">
           <UForm :state="article" class="space-y-4">
             <UFormGroup label="ShortLink" name="shortLink">
               <UInput v-model="article.shortLink" />

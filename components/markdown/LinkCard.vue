@@ -15,8 +15,7 @@ onMounted(async () => {
     if (match) {
       const owner = match[1]
       const repoName = match[2]
-      const res = await $fetch(`https://api.github.com/repos/${owner}/${repoName}`)
-      repoInfo.value = res
+      repoInfo.value = await $fetch(`https://api.github.com/repos/${owner}/${repoName}`)
     }
   }
 })
@@ -27,33 +26,17 @@ onMounted(async () => {
     <div v-if="repoInfo" class="my-4 flex flex-row w-full justify-start items-center">
       <NuxtLink
         :href="props.link" target="_blank"
-        class="p-4 rounded-md flex flex-col h-35 w-full justify-between transition-all lg:w-100 md:w-100 sm:w-100 xl:w-100 card"
+        class="p-4 rounded-md flex flex-col h-36 w-full justify-between transition-all lg:w-96 md:w-96 sm:w-96 xl:w-96 card"
       >
-        <div class="flex flex-row justify-start items-center">
-          <div class="object-cover w-30">
-            <NuxtImg :src="repoInfo.owner.avatar_url" class="rounded" />
-          </div>
+        <div class="flex flex-row justify-start items-start w-full h-full">
+          <NuxtImg :src="repoInfo.owner.avatar_url" class="rounded h-28 w-28 " />
           <div class="ml-4 flex flex-col w-full">
-            <div class="line-clamp-1 mb-2 text-xl">
+            <div class=" mb-2 text-xl">
               {{ repoInfo?.full_name }}
             </div>
             <div class="line-clamp-2 text-sm text-gray">
               {{ repoInfo?.description }}
             </div>
-          </div>
-        </div>
-        <div class="px-4 mt-2.5 text-sm flex flex-row w-full justify-between">
-          <div class="text-amber flex flex-row justify-start items-center">
-            <div class="i-ri:star-s-fill mr-2" />
-            <div>{{ repoInfo?.stargazers_count }}</div>
-          </div>
-          <div class="text-blue flex flex-row justify-center items-center">
-            <div class="i-ri:git-fork-fill mr-2" />
-            <div>{{ repoInfo?.forks_count }}</div>
-          </div>
-          <div class="text-red flex flex-row justify-end items-center">
-            <div class="i-ri:error-warning-fill mr-2" />
-            <div>{{ repoInfo?.open_issues_count }}</div>
           </div>
         </div>
       </NuxtLink>

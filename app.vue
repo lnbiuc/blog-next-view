@@ -1,7 +1,9 @@
 <script lang="ts" setup>
 import '~/styles/main.css'
-import '~/styles/markdown.css'
-import '~/styles/prose.css'
+import '~/styles/tailwind.css'
+
+// import '~/styles/markdown.css'
+// import '~/styles/prose.css'
 
 function handleToTop() {
   window.scrollTo({ top: 0, behavior: 'smooth' })

@@ -133,7 +133,7 @@ if (data.value) {
 
 <template>
   <div
-    class="border-b-[#eee] font-sans flex flex-row fixed h-60px w-full justify-around items-center z-999 transition-all dark:border-b-[#222]"
+    class="border-b-[#eee] font-sans flex flex-row fixed h-[60px] w-full justify-around items-center z-[999] transition-all dark:border-b-[#222]"
     :class="{
       'dark:bg-opacity-50 bg-opacity-50 backdrop-blur-xl border-b ':
         showShadow && !isOpen,
@@ -141,7 +141,7 @@ if (data.value) {
     }"
   >
     <div
-      class="mx-2 mr-4 rounded-3 flex flex-row h-45px w-45px cursor-pointer justify-center items-center"
+      class="mx-2 mr-4 rounded-3 flex flex-row h-[45px] w-[45px] cursor-pointer justify-center items-center"
     >
       <img
         src="/site-favicon.ico"
@@ -171,7 +171,7 @@ if (data.value) {
           <div>&nbsp;</div>
         </div>
         <div
-          class="hidden justify-center items-center z-1000 lg:flex md:flex sm:flex xl:flex"
+          class="hidden justify-center items-center z-[1000] lg:flex md:flex sm:flex xl:flex"
           :class="{ fixed: isFixed, relative: !isFixed }"
         >
           <header
@@ -183,7 +183,7 @@ if (data.value) {
             }"
           >
             <ul
-              class="border rounded-full flex flex-row h-40px items-center transition-all"
+              class="border rounded-full flex flex-row h-[40px] items-center transition-all"
               :class="{
                 'mt-52px dark:border-[#222] border-[#eee] shadow backdrop-blur-2xl':
                   !isFixed,
@@ -237,11 +237,11 @@ if (data.value) {
     </div>
   </div>
 
-  <div class="h-60px" />
+  <div class="h-[60px]" />
 
   <div
     name="v-header"
-    class="bg-light flex fixed h-0 w-full justify-end top-60px z-6000 transition-all lg:hidden md:hidden sm:hidden xl:hidden dark:bg-dark"
+    class="bg-light flex fixed h-0 w-full justify-end top-60px z-[6000] transition-all lg:hidden md:hidden sm:hidden xl:hidden dark:bg-dark"
     :class="{ 'h-full': isOpen }"
   >
     <Transition name="slide-fade">

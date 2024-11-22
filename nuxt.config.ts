@@ -4,7 +4,6 @@ import { appDescription } from './constants/index'
 export default defineNuxtConfig({
   modules: [
     '@vueuse/nuxt',
-    '@unocss/nuxt',
     '@pinia/nuxt',
     '@nuxtjs/color-mode',
     '@nuxt/ui',
@@ -17,6 +16,8 @@ export default defineNuxtConfig({
     'nuxt-seo-experiments',
     '@nuxt/image',
     '@nuxtjs/mdc',
+    '@nuxtjs/tailwindcss',
+    '@nuxt/icon',
   ],
 
   image: {
@@ -160,6 +161,19 @@ export default defineNuxtConfig({
 
   devtools: {
     enabled: true,
+  },
+
+  tailwindcss: {
+    cssPath: ['~/styles/tailwind.css', { injectPosition: 'first' }],
+    config: {
+      theme: {
+        extend: {
+          colors: {
+            violet: '#A78BFA',
+          },
+        },
+      },
+    },
   },
 
   compatibilityDate: '2024-10-08',

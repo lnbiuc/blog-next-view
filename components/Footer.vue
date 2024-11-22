@@ -14,18 +14,17 @@ onMounted(async () => {
 
 <template>
   <div
-    text="xs gray4"
-    class="backdrop-blur-md p-4 mt-20 border-t border-t-[#eee] flex flex-col w-full justify-center items-center dark:border-t-[#222]"
+    class="backdrop-blur-md p-4 mt-20 border-t border-t-[#eee] flex flex-col w-full justify-center items-center dark:border-t-[#222] text-xs text-gray-400"
   >
     <div
       class="flex flex-col w-full justify-between items-center lg:flex-row md:flex-row sm:flex-row xl:flex-row lg:w-[80%] md:w-full sm:w-full xl:max-w-[1000px] xl:w-[80%]"
     >
-      <div v-if="umami.pv && umami.uv">
+      <div>
         <span>Total PV : </span>
-        <span text="violet">{{ umami.pv }}</span>
+        <span class="text-violet">{{ umami.pv }}</span>
         <span class="mx-1">&nbsp;</span>
         <span>UV : </span>
-        <span text="violet">{{ umami.uv }}</span>
+        <span class="text-violet">{{ umami.uv }}</span>
       </div>
       <div>
         <span>Copyright © 2024</span>

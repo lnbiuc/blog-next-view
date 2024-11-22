@@ -57,7 +57,7 @@ getAll().then(() => {
       <div>
         <Suspense>
           <ClientOnly>
-            <div v-if="!online" text-gray:80>
+            <div v-if="!online" class="text-gray">
               You're offline
             </div>
           </ClientOnly>
@@ -77,7 +77,7 @@ getAll().then(() => {
             <div class="title-btn">
               <MyButton @click="$router.push('/blog')">
                 See More
-                <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
+                <Icon name="ri:arrow-right-line" class="ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
           </div>
@@ -89,7 +89,7 @@ getAll().then(() => {
             <div class="title-btn">
               <MyButton @click="$router.push('/shorts')">
                 See More
-                <div class="i-ri:arrow-right-line ml-2 mt-[2px] text-violet" />
+                <Icon name="ri:arrow-right-line" class="ml-2 mt-[2px] text-violet" />
               </MyButton>
             </div>
           </div>
