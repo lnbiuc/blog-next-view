@@ -52,7 +52,7 @@ function copyAddress() {
     title: 'Copied',
     description: source.value,
     timeout: 3000,
-    icon: 'i-heroicons-check-circle text-violet',
+    icon: 'i-heroicons-check-circle text-violet-500',
   })
 }
 </script>

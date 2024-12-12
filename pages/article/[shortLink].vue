@@ -135,7 +135,7 @@ function copySelection() {
     title: 'Copied',
     description: sourceCopy.value,
     timeout: 3000,
-    icon: 'i-heroicons-check-circle text-violet',
+    icon: 'i-heroicons-check-circle text-violet-500',
   })
   openPop.value = false
 }
@@ -238,11 +238,11 @@ onMounted(() => {
             <div class="mt-4 flex flex-row justify-between items-center">
               <div class="flex flex-row justify-start items-center">
                 <div class="i-carbon-view mr-2 z-2" />
-                <div class="text-violet z-2">
+                <div class="text-violet-500 z-2">
                   {{ article?.views }} views
                 </div>
                 <div class="i-carbon-alarm mx-2 z-2 scale-110" />
-                <div class="text-violet z-2">
+                <div class="text-violet-500 z-2">
                   {{ formatTime(article?.updatedAt) }}
                 </div>
               </div>
@@ -278,7 +278,7 @@ onMounted(() => {
                   @mouseup="checkSelection"
                 />
 
-                <div v-else class="text-2xl text-violet">
+                <div v-else class="text-2xl text-violet-500">
                   <div v-for="i in 3" :key="i" class="flex flex-col items-start">
                     <USkeleton class="h-10 w-1/3 my-2 mt-8" />
                     <USkeleton v-for="i in 10" :key="i" class="h-4 w-full my-2" />

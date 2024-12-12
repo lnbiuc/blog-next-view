@@ -19,10 +19,10 @@ useFetch('/api/umami/stats').then((res) => {
     >
       <div>
         <span>Total PV : </span>
-        <span class="text-violet">{{ umami.pv }}</span>
+        <span class="text-violet-500">{{ umami.pv }}</span>
         <span class="mx-1">&nbsp;</span>
         <span>UV : </span>
-        <span class="text-violet">{{ umami.uv }}</span>
+        <span class="text-violet-500">{{ umami.uv }}</span>
       </div>
       <div>
         <span>Copyright © 2024</span>

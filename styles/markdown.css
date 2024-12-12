@@ -1,6 +1,6 @@
 .dark .shiki,
 .dark .shiki span {
-  color: var(--shiki-default, inherit) !important;
+  color: var(--shiki-dark, inherit) !important;
   --twoslash-popup-bg: #191919;
   --twoslash-border-color: #8884;
 }
@@ -14,7 +14,7 @@
 
 html:not(.dark) .shiki,
 html:not(.dark) .shiki span {
-  color: var(--shiki-dark, inherit);
+  color: var(--shiki-default, inherit);
   --twoslash-popup-bg: #fafafa;
 }
 

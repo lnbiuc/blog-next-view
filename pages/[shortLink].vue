@@ -86,7 +86,7 @@ defineOgImage({
     <h1 class="text-10 pt-40vh">
       404 Not Found
     </h1>
-    <NuxtLink to="/" class="text-violet mt-2 hover:underline-violet">
+    <NuxtLink to="/" class="text-violet-500 mt-2 hover:underline-violet">
       Back To Home
     </NuxtLink>
   </div>

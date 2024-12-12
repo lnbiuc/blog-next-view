@@ -102,7 +102,12 @@ function handleCopy(text: string) {
 
   if (isSupported) {
     copy()
-    toast.add({ title: 'Copied', description: sourceCopy.value, timeout: 3000, icon: 'i-heroicons-check-circle text-violet' })
+    toast.add({
+      title: 'Copied',
+      description: sourceCopy.value,
+      timeout: 3000,
+      icon: 'i-heroicons-check-circle text-violet-500',
+    })
   }
 }
 

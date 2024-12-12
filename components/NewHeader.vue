@@ -213,7 +213,7 @@ useFetch<Array<IArticle>>('/api/article/pages').then((res) => {
           <Transition name="slide">
             <div v-if="!isFixed">
               {{ Math.round(readProgress * 100) }}
-              <span class="text-violet">%</span>
+              <span class="text-violet-500">%</span>
             </div>
           </Transition>
           <div>&nbsp;</div>

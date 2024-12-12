@@ -37,12 +37,17 @@ const icon = computed(() => {
 const source = ref(props.code)
 
 const { copy } = useClipboard({ source })
+const toast = useToast()
 
 function copyCode() {
   copy(source.value)
-
+  toast.add({
+    title: 'Copied',
+    description: source.value,
+    timeout: 3000,
+    icon: 'i-heroicons-check-circle text-violet-500',
+  })
   copied.value = true
-
   setTimeout(() => {
     copied.value = false
   }, 3000)
@@ -61,9 +66,7 @@ function copyCode() {
   <div class="pre-container">
     <div class="flex flex-row relative justify-end">
       <div class="pr-2 pt-2.5 absolute">
-        <UButton class="copy-button" color="white" :icon="icon" :trailing="false" size="xs" @click="copyCode">
-          {{ copied ? 'Copied' : 'Copy' }}
-        </UButton>
+        <UButton class="copy-button" color="white" :icon="icon" :trailing="false" size="xs" @click="copyCode" />
       </div>
     </div>
     <pre
@@ -87,7 +90,6 @@ pre code .line {
 .copy-button {
   opacity: 0;
   transition: opacity 0.3s;
-  transition-delay: 3s;
 }
 
 .pre-container:hover .copy-button {

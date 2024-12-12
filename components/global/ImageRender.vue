@@ -29,7 +29,7 @@ const imageError = ref<boolean>(false)
       :alt="props.alt"
       :width="props.width"
       :height="props.height"
-      class="my-2 opacity-75 rounded transition-all hover:opacity-100 hover:shadow"
+      class="my-2 rounded transition-all hover:shadow"
       @error="imageError = true"
     >
   </div>

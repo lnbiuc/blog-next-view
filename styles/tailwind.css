@@ -13,11 +13,11 @@
     }
 
     .card-hover {
-        @apply transition duration-200 ease-in-out dark:hover:border-violet hover:border-violet border;
+        @apply transition duration-200 ease-in-out dark:hover:border-violet-500 hover:border-violet-500 border;
     }
 
     .title-font {
-        @apply text-left text-violet font-semibold text-2xl my-4;
+        @apply text-left text-violet-500 font-semibold text-2xl my-4;
     }
 
     .title-btn {
@@ -33,11 +33,11 @@
     }
 
     .header-link {
-        @apply px-3 mx-1 py-2 transition-all duration-150 hover:text-violet font-semibold hover:cursor-pointer;
+        @apply px-3 mx-1 py-2 transition-all duration-150 hover:text-violet-500 font-semibold hover:cursor-pointer;
     }
 
     .card {
-        @apply rounded-md shadow-sm border border-[#ddd] dark:border-[#333] transition-all ease-in-out hover:dark:border-violet ring-inset hover:border-violet hover:ring-2 hover:ring-violet;
+        @apply rounded-md shadow-sm border border-[#ddd] dark:border-[#333] transition-all ease-in-out hover:dark:border-violet-500 ring-inset hover:border-violet-500 hover:ring-2 hover:ring-violet-500;
     }
 
     .mobile-head-link {

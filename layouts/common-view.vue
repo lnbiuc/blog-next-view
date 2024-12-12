@@ -3,12 +3,12 @@
     <NuxtLayout name="default">
       <NuxtLayout name="home">
         <div class="text-left flex flex-col">
-          <h1 class="text-5xl text-violet font-bold">
-            <slot name="title"/>
+          <h1 class="text-5xl text-violet-500 font-bold">
+            <slot name="title" />
           </h1>
           <div class="py-4">
             <span>
-              <slot name="description"/>
+              <slot name="description" />
             </span>
           </div>
         </div>

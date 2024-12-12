@@ -21,7 +21,7 @@ const link = [
   {
     index: 3,
     name: '',
-    url: 'mailto:hi@lnbiuc.com',
+    url: 'mailto:hi@vio.vin',
     icon: 'i-ri:mail-line',
   },
 ]
@@ -41,7 +41,7 @@ const link = [
         <h2 class="text-4xl text-left">
           I'm
           <NuxtLink
-            class="ml-2 text-violet hover:underline" to="/about" prefetch
+            class="ml-2 text-violet-500 hover:underline" to="/about" prefetch
             style="font-family: 'MyFont', sans-serif;"
           >
             violet
@@ -52,7 +52,7 @@ const link = [
         </span>
         <span class="mb-2 mt-5 text-left">
           Living and working in <a
-            class="text-violet hover:underline" href="https://unsplash.com/s/photos/xian"
+            class="text-violet-500 hover:underline" href="https://unsplash.com/s/photos/xian"
             target="_blank"
           >Xi'an</a>.
         </span>

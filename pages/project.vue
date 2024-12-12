@@ -38,7 +38,7 @@ defineOgImage({
       <NuxtLayout name="home">
         <div class="flex flex-row">
           <div class="text-left w-full">
-            <h1 class="text-5xl text-violet font-bold">
+            <h1 class="text-5xl text-violet-500 font-bold">
               Project
             </h1>
             <div class="py-4">

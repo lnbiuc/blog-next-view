@@ -101,11 +101,12 @@ watchEffect(async () => {
   }
 })
 
-function onChangeFile(e: Event) {
-  const target = e.target as HTMLInputElement
-  const file = target.files?.[0]
-  if (file)
-    fileCover.value = file
+function onChangeFile(files: FileList) {
+  if (files.length > 0) {
+    const file = files[0]
+    if (file)
+      fileCover.value = file
+  }
 }
 
 const uploading = ref(false)
@@ -248,9 +249,9 @@ function handleKeyDown(event: KeyboardEvent) {
       <div class="flex flex-col justify-between items-center">
         <div class="flex flex-row w-full justify-between items-center">
           <div>
-            <span class="text-violet">{{ article.shortLink }}</span>
+            <span class="text-violet-500">{{ article.shortLink }}</span>
             <em class="mx-2">/</em>
-            <span class="text-violet font-bold">{{ article.title }}</span>
+            <span class="text-violet-500 font-bold">{{ article.title }}</span>
           </div>
           <div>
             <UButton class="mr-2" color="blue" @click="preview = !preview">
@@ -274,7 +275,7 @@ function handleKeyDown(event: KeyboardEvent) {
       <UCard>
         <template #header>
           <div class="flex flex-row justify-between items-center">
-            <div class="text-violet">
+            <div class="text-violet-500">
               {{ article.title }}
             </div>
             <div>
@@ -298,7 +299,7 @@ function handleKeyDown(event: KeyboardEvent) {
         <template #header>
           Publish Settings
         </template>
-        <div class="p-2 max-h-[calc(100vh - 100px)] overflow-y-scroll">
+        <div class="p-2 overflow-y-scroll" style="max-height: calc(100vh - 100px)">
           <UForm :state="article" class="space-y-4">
             <UFormGroup label="ShortLink" name="shortLink">
               <UInput v-model="article.shortLink" />
@@ -329,7 +330,8 @@ function handleKeyDown(event: KeyboardEvent) {
             </div>
             <UFormGroup label="Upload Cover" name="file">
               <div class="flex flex-row">
-                <input type="file" class="w-full" @change="onChangeFile">
+                <!--                <input type="file" class="w-full" @change="onChangeFile"> -->
+                <UInput type="file" size="sm" icon="i-heroicons-folder" @change="onChangeFile" />
                 <UButton class="ml-2" :disabled="uploading" :loading="uploading" @click="handleUpload('cover')">
                   upload
                 </UButton>

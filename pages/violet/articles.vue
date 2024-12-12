@@ -56,7 +56,7 @@ const columns = [
   { key: 'status', label: 'Status' },
   { key: 'views', label: 'Views', sortable: true },
   { key: 'likes', label: 'Likes', sortable: true },
-  { key: 'ogImage', label: 'OG Image' },
+  // { key: 'ogImage', label: 'OG Image' },
   { key: 'link', label: 'Link' },
   { key: 'createdAt', label: 'Created At', sortable: true },
   { key: 'updatedAt', label: 'Updated At', sortable: true },
@@ -161,7 +161,7 @@ function handleDelete() {
       <template #shortLink-data="{ row }">
         <ULink
           target="_blank" :to="`/article/${row.shortLink}`"
-          class="text-violet-400 transition-all hover:text-violet-600"
+          class="text-violet-500-400 transition-all hover:text-violet-500-600"
         >
           {{ row.shortLink }}
         </ULink>
@@ -183,7 +183,7 @@ function handleDelete() {
           </div>
           <template #panel>
             <div class="h-full w-full">
-              <img :src="`${row.cover}`" class="object-cover h-50 w-full">
+              <img :src="`${row.cover}`" class="object-cover h-48 w-full">
             </div>
           </template>
         </UPopover>
@@ -197,16 +197,16 @@ function handleDelete() {
         </div>
       </template>
 
-      <!-- <template #ogImage-data="{ row }">
-        <UPopover mode="hover">
-          <UAvatar :src="`/__og-image__/image/article/${row.shortLink}/og.png`" alt="Avatar" />
-          <template #panel>
-            <div class="h-full w-full">
-              <img :src="`/__og-image__/image/article/${row.shortLink}/og.png`" class="object-cover h-50 w-full">
-            </div>
-          </template>
-        </UPopover>
-      </template> -->
+      <!--      <template #ogImage-data="{ row }"> -->
+      <!--        <UPopover mode="hover"> -->
+      <!--          <UAvatar :src="`/__og-image__/image/article/${row.shortLink}/og.png`" alt="Avatar" /> -->
+      <!--          <template #panel> -->
+      <!--            <div class="h-full w-full"> -->
+      <!--              <img :src="`/__og-image__/image/article/${row.shortLink}/og.png`" class="object-cover h-50 w-full"> -->
+      <!--            </div> -->
+      <!--          </template> -->
+      <!--        </UPopover> -->
+      <!--      </template> -->
       <template #createdAt-data="{ row }">
         {{ formatZHTime(row.createdAt) }}
       </template>
