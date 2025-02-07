@@ -4,9 +4,6 @@ FROM node:20-alpine AS builder
 # 设置工作目录
 WORKDIR /app
 
-# 复制 package.json 和 pnpm-lock.yaml 文件
-COPY package.json pnpm-lock.yaml ./
-
 # 安装 pnpm
 RUN npm install -g pnpm
 
@@ -25,8 +22,12 @@ FROM node:20-alpine
 # 设置工作目录
 WORKDIR /app
 
+RUN ls
+
+RUN pwd
+
 # 从 builder 阶段复制构建产物
-COPY --from=builder /app/dist ./dist
+COPY --from=builder ./dist ./dist
 
 # 安装 pm2
 RUN npm install -g pm2
