@@ -1,8 +1,10 @@
 # 使用 Node.js 官方基础镜像
 FROM node:20-alpine AS builder
 
-# 设置工作目录
 WORKDIR /app
+
+COPY package.json /app/
+COPY package-lock.json /app/
 
 # 安装 pnpm
 RUN npm install -g pnpm
@@ -11,23 +13,10 @@ RUN npm install -g pnpm
 RUN pnpm install
 
 # 复制项目文件
-COPY . .
+ADD . /app
 
 # 运行构建命令
 RUN pnpm run build
-
-# 使用较小的 Node.js 基础镜像来运行应用
-FROM node:20-alpine
-
-# 设置工作目录
-WORKDIR /app
-
-RUN ls
-
-RUN pwd
-
-# 从 builder 阶段复制构建产物
-COPY --from=builder ./dist ./dist
 
 # 安装 pm2
 RUN npm install -g pm2
